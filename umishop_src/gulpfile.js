@@ -32,10 +32,10 @@ const less = 'less/*.less';
 const cssLibraries = 'css/lib/*.css';
 const compiledCss = 'compiled/*.css';
 const compiledJs = 'compiled/*.js';
-const rimrafCss = '../../compiled/*.min.css';
+const rimrafCss = 'compiled/*.min.css';
 const rimrafJs = 'compiled/*-min.js';
 
-const destination = 'compiled';
+const destination = '../compiled';
 
 gulp.task('build-js-libraries', function() {
 	return gulp.src(jsLibraries)

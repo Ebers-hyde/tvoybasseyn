@@ -768,42 +768,6 @@ main {
 
 //-----------------------------------------------  checkbox  -------------------------------------------------//
 
-	label {
-		margin-bottom: 20px;
-		position: relative;
-		cursor: pointer;
-		font-weight: normal;
-		input[type="checkbox"] {
-			width: 20px;
-			height: 20px;
-			margin-right: 15px;
-			opacity: 0;
-			vertical-align: middle;
-			& + span {
-				display: block;
-				border: 1px solid #bcbcbc;
-				width: 20px;
-				height: 20px;
-				background: #ffffff;
-				position: absolute;
-				left: 0;
-				top: 0;
-				margin: 0;
-			}
-			&:checked + span:before {
-				content: "";
-				position: absolute;
-				display: block;
-				border-left: 3px solid @color-base;
-				border-bottom: 3px solid @color-base;
-				width: 13px;
-				height: 8px;
-				transform: rotate(-45deg);
-				top: 3px;
-				left: 3px;
-			}
-		}
-	}
 
 
 div.personal_data_wrapper {
@@ -984,7 +948,7 @@ main {
 //-------------------------------------------------  input[type="submit"]  ------------------------------------------------//
 main {
 	input[type="submit"] {
-		border: 2px solid #33b5cb;
+		border: 2px solid #3363cb;
 		background: transparent;
 		font-family: 'open_sans_bold', sans-serif;
 		padding: 16px;
