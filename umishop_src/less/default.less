@@ -1,36 +1,6 @@
 @import "variables";
 @import "mixin";
 
-@font-face {
-	font-family: open_sans;
-	src: url('../fonts/woff/open-sans.regular.woff');
-}
-
-@font-face {
-	font-family: open_sans_light;
-	src: url('../fonts/woff/open-sans.light.woff');
-}
-
-@font-face {
-	font-family: open_sans_med;
-	src: url('../fonts/woff/open-sans.semibold.woff');
-}
-
-@font-face {
-	font-family: open_sans_bold;
-	src: url('../fonts/woff/open-sans.bold.woff');
-}
-
-@font-face {
-	font-family: bold_font;
-	src: url('../fonts/woff/9131.woff');
-}
-
-@font-face {
-	font-family: docter_two;
-	src: url('../fonts/woff/docker.two.woff');
-}
-
 html {
 	height: 100%;
 	min-height: 100%;
@@ -149,9 +119,6 @@ a:focus {
 	outline: none;
 }
 
-a:hover {
-	color: #33b5cb;
-}
 
 button,
 .btn_orange {
@@ -1013,156 +980,6 @@ main {
 	}
 }
 
-//-------------------------------------------------  input[type="..."]  ------------------------------------------------//
-
-form {
-	.sub_group_inline {
-		display: flex;
-		& > div {
-			flex-grow: 1;
-			&:last-of-type {
-				input {
-					border-left: none;
-				}
-			}
-		}
-	}
-	div {
-		position: relative;
-		margin-top: -1px;
-		&.important:after {
-			content: "*";
-			position: absolute;
-			top: 17px;
-			right: 5px;
-			font-size: 20px;
-			color: #949494;
-		}
-
-		input[type="text"],
-		input[type="tel"],
-		input[type="password"],
-		input[type="email"],
-		input[type="number"],
-		input[type="color"],
-		input[type="date"] {
-			outline: none;
-			border: 1px solid #ebebeb;
-			width: 100%;
-			padding: 17px;
-			background: #fff;
-			&:focus {
-				background: @backgroundGray;
-			}
-			&:focus + span.sub_text {
-				display: block;
-			}
-		}
-
-		input[type="color"] {
-			height: 56px;
-		}
-
-		.sub_text {
-			position: absolute;
-			top: 2px;
-			left: 18px;
-			font-size: 12px;
-			color: @lightGray;
-			display: none;
-		}
-
-		&.disabled_input {
-			input {
-				background: #f6f6f6;
-			}
-		}
-	}
-	::-webkit-input-placeholder {
-		font-size: 14px;
-	}
-	::-moz-placeholder {
-		font-size: 14px;
-	}
-	/* Firefox 19+ */
-	:-moz-placeholder {
-		font-size: 14px;
-	}
-	/* Firefox 18- */
-	:-ms-input-placeholder {
-		font-size: 14px;
-	}
-	:focus::-webkit-input-placeholder {
-		color: transparent
-	}
-	:focus::-moz-placeholder {
-		color: transparent
-	}
-	:focus:-moz-placeholder {
-		color: transparent
-	}
-	:focus:-ms-input-placeholder {
-		color: transparent
-	}
-}
-
-//-------------------------------------------------  textarea  ------------------------------------------------//
-form {
-	div {
-		position: relative;
-		textarea {
-			outline: none;
-			border: 1px solid #ebebeb;
-			width: 100%;
-			padding: 17px;
-			background: #fff;
-			resize: none;
-			height: 200px;
-			margin-bottom: 15px;
-
-			&:focus {
-				background: @backgroundGray;
-			}
-			&:focus + span.sub_text {
-				display: block;
-			}
-		}
-		.sub_text {
-			position: absolute;
-			top: 2px;
-			left: 18px;
-			font-size: 12px;
-			color: @lightGray;
-			display: none;
-		}
-	}
-	textarea::-webkit-input-placeholder {
-		font-size: 14px;
-	}
-	textarea::-moz-placeholder {
-		font-size: 14px;
-	}
-	/* Firefox 19+ */
-	textarea:-moz-placeholder {
-		font-size: 14px;
-	}
-	/* Firefox 18- */
-	textarea:-ms-input-placeholder {
-		font-size: 14px;
-	}
-	textarea:focus::-webkit-input-placeholder {
-		color: transparent
-	}
-	textarea:focus::-moz-placeholder {
-		color: transparent
-	}
-	textarea:focus:-moz-placeholder {
-		color: transparent
-	}
-	textarea:focus:-ms-input-placeholder {
-		color: transparent
-	}
-}
 
 //-------------------------------------------------  input[type="submit"]  ------------------------------------------------//
 main {

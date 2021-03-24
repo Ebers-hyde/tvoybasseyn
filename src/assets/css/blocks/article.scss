@@ -72,14 +72,18 @@
     }
     p,span,li,a,&__text{
         //font-family: Georgia;
+        font-family: charter, Georgia, Cambria, "Times New Roman", Times, serif;
         font-style: normal;
-        font-weight: normal;
+        font-weight: 500;
        // font-size: 18px;
         //line-height: 154.56%;
         margin-bottom: 20px;
         color:#383c40;
-        font-size: 1.6rem;
+        font-size: 1.5rem;
+        font-size: 18px;
         line-height: 1.4;
+        line-height: 30px;
+        letter-spacing: -0.003em;
     }
     ul{
         padding-left: 20px;
