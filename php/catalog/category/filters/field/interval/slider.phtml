@@ -9,13 +9,14 @@
 $data = $this->getSliderFilterFieldData($variables);
 ?>
 
-<div class="slider_field col-md-12 dropdown_price clearfix">
-	<div class="clearfix arrow_product">
-		<p class="float_left"><?= $data['title'] ?></p>
-		<i class="fa fa-angle-up float_right arrow_dropdown" aria-hidden="true"></i>
+<div class="select slider_field">
+	<div class="select__value">
+	<div><?= $data['title'] ?></div>
 	</div>
-
-	<div class="progress_hide product_form">
+	<svg class="select__arrow" width="6" height="4" viewBox="0 0 6 4" fill="none" xmlns="http://www.w3.org/2000/svg">
+	<path d="M2.86243 4L0.643236 0.25L5.08162 0.25L2.86243 4Z"></path>
+	</svg>
+	<div class="select__variants">
 		<div class="col-md-12 delta_price clearfix">
 			<input type="text" name="<?= $data['name_from'] ?>" value="<?= $data['selected_min'] ?>" data-minimum="<?= $data['min'] ?>" class="min float_left" />
 			<span>&mdash;</span>

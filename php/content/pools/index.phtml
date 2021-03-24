@@ -10,6 +10,13 @@ $catalog = $this->getProductsListFromCategory($variables['pageId'],100);
         <?php foreach($catalog['items'] as $category): ?>
         <?= $this->render($category, 'content/pools/preview') ?>
         <?php endforeach; ?>
+        <?php if(count($catalog['items'])%3==2){ ?>
+            <div class=" catalog-list__category"></div>
+        <?php } ?>
+        <?php if(count($catalog['items'])%3==1){ ?>
+            <div class=" catalog-list__category"></div>
+            <div class=" catalog-list__category"></div>
+        <?php } ?>
     </div>
 <div class="center-wrap" style="padding-top: 2.1rem;">
     <div class="article" style="padding-top: 2.1rem;">

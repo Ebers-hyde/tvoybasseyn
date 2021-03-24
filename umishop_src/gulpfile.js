@@ -35,7 +35,7 @@ const compiledJs = 'compiled/*.js';
 const rimrafCss = 'compiled/*.min.css';
 const rimrafJs = 'compiled/*-min.js';
 
-const destination = '../compiled';
+const destination = '../../tvoybasseyn.ru v3/compiled';
 
 gulp.task('build-js-libraries', function() {
 	return gulp.src(jsLibraries)

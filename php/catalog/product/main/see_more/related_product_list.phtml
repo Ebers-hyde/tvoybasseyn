@@ -7,25 +7,29 @@
  */
 
 $product = $variables['page'];
-$relatedProductList = $this->getRelatedProducts($product);
+$productList = $this->getRelatedProducts($product);
 ?>
 
-<?php if ($relatedProductList): ?>
-	<div class="container mobile_all_width">
-		<div class="row">
-			<div class="sect_capt">
-				<h3 class="up"><?= $this->translate('related_products') ?></h3>
-			</div>
-		</div>
+<?php if ($productList): ?>
+	<section class="history">
+        <div class="center-wrap">
+        <h3 class="simple-title history__title"><?= $this->translate('related_products') ?></h3>
+        <div class="history__list mobile--hide">
+            
+            <?php foreach ($productList as $product): ?>
+                <?= $this->render($product, 'catalog/product/preview/index') ?>
+            <?php endforeach; ?>
 
-		<div class="row">
-			<div class="subCarousel goods w100p">
-				<?php foreach ($relatedProductList as $relatedProduct): ?>
-					<div>
-						<?= $this->render($relatedProduct, 'catalog/product/preview/index') ?>
-					</div>
-				<?php endforeach; ?>
-			</div>
-		</div>
-	</div>
+        </div>
+        </div>
+        <div class="history-slider desktop--hide">
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+            <?php foreach ($productList as $product): ?>
+                <div class="swiper-slide"><?= $this->render($product, 'catalog/product/preview/index') ?></div>
+            <?php endforeach; ?>
+            </div>
+        </div>
+        </div>
+    </section>
 <?php endif; ?>

@@ -128,9 +128,9 @@ $old_price = ($p=$category->getValue('old_price'))?$p:false;
     <div class="series__modelsList series__modelsList-slider desktop--hide">
         <div class="swiper-container">
             <div class="swiper-wrapper">
-                <div class="series__model swiper-slide">
+                <a class="series__model swiper-slide" href="<?=$category->link?>">
                     <span class="series__modelName"><?=$category->name?></span>
-                    <a href="<?=$category->link?>" ><img class="series__modelImage" src="<?=$category->getValue('menu_pic_ua')?>"></a>
+                    <div><img class="series__modelImage" src="<?=$category->getValue('menu_pic_ua')?>"></div>
                     <?php if($price): $price = str_replace(' ','',$price); ?>
                         <span class="series__modelPrice"><?=number_format($price, 0, ',', ' ')?> ₽</span>
                     <?php endif; ?>
@@ -139,7 +139,7 @@ $old_price = ($p=$category->getValue('old_price'))?$p:false;
                             <p class="product__specifications-item"><?=$k?>  — <span><?=$prop?></span></p>
                         <?php endforeach; ?>
                     </div>
-                </div>
+                </a>
 
                 <?php foreach($mass as $k=>$model){ ?>
                     <div class="series__model swiper-slide">
@@ -154,7 +154,7 @@ $old_price = ($p=$category->getValue('old_price'))?$p:false;
                             <?php endforeach; ?>
                         </div>
                     </div>
-                <?php } ?>
+                <?php } ?> 
             </div>
             <div class="swiper-pagination"></div>
         </div>

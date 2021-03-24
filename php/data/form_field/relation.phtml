@@ -1,0 +1,18 @@
+<?php
+/**
+ * Поле типа "Выпадающий список".
+ *
+ * @var umiTemplaterPHP|ViewPhpExtension|DemomarketPhpExtension $this
+ * @var array $variables
+ */
+
+$field = $variables;
+?>
+
+<?php if($field['name']=='subway_addr'){?><div data-adress="29250" class="delivery__choose-adress" style="margin-top: 40px;"> <?php } ?>
+	<select name="<?= $field['input_name'] ?>">
+		<?php foreach ($field['options'] as $option): ?>
+			<option value="<?= $option['id'] ?>"><?= $option['name'] ?></option>
+		<?php endforeach; ?>
+	</select>
+<?php if($field['name']=='subway_addr'){?></div><?php } ?>

@@ -1,0 +1,31 @@
+<?php
+use UmiCms\Service;
+$page = $variables['page'];
+$prices = $this->vsk_objByType(258,['tovar',$page->id]);
+$cf = Service::CurrencyFacade();
+$currencyOld = $cf->getByCode('EUR');
+$currency = $cf->getByCode('RUR');
+
+?>
+<div class="article" style="margin:0">
+    <table>
+        <tr>
+            <td>Ширина внутр.</td>
+            <td>Ширина внеш.</td>
+            <td>Длина м.</td>
+            <td>Высота м.</td>
+            <td>Кол-во секций</td>
+            <td>Цена</td>
+        </tr>
+        <?php foreach($prices as $line): $pavPrice = $cf->calculate($line->getValue('cena_ue'),$currencyOld,$currency); $pavPrice = number_format($pavPrice, 0, ',', '&nbsp;').'&nbsp;₽'; ?>
+        <tr>
+            <td><?=$line->getValue('shirina_vnutr')?></td>
+            <td><?=$line->getValue('shirina_vnesh')?></td>
+            <td><?=$line->getValue('dlina_m')?></td>
+            <td><?=$line->getValue('vysota_m')?></td>
+            <td><?=$line->getValue('kolvo_sekcij')?></td>
+            <td><?=$pavPrice?></td>
+        </tr>
+        <?php endforeach; ?>
+    </table>
+</div>

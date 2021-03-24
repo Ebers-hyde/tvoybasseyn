@@ -12,11 +12,11 @@ $parentList = $variables['parents'];
 <div class="breadcrumbs">
 	<div class="breadcrumbs__list">
         <li class="breadcrumbs__item"><a href="/" class="breadcrumbs__link">Главная</a></li>
-		<?php foreach ($parentList as $parent): ?>
-            <li class="breadcrumbs__item"><a href="<?= $this->getPath($parent) ?>" class="breadcrumbs__link"><?= $this->escape($parent->getName()) ?></a></li>
+		<?php foreach ($parentList as $parent): $name = str_replace("<br>", " ", $parent->getName());  ?>
+            <li class="breadcrumbs__item"><a href="<?= $this->getPath($parent) ?>" class="breadcrumbs__link"><?= $this->escape(strip_tags($name)) ?></a></li>
 		<?php endforeach; ?>
         <li class="breadcrumbs__item">
-            <div class="breadcrumbs__link"><?= $this->escape($variables['page']->getName()) ?>
+            <div class="breadcrumbs__link"><?= strip_tags(str_replace("<br>", " ", $variables['page']->getName())) ?>
                 <?php /* <svg viewBox="0 0 6 4" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M2.86243 4L0.643236 0.25L5.08162 0.25L2.86243 4Z"></path>
                 </svg>

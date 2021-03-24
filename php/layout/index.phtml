@@ -57,6 +57,10 @@
 	</head>
 
 	<body>
+        <!-- Google Tag Manager (noscript) -->
+        <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K9NZCTN"
+        height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+        <!-- End Google Tag Manager (noscript) -->
 		<!-- Yandex.Metrika counter -->
         <script type="text/javascript" >
         (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
@@ -108,7 +112,6 @@
 		$(document).ready(function(){
 		const locateWrap = document.querySelector('.header__region-list-wrap');
 		const locateBox = document.querySelector('.header__city');
-		//const locateConfirm = document.querySelector('.header__region-list-confirm');
 		const locateMsk = document.querySelectorAll('.region-modal__msk');
 		const locateSpb = document.querySelectorAll('.region-modal__spb');
 		const locateAny = document.querySelectorAll('.region-modal__any');
@@ -116,7 +119,6 @@
 		const header__tel_shop = document.querySelectorAll('.select-phone--shop a');
 		const sidebar__footer_phone = document.querySelector('.sidebar__footer a:last-child');
 		const sidebar__footer_mail = document.querySelector('.sidebar__footer a:first-child');
-		//const header__tel2 = document.querySelector('.header__tel a:last-child');
 		const header__tel3 = document.querySelector('.header__tel_mobile');
         const token = "11b8adbf35744dda02c4b7e4ce92e225111e1077";
 
@@ -146,7 +148,13 @@
                 return $.ajax(serviceUrl, params);
             },
             detect: function() {
-                var ip = '<?=$_SERVER['REMOTE_ADDR']?>';
+                <?php
+                    $ipAddress = $_SERVER['REMOTE_ADDR'];
+                    if (array_key_exists('HTTP_X_FORWARDED_FOR', $_SERVER)) {
+                        $ipAddress = array_pop(explode(',', $_SERVER['HTTP_X_FORWARDED_FOR']));
+                    }
+                ?>
+                var ip = '<?=$ipAddress?>';
                 city.iplocate(ip).done(function(response) {
                     city.cityRu = response.location.data.city;
                     city.region = response.location.data.federal_district;
@@ -157,7 +165,7 @@
 					document.querySelector('.header__region-list-confirm').innerHTML = 'Да';
                 })
                 .fail(function(jqXHR, textStatus, errorThrown) {
-                   // console.log(textStatus);
+      
                 });
             },
 			getCookie: function(name) {
@@ -168,12 +176,12 @@
 			},
 			setLocate: function(name, value) {
 				document.cookie = `${name}=${value}; path=/; expires=Tue, 19 Jan 2038 03:14:07 GMT`;
-				// document.querySelector('.header__region-current').innerHTML = city.names.value;
+
 			},
 			checkLocate: function(name,region='') {
                 name = city.cityRu;
                 region = city.region;
-                // console.log(region);
+
 				if (name == 'Санкт-Петербург'||region == 'Северо-Западный') {
                     city.city = 'spb';
 					return 'spb';
@@ -187,9 +195,7 @@
 			}, 
 			showLocate: function(val = this.getCookie('locate')) {
 				document.querySelector('.header__city span').innerHTML = city.names[val];
-				// if (document.querySelector('#new-address .data-form__input_type_string')) {
-				// 	document.querySelector('#new-address .data-form__input_type_string').value = city.getCookie('locate-city');
-				// }  
+                
                 if(header__tel){
                     header__tel.forEach(function(tel,index) { 
                         tel.innerHTML = city.phone[val];
@@ -210,10 +216,7 @@
                     sidebar__footer_mail.innerHTML = city.email[val];
 				    sidebar__footer_mail.setAttribute('href', 'mailto:'+city.email[val]);
                 }
-         /*       if(header__tel2){
-                    header__tel2.innerHTML = city.phone2[val];
-				    header__tel2.setAttribute('href', 'tel:'+city.phone2[val]);
-                } */
+
 				if (header__tel3) {
                     header__tel3.setAttribute('href', 'tel:'+city.phone[val]);
 				}
@@ -229,8 +232,7 @@
                     document.querySelector('.contacts__listItem.phone a:last-child').innerHTML = city.phone2[val];
                     document.querySelector('.contacts__listItem.phone a:last-child').setAttribute('href', 'tel:'+city.phone2[val]);
                     document.querySelector('.contacts__listItem.mail a').innerHTML = city.email[val];
-                    // document.querySelector('.contacts__listItem.mail a:first-child').innerHTML = city.email[val];
-                    // document.querySelector('.contacts__listItem.mail a:first-child').setAttribute('href', 'mailto:'+city.email[val]);
+ 
                     document.querySelector('.contacts__listItem.mail a').setAttribute('href', 'mailto:'+city.email[val]);
                     document.querySelector('.contacts__listItem.address span').innerHTML = city.address[val];
 
@@ -296,12 +298,6 @@
 				msk: '10588', 
 				any: '959'
             },
-            map: {
-                spb: '<iframe class="contacts__map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2003.1004996777938!2d30.339779615783712!3d59.86407738184916!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46963aaafda9c53f%3A0xe1c4654a691678a0!2z0YPQuy4g0JHQsNGB0YHQtdC50L3QsNGPLCA3MyDQutC-0YDQv9GD0YEgMSwg0KHQsNC90LrRgi3Qn9C10YLQtdGA0LHRg9GA0LMsIDE5NjIxMQ!5e0!3m2!1sru!2sru!4v1580406932524!5m2!1sru!2sru" width="600" height="450" frameborder="0" style="border:0;" allowfullscreen=""></iframe>',
-                // msk: '',
-				msk: '<iframe class="contacts__map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2252.1254147928125!2d37.43568151604289!3d55.63463230856709!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46b55289d4fa639f%3A0xcaf392ca401cb288!2z0JHQuNC30L3QtdGBLdC_0LDRgNC6INCg0YPQvNGP0L3RhtC10LLQvg!5e0!3m2!1sru!2sru!4v1583156838556!5m2!1sru!2sru"  style="border:0;" allowfullscreen=""></iframe>', 
-				any: '<iframe class="contacts__map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2003.1004996777938!2d30.339779615783712!3d59.86407738184916!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46963aaafda9c53f%3A0xe1c4654a691678a0!2z0YPQuy4g0JHQsNGB0YHQtdC50L3QsNGPLCA3MyDQutC-0YDQv9GD0YEgMSwg0KHQsNC90LrRgi3Qn9C10YLQtdGA0LHRg9GA0LMsIDE5NjIxMQ!5e0!3m2!1sru!2sru!4v1580406932524!5m2!1sru!2sru" width="600" height="450" frameborder="0" style="border:0;" allowfullscreen=""></iframe>'
-            },
             header: {
                 spb: 'в Санкт-Петербурге',
 				msk: 'в Москве', 
@@ -317,19 +313,9 @@
 				msk: 'в Москве и Московской области', 
 				any: 'по всей России'
 			}
-		}
-
-		city.init();
+		};city.init();
 
 		
-
-
-		locateBox.onmouseover = function() {
-			//locateWrap.classList.add('header__region-list-wrap--hover');
-		}
-		locateBox.onmouseout  = function() {
-			//locateWrap.classList.remove('header__region-list-wrap--hover');
-		}
 
         for (let locate of locateMsk) {
             locate.onclick = function(e) {
@@ -357,7 +343,13 @@
             locate.onclick = function(e) {
                 city.setLocate('locate', 'any');
                 document.cookie = `locate-city=${city.cityRu}; path=/; expires=Tue, 19 Jan 2038 03:14:07 GMT`;
-                let ip = '78.107.205.102';
+                <?php
+                    $ipAddress = $_SERVER['REMOTE_ADDR'];
+                    if (array_key_exists('HTTP_X_FORWARDED_FOR', $_SERVER)) {
+                        $ipAddress = array_pop(explode(',', $_SERVER['HTTP_X_FORWARDED_FOR']));
+                    }
+                ?>
+                let ip = '<?=$ipAddress?>';
                 city.iplocate(ip).done(function(response) {
                     city.cityRu = response.location.data.city;
                     city.setLocate('locate-city', response.location.data.city);
@@ -372,13 +364,7 @@
             }
         }
  
-		
 
-		// locateConfirm.onclick = function(e) {
-		// 	locateWrap.classList.remove('header__region-list-wrap--hover');
-		// 	document.querySelector('.header__region-list-confirm').innerHTML = '';
-		// 	return false;
-		// }
 
 	});
 	</script>

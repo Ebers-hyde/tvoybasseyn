@@ -1,0 +1,36 @@
+<?php
+/**
+ * Блок "Вы недавно смотрели".
+ *
+ * @var umiTemplaterPHP|ViewPhpExtension|DemomarketPhpExtension $this
+ * @var array $variables
+ */
+
+$productList = $this->getRecentlyVisitedProducts();
+?>
+
+<?php if ($productList): ?>
+	<section class="history">
+        <div class="center-wrap">
+        <h3 class="simple-title history__title">История просмотров</h3>
+        <div class="history__list mobile--hide">
+            
+            <?php foreach ($productList as $product): ?>
+                <?= $this->render($product, 'catalog/product/preview/index') ?>
+            <?php endforeach; ?>
+
+        </div>
+        </div>
+        <div class="history-slider desktop--hide">
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+            <?php foreach ($productList as $product): ?>
+                <div class="swiper-slide"><?= $this->render($product, 'catalog/product/preview/index') ?></div>
+            <?php endforeach; ?>
+            </div>
+        </div>
+        </div>
+    </section>
+<?php endif; ?>
+
+

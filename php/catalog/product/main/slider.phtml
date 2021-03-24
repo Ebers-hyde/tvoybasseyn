@@ -11,34 +11,18 @@ $imageList = $this->getProductImageList($variables['page']);
 $page = $variables['page'];
 ?>
 
-<div class="col-md-5  main_carousel">
-	<div class="carousels_container">
-		<div class="slider-for">
-			<?php foreach ($imageList as $image): ?>
-				<div>
-					<a href="<?= $image ?>" rel="fancybox_group" class="fancybox" data-fancybox="gallery" 
-						data-caption="<?= $this->escape($image->getTitle() ?: $page->getName()) ?>">
-						<img class="img-responsive" src="<?= $image ?>"
-						     alt="<?= $this->escape($image->getAlt() ?: $page->getName()) ?>"
-						     title="<?= $this->escape($image->getTitle() ?: $page->getName()) ?>"
-						>
-					</a>
-				</div>
-			<?php endforeach; ?>
-		</div>
 
-		<div class="slider-nav hidden-xs hidden-sm">
-			<?php foreach ($imageList as $image): ?>
-				<div>
-					<a href="<?= $image ?>" rel="fancybox_group" class="fancybox" data-fancybox="gallery"
-						data-caption="<?= $this->escape($image->getTitle() ?: $page->getName()) ?>">
-						<img class="img-responsive" src="<?= $image ?>"
-						     alt="<?= $this->escape($image->getAlt() ?: $page->getName()) ?>"
-						     title="<?= $this->escape($image->getTitle() ?: $page->getName()) ?>"
-						>
-					</a>
-				</div>
-			<?php endforeach; ?>
+<div class="product__slider" style="height: 413px;">
+<div class="swiper-container" style="height: 413px;">
+	<div class="swiper-wrapper"> 
+	<?php $i=1; foreach ($imageList as $image): ?>
+		<div class="swiper-slide">
+			<div class="product__slider-img toogles__item-title" data-toogles="<?=$i++?>">
+				<div><img src="<?= $image ?>" alt=""></div>
+			</div>
 		</div>
+	<?php endforeach; ?>
 	</div>
+</div>
+<div class="swiper-pagination"></div>
 </div>

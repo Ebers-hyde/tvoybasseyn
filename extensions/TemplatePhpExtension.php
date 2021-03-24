@@ -172,9 +172,9 @@
 		 * @return iUmiHierarchyElement[]
 		 * @throws selectorException
 		 */
-		public function getProductsByFlag($flag, $amount) {
-			$amount = is_numeric($amount) ? $amount : self::MAX_BEST_OFFERS_COUNT;
-
+		public function getProductsByFlag($flag, $amount=self::MAX_BEST_OFFERS_COUNT) {
+			//$amount = is_numeric($amount) ? $amount : self::MAX_BEST_OFFERS_COUNT;
+ 
 			$products = new selector('pages');
 			$products->types('object-type')->name('catalog', 'object');
 			$products->where($flag)->equals(true);
@@ -184,8 +184,8 @@
 			$products->option('load-all-props')->value(true);
 			$products->option('no-length', true);
 			return $products->result();
-		}
-
+		} 
+ 
 		/**
 		 * Отображать ли вкладку "Новинки"
 		 * @return bool
@@ -1576,7 +1576,7 @@
 		 */
 		public function getSortField() {
 			$cookieJar = Service::CookieJar();
-			return $cookieJar->get('sort_field') ?: 'common_quantity';
+			return $cookieJar->get('sort_field') ?: 'ord';
 		}
 
 		/**
@@ -1599,7 +1599,8 @@
 			}
 
 			$direction = $this->isSortDirectionAscending() ? 'up_arrow' : 'down_arrow';
-			return "active {$direction}";
+			//return "active {$direction}";
+			return "select__variant--active";
 		}
 
 		/**
@@ -2909,7 +2910,7 @@
 			/** @var umiSettings|UmiSettingsMacros $module */
 			$module = cmsController::getInstance()
 				->getModule('umiSettings');
-			$id = $module->getIdByCustomId('demomarket');
+			$id = $module->getIdByCustomId('demomarket',1);
 			return umiObjectsCollection::getInstance()
 				->getObject($id);
 		}
@@ -4648,6 +4649,8 @@
 			}
 
 			$currency = Service::CurrencyFacade()->getCurrent();
+		
+			
 			/** @var itemDiscount $discount */
 			$discount = itemDiscount::search($product);
 
@@ -4669,6 +4672,7 @@
 		 * @return string
 		 */
 		public function formatTradeOfferPrice($price, iCurrency $currency) {
+			$price = Service::CurrencyFacade()->calculate($price,Service::CurrencyFacade()->getDefault(),$currency);
 			return $this->formatPriceWithCurrency($currency->getPrefix(), $price, $currency->getSuffix());
 		}
 
@@ -4937,5 +4941,14 @@
 			/** @var iUmiImageFile $photo */
 			$photo = $product->getValue('photo');
 			return ($photo instanceof iUmiImageFile) ? $photo->getPathHash() : '';
+		}
+
+		public function getPriceTypeId($productId) {
+			$product = $this->getPageByIdStrict($productId);
+			$offerCollection = $this->getTradeOfferCollection($product);
+			$priceCollection = Service::TradeOfferPriceFacade()
+				->getCollectionByOfferCollection($offerCollection);
+			$price = $priceCollection->getMain();
+			return $price instanceof iPrice ? $price->getTypeId() : 0;
 		}
 	}

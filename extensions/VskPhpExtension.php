@@ -168,6 +168,14 @@
 			}
 		}
 
+		public function vsk_currency($old='EUR',$new='RUR',$price=0){
+			$cf = Service::CurrencyFacade();
+			$currencyOld = $cf->getByCode($old);
+			$currency = $cf->getByCode($new);
+			$pavPrice = $cf->calculate($price,$currencyOld,$currency); 
+			return number_format($pavPrice, 0, ',', '&nbsp;').'&nbsp;₽';
+		}
+
 
     } 
 

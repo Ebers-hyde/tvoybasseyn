@@ -1,0 +1,28 @@
+<?php
+
+$page = $variables['page'];
+$pavPrices = $this->vsk_objByType(258,['tovar',$page->id]);
+
+?>
+<div class="article" style="margin:0">
+    <table>
+        <tr>
+            <td>Ширина внутр.</td>
+            <td>Ширина внеш.</td>
+            <td>Длина м.</td>
+            <td>Высота м.</td>
+            <td>Кол-во секций</td>
+            <td>Цена</td>
+        </tr>
+        <?php foreach($pavPrices as $line):  ?>
+        <tr>
+            <td><?=$line->getValue('shirina_vnutr')?></td>
+            <td><?=$line->getValue('shirina_vnesh')?></td>
+            <td><?=$line->getValue('dlina_m')?></td>
+            <td><?=$line->getValue('vysota_m')?></td>
+            <td><?=$line->getValue('kolvo_sekcij')?></td>
+            <td><?=$this->vsk_currency('EUR','RUR',$line->getValue('cena_ue'))?></td>
+        </tr>
+        <?php endforeach; ?>
+    </table>
+</div>

@@ -30,6 +30,13 @@ $this->setCommonVar('smart_filters', $this->getSmartFilters($variables));
 		<?php foreach ($productList as $product): ?>
 			<?= $this->render($product, 'catalog/product/preview/index') ?>
 		<?php endforeach; ?>
+		<?php if(count($productList)%3==2){ ?>
+            <div class="card"></div>
+        <?php } ?>
+        <?php if(count($productList)%3==1){ ?>
+            <div class="card"></div>
+			<div class="card"></div>
+        <?php } ?>
 	</div>
 
 	<div class="catalog_more top_bottom_platform">

@@ -1,0 +1,49 @@
+<?php
+    $best = $this->getBestProducts();
+    $new = $this->getNewProducts();
+    $sales = $this->getProductsByFlag('sales'); 
+    $delivery = $this->getProductsByFlag('delivery_free'); 
+    $i = 1;
+    $cats = ['Хит'=>$best,'Скидка'=>$sales,'Новинка'=>$new,'Доставка бесплтная'=>$delivery];
+?>
+<section class="best-offers">
+    <div class="center-wrap toogles__wrap">
+    <div class="best-offers__top">
+        <div class="simple-title best-offers__title">Лучшие предложения</div>
+        <div class="best-offers__filter">
+            <?php foreach($cats as $key=>$cat): ?>
+                <?php if($cat){ ?><div class="best-offers__filter-link toogles__item-title <?=($i==1)?'toogles__item-title--active':''?>" data-toogles="<?=++$i?>"><?=$key?></div><?php } ?>
+            <?php endforeach; ?>
+        </div>
+        <a class="best-offers__catalog mobile--hide" href="">Весь каталог</a> 
+    </div> 
+    <?php $i = 1; foreach($cats as $key=>$cat): if(!$cat) continue;  ?>       
+        <div class="toogles__item <?=($i==1)?'toogles__item--active':''?>" data-toogles="<?=++$i?>">
+            <div class="toogles__item-content" <?=($i==2)?'style="display:block"':''?>>
+                <div>
+                    <div class="best-offers__list mobile--hide">
+                        <?php $j=0; foreach($cat as $product): ?>
+                            <?php $classes = ($j<5)?'':'card--hide'; ?>   
+                            <?php $query = array(); $query['classes']=$classes; $query['product']=$product; ?>
+                            <?= $this->render($product, 'catalog/product/preview/index') ?>
+                        <?php $j++; endforeach; ?>
+                    </div>
+                    <div class="best-offers-slider desktop--hide">
+                        <div class="swiper-container">
+                            <div class="swiper-wrapper">
+                                <?php $j=0; foreach($cat['items'] as $product): ?>
+                                    <div class="swiper-slide">
+                                        <?= $this->render($product, 'catalog/product/preview/index') ?>
+                                    </div>
+                                <?php $j++; endforeach; ?>
+                            </div>
+                        </div>
+                    </div> 
+                </div>
+            </div>
+        </div>
+    <?php endforeach; ?>
+
+    <div class="best-offers__btn btn btn--border mobile--hide">загрузить еще</div>
+    </div>
+</section>
