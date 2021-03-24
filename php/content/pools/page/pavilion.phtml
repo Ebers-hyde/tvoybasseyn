@@ -1,0 +1,102 @@
+<?php
+$page = $variables['page'];
+
+
+$price = 0;
+if($page->getValue('stoimost')) $price = str_replace(' ','',$page->getValue('stoimost'));
+if($price == 0) $price = '';
+else $price = number_format($price, 0, ',', ' ').' ₽';
+
+
+$main_photo = '';
+//$photos = $page->getValue('photos');
+$photos = $this->thumb($page->getValue('photos'),1400);
+$renders = $this->thumb($page->getValue('rendery_modeli'),1400);
+//if(!empty($renders)) $photos = $renders;
+if($photos) $main_photo = $photos[0];
+
+?>
+<div class="center-wrap">
+    <div class="product__wrap toogles__wrap">
+      <div class="product__slider">
+        <div class="swiper-container">
+          <div class="swiper-wrapper">
+            <?php $i=1; foreach($photos as $photo): ?> 
+                <div class="swiper-slide">
+                    <div class="product__slider-img toogles__item-title" data-toogles="<?=$i++?>">
+                        <div><img src="<?=$photo?>" alt="" style="object-fit: cover;height:100%"></div>
+                    </div>
+                </div>
+            <?php endforeach; ?> 
+            
+            
+          </div> 
+        </div>
+        <div class="swiper-pagination"></div>
+      </div>
+      <div class="product__inner-right desktop--hide">
+        <div class="product__inner-postpone comparisons comparisons--bg comparisons--heart">
+          <svg viewBox="0 0 15 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M7.11941 1.92959L7.50008 2.37662L7.88076 1.92959C8.56104 1.13072 9.60647 0.625 10.6876 0.625C12.5931 0.625 14.0834 2.11531 14.0834 4.02083C14.0834 5.19534 13.5597 6.30011 12.5362 7.55141C11.507 8.80972 10.0253 10.1544 8.19129 11.8175L8.19058 11.8182L7.4988 12.4479L6.80926 11.825L6.80834 11.8241C4.97463 10.1578 3.4932 8.81153 2.46404 7.55242C1.44045 6.30014 0.916748 5.19535 0.916748 4.02083C0.916748 2.11531 2.40706 0.625 4.31258 0.625C5.39369 0.625 6.43912 1.13072 7.11941 1.92959Z"></path>
+          </svg>Отложить
+        </div>
+      </div>
+      <div class="toogles__list">
+      <?php $i=1; foreach($photos as $photo): ?>
+            <div class="toogles__item toogles__item_pool <?=($i==1)?'toogles__item--active':''?> mobile--hide" data-toogles="<?=$i++?>">
+                <div class="toogles__item-content" <?=($i==2)?'style="display:block"':''?>>
+                <div>
+                    <div class="product__img">
+                    <div><img src="<?=$photo?>" style="object-fit: contain;" alt=""></div>
+                    </div>
+                </div>
+                </div>
+            </div>
+        <?php endforeach; ?> 
+        </div>
+      <div class="product__column">  
+        <div class="product__price">
+          <div class="price"> 
+            <p><?=$price?></p> 
+          </div>
+        </div>
+        <div class="product__row">
+          <div class="product__row-basket1">
+            <div class="basket basket--blue" onclick="$('#callback .popup-form__title').text('Консультация по павильону <?=$page->name?>');show_popup('callback')">
+              <span>Заказать консультацию</span>
+            </div>
+          </div>
+        </div>
+        <div class="product__discount mobile--hide">
+          <div class="discount">
+            <svg viewBox="0 0 26 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M8.64144 7.36614L12.1263 0.525577C12.4833 -0.175192 13.5167 -0.175192 13.8737 0.525577L17.3586 7.36614L25.1643 8.4567C25.9637 8.56839 26.2832 9.51814 25.7047 10.0631L20.059 15.3818L21.3918 22.8971C21.5283 23.6667 20.6925 24.2533 19.978 23.8894L13 20.3357L6.02205 23.8894C5.3072 24.2534 4.47114 23.6661 4.60835 22.8963L5.94771 15.3818L0.295738 10.0635C-0.283268 9.51868 0.0360775 8.56842 0.835721 8.4567L8.64144 7.36614Z"></path>
+            </svg><a class="discount__link mobile--hide" href="">Получите скидку 3% от суммы заказа</a>
+          </div>
+        </div>
+
+        <?= $this->render($variables, 'blocks/product/props') ?>
+        <div class="anchors "><a class="product__specifications-link" href="product__info-wrap">Подробнее</a></div>
+      </div>
+    </div>
+  </div>
+
+
+  <style>
+    .product__column {
+        max-width:18.7rem;
+    }
+    .product__slider-img>div img{
+        object-fit: cover;
+        height: 100%;
+    }
+    .product__img>div {
+        padding-bottom: 73.61%;
+    }
+    
+    @media screen and (max-width: 1024px){
+        .product__column {
+            max-width: 100%;
+        }
+    }
+</style>

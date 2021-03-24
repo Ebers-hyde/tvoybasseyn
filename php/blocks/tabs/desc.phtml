@@ -1,0 +1,59 @@
+<?php
+$page = $variables['page'];
+$fabrikaId = $page->getValue('fabrika');
+?>
+<div class="article" style="margin:0">
+<?=$page->getValue('content')?>
+</div>
+
+<?php if($fabrikaId==53032){ ?>
+
+  <div class="simple-title articles__title">Варианты исполнения</div>
+  <div class="row">
+			  <ul class="nav nav-tabs">
+          <li class="active">
+						<a href="#newItems" data-toggle="tab" class="up">LINER</a>
+					</li>
+				
+          <li class="">
+						<a href="#bestItems" data-toggle="tab" class="up">CRISTAL</a>
+					</li>
+        </ul>
+		</div>
+
+    
+		<div class="tab-content">				
+      <div id="newItems" class="tab-pane fade in active">
+        <div class="article" style="margin:0;">
+          <h4>FIBERGLASS POOL</h4>
+          <p>Базовый вариант исполнения. Cмесь полиэфирной смолы, армирующих материалов и барьерный винилэфирный слой. Отличный состав по своим свойствам, который идеально подходит для создания стационарного бассейна. Тем более в такой чаше нет ни единого шва, что делает ее очень прочной. На выбор дается 2 цвета - белый и голубой. Гарантия на чаши в исполнении Liner составляет 10 лет.</p>
+        </div>  
+      </div>
+      <div id="bestItems" class="tab-pane fade in">
+        <div class="article" style="margin:0;">
+            <h4>GLASS CRISTAL®</h4>
+            <p>Прозрачный слой, созданный по новейшей технологии для создания непревзойденного глянцевого эффекта. Придаёт насыщенный зеркальный оттенок и глубину цвету. Надежно защищает от хим. реагентов, механического воздействия и ультрофиолетового излучения. Гарантия на чаши в исполнении Cristal - 30 лет.</p>
+        
+            <h4>GRANI CRISTAL®</h4>
+            <p>Инновационный материал в основе которого лежит технология литиевого гранита. Наши дизайнеры собрали девять цветов которые погрузят вас в мир натурального камня. Гранит, мрамор которые подчёркнут монументальность, престижность и индивидуальность вашего дизайнерского решения.</p>
+        
+            <h4>CERAMO CRISTAL®</h4>
+            <p>Керамический слой, повышающий жесткость конструкции. Дополнительный гидроизоляционный слой, уменьшает теплопотери до 20%</p>
+          </div> 
+        </div>
+    </div>
+
+
+    <div style="padding-top: 2.1rem;">
+      <div class="simple-title articles__title">Технологии композитных бассейнов "Аквабиография"</div>
+      <div class="services__list" style="margin-bottom: 0;">
+        <div class="services__item toogles__item-title toogles__item-title--active" data-toogles="1">
+          <div class="services__info"><div class="services__title"><h4>Противоскользящее покрытие SaveStep®</h4></div>
+            <div class="services__text">
+              <p>Наши бассейны оснащены антискользящим покрытием всех горизонтальных поверхностей. Эта технология позволяет безопасно пользоваться бассейном и сохраняет цвет и врешний вид бассейна. SaveStep состоит из маленьких округлых гранул, благодаря чему в них не может забиться грязь.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+<?php } ?>

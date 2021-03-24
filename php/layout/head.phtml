@@ -1,0 +1,21 @@
+<base href="<?= $this->getResourceDirectory() ?>">
+<title><?= $this->escape($variables['title']) ?></title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="<?= $this->escape($variables['meta']['description']) ?>">
+<meta name="keywords" content="<?= $this->escape($variables['meta']['keywords']) ?>">
+
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+
+
+<?= $this->macros('content', 'includeFrontendResources') ?>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/5.4.5/css/swiper.min.css">
+<link rel="stylesheet" href="compiled/demomarket.lib.min.css">
+<link rel="stylesheet" href="compiled/demomarket.min.css">
+
+<link href="dist/assets/css/app.css" rel="stylesheet"></head>
+
+<script type="text/javascript" src="/ulang/<?= $variables['lang'] ?>/common/emarket/?js" charset="utf-8"></script>
+<script src="compiled/demomarket.lib-min.js"></script>
+<script src="compiled/demomarket-min.js"></script>

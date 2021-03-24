@@ -1,0 +1,19 @@
+<?php
+$this->initializeCommonVariables($variables);
+$variables['settings'] = $this->getSettingsContainer();
+
+if(getCookie('locate') == 'msk'){
+    $variables['contacts']['phone'] = $variables['settings']->getValue('contacts-phone_msk');
+    $variables['contacts']['phone2'] = $variables['settings']->getValue('phone_2_msk');
+    $variables['contacts']['address'] = $variables['settings']->getValue('contacts-address_msk');
+    $variables['contacts']['email'] = $variables['settings']->getValue('contacts-email_msk');
+}else{
+    $variables['contacts']['phone'] = $variables['settings']->getValue('contacts-phone');
+    $variables['contacts']['phone2'] = $variables['settings']->getValue('phone_2');
+    $variables['contacts']['address'] = $variables['settings']->getValue('contacts-address');
+    $variables['contacts']['email'] = $variables['settings']->getValue('contacts-email');
+}
+?>
+
+<?= $this->render($variables, 'layout/index') ?>
+

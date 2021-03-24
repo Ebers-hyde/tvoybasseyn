@@ -1,0 +1,25 @@
+<?php
+$p = $variables['page'];
+$pic = $p->getValue('header_pic');
+$header = $this->escape($variables['header']);
+$fon_temnyj = $p->getValue('fon_temnyj');
+?>
+
+
+
+<?php if(!$p->getValue('zagolovok_na_kartinke')): ?>
+    <div class="pool-filters__title"><?=$header?></div>
+<?php endif; ?>
+<?= $this->render($variables, 'layout/header/breadcrumbs') ?>
+
+<?php if($pic): $pic = $this->thumb($pic,1200,'auto'); ?>
+    <?php if($p->getValue('zagolovok_na_kartinke')): ?>
+        <section class="blog-header" style="background: url(<?=$pic[0]?>) 0 0 no-repeat;background-size: cover;"> 
+            <h2 class="blog-header__title" <?=($fon_temnyj)?'style="color:#fff"':''?>><?=$header?></h2>
+            <div class="blog-header__paragraph" <?=($fon_temnyj)?'style="color:#fff"':''?>><?=$p->getValue('anons')?></div>
+        </section>
+    <?php else: ?>
+    <img src="<?=$pic[0]?>" style="width:100%;margin-top:2rem">
+    <?php endif; ?>
+<?php endif; ?>
+

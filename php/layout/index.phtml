@@ -1,0 +1,612 @@
+<?php
+/**
+ * Скелет сайта.
+ *
+ * @var umiTemplaterPHP|ViewPhpExtension|DemomarketPhpExtension $this
+ * @var array $variables
+ */
+
+	$p = $variables["page"];
+	if ($p AND ($p->getId() == 1351) ) {
+		echo $this->render($variables, 'layout/cart');
+		exit();
+	}
+	if ($p AND ($p->getId() == 1352) ) {
+		echo $this->render($variables, 'layout/cart_basket_price');
+		exit();
+	}
+
+	$p = $variables["page"];
+	if ($p AND ($p->getId() == 1351)) {
+		echo $this->render($variables, 'layout/cart');
+		exit();
+	}
+	if ($_POST["quick_filter"]) {
+		$catalog = $this->getCatalog($variables);
+		$childs = $this->getChildCategories($variables);
+		$childCategoryList = $childs['items'];
+		$productList = $this->getPages($catalog);
+		
+		$pagination = $this->getPagination($catalog);
+		$this->setCommonVar('smart_filters', $this->getSmartFilters($variables));
+		
+		foreach ($productList as $product):
+			echo $this->render($product, 'catalog/product/preview/index');
+		endforeach;
+		
+		exit();
+	}
+	if ($_POST["quick_pagination"]) {
+		$catalog = $this->getCatalog($variables);
+		$childs = $this->getChildCategories($variables);
+		$childCategoryList = $childs['items'];
+		$productList = $this->getPages($catalog);
+		
+		$pagination = $this->getPagination($catalog);
+		$this->setCommonVar('smart_filters', $this->getSmartFilters($variables));
+		
+		echo $this->render($pagination, 'library/pagination');
+
+		exit();
+	}
+?>
+<!DOCTYPE html>
+<html>
+	<head>
+		<?= $this->render($variables, 'layout/head') ?>
+	</head>
+
+	<body>
+		<!-- Yandex.Metrika counter -->
+        <script type="text/javascript" >
+        (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+        (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+        ym(23803030, "init", {
+                clickmap:true,
+                trackLinks:true,
+                accurateTrackBounce:true,
+                webvisor:true
+        });
+        </script>
+        <noscript><div><img src="https://mc.yandex.ru/watch/23803030" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+        <!-- /Yandex.Metrika counter -->
+
+        <?= $this->render($variables, 'layout/main') ?>
+
+        <script type='text/javascript'>
+        (function () {
+            window['yandexChatWidgetCallback'] = function() {
+                try {
+                    window.yandexChatWidget = new Ya.ChatWidget({
+                        guid: 'beb3bb03-4b7a-9aca-7ea0-7b1b45462520',
+                        buttonText: 'Мессенджер',
+                        title: 'Чат с оператором',
+                        theme: 'light',
+                        collapsedDesktop: 'never',
+                        collapsedTouch: 'never'
+                    });
+                } catch(e) { }
+            };
+            var n = document.getElementsByTagName('script')[0],
+                s = document.createElement('script');
+            s.async = true;
+            s.charset = 'UTF-8';
+            s.src = 'https://yastatic.net/s3/chat/widget.js';
+            n.parentNode.insertBefore(s, n);
+        })();
+        </script>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/5.4.5/js/swiper.min.js"></script>
+
+
+
+    <script>
+		window.city = window.city || {};
+		$(document).ready(function(){
+		const locateWrap = document.querySelector('.header__region-list-wrap');
+		const locateBox = document.querySelector('.header__city');
+		//const locateConfirm = document.querySelector('.header__region-list-confirm');
+		const locateMsk = document.querySelectorAll('.region-modal__msk');
+		const locateSpb = document.querySelectorAll('.region-modal__spb');
+		const locateAny = document.querySelectorAll('.region-modal__any');
+		const header__tel = document.querySelectorAll('.select-phone--service a');
+		const header__tel_shop = document.querySelectorAll('.select-phone--shop a');
+		const sidebar__footer_phone = document.querySelector('.sidebar__footer a:last-child');
+		const sidebar__footer_mail = document.querySelector('.sidebar__footer a:first-child');
+		//const header__tel2 = document.querySelector('.header__tel a:last-child');
+		const header__tel3 = document.querySelector('.header__tel_mobile');
+        const token = "11b8adbf35744dda02c4b7e4ce92e225111e1077";
+
+		city = {
+            cityRu: '',
+            city: '',
+			init: function () {
+				if (this.getCookie('locate')) {
+					this.showLocate();
+				} else {
+                    city.detect();
+				}
+		
+			},
+            iplocate: function(ip) {
+                var serviceUrl = "https://suggestions.dadata.ru/suggestions/api/4_1/rs/iplocate/address";
+                if (ip) {
+                    serviceUrl += "?ip=" + ip;
+                }
+                var params = {
+                    type: "GET",
+                    contentType: "application/json",
+                    headers: {
+                    "Authorization": "Token " + token
+                    }
+                };
+                return $.ajax(serviceUrl, params);
+            },
+            detect: function() {
+                var ip = '<?=$_SERVER['REMOTE_ADDR']?>';
+                city.iplocate(ip).done(function(response) {
+                    city.cityRu = response.location.data.city;
+                    city.region = response.location.data.federal_district;
+                    city.setLocate('locate', city.checkLocate());
+                    city.setLocate('locate-city', response.location.data.city);
+					city.showLocate();
+                    city.showConfirm();
+					document.querySelector('.header__region-list-confirm').innerHTML = 'Да';
+                })
+                .fail(function(jqXHR, textStatus, errorThrown) {
+                   // console.log(textStatus);
+                });
+            },
+			getCookie: function(name) {
+				let matches = document.cookie.match(new RegExp(
+					"(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+				));
+				return matches ? decodeURIComponent(matches[1]) : undefined;
+			},
+			setLocate: function(name, value) {
+				document.cookie = `${name}=${value}; path=/; expires=Tue, 19 Jan 2038 03:14:07 GMT`;
+				// document.querySelector('.header__region-current').innerHTML = city.names.value;
+			},
+			checkLocate: function(name,region='') {
+                name = city.cityRu;
+                region = city.region;
+                // console.log(region);
+				if (name == 'Санкт-Петербург'||region == 'Северо-Западный') {
+                    city.city = 'spb';
+					return 'spb';
+				} else if (name == 'Москва'||region == 'Центральный'||region == 'Приволжский') {
+                    city.city = 'msk';
+					return 'msk';
+				} else {
+                    city.city = 'any';
+					return 'any';
+				}
+			}, 
+			showLocate: function(val = this.getCookie('locate')) {
+				document.querySelector('.header__city span').innerHTML = city.names[val];
+				// if (document.querySelector('#new-address .data-form__input_type_string')) {
+				// 	document.querySelector('#new-address .data-form__input_type_string').value = city.getCookie('locate-city');
+				// }  
+                if(header__tel){
+                    header__tel.forEach(function(tel,index) { 
+                        tel.innerHTML = city.phone[val];
+                        tel.setAttribute('href', 'tel:'+city.phone[val]);
+                    });
+                }
+				if(header__tel_shop){
+                    header__tel_shop.forEach(function(tel,index) { 
+                        tel.innerHTML = city.phone2[val];
+                        tel.setAttribute('href', 'tel:'+city.phone2[val]);
+                    });                        
+                }
+                if(sidebar__footer_phone){
+                    sidebar__footer_phone.innerHTML = city.phone[val];
+                    sidebar__footer_phone.setAttribute('href', 'tel:'+city.phone[val]);
+                }
+                if(sidebar__footer_mail){
+                    sidebar__footer_mail.innerHTML = city.email[val];
+				    sidebar__footer_mail.setAttribute('href', 'mailto:'+city.email[val]);
+                }
+         /*       if(header__tel2){
+                    header__tel2.innerHTML = city.phone2[val];
+				    header__tel2.setAttribute('href', 'tel:'+city.phone2[val]);
+                } */
+				if (header__tel3) {
+                    header__tel3.setAttribute('href', 'tel:'+city.phone[val]);
+				}
+                if(document.querySelector('[name="system_email_to"]')){
+					let arr = document.querySelectorAll('[name="system_email_to"]');
+					for(k in arr){
+						arr[k].value = city.system_email_to[val];
+					}
+				}
+                if(document.querySelector('.contacts__list')){
+                    document.querySelector('.contacts__listItem.phone a:first-child').innerHTML = city.phone[val];
+                    document.querySelector('.contacts__listItem.phone a:first-child').setAttribute('href', 'tel:'+city.phone[val]);
+                    document.querySelector('.contacts__listItem.phone a:last-child').innerHTML = city.phone2[val];
+                    document.querySelector('.contacts__listItem.phone a:last-child').setAttribute('href', 'tel:'+city.phone2[val]);
+                    document.querySelector('.contacts__listItem.mail a').innerHTML = city.email[val];
+                    // document.querySelector('.contacts__listItem.mail a:first-child').innerHTML = city.email[val];
+                    // document.querySelector('.contacts__listItem.mail a:first-child').setAttribute('href', 'mailto:'+city.email[val]);
+                    document.querySelector('.contacts__listItem.mail a').setAttribute('href', 'mailto:'+city.email[val]);
+                    document.querySelector('.contacts__listItem.address span').innerHTML = city.address[val];
+
+                    document.querySelector('.contacts__map').outerHTML = city.map[val];
+				}
+				if (document.querySelector('.header__address .address__text')) {
+					document.querySelector('.header__address .address__text').innerHTML = city.address[val];
+				}
+				if (document.querySelector('.home-page__subtitle')) {
+					document.querySelector('.home-page__subtitle').innerHTML = city.mainPage[val];
+				}   
+				if (document.querySelector('.data-form__title')) {
+					let deliveryBoxes = document.querySelectorAll('.delivery__choose-adress');
+					let deliveryBoxes_array = Array.prototype.slice.call(deliveryBoxes);
+					deliveryBoxes_array.map((el) => el.style.display = "block");
+
+					let optionsList = document.querySelectorAll('.data-form__wrapper');
+					let optionsList_array = Array.prototype.slice.call(optionsList);
+
+					document.querySelector('.delivery__choose-adress iframe').outerHTML = city.map[val];
+					document.querySelector('.delivery__choose-adress iframe').style.height = '50vh';
+					if (val == 'msk') {
+						optionsList_array.map((el) => el.style.display = "block");
+						optionsList_array[0].style.display = "none";
+					} else {
+						optionsList_array.map((el) => el.style.display = "block");
+						optionsList_array[2].style.display = "none";
+					}
+				}     
+				city.cityRu = city.names[val];     
+                
+			},
+			showConfirm: function() {
+				locateWrap.classList.add('header__region-list-wrap--hover');
+			},
+			names: {
+				spb: 'Санкт-Петербург',
+				msk: 'Москва', 
+				any: 'работаем по всей России'
+			},
+            phone: {
+                spb: '+7 (812) 970-71-71',
+				msk: '+7 (499) 113-71-71', 
+				any: '+7 (812) 970-71-71'
+            },
+            phone2: {
+                spb: '+7 (812) 716-77-11',
+				msk: '+7 (499) 113-70-70', 
+				any: '+7 (812) 716-77-11'
+            },
+            email: {
+                spb: 'sale@tvoybasseyn.ru',
+				msk: 'msk@tvoybasseyn.ru', 
+				any: 'sale@tvoybasseyn.ru'
+            },
+            address: {
+                spb: 'ул. Бассейная, д.73, корпус 1',
+				msk: 'Киевское шоссе, БЦ Румянцево, корпус Е', 
+				any: 'ул. Бассейная, д.73, корпус 1'
+            },
+            system_email_to: {
+                spb: '959',
+				msk: '10588', 
+				any: '959'
+            },
+            map: {
+                spb: '<iframe class="contacts__map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2003.1004996777938!2d30.339779615783712!3d59.86407738184916!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46963aaafda9c53f%3A0xe1c4654a691678a0!2z0YPQuy4g0JHQsNGB0YHQtdC50L3QsNGPLCA3MyDQutC-0YDQv9GD0YEgMSwg0KHQsNC90LrRgi3Qn9C10YLQtdGA0LHRg9GA0LMsIDE5NjIxMQ!5e0!3m2!1sru!2sru!4v1580406932524!5m2!1sru!2sru" width="600" height="450" frameborder="0" style="border:0;" allowfullscreen=""></iframe>',
+                // msk: '',
+				msk: '<iframe class="contacts__map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2252.1254147928125!2d37.43568151604289!3d55.63463230856709!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46b55289d4fa639f%3A0xcaf392ca401cb288!2z0JHQuNC30L3QtdGBLdC_0LDRgNC6INCg0YPQvNGP0L3RhtC10LLQvg!5e0!3m2!1sru!2sru!4v1583156838556!5m2!1sru!2sru"  style="border:0;" allowfullscreen=""></iframe>', 
+				any: '<iframe class="contacts__map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2003.1004996777938!2d30.339779615783712!3d59.86407738184916!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46963aaafda9c53f%3A0xe1c4654a691678a0!2z0YPQuy4g0JHQsNGB0YHQtdC50L3QsNGPLCA3MyDQutC-0YDQv9GD0YEgMSwg0KHQsNC90LrRgi3Qn9C10YLQtdGA0LHRg9GA0LMsIDE5NjIxMQ!5e0!3m2!1sru!2sru!4v1580406932524!5m2!1sru!2sru" width="600" height="450" frameborder="0" style="border:0;" allowfullscreen=""></iframe>'
+            },
+            header: {
+                spb: 'в Санкт-Петербурге',
+				msk: 'в Москве', 
+				any: 'в России'
+			},
+			mainPage: {
+				spb: 'в Санкт-Петербурге и Ленинградской области',
+				msk: 'в Москве и Московской области', 
+				any: 'Работаем по всей России'
+			},
+			deliveryAdress: {
+				spb: 'в Санкт-Петербурге и Ленинградской области',
+				msk: 'в Москве и Московской области', 
+				any: 'по всей России'
+			}
+		}
+
+		city.init();
+
+		
+
+
+		locateBox.onmouseover = function() {
+			//locateWrap.classList.add('header__region-list-wrap--hover');
+		}
+		locateBox.onmouseout  = function() {
+			//locateWrap.classList.remove('header__region-list-wrap--hover');
+		}
+
+        for (let locate of locateMsk) {
+            locate.onclick = function(e) {
+                city.setLocate('locate', 'msk');
+                document.cookie = `locate-city=Москва; path=/; expires=Tue, 19 Jan 2038 03:14:07 GMT`;
+                city.showLocate();
+                close_popup('city');
+                close_popup('other');
+                return false;
+            }
+        }
+
+        for (let locate of locateSpb) {
+            locate.onclick = function(e) {
+                city.setLocate('locate', 'spb');
+                document.cookie = `locate-city=Санкт-Петербург; path=/; expires=Tue, 19 Jan 2038 03:14:07 GMT`;
+                city.showLocate();
+                close_popup('city');
+                close_popup('other');
+                return false;
+            }
+        }
+
+        for (let locate of locateAny) {
+            locate.onclick = function(e) {
+                city.setLocate('locate', 'any');
+                document.cookie = `locate-city=${city.cityRu}; path=/; expires=Tue, 19 Jan 2038 03:14:07 GMT`;
+                let ip = '78.107.205.102';
+                city.iplocate(ip).done(function(response) {
+                    city.cityRu = response.location.data.city;
+                    city.setLocate('locate-city', response.location.data.city);
+                    console.log(response, response.location.data.city);
+                    
+                });
+                city.showLocate();
+                close_popup('city');
+                close_popup('other');
+                document.querySelector('.header__region-current').innerHTML = 'Другой город';
+                return false;
+            }
+        }
+ 
+		
+
+		// locateConfirm.onclick = function(e) {
+		// 	locateWrap.classList.remove('header__region-list-wrap--hover');
+		// 	document.querySelector('.header__region-list-confirm').innerHTML = '';
+		// 	return false;
+		// }
+
+	});
+	</script>
+    
+    <script>
+    $('.selectCurrency').click(function(){
+        let $form = $(this).closest('form');
+        $form.submit();
+    }); 
+    </script>
+
+ 
+	<style>.list-group-item {color: #08c;  border-bottom: 1px dotted; margin-right: 24px;}.list-group-item:hover{color:#000}</style>  
+ 
+
+ 
+    <script>
+      ! function (e) {
+      "function" == typeof define && define.amd ? define(["jquery"], e) : e("object" == typeof exports ? require(
+      "jquery") : jQuery)
+      }(function (e) {
+      var t, n = navigator.userAgent,
+      a = /iphone/i.test(n),
+      i = /chrome/i.test(n),
+      r = /android/i.test(n);
+      e.mask = {
+      definitions: {
+      9: "[0-9]",
+      a: "[A-Za-z]",
+      "*": "[A-Za-z0-9]"
+      },
+      autoclear: !0,
+      dataName: "rawMaskFn",
+      placeholder: "_"
+      }, e.fn.extend({
+      caret: function (e, t) {
+      var n;
+      if (0 !== this.length && !this.is(":hidden")) return "number" == typeof e ? (t =
+      "number" == typeof t ? t : e, this.each(function () {
+      this.setSelectionRange ? this.setSelectionRange(e, t) : this
+      .createTextRange && (n = this.createTextRange(), n.collapse(!0), n
+      .moveEnd("character", t), n.moveStart("character", e), n
+      .select())
+      })) : (this[0].setSelectionRange ? (e = this[0].selectionStart, t = this[0]
+      .selectionEnd) : document.selection && document.selection.createRange && (
+      n = document.selection.createRange(), e = 0 - n.duplicate().moveStart(
+      "character", -1e5), t = e + n.text.length), {
+      begin: e,
+      end: t
+      })
+      },
+      unmask: function () {
+      return this.trigger("unmask")
+      },
+      mask: function (n, o) {
+      var c, l, u, f, s, h, g, m;
+      if (!n && this.length > 0) {
+      c = e(this[0]);
+      var d = c.data(e.mask.dataName);
+      return d ? d() : void 0
+      }
+      return o = e.extend({
+      autoclear: e.mask.autoclear,
+      placeholder: e.mask.placeholder,
+      completed: null
+      }, o), l = e.mask.definitions, u = [], f = g = n.length, s = null, e.each(n.split(""),
+      function (e, t) {
+      "?" == t ? (g--, f = e) : l[t] ? (u.push(new RegExp(l[t])), null === s && (s =
+      u.length - 1), f > e && (h = u.length - 1)) : u.push(null)
+      }), this.trigger("unmask").each(function () {
+      function c() {
+      if (o.completed) {
+      for (var e = s; h >= e; e++)
+      if (u[e] && C[e] === d(e)) return;
+      o.completed.call(w)
+      }
+      }
+      function d(e) {
+      return o.placeholder.charAt(e < o.placeholder.length ? e : 0)
+      }
+      function p(e) {
+      for (; ++e < g && !u[e];);
+      return e
+      }
+      function v(e) {
+      for (; --e >= 0 && !u[e];);
+      return e
+      }
+      function b(e, t) {
+      var n, a;
+      if (!(0 > e)) {
+      for (n = e, a = p(t); g > n; n++)
+      if (u[n]) {
+      if (!(g > a && u[n].test(C[a]))) break;
+      C[n] = C[a], C[a] = d(a), a = p(a)
+      } A(), w.caret(Math.max(s, e))
+      }
+      }
+      function k(e) {
+      var t, n, a, i;
+      for (t = e, n = d(e); g > t; t++)
+      if (u[t]) {
+      if (a = p(t), i = C[t], C[t] = n, !(g > a && u[a].test(i))) break;
+      n = i
+      }
+      }
+      function y() {
+      var e = w.val(),
+      t = w.caret();
+      if (m && m.length && m.length > e.length) {
+      for (T(!0); t.begin > 0 && !u[t.begin - 1];) t.begin--;
+      if (0 === t.begin)
+      for (; t.begin < s && !u[t.begin];) t.begin++;
+      w.caret(t.begin, t.begin)
+      } else {
+      for (T(!0); t.begin < g && !u[t.begin];) t.begin++;
+      w.caret(t.begin, t.begin)
+      }
+      c()
+      }
+      function x() {
+      T(), w.val() != E && w.change()
+      }
+      function j(e) {
+      if (!w.prop("readonly")) {
+      var t, n, i, r = e.which || e.keyCode;
+      m = w.val(), 8 === r || 46 === r || a && 127 === r ? (t = w.caret(),
+      n = t.begin, i = t.end, i - n === 0 && (n = 46 !== r ? v(n) :
+      i = p(n - 1), i = 46 === r ? p(i) : i), S(n, i), b(n, i -
+      1), e.preventDefault()) : 13 === r ? x.call(this, e) :
+      27 === r && (w.val(E), w.caret(0, T()), e.preventDefault())
+      }
+      }
+      function R(t) {
+      if (!w.prop("readonly")) {
+      var n, a, i, o = t.which || t.keyCode,
+      l = w.caret();
+      if (!(t.ctrlKey || t.altKey || t.metaKey || 32 > o) && o && 13 !==
+      o) {
+      if (l.end - l.begin !== 0 && (S(l.begin, l.end), b(l.begin, l
+      .end - 1)), n = p(l.begin - 1), g > n && (a = String
+      .fromCharCode(o), u[n].test(a))) {
+      if (k(n), C[n] = a, A(), i = p(n), r) {
+      var f = function () {
+      e.proxy(e.fn.caret, w, i)()
+      };
+      setTimeout(f, 0)
+      } else w.caret(i);
+      l.begin <= h && c()
+      }
+      t.preventDefault()
+      }
+      }
+      }
+      function S(e, t) {
+      var n;
+      for (n = e; t > n && g > n; n++) u[n] && (C[n] = d(n))
+      }
+      function A() {
+      w.val(C.join(""))
+      }
+      function T(e) {
+      var t, n, a, i = w.val(),
+      r = -1;
+      for (t = 0, a = 0; g > t; t++)
+      if (u[t]) {
+      for (C[t] = d(t); a++ < i.length;)
+      if (n = i.charAt(a - 1), u[t].test(n)) {
+      C[t] = n, r = t;
+      break
+      } if (a > i.length) {
+      S(t + 1, g);
+      break
+      }
+      } else C[t] === i.charAt(a) && a++, f > t && (r = t);
+      return e ? A() : f > r + 1 ? o.autoclear || C.join("") === D ? (w.val() &&
+      w.val(""), S(0, g)) : A() : (A(), w.val(w.val().substring(0, r +
+      1))), f ? t : s
+      }
+      var w = e(this),
+      C = e.map(n.split(""), function (e, t) {
+      return "?" != e ? l[e] ? d(t) : e : void 0
+      }),
+      D = C.join(""),
+      E = w.val();
+      w.data(e.mask.dataName, function () {
+      return e.map(C, function (e, t) {
+      return u[t] && e != d(t) ? e : null
+      }).join("")
+      }), w.one("unmask", function () {
+      w.off(".mask").removeData(e.mask.dataName)
+      }).on("focus.mask", function () {
+      if (!w.prop("readonly")) {
+      clearTimeout(t);
+      var e;
+      E = w.val(), e = T(), t = setTimeout(function () {
+      w.get(0) === document.activeElement && (A(), e ==
+      n.replace("?", "").length ? w.caret(0,
+      e) : w.caret(e))
+      }, 10)
+      }
+      }).on("blur.mask", x).on("keydown.mask", j).on("keypress.mask", R).on(
+      "input.mask paste.mask",
+      function () {
+      w.prop("readonly") || setTimeout(function () {
+      var e = T(!0);
+      w.caret(e), c()
+      }, 0)
+      }), i && r && w.off("input.mask").on("input.mask", y), T()
+      })
+      }
+      })
+      });
+      $('[name="phone"]').mask("+7 (999) 999-99-99");
+
+      
+    $('.series__itemGallery').each(function(){
+        let mySwiper = new Swiper($(this), {
+        slidesPerView: 1,
+        loop: false,
+        navigation: {
+            nextEl: '.button-next'+$(this).data('index'),
+            prevEl: '.button-prev'+$(this).data('index'),
+        },
+        });
+    });
+    </script>
+    
+  <script type="text/javascript" src="dist/js/app.js"></script>
+	</body>
+</html>

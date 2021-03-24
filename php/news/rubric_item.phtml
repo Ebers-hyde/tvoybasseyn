@@ -1,0 +1,31 @@
+<?php
+/**
+ * Новость на главной.
+ *
+ * @var umiTemplaterPHP|ViewPhpExtension|DemomarketPhpExtension $this
+ * @var iUmiHierarchyElement $variables
+ */
+
+$newsItem = $this->getPageById($variables['id']);
+$image = 'resources/img/news_item.png';
+$play = '';
+$url = $this->getPath($newsItem);
+if($anons_pic = $this->thumb($newsItem->getValue('menu_pic_a'),600,400)) $image = $anons_pic[0];
+
+if($video = $newsItem->getValue('video')){
+  preg_match("/^(?:http(?:s)?:\/\/)?(?:www\.)?(?:m\.)?(?:youtu\.be\/|youtube\.com\/(?:(?:watch)?\?(?:.*&)?v(?:i)?=|(?:embed|v|vi|user)\/))([^\?&\"'>]+)/", $video, $matches);
+  $image = 'https://img.youtube.com/vi/'.$matches[1].'/maxresdefault.jpg';
+  $play = '<div data-fancybox href="https://www.youtube.com/watch?v='.$matches[1].'" class="news_page__play"><svg enable-background="new 0 0 512 512" viewBox="0 0 512 512" xml:space="preserve" xmlns="http://www.w3.org/2000/svg">
+  <path d="m256 0c-141.38 0-256 114.62-256 256s114.62 256 256 256 256-114.62 256-256-114.62-256-256-256zm88.48 269.57l-128 80c-2.59 1.617-5.535 2.43-8.48 2.43-2.668 0-5.34-0.664-7.758-2.008-5.086-2.82-8.242-8.172-8.242-13.992v-160c0-5.82 3.156-11.172 8.242-13.992 5.086-2.836 11.305-2.664 16.238 0.422l128 80c4.676 2.93 7.52 8.055 7.52 13.57s-2.844 10.641-7.52 13.57z"/>
+  </svg></div>
+  ';
+  $url = 'https://www.youtube.com/watch?v='.$matches[1];
+}
+?>
+
+<div class="blog-main__section">
+    <a href="<?=$url?>" <?=($video)?'data-fancybox':''?>><img src="<?=$image?>" alt="" class="blog-main__img">
+    <h3 class="blog-main__title"><?= $this->escape($newsItem->getName()) ?></h3></a>
+    <div class="blog-main__paragraph"><?= $newsItem->getValue('anons') ?></div>
+   
+</div>

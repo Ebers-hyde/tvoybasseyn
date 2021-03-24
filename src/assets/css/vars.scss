@@ -1,0 +1,200 @@
+
+
+// colors
+
+$color-1: #404042; // Ship Gray
+$color-2: #9dc997; // Spring Rain
+$color-3: #ffffff; // White
+$border: shade($color-3, 10%);
+
+// fonts 
+
+$primary-font: 'Source Sans Pro', sans-serif; 
+
+// Table
+
+$products-number: 8;
+$products-column-width-mobile: 150px;
+$products-column-width: 310px;
+$features-column-width-mobile: 120px;
+$features-column-width: 210px;
+
+// center vertically and/or horizontally an absolute positioned element
+
+@mixin clearfix {
+	&:after {
+		content: "";
+		display: table;
+		clear: both;
+	}
+}
+
+@mixin linear-gradient($direction, $color-stops...) {
+  background: nth(nth($color-stops, 1), 1);
+  background: -webkit-linear-gradient(legacy-direction($direction), $color-stops);
+  background: linear-gradient($direction, $color-stops);
+}
+
+@mixin backface-visibility($var) {
+  backface-visibility: $var;
+  -webkit-backface-visibility: $var;
+  -moz-backface-visibility: $var;
+  -ms-backface-visibility: $var;
+  -o-backface-visibility: $var;
+}
+
+@mixin keyframes($name) {
+  @-o-keyframes $name { @content };
+  @-moz-keyframes $name { @content };
+  @-webkit-keyframes $name { @content }; 
+  @-keyframes $name { @content };
+}
+@mixin animation-name($name...) {
+  -o-animation-name: $name;
+  -moz-animation-name: $name;
+  -webkit-animation-name: $name;
+  animation-name: $name;
+}
+@mixin animation-duration($duration...) {
+  -o-animation-duration: $duration;
+  -moz-animation-duration: $duration;
+  -webkit-animation-duration: $duration;
+  animation-duration: $duration;
+}
+@mixin animation-duration($duration...) {
+  -o-animation-duration: $duration;
+  -moz-animation-duration: $duration;
+  -webkit-animation-duration: $duration;
+  animation-duration: $duration;
+}
+@mixin animation-timing-function($timing...) {
+  -o-animation-timing-function: $timing;
+  -moz-animation-timing-function: $timing;
+  -webkit-animation-timing-function: $timing;
+  animation-timing-function: $timing;
+}
+@mixin animation-iteration-count($count...) {
+  -o-animation-iteration-count: $count;
+  -moz-animation-iteration-count: $count;
+  -webkit-animation-iteration-count: $count;
+  animation-iteration-count: $count;
+}
+@mixin animation-direction($direction...) {
+  -o-animation-direction: $direction;
+  -moz-animation-direction: $direction;
+  -webkit-animation-direction: $direction;
+  animation-direction: $direction;
+}
+@mixin animation-fill-mode($fill...) {
+  -o-animation-fill-mode: $fill;
+  -moz-animation-fill-mode: $fill;
+  -webkit-animation-fill-mode: $fill;
+  animation-fill-mode: $fill;
+}
+@mixin animation-play-state($state...) {
+  -o-animation-play-state: $state;
+  -moz-animation-play-state: $state;
+  -webkit-animation-play-state: $state;
+  animation-play-state: $state;
+}
+
+@mixin animation($animation...) {
+  -o-animation: $animation;
+  -moz-animation: $animation;
+  -webkit-animation: $animation;
+  animation: $animation;
+}
+
+@mixin transform($transforms) {
+  -moz-transform: $transforms;
+    -o-transform: $transforms;
+   -ms-transform: $transforms;
+-webkit-transform: $transforms;
+       transform: $transforms;
+}
+
+@mixin transition($args...) {
+ 
+    // Setting the default value
+    @if length($args) == 0 {
+      $args: all 0.5s ease; // all and ease are defaults, so the default value can be simplified to $args: 0.5s
+    }
+    
+    -webkit-transition: $args;
+    -moz-transition: $args;
+    -ms-transition: $args;
+    -o-transition: $args;
+    transition: $args;
+  }
+  
+
+@mixin center($xy:xy) {
+	@if $xy == xy {
+	  left: 50%;
+	  top: 50%;
+	  bottom: auto;
+	  right: auto;
+	  @include transform(translateX(-50%) translateY(-50%));
+	}
+	@else if $xy == x {
+	  left: 50%;
+	  right: auto;
+	  @include transform(translateX(-50%));
+	}
+	@else if $xy == y {
+	  top: 50%;
+	  bottom: auto;
+	  @include transform(translateY(-50%));
+	}
+  }
+  
+  // border radius
+  
+  @mixin border-radius($radius:.25em) {
+	border-radius: $radius;
+  }
+  
+  // antialiasing mode font rendering
+  
+  @mixin font-smoothing {
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+  }
+  
+// breakpoints
+   
+$S:     480px;   
+$M:     768px;     
+$L:     1170px;     
+
+// media queries
+
+@mixin MQ($canvas) {
+  @if $canvas == S {
+   @media only screen and (min-width: $S) { @content; } 
+  }
+  @else if $canvas == M {
+   @media only screen and (min-width: $M) { @content; } 
+  }
+  @else if $canvas == L {
+   @media only screen and (min-width: $L) { @content; } 
+  }
+}
+
+// super light grid - it works with the .cd-container class inside style.scss
+
+@mixin column($percentage, $float-direction:left) {
+  width: 100% * $percentage;
+  float: $float-direction;
+}
+
+
+
+
+$large_desktop: 1500px;
+$large_tablet: 1024px;
+$large_mobile: 600px;
+$small_tablet: 768px;
+$small_mobile: 440px;
+
+

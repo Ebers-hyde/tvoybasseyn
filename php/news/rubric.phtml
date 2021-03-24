@@ -1,0 +1,35 @@
+<?php
+/**
+ * Лента новостей.
+ *
+ * @var umiTemplaterPHP|ViewPhpExtension|DemomarketPhpExtension $this
+ * @var array $variables
+ * @var iUmiHierarchyElement $rubric
+ */
+
+$rubric = $variables['page'];
+$newsList = $this->getRubricNews($rubric);
+?>
+
+<div class="center-wrap" style="padding-top: 2.1rem;">
+    <?= $this->render($variables, 'layout/header/titleWithBread') ?>
+</div>
+
+<div class="center-wrap" style="padding-top: 2.1rem;">
+    
+	<div class="news" umi:button-position="top center" umi:element-id="<?= $rubric->getId() ?>" umi:region="list"
+		umi:module="news" umi:method="lastlist" umi:sortable="sortable">
+
+			<?php if (count($newsList['items']) > 0): ?>
+				<div class="news_page">
+					<?php foreach ($newsList['items'] as $newsItem): ?>
+						<?= $this->render($newsItem, 'news/rubric_item') ?>
+					<?php endforeach; ?>
+				</div>
+			<?php endif; ?>
+
+			<?= $this->render($newsList, 'blocks/pagination') ?>
+
+	</div> 
+
+</div>

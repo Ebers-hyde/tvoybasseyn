@@ -1,0 +1,224 @@
+.article{
+    font-size: 16px;
+    line-height: 141.4%;
+    color: #777777;
+    max-width: 750px;
+    margin: 0 auto 50px;
+    p{ 
+        line-height: 154.56%;
+        margin-bottom: 20px;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    table tr:nth-child(odd), .row.gray, .tabs-navigation.small.gray li a {
+        background: #f5f5f5;
+    }
+    table td, table th {
+        font-family: Arial;
+        font-size: 14px;
+        line-height: 18px;
+        border-left: 1px solid #e2e6e7;
+        padding: 15px 30px;
+    }
+    table td:first-child, table th:first-child {
+        border-left: none;
+    }
+    h2{
+        font-size: 1.666em;
+        line-height: 26px;
+    }
+    h3{
+        font-size: 1.4em;
+        line-height: 22px;
+    }
+    h2,h3,h4{
+        font-weight: 500;
+        margin: 30px 0 25px;
+        color: #000;
+    }
+}
+
+
+
+.article{
+    max-width:700px;
+    margin: 0 auto;
+    margin-bottom: 6rem;
+    
+    .article-contents {
+        background: #f3f5f7;
+        padding: 15px;
+        font-size: 16px;
+        margin-bottom: 30px;
+        li,a{
+            font-size: 16px;
+            line-height: 25px;
+            margin: 0;
+            font-family: sans-serif;
+            color: #2293ad;
+        }
+    }
+
+    
+    h1,&__title{
+        //font-family: Georgia;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 42px;
+        line-height: 48px;
+
+    }
+    p,span,li,a,&__text{
+        //font-family: Georgia;
+        font-style: normal;
+        font-weight: normal;
+       // font-size: 18px;
+        //line-height: 154.56%;
+        margin-bottom: 20px;
+        color:#383c40;
+        font-size: 1.6rem;
+        line-height: 1.4;
+    }
+    ul{
+        padding-left: 20px;
+        li{
+            list-style-type: disc;
+        }
+    }
+    img,&__img{ 
+        margin-top:10px;
+        margin-bottom: 30px;
+         
+        &_wide{
+            margin-left:-20px;
+            margin-right:-20px;
+            width: calc(100% + 40px);
+            max-width: calc(100% + 40px);
+        }
+    }
+}
+
+
+.news_page{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    flex-wrap: wrap;
+    margin: 0 -15px;
+}
+
+.blog-header {
+    box-sizing: border-box;
+    padding: 47px 0 0 59px;
+    width: 100%;
+    height: 420px;
+    margin-top: 27px;
+    background-size: cover;
+}
+
+.blog-header--bg {
+    background-size: unset;
+    background-position-x: right;
+}
+
+.blog-header__title {
+    color: #212732;
+    font-size: 36px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 50px;
+    letter-spacing: 0em;
+    text-align: left;
+
+    width: 37%;
+    margin-bottom: 18px;
+}
+
+.blog-header__paragraph {
+    color: #000000;
+    font-size: 17px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
+    letter-spacing: 0em;
+    text-align: left;
+    padding-left: 10px;
+    border-left: 1px solid #000000;
+}
+
+.blog-main__section {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 58px;
+
+    color: #000000;
+    width: 33%;
+    padding: 15px;
+    img{
+        transition: all .3s;
+    }
+    &:hover img{
+        opacity:0.6;
+    }
+    @media screen and (max-width:$large_mobile) {
+        width: 50%;
+        margin-bottom: 0;
+    } 
+}
+
+.blog-main__img {
+    width: 100%;
+    margin-bottom: 22px;
+    border-radius: 5px;
+    @media screen and (max-width:$large_mobile) {
+        margin-bottom: 8px;
+    } 
+    
+}
+
+.blog-main__title {
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 30px;
+    letter-spacing: 0em;
+    text-align: left;
+
+    margin-bottom: 16px;
+    @media screen and (max-width:$large_mobile) {
+        font-size: 15px;
+        margin-bottom: 0;
+        font-weight: 600;
+        line-height: 21px;
+    } 
+    
+}
+
+.blog-main__paragraph {
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
+    letter-spacing: 0em;
+    text-align: left;
+    margin-bottom: 22px;
+
+    @media screen and (max-width:$large_mobile) {
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 19px;
+        letter-spacing: 0em;
+        text-align: left;
+        margin-bottom: 22px;
+        margin-top: 8px;
+    } 
+    
+}
+
+.blog-main__link {
+    color: #000000;
+    text-decoration: underline;
+}

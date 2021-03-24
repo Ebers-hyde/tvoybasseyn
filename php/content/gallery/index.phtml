@@ -1,0 +1,16 @@
+<?php
+    $page = $variables['page'];
+?>
+
+<div class="center-wrap" style="padding-top: 2.1rem;">
+    <div class="pool-filters__title"><?= $this->escape($variables['header']) ?></div>
+    <?= $this->render($variables, 'layout/header/breadcrumbs') ?>
+    
+    <?php if($page->getValue('header_pic')): ?>
+        <img src="<?=$page->getValue('header_pic')?>" style="width:100%;margin-top:2rem">
+    <?php endif; ?>
+    
+    <div class="gallery">
+        <?= $this->render($this->getProjects(), 'content/gallery/gallery_list') ?>
+    </div>
+</div> 

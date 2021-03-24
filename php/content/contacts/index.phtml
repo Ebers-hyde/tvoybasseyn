@@ -1,0 +1,99 @@
+<?php 
+$page = $variables['page'];
+$catalog = $this->getProductsListFromCategory($variables['pageId'],100);
+
+?>
+<div class="center-wrap" style="padding-top: 2.1rem;">
+    <?= $this->render($variables, 'layout/header/titleWithBread') ?>
+</div>
+
+<div class="center-wrap contactStores" style="padding-top: 2.1rem;">
+<!--script type="text/javascript" charset="utf-8" async src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3Af5c67ada48c3ab4ef5360ebb79c24d1a5bcd4fded81cadbc1f3b3fe1b7d27156&amp;width=100%25&amp;height=451&amp;lang=ru_RU"></script-->
+
+    <div style="padding-top: 4em;">
+        <strong class="contactStores__itemTitle">Санкт-Петербург</strong>
+        <div>
+            <iframe class="contacts__map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2003.1003374829208!2d30.339779616171192!3d59.86408007507304!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46963aaafda9c53f%3A0xe1c4654a691678a0!2z0YPQuy4g0JHQsNGB0YHQtdC50L3QsNGPLCA3MyDQutC-0YDQv9GD0YEgMSwg0KHQsNC90LrRgi3Qn9C10YLQtdGA0LHRg9GA0LMsIDE5NjIxMQ!5e0!3m2!1sru!2sru!4v1565101275681!5m2!1sru!2sru" width="100%" height="400" frameborder="0" style="border:0" allowfullscreen></iframe>
+        </div>
+        <div class="contactStores__item">
+            <div>
+                <div class="contactStores__itemName">ул. Бассейная, д.73, корпус 1</div>
+                <div class="contactStores__itemProp">
+                    <div class="contactStores__itemProp-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14">
+                            <defs>
+                                <style>.cccls-1{fill:#222;fill-rule:evenodd}</style>
+                            </defs>
+                            <path class="cccls-1" d="M7,0A7,7,0,1,1,0,7,7,7,0,0,1,7,0ZM7,2A5,5,0,1,1,2,7,5,5,0,0,1,7,2ZM9.434,9.434a1,1,0,0,1-1.414,0L6.293,7.707A1.014,1.014,0,0,1,6,7H6V4.656a1,1,0,0,1,2,0v1.93L9.434,8.02A1,1,0,0,1,9.434,9.434Z"></path>
+                        </svg>
+                    </div>
+                    <span>ПН-ПТ 10:00 - 19:00<br>СБ-ВС 11:00 - 18:00</span>
+                </div>
+                <div class="contactStores__itemProp" target="_blank" href="mailto:sale@tvoybasseyn.ru">
+                    <div class="contactStores__itemProp-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="12" viewBox="0 0 16 13">
+                            <defs>
+                                <style>.ecls-1{fill:#222;fill-rule:evenodd}</style>
+                            </defs>
+                            <path class="ecls-1" d="M14,13H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H14a2,2,0,0,1,2,2v9A2,2,0,0,1,14,13ZM3.534,2L8.015,6.482,12.5,2H3.534ZM14,3.5L8.827,8.671a1.047,1.047,0,0,1-.812.3,1.047,1.047,0,0,1-.811-0.3L2,3.467V11H14V3.5Z"></path>
+                        </svg>
+                    </div>
+                    <a target="_blank" href="mailto:sale@tvoybasseyn.ru">sale@tvoybasseyn.ru</a>
+                </div> 
+            </div>
+            <div>
+                <div class="contactStores__itemPhone">
+                    <span>+7 (812) 970-71-71</span>
+                    <span>+7 (812) 716-77-11</span>
+                </div>
+            </div>
+            <div style="font-size: 1.2rem;">
+            ОБЩЕСТВО С ОГРАНИЧЕННОЙ<br> ОТВЕТСТВЕННОСТЬЮ "НОВОПУЛ"<br>
+            ОГРН 1187847025838<br>
+            ИНН 7810721003
+            </div>
+            
+        </div> 
+    </div>
+    <div style="padding-top: 4em;">
+        <strong class="contactStores__itemTitle">Москва</strong>
+        <div>
+            <iframe class="contacts__map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2252.1254147928125!2d37.43568151604289!3d55.63463230856709!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46b55289d4fa639f%3A0xcaf392ca401cb288!2z0JHQuNC30L3QtdGBLdC_0LDRgNC6INCg0YPQvNGP0L3RhtC10LLQvg!5e0!3m2!1sru!2sru!4v1583156838556!5m2!1sru!2sru"  style="border:0;" width="100%" height="400"  allowfullscreen=""></iframe>
+        </div>
+        <div class="contactStores__item">
+            <div>
+                <div class="contactStores__itemName">Киевское шоссе, БЦ Румянцево, корпус Е</div>
+                <div class="contactStores__itemProp">
+                    <div class="contactStores__itemProp-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14">
+                            <defs>
+                                <style>.cccls-1{fill:#222;fill-rule:evenodd}</style>
+                            </defs>
+                            <path class="cccls-1" d="M7,0A7,7,0,1,1,0,7,7,7,0,0,1,7,0ZM7,2A5,5,0,1,1,2,7,5,5,0,0,1,7,2ZM9.434,9.434a1,1,0,0,1-1.414,0L6.293,7.707A1.014,1.014,0,0,1,6,7H6V4.656a1,1,0,0,1,2,0v1.93L9.434,8.02A1,1,0,0,1,9.434,9.434Z"></path>
+                        </svg>
+                    </div>
+                    <span>10:00 - 21:00<br>Без выходных</span>
+                </div>
+                <a class="contactStores__itemProp" target="_blank" href="mailto:msk@tvoybasseyn.ru">msk@tvoybasseyn.ru</a>
+            </div>
+            <div>
+                <div class="contactStores__itemPhone">
+                    <span>+7 (499) 113-71-71</span>
+                    <span>+7 (499) 113-70-70</span>
+                </div>
+            </div>
+            <div style="font-size: 1.2rem;">
+            ОБЩЕСТВО С ОГРАНИЧЕННОЙ<br> ОТВЕТСТВЕННОСТЬЮ "НОВОПУЛ"<br>
+            ОГРН 1187847025838<br>
+            ИНН 7810721003
+            </div>
+        </div> 
+    </div>
+</div> 
+
+<div class="center-wrap" style="padding-top: 2.1rem;">
+    <div class="article" style="padding-top: 2.1rem;">
+        <?=$page->getValue('content')?>
+    </div>
+</div>
+

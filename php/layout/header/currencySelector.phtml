@@ -1,0 +1,33 @@
+<?php
+$currency = $this->macros('emarket', 'currencySelector'); 
+$currency_slected = getCookie('customer_currency'); 
+
+if(!$currency_slected){
+    $currency_slected = 620; 
+    setcookie('customer_currency', '620', time()+60*60*24*365, '/', false, false);
+    header("Refresh:0");
+}
+?>
+
+<form class="currency" method="post" action="/emarket/selectCurrency/">	
+    <?php foreach($currency['items'] as $item){  ?>
+
+        <div class="header__price selectCurrency " <?=($currency_slected!=$item['id'])?'style="display:none"':''?>>
+            <?=$item['name']?>
+        </div>
+        <?php
+        if($currency_slected!=$item['id']){
+            $codename=$item['codename'];
+        }
+        ?>
+    <?php } ?>
+    <input type="hidden" name="currency-codename" value="<?=$codename?>">
+</form> 
+
+<style>
+    .header__price{
+        font-size: 1.4rem;
+        color: #c3c3c3;
+        font-weight: 400;
+    }
+</style>

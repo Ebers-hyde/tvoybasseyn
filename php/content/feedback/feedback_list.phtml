@@ -1,0 +1,22 @@
+<?php foreach($variables as $key=>$item): ?>
+
+    <?php
+        $play = '';
+        if($image = $item->getValue('photo')) $photo = $image->getFilePath(1);
+
+        if($video = $item->getValue('video')){
+            preg_match("/^(?:http(?:s)?:\/\/)?(?:www\.)?(?:m\.)?(?:youtu\.be\/|youtube\.com\/(?:(?:watch)?\?(?:.*&)?v(?:i)?=|(?:embed|v|vi|user)\/))([^\?&\"'>]+)/", $video, $matches);
+        }
+    ?>
+
+    <div class="feedback__item">
+        <div class="feedback__video"><iframe width="1080" height="608" src="https://www.youtube.com/embed/<?=$matches[1]?>?feature=oembed" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+        <div class="feedback__info">
+            <?php if($image){ ?><div class="feedback__photo"><img src="<?=$photo?>"></div><?php } ?>
+            <div class="feedback__desc"><?=$item->getValue('description')?></div>
+            <div class="feedback__name"><?=$item->name?></div>
+            <div class="feedback__place"><?=$item->getValue('address')?></div>
+        </div>
+    </div>
+
+<?php endforeach; ?>

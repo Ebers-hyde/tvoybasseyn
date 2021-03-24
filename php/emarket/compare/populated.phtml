@@ -1,0 +1,66 @@
+<?php
+/**
+ * Страница сравнения товаров.
+ *
+ * @var umiTemplaterPHP|ViewPhpExtension|DemomarketPhpExtension $this
+ * @var array $variables
+ * @var array $column
+ */
+
+$productList = $this->getProductsForComparison($variables);
+$fieldDataList = $this->filterAllowedFieldData($variables['fields']);
+
+?>
+<div class="center-wrap" style="padding-top: 2.1rem;">
+<div class="pool-filters__title"><?= $this->getCommonVar('header') ?></div>
+</div>
+<section class="cd-products-comparison-table"> 
+		<header>
+		
+
+			<div class="actions">
+				<a href="#0" class="reset">Очистить</a>
+				<a href="#0" class="filter">Фильтр</a>
+			</div>
+		</header>
+
+		<div class="cd-products-table">
+			<div class="features">
+				<div class="top-info">Товар</div>
+				<ul class="cd-features-list">
+					<?php foreach ($fieldDataList as $fieldData): ?>
+						<li><?= $fieldData['title'] ?></li>
+					<?php endforeach; ?>
+				</ul>
+			</div> <!-- .features -->
+			
+			<div class="cd-products-wrapper">
+				<ul class="cd-products-columns">
+					<?php foreach ($productList as $product): ?>
+					<li class="product">
+						<div class="top-info">
+							<div class="check"></div>
+							<img src="<?=$this->thumb($this->getPhotoPath($product),'auto',150)[0]?>" alt="product image">
+							<h3><?=$product->name?></h3>
+						</div> <!-- .top-info -->
+
+						<ul class="cd-features-list">
+							<?php foreach ($fieldDataList as $fieldData): ?>
+								<li><?php foreach ($this->getComparedValueList($fieldData) as $id => $value): if(empty($value)) $value = '—'; ?>
+									<?=($product->id == $id)?$value:''?>
+								<?php endforeach; ?></li>
+							<?php endforeach; ?>
+						</ul>
+					</li> <!-- .product -->
+					<?php endforeach; ?>
+
+			
+				</ul> <!-- .cd-products-columns -->
+			</div> <!-- .cd-products-wrapper -->
+			
+			<ul class="cd-table-navigation">
+				<li><a href="#0" class="prev inactive">Prev</a></li>
+				<li><a href="#0" class="next">Next</a></li>
+			</ul>
+		</div> <!-- .cd-products-table -->
+	</section> <!-- .cd-products-comparison-table -->

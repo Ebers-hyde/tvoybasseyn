@@ -1,0 +1,16 @@
+<?php
+    $page = $variables['page'];
+?>
+
+<div class="center-wrap" style="padding-top: 2.1rem;">
+    <?= $this->render($variables, 'layout/header/titleWithBread') ?>
+</div>
+
+<div class="center-wrap" style="padding-top: 2.1rem;">
+    <div class="feedback-list">
+            <?= $this->render($this->getFeedback(), 'content/feedback/feedback_list') ?>
+        </div>
+    <div class="article" style="padding-top: 2.1rem;">
+        <?=$page->getValue('content')?>
+    </div> 
+</div>

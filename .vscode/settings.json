@@ -1,0 +1,36 @@
+{
+    "deploy.reloaded": {
+        "language": "ru",
+        "targets": [
+            {
+                "type": "ftp",
+                "name": "pool.axlab.ru",
+                "description": "A SFTP folder",
+
+                "dir": "/templates/vsk_shop/",
+                "host": "pool.axlab.ru", "port": 21,
+                "user": "pool.axlab.ru", "password": "Z9lFeS7xR",
+                "checkBeforeDeploy": true
+                
+            }
+        ],
+        "buttons": [{
+            "text": "Отправить измененные файлы",
+            "command": "extension.deploy.reloaded.pullPackgeFiles",
+            "arguments": [ "All files", "pool.axlab.ru" ]
+        }],
+        "packages": [
+            {
+                "name": "All files",
+                "files": [
+                    "**/*"
+                ],
+                "exclude": [
+                    ".DS_Store",
+                    "node_modules"
+                ],
+                "deployOnSave": ["pool.axlab.ru"]
+            }
+        ]
+    }
+}

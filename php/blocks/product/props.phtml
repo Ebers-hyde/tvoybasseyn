@@ -1,0 +1,17 @@
+<?php
+$page = $variables['page'];
+$props = [];
+if($p=$page->getValue('dlina')) $props['Длина'] = $p.' м';
+if($p=$page->getValue('shirina')) $props['Ширина'] = $p.' м';
+if($p=$page->getValue('glubina')) $props['Глубина'] = $p.' м';
+if($p=$page->getValue('vysoty')) $props['Выс'] = $p.' м';
+if($p=$page->getValue('obem')) $props['Объем'] = $p.' м<sup>3</sup>';
+if($p=$page->getValue('kolichestvo_segmentov')) $props['Сегм'] = $p.' шт';
+
+?>
+<div class="product__specifications" style="margin-top:2rem;">
+<div class="product__column-title">Характеристики</div>
+<?php foreach($props as $k=>$prop): ?>
+        <p class="product__specifications-item"><?=$k?>  — <span><?=$prop?></span></p>
+<?php endforeach; ?>
+</div>

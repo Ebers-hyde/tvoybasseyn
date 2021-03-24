@@ -1,0 +1,54 @@
+<?php
+$umiObj = umiObjectsCollection::getInstance();
+$newsItem = $variables[1];
+
+$image = 'resources/img/news_item.png';
+$play = '';
+$tip = 'Статья';
+$dop_ssylka = '/blog/';
+$tekst_ssylki = 'Все статьи'; 
+$name = $this->escape($newsItem->getName());
+if($item = $newsItem->getValue('material')[0]){
+  $url = $this->getPath($item);
+  $name = $this->escape($item->getName());
+  if($anons_pic = $item->getValue('anons_pic')) $image = $anons_pic->getFilePath(1);
+  if($video = $item->getValue('video')){
+    preg_match("/^(?:http(?:s)?:\/\/)?(?:www\.)?(?:m\.)?(?:youtu\.be\/|youtube\.com\/(?:(?:watch)?\?(?:.*&)?v(?:i)?=|(?:embed|v|vi|user)\/))([^\?&\"'>]+)/", $video, $matches);
+    $image = 'https://img.youtube.com/vi/'.$matches[1].'/maxresdefault.jpg';
+    $play = '<div data-fancybox href="https://www.youtube.com/watch?v='.$matches[1].'" class="home-page__play"><svg enable-background="new 0 0 512 512" viewBox="0 0 512 512" xml:space="preserve" xmlns="http://www.w3.org/2000/svg">
+    <path d="m256 0c-141.38 0-256 114.62-256 256s114.62 256 256 256 256-114.62 256-256-114.62-256-256-256zm88.48 269.57l-128 80c-2.59 1.617-5.535 2.43-8.48 2.43-2.668 0-5.34-0.664-7.758-2.008-5.086-2.82-8.242-8.172-8.242-13.992v-160c0-5.82 3.156-11.172 8.242-13.992 5.086-2.836 11.305-2.664 16.238 0.422l128 80c4.676 2.93 7.52 8.055 7.52 13.57s-2.844 10.641-7.52 13.57z"/>
+    </svg></div>
+    ';
+    $url = 'https://www.youtube.com/watch?v='.$matches[1];
+    $tip = 'Видео';
+    $dop_ssylka = '/videoblog/';
+    $tekst_ssylki = 'Все видео';
+  }
+}
+
+if($newsItem->getValue('url')) $url = $newsItem->getValue('url');
+if($newsItem->getValue('photo')) $image = $this->thumb($newsItem->getValue('photo'),600,400);
+if($newsItem->getValue('dop_ssylka')) $dop_ssylka = $newsItem->getValue('dop_ssylka');
+if($newsItem->getValue('tip')) $tip = $umiObj->getObject($newsItem->getValue('tip'))->name;
+if($newsItem->getValue('tekst_ssylki')) $tekst_ssylki = $newsItem->getValue('tekst_ssylki');
+
+?>
+      <?php if($video):?>
+      <div class="information__item"><a class="information__img information__img--video fancybox" href="<?=$url?>" data-fancybox-type="iframe">
+          <div><img src="<?=$image?>" alt=""></div></a>
+        <div class="information__subtitle">
+          <p><?=$tip?></p>
+        </div><a class="information__title fancybox" href="<?=$url?>" data-fancybox data-fancybox-type="iframe"><?=$name ?></a>
+        <div class="information__link"><a href="<?=$dop_ssylka?>"><?=$tekst_ssylki?></a></div>
+      </div>
+      <?php else: ?>
+        <div class="information__item">
+        <a class="information__img" href="<?=$url?>">
+          <div><img src="<?=$image[0]?>" alt=""></div>
+        </a>
+        <div class="information__subtitle">
+          <p><?=$tip?></p>
+        </div><a class="information__title" href="<?=$url?>" data-fancybox="fproject"><?=$name ?></a>
+        <div class="information__link"><a href="<?=$dop_ssylka?>"><?=$tekst_ssylki?></a></div>
+      </div>
+      <?php endif; ?>

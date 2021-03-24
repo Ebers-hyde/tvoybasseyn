@@ -1,0 +1,19 @@
+<?php foreach($variables as $key=>$item): /* $photos = $item->getValue('photos'); */ 
+    $photos = $this->thumb($item->getValue('photos'),1600); ?>
+    <a data-fancybox="gallery_<?=$key?>" data-options='{"thumbs" : {"autoStart":true}}' href="<?=$photos[0]?>" class="gallery__category">
+        
+        <div class="gallery__image is-loading">
+            <!-- <img src="<?//=$photos[0]?>"> -->
+            <img src="<?=$this->thumb($item->getValue('photos'),600,400)[0]?>">
+        </div>
+        <span class="gallery__title"><?=$item->name?></span><br>
+        <span class="gallery__subtitle"><?=$item->getValue('address')?></span>
+    </a>
+    <?php if(count($photos) > 1): ?>
+        <div style="display:none">
+            <?php foreach($photos as $k=>$photo){ if($k==0) continue; ?>
+                <a data-fancybox="gallery_<?=$key?>" data-thumb="<?=$photo?>" href="<?=$photo?>"></a>
+            <?php } ?>
+        </div>
+    <?php endif; ?>
+<?php endforeach; ?> 

@@ -1,0 +1,64 @@
+<?php
+$prod = false;
+if(is_array($variables)) $category = $variables[1];
+else $category = $variables;
+$props = [];
+if($category->getObjectTypeId()==195) $prod = true;
+if($p=$category->getValue('dlina')) $props['Длина, м'] = $p;
+if($p=$category->getValue('shirina')) $props['Ширина, м '] = $p;
+if($p=$category->getValue('glubina')) $props['Глубина, м'] = $p;
+if($p=$category->getValue('vysoty')) $props['Высота, м'] = $p;
+if($p=$category->getValue('kolichestvo_segmentov')) $props['Сегменты, шт'] = $p;
+$price = ($p=$category->getValue('stoimost'))?$p:false;
+if($price) $prod = true;
+$old_price = ($p=$category->getValue('old_price'))?$p:false;
+
+$photos = $category->getValue('photos');
+$photos = $this->thumb(reset($photos),600,300);
+
+?>
+<a href="<?=$category->link?>" class="<?=(is_array($variables)&&!empty($a=$variables[0]))?$a:''?> catalog-list__category <?=$category->getAltName()?>">
+<?php if(umiHierarchy::getInstance()->getParent($category->id)==325){  ?>
+    <span style="
+    position: absolute;
+    top: -12px;
+    left: 6px;
+    z-index: 1;
+    background: #FF9B58;
+    border-radius: 150px;
+    padding: 3px 15px;
+    color: #fff;
+    font-size: 14px;
+">Распродажа</span>
+<?php  } ?> 
+    <span class="catalog-list__title <?=($prod)?'catalog-list__title_top':''?>"><?=$category->name?></span>
+    <?php /* if($props||$price): ?>
+        <div class="catalog-list__top_properties">
+            <?php foreach($props as $k=>$prop): ?>
+                    <span class="catalog-list__propval"><?=$k?><br> <span><?=$prop?></span></span>
+            <?php endforeach; ?>
+        </div>
+    <?php endif; */ ?>
+
+    <div class="catalog-list__image is-loading" style="opacity:1">
+        <img data-hover="<?=$photos[0]?>" src="<?=($preview = $this->thumb($this->getPicPath($category),600,300)[0])?$preview:$this->getPicPath($category)?>">
+        <!-- <img src="<?//=$this->thumb($this->getPicPath($category), 300)[0]?>"> -->
+    </div> 
+  
+    <?php if($props||$price): ?>  
+        <div class="catalog-list__properties">
+            <?php /* foreach($props as $k=>$prop): ?>
+                    <span class="catalog-list__propval"><span style="font-weight:normal"><?=$k?></span> <?=$prop?></span>
+            <?php endforeach; */ ?> 
+            
+            <?php if($price): $price = str_replace(' ','',$price); ?>
+                    <div class="catalog-list__price">
+                        <?php if($old_price){ $old_price = str_replace(' ','',$old_price); ?><span style="text-decoration:line-through;padding-right:7px;color:#a2a2a2"><?=number_format($old_price, 0, ',', ' ')?> ₽</span><?php } ?>
+                        <span <?=($old_price)?'style="color: #dc0000;"':''?>><?=number_format($price, 0, ',', ' ')?> ₽</span>
+                    </div>
+            <?php endif; ?>
+        </div>
+    <?php endif; ?>
+</a>
+
+

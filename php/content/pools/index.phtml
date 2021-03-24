@@ -1,0 +1,40 @@
+<?php 
+$page = $variables['page'];
+$catalog = $this->getProductsListFromCategory($variables['pageId'],100);
+
+?>
+<div class="center-wrap" style="padding-top: 2.1rem;">
+    <?= $this->render($variables, 'layout/header/titleWithBread') ?>
+</div>
+    <div class="catalog-list">
+        <?php foreach($catalog['items'] as $category): ?>
+        <?= $this->render($category, 'content/pools/preview') ?>
+        <?php endforeach; ?>
+    </div>
+<div class="center-wrap" style="padding-top: 2.1rem;">
+    <div class="article" style="padding-top: 2.1rem;">
+        <?=$page->getValue('content')?>
+    </div>
+</div>
+
+
+<script>
+var items = document.querySelectorAll(".catalog-list__image img");
+
+items.forEach(element => {
+    if(element.dataset.hover){
+        element.addEventListener("mouseover", function(){func(element);}, false);
+        element.addEventListener("mouseout", function(){func(element);}, false);
+    }
+});
+
+
+function func(item)
+{ 
+    let hover = item.dataset.hover;
+    item.dataset.hover = item.src;
+    item.setAttribute("src", hover);
+}
+
+
+</script>
