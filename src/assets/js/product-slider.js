@@ -5,7 +5,7 @@ if (document.querySelector('.product__slider')) {
         spaceBetween: 14,
         centeredSlides: true,
         speed: 1000,
-        loop: true,
+        loop: false,
         breakpoints: {
             320: {
                 slidesPerView: 1,
@@ -18,6 +18,7 @@ if (document.querySelector('.product__slider')) {
             1024: {
                 slidesPerView: 'auto',
                 direction: 'vertical',
+                centeredSlides: false,
                 pagination: {
                     el: '.swiper-pagination',
                     clickable: true,

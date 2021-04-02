@@ -44,6 +44,18 @@
 
 			return $sel->result;
 		}
+
+		public function vsk_pageByType($ids = false, $limit = 100) {
+            $sel = Service::SelectorFactory()->createPageTypeName('catalog', 'object');
+            if($ids){
+				$sel->where('id')->equals($ids);
+			}
+			$sel->option('load-all-props')->value(true);
+            $sel->limit(0,$limit);
+            $sel->order('ord')->asc();
+
+			return $sel->result;
+		}
         
         public function multiRender($variables, $templates) {
             if(!is_array($templates)) $templates = [$templates];
@@ -174,6 +186,11 @@
 			$currency = $cf->getByCode($new);
 			$pavPrice = $cf->calculate($price,$currencyOld,$currency); 
 			return number_format($pavPrice, 0, ',', '&nbsp;').'&nbsp;₽';
+		}
+
+		public function getCookie($field) {
+			$cookieJar = Service::CookieJar();
+			return $cookieJar->get($field);
 		}
 
 

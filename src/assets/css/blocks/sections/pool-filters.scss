@@ -3,6 +3,16 @@
     padding-bottom: 10rem;
     border-bottom: 1px solid #E2E6F0;
 
+    .show_result{
+        font-size: 1.4rem;
+        line-height: 31px;
+        border-radius: 5px;
+        padding: 0 2rem;
+        border: 1px solid #4081ff;
+        color: #4081ff;
+        margin-bottom: 1rem;
+    }
+
     &__title {
         font-weight: 500;
         font-size: 2rem;
@@ -86,9 +96,11 @@
         &-left {
             display: flex;
             align-items: center;
+            flex-wrap: wrap;
 
             .select {
                 margin-right: 1rem;
+                margin-bottom: 1rem;
 
                 &:last-child {
                     margin-right: 0px;

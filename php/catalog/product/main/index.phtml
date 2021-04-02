@@ -14,14 +14,17 @@
  * @var umiTemplaterPHP|ViewPhpExtension|DemomarketPhpExtension $this
  * @var array $variables
  */
+$parent = end($variables['parents']);
 $product = $variables['page'];
 $imageList = $this->getProductImageList($product);
 $description = $product->getValue('description');
 $propList = $this->getProductPropertyChunks($product);
 
+$brandId = $product->getValue('brend');
+$brand = $this->getRelation($brandId);
 ?>
 
-<section class="product">
+<section class="product" data-id="<?=$product->id?>">
 <?= $this->render($variables, 'catalog/product/main/caption/index') ?>
  
   <div class="center-wrap"> 
@@ -32,7 +35,7 @@ $propList = $this->getProductPropertyChunks($product);
         <div class="product__inner-postpone comparisons comparisons--bg comparisons--heart">
           <svg viewBox="0 0 15 13" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M7.11941 1.92959L7.50008 2.37662L7.88076 1.92959C8.56104 1.13072 9.60647 0.625 10.6876 0.625C12.5931 0.625 14.0834 2.11531 14.0834 4.02083C14.0834 5.19534 13.5597 6.30011 12.5362 7.55141C11.507 8.80972 10.0253 10.1544 8.19129 11.8175L8.19058 11.8182L7.4988 12.4479L6.80926 11.825L6.80834 11.8241C4.97463 10.1578 3.4932 8.81153 2.46404 7.55242C1.44045 6.30014 0.916748 5.19535 0.916748 4.02083C0.916748 2.11531 2.40706 0.625 4.31258 0.625C5.39369 0.625 6.43912 1.13072 7.11941 1.92959Z"></path>
-          </svg>Отложить
+          </svg><span>В&nbsp;избранное</span>
         </div>
         <?= $this->render($product, 'catalog/product/main/price/actions/compare') ?>
       </div>
@@ -46,8 +49,8 @@ $propList = $this->getProductPropertyChunks($product);
 				</div>
 				</div>
 			</div>
-		<?php endforeach; ?>
-      <div class="product__column">
+		<?php endforeach; ?> 
+      <div class="product__column anchors">
         <?= $this->render($product, 'catalog/product/main/price/trade_offers') ?>
         <?php if (!$this->hasTradeOffers($product->getId())): ?>
           <?= $this->render($product, 'catalog/product/preview/optioned/list') ?>
@@ -61,7 +64,7 @@ $propList = $this->getProductPropertyChunks($product);
             <?php endforeach; ?>	
           <?php endforeach; ?>
         </div>
-        <?=($more)?'<a class="product__specifications-link" href="">Подробнее</a>':''?>
+        <?=($more)?'<a class="product__specifications-link" href="productinfo" onclick="$(\'.product__tabs-item[data-toogles=2]\').trigger(\'click\')">Подробнее</a>':''?>
       </div> 
       <div class="product__column">
 	  <?= $this->render($variables, 'catalog/product/main/price/index') ?>
@@ -69,7 +72,7 @@ $propList = $this->getProductPropertyChunks($product);
       </div>
     </div>
   </div>
-  <div class="product__info-wrap">
+  <div class="product__info-wrap" id="productinfo">
     <div class="center-wrap">
       <div class="product__info">
         <div class="product__tabs toogles__wrap">
@@ -134,9 +137,9 @@ $propList = $this->getProductPropertyChunks($product);
           </div>
         </div>
         <div class="product__manufacturer mobile--hide">
-          <div class="manufacturer"><a class="manufacturer__logo" href="">
-              <div><img src="assets/images/manufacturer__logo.png" alt=""></div></a>
-            <p class="manufacturer__text">Получите скидку 3% от суммы заказа</p><a class="manufacturer__link" href="">Все товары категории<br></a><a class="manufacturer__link" href="">Все характеристики</a>
+          <div class="manufacturer anchors"><a class="manufacturer__logo" data-anchors href="<?=$parent->link?>?filter%5Bbrend%5D%5B0%5D=<?=$brand->name?>">
+              <div><?=$brand->name?></div></a>
+            <p class="manufacturer__text">Получите скидку 3% от суммы заказа</p><a data-anchors class="manufacturer__link" href="<?=$parent->link?>">Все товары категории<br></a><a class="manufacturer__link" href="productinfo" onclick="$('.product__tabs-item[data-toogles=2]').trigger('click')">Все характеристики</a>
           </div>
         </div>
       </div>
@@ -147,7 +150,8 @@ $propList = $this->getProductPropertyChunks($product);
 <?php if ($this->isShowCommentsOnProductPage()): ?>
 	<?= $this->renderComments($variables) ?>
 <?php endif;?>	
-
+<?php
+/*
         <div class="wrap-section">
           <section class="kit toogles__wrap">
             <div class="center-wrap">
@@ -484,6 +488,7 @@ $propList = $this->getProductPropertyChunks($product);
     </div>
   </div>
 </article>
+
         </div>
         <section class="collection collection--product">
           <div class="center-wrap">
@@ -551,7 +556,7 @@ $propList = $this->getProductPropertyChunks($product);
             </div>
           </div>
         </section>
-
+*/ ?>
         <?= $this->render($variables, 'catalog/product/main/see_more/suggested_product_list') ?>
 			<?= $this->render($variables, 'catalog/product/main/see_more/related_product_list') ?>
 

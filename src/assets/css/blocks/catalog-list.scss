@@ -67,15 +67,18 @@
             // left: 10%;
             // width: 80%;
             z-index: 1;
-            font-weight: 350;
             font-size: 18px;
-            line-height: 100%;
             text-align: center;
             color: #000000;
             margin: 20px 0;
+            font-weight: 600;
+            line-height: 2.2rem;
             &_top{
                 // bottom: auto;
                 // top: 15px;  
+            }
+            span{
+                font-weight: 400;
             }
         }
         #{$p}__image{
@@ -91,7 +94,8 @@
             position: relative;
             transition: all .3s;
             @media screen and (max-width:$small_tablet) {
-                height: 300px;
+               // height: 300px;
+                height: 96px;
             }
             img{
                 // max-height: 50%;
@@ -104,11 +108,21 @@
            opacity: 0.6;
         }
         &.sale{
+            @media screen and (max-width:$small_tablet) { 
+                border: 15px solid #81bff0;
+             }
+            
             #{$p}__title{
-                display: none;
+                //display: none;
+                font-size: 26px;
+                font-weight: bold;
             }
             #{$p}__image{
                 background: none;
+                
+                @media screen and (min-width:$small_tablet + 1) {
+                    display:none;
+                 }
                 img{
                     max-height: 100%;
                     max-width: 100%;

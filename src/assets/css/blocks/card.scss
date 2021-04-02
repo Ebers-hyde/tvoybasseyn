@@ -12,7 +12,7 @@
         .basket {
             width: 100%;
             background-color: #4081FF;
-
+            border:0;
             span {
                 opacity: 1;
             }
@@ -133,6 +133,7 @@
         }
     }
 
+   
     &__heart {
         cursor: pointer;
 
@@ -149,6 +150,13 @@
             svg {
                 stroke: #000;
             }
+        }
+    }
+    &__heart--active {
+        
+        svg {
+            stroke: #ff5c2b;
+            fill: #ff5c2b!important;
         }
     }
 

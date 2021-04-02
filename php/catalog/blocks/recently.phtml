@@ -18,7 +18,9 @@ $productList = $this->getRecentlyVisitedProducts();
             <?php foreach ($productList as $product): ?>
                 <?= $this->render($product, 'catalog/product/preview/index') ?>
             <?php endforeach; ?>
-
+            <div class="pool-filters__item pool-filters__item--hide"></div>
+					<div class="pool-filters__item pool-filters__item--hide"></div>
+					<div class="pool-filters__item pool-filters__item--hide"></div>
         </div>
         </div>
         <div class="history-slider desktop--hide">

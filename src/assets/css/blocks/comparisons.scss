@@ -41,4 +41,16 @@
             stroke:#6D6D6D;
         }
     }
+    &__active{
+        color: #000;
+        svg {
+            fill: #ff5c2b!important;
+            stroke:#ff5c2b;
+        }
+        &:hover{
+            svg{
+                stroke:#ff5c2b;
+            }
+        }
+    }
 }

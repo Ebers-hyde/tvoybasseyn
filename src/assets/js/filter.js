@@ -7,3 +7,13 @@ if (document.querySelector('.pool-filters__sort')) {
         })
     }
 };
+
+$('.pool-filters__position').on('click', function() {
+    var $button = $(this);
+    var className = $button.data('class');
+    $.cookie('catalog_class', className);
+
+    $('#catalog_category')
+        .removeClass('goods catalog_list catalog_inline')
+        .addClass(className);
+});

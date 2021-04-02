@@ -232,16 +232,18 @@
 
         &-item {
             margin-right: 1.2rem;
-            border: 1px solid #EEEEEE;
+            border: 1px solid #bbbbbb;
             padding: 0 2.7rem;
-            border-radius: 2px;
-            font-weight: 500;
-            font-size: 1.4rem;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 1.6rem;
             line-height: 4.3rem;
             text-align: center;
-            text-transform: lowercase;
-            color: #6D6D6D;
+            /* text-transform: lowercase; */
+            color: #737373;
             cursor: pointer;
+            -webkit-transition: all 0.5s;
+            -o-transition: all 0.5s;
             transition: all 0.5s;
             white-space: nowrap;
             @media screen and (max-width:$large_tablet) {

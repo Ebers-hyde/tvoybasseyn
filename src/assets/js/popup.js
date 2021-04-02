@@ -71,7 +71,7 @@ if ( document.querySelector('.popup-wrap') ) {
 
 
 
-$('.contact__form form').submit(function(e){
+$('.contact__form form,#callback form').submit(function(e){
 	let forma = $(this);
 	console.log(forma);
 	e.preventDefault();

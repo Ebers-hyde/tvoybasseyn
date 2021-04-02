@@ -124,7 +124,8 @@
         border: none;
 
         &__img {
-            width: 117px;
+            width: 155px;
+            object-fit: contain;
 
             >div {
                 padding-bottom: 95.72%;

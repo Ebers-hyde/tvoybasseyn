@@ -9,7 +9,17 @@ $(document).ready(function () {
             }
         });
 
+
         $('.select__variant').on('click', function () {
+
+            var $this = $(this);
+            var fieldName = $this.data('field');
+            $.cookie('sort_field', fieldName);
+            var isAscending = !$this.parent().hasClass('up_arrow');
+            var flag = isAscending ? '1' : '0';
+            $.cookie('sort_direction_is_ascending', flag);
+            window.location.reload(true);
+
             var select_value = $(this).find('span').text();
             $(this).closest('.select').find('.select__value').text(select_value);
             $(this).closest('.select').find('.select__variant--active').removeClass('select__variant--active');
@@ -26,6 +36,10 @@ $(document).ready(function () {
                 $('.select--active').removeClass('select--active');
             }
         });
+
+
+        
+		
 
     }
 })

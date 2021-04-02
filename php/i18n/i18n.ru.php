@@ -64,6 +64,7 @@
 
 		'compare-title' => 'Сравнение товаров',
 		'compare-submit' => 'Сравнить',
+		'js-remove-from-comparison' => 'В&nbsp;сравнении',
 		'purchase' => 'Купить',
 		'already_in_cart' => 'В корзине',
 		'purchase_one_click' => 'Купить в один клик',

@@ -1,0 +1,46 @@
+<?php
+    $page = $variables['page'];
+    $ids = json_decode($this->getCookie('favorites'));
+    if(count($ids)>0)
+        $products = $this->vsk_pageByType($ids);
+?>
+
+
+<section class="pool-filters">
+          <div class="center-wrap">
+            <?= $this->render($variables, 'layout/header/titleWithBread') ?>
+
+            <?php if(count($ids)>0): ?>
+            <div class="pool-filters__sort">
+              
+              <div class="pool-filters__sort-left">
+                <div class="pool-filters__sort-quantity">товаров: <?=count($products)?></div>
+              </div>
+    
+            </div>
+
+            <div class="pool-filters__wrap goods" id="catalog_category">
+              <?php foreach ($products as $product): ?>
+                <?= $this->render($product, 'catalog/product/preview/index') ?>
+              <?php endforeach; ?>
+              <div class="card" style="opacity:0;padding: 0;margin: 0;"></div>
+              <div class="card" style="opacity:0;padding: 0;margin: 0;"></div>
+              <div class="card" style="opacity:0;padding: 0;margin: 0;"></div>
+              <div class="card" style="opacity:0;padding: 0;margin: 0;"></div>
+            </div>
+            <?php else: ?>
+
+            <div class="article" style="padding-top: 2.1rem;">
+                <p>В избранном ничего нет</p>
+            </div>
+
+            <?php endif; ?>
+          </div>
+        </section>
+
+<div class="center-wrap" style="padding-top: 2.1rem;">
+    <div class="article" style="padding-top: 2.1rem;">
+        <?=$page->getValue('content')?>
+    </div>
+</div> 
+   

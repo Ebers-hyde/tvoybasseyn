@@ -88,3 +88,4 @@ import './assets/js/sidebar__drop-yet';
 import './assets/js/toogles';
 import './assets/js/drop-down';
 import './assets/js/compare';
+import './assets/js/likes';

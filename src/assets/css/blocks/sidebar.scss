@@ -141,6 +141,12 @@
         visibility: hidden;
         transition: all .5s;
         pointer-events: none;
+
+        min-height: 100%;
+        top: 57px;
+        position: fixed;
+        left: 280px;
+        
         .mobile-menu &{
             top:5rem;
             left: 27rem;
