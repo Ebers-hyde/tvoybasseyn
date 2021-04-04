@@ -11,7 +11,7 @@ $parentList = $variables['parents'];
 
 <div class="breadcrumbs">
 	<div class="breadcrumbs__list">
-        <li class="breadcrumbs__item"><a href="/" class="breadcrumbs__link">Главная</a></li>
+        <?php if($variables['domain-id']==1){ ?><li class="breadcrumbs__item"><a href="/" class="breadcrumbs__link">Главная</a></li><?php } ?>
 		<?php foreach ($parentList as $parent): $name = str_replace("<br>", " ", $parent->getName());  ?>
             <li class="breadcrumbs__item"><a href="<?= $this->getPath($parent) ?>" class="breadcrumbs__link"><?= $this->escape(strip_tags($name)) ?></a></li>
 		<?php endforeach; ?>

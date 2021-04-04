@@ -1116,18 +1116,19 @@ site.Cart = {
 			var $button = $(this);
 
 			if ($button.hasClass('not_buy')) {
-				return;
+				return; 
 			}
-
-			var $addToCartBlock = $button.parents('.add_to_cart_block');
+ 
+			var $addToCartBlock = $button.closest('.product').find('.add_to_cart_block');
+			
 			var $oneClickModal = $(oneClickModalSelector);
 
 			var elementId = $addToCartBlock.data('element_id');
-			$oneClickModal.data('element_id', elementId);
+			$oneClickModal.attr('data-element_id', elementId);
 
 			if (site.TradeOffers.isAvailable()) {
-				$oneClickModal.data('offer_id', elementId);
-				$oneClickModal.modal('show');
+				$oneClickModal.attr("data-offer_id", elementId);
+				show_popup('oneclick_modal');
 				return;
 			}
 
@@ -1140,7 +1141,7 @@ site.Cart = {
 					.remove(); // Удаляем ненужную кнопку 'Добавить в корзину'
 			}
 
-			$oneClickModal.modal('show');
+			show_popup('oneclick_modal');
 		});
 
 		/** Нажатие на кнопку "Оформить заказ" внутри всплывающего окна для заказа в один клик. */

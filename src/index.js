@@ -36,6 +36,7 @@ import './assets/css/blocks/sections/compare.scss';
 import './assets/css/blocks/article.scss';
 import './assets/css/blocks/feedback.scss';
 import './assets/css/blocks/catalog-list.scss';
+import './assets/css/blocks/comparisons.scss';
 import './assets/css/blocks/header.scss';
 import './assets/css/blocks/sidebar.scss';
 import './assets/css/blocks/footer.scss';
@@ -55,7 +56,7 @@ import './assets/css/blocks/basket.scss';
 import './assets/css/blocks/breadcrumbs.scss';
 import './assets/css/blocks/quantity.scss';
 import './assets/css/blocks/discount.scss';
-import './assets/css/blocks/comparisons.scss';
+
 import './assets/css/blocks/banner.scss';
 import './assets/css/blocks/history-slider.scss';
 import './assets/css/blocks/categories-slider.scss';

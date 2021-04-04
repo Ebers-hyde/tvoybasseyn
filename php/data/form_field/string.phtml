@@ -9,13 +9,7 @@
 $field = $variables;
 ?>
 
-<input
-    class="data-form__input_type_string"
-	type="<?= $this->getFieldTypeAttribute($field) ?>"
-	name="<?= $field['input_name'] ?>"
-	placeholder="<?= $field['title'] ?>"
-	<?= (isset($field['required']) ? ' required ' : '') ?>
-	value="<?= isset($field['value']) ? $field['value'] : '' ?>"
-/>
-
-<span class="sub_text"><?= $field['title'] ?></span>
+<div class="inputs__field-wrap">
+	<input class="inputs__field" type="<?= $this->getFieldTypeAttribute($field) ?>" name="<?= $field['input_name'] ?>" <?= (isset($field['required']) ? ' required ' : '') ?> value="<?= isset($field['value']) ? $field['value'] : '' ?>">
+	<label class="inputs__label" for="text"><span class="inputs__content"><?= $field['title'] ?></span></label>
+</div>

@@ -30,10 +30,10 @@ const jsLibraries = [
 const jsCommon = 'js/*.js';
 const less = 'less/*.less';
 const cssLibraries = 'css/lib/*.css';
-const compiledCss = 'compiled/*.css';
-const compiledJs = 'compiled/*.js';
-const rimrafCss = 'compiled/*.min.css';
-const rimrafJs = 'compiled/*-min.js';
+const compiledCss = '../../tvoybasseyn.ru v3/compiled/*.css';
+const compiledJs = '../../tvoybasseyn.ru v3/compiled/*.js';
+const rimrafCss = '../../tvoybasseyn.ru v3/compiled/*.min.css';
+const rimrafJs = '../../tvoybasseyn.ru v3/compiled/*-min.js';
 
 const destination = '../../tvoybasseyn.ru v3/compiled';
 
@@ -77,7 +77,7 @@ gulp.task('build-less', function() {
 
 gulp.task('cleancss', function() {
 	return gulp.src(rimrafCss, { read: false })
-		.pipe(rimraf())
+		.pipe(rimraf({ force: true }))
 		.on('error', function(err) {
 			gutil.log(err);
 			this.emit('end');
@@ -86,7 +86,7 @@ gulp.task('cleancss', function() {
 
 gulp.task('cleanjs', function() {
 	return gulp.src(rimrafJs, { read: false })
-		.pipe(rimraf())
+		.pipe(rimraf({ force: true }))
 		.on('error', function(err) {
 			gutil.log(err);
 			this.emit('end');
