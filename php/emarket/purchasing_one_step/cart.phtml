@@ -1,23 +1,32 @@
 <?php
 /**
-* Статический блок с товарами в корзине (не поддерживается изменение содержимого корзины).
-*
-* @var umiTemplaterPHP|ViewPhpExtension|DemomarketPhpExtension $this
-* @var array $variables
-*/
+ * Статический блок с товарами в корзине (не поддерживается изменение содержимого корзины).
+ *
+ * @var umiTemplaterPHP|ViewPhpExtension|DemomarketPhpExtension $this
+ * @var array $variables
+ */
 
 $cart = $this->macros('emarket', 'cart');
+$cart['drawFormButton'] = true;
 ?>
 
-<div class="order_bill">
-	<div id="billForm">
-		<div class="del_row">
-			<div class="del_content">
-				<h3><?= $this->getOrderItemCountMessage($cart) ?></h3>
-				<?= $this->render($cart, 'emarket/purchasing_one_step/cart/product_list') ?>
-				<?= $this->render($cart, 'emarket/purchasing_one_step/cart/result') ?>
-			</div>
-		</div>
+<div class="cart onestep">
+	<div data-full-cartlist="hide" class="cart__hide-list d-sm-none hidden_tablet">
+		<a href="javascript:;" class="cart__show-list-trigger">
+			Скрыть детали заказа
+			<img src="/templates/axlab_2018/images/icons/small-blue-chevron.svg" alt="">
+		</a>
 	</div>
+	<div class="">
+		<h2 class="data-form__title" style="padding-top: 0;">
+			<?= $this->translate('cart_reminder') ?>
+		</h2>
+	</div>
+	<?= $this->render($cart, 'emarket/cart/product_list') ?>
 </div>
 
+<style>
+	.cart__list__item{
+		padding-top: 4px;
+	}
+</style>

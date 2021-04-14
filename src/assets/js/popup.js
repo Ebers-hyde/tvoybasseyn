@@ -102,3 +102,10 @@ $('.contact__form form,#callback form').submit(function(e){
         }
     });
 });
+
+
+$(document).trigger("enhance");
+var dataOffcanvas = $('#cart').data('offcanvas-component');
+$('.cart__close').click(function(){
+	dataOffcanvas.close();
+});

@@ -10,29 +10,71 @@
  * @var umiTemplaterPHP|ViewPhpExtension|DemomarketPhpExtension $this
  * @var array $variables
  */
+//$page = $variables['page'];
 
 $variables = $this->macros('emarket', 'purchasing_one_step');
+$cart = $this->macros('emarket', 'cart');
+
+
 ?>
 
-<div class="section_capt">
-	<div class="container">
-		<div class="row">
-			<h1><?= $this->translate('purchasing_one_step') ?></h1>
-		</div>
-	</div>
+
+<div class="center-wrap" style="padding-top: 2.1rem;">
+	<div class="pool-filters__title"><?= $this->translate('purchasing_one_step') ?></div>
 </div>
 
-<div class="order">
-	<div class="container">
-		<form action="<?= $this->getPurchasingOneStepUrl() ?>" method="post" id="oneStepForm" class="without-steps" novalidate>
-			<div class="order_data">
-				<?= $this->render($variables, 'emarket/purchasing_one_step/customer_info') ?>
-				<?= $this->render($variables, 'emarket/purchasing_one_step/delivery_address') ?>
-				<?= $this->render($variables, 'emarket/purchasing_one_step/delivery_choose') ?>
-				<?= $this->render($variables, 'emarket/purchasing_one_step/payment_choose') ?>
-				<?= $this->render($variables, 'emarket/purchasing_one_step/comment_block') ?>
-			</div>
-			<?= $this->render($variables, 'emarket/purchasing_one_step/cart') ?>
-		</form>
-	</div>
+<div class="center-wrap" style="padding-top: 2.1rem;">
+    <div class="page__content page__content_mob-bgc_white">
+        <div class="order">
+            <div data-full-cartlist="container" class="cart__show-list hidden_tablet" style="display:none;">
+                <img src="/templates/axlab_2018/images/icons/blue-cart.svg" alt="" class="cart__blue-cart">
+                <a href="javascript:;" data-full-cartlist="trigger" class="cart__show-list-trigger">
+                    Показать детали заказа
+                    <img src="/templates/axlab_2018/images/icons/small-blue-chevron.svg" alt="">
+                </a>
+                <span class="" order="price" id="order_price">
+                    <?= $this->getOrderPrice($cart) ?>
+                </span>
+                <!-- заменить на вывод суммы заказа -->
+            </div>
+            <div class="">
+                <form action="<?= $this->getPurchasingOneStepUrl() ?>" method="post" id="deliveryForm" class="without-steps">
+                    <div class="row">
+                        <div class="col-md-7 col-sm-12 order-2 order-md-1">
+                            <div class="row flex-column flex-lg-row">
+                                <div class="col-12 col-lg-6 form__column">
+                                    <?= $this->render($variables, 'emarket/purchasing_one_step/customer_info') ?>
+                                </div>
+                                <div class="col-12 col-lg-6 form__column ">
+                                    <?= $this->render($variables, 'emarket/purchasing_one_step/delivery_choose') ?>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <?= $this->render($variables, 'emarket/purchasing_one_step/delivery_address') ?>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <?= $this->render($cart, 'emarket/cart/result') ?>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-5 col-sm-12 order-1 order-md-2" data-full-cartlist="target">
+                            <?= $this->render($variables, 'emarket/purchasing_one_step/cart') ?>
+                            
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
+
+<script>
+    $(window).load(function(){
+        if(!$('input[name="delivery-id"]:checked').length)
+            $('.delivery_choose .data-form__wrapper:first .data-form__label').trigger('click');
+    });
+    
+</script>

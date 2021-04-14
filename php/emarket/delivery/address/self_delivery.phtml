@@ -8,15 +8,15 @@
 $selfDelivery = $variables;
 ?>
 
-<div class="form_element">
+<div>
 	<label>
 		<input
 			type="radio"
-			name="delivery-id"
-			value="<?= $selfDelivery['id'] ?>"
+			name="delivery-address"
+			value="delivery_<?= $selfDelivery['id'] ?>"
 			data-type="<?= $selfDelivery['type-class-name'] ?>"
-			data-price="<?= $selfDelivery['price'] ?>"
 			<?= $this->getRadioStatusByActivity($selfDelivery) ?>
+			required
 		/>
 
 		<span></span>

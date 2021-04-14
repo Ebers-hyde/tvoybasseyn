@@ -1,6 +1,7 @@
 
 import './assets/css/normalize.scss';
 import './assets/css/main.scss';
+import './assets/css/_js-offcanvas.scss';
 
 //SECTION
 
@@ -68,6 +69,9 @@ import './assets/css/blocks/toogles.scss';
 
 
 // JS
+import './assets/js/lib/modernizr.custom';
+import './assets/js/lib/js-offcanvas';
+import './assets/js/js-offcanvas';
 import './assets/js/anchors';
 import './assets/js/building-slider';
 import './assets/js/history-slider';
@@ -90,3 +94,5 @@ import './assets/js/toogles';
 import './assets/js/drop-down';
 import './assets/js/compare';
 import './assets/js/likes';
+
+

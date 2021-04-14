@@ -9,17 +9,23 @@
  */
 
 $groupList = $variables['form']['groups'];
+$groupList[1]['displayHeader']=0;
 ?>
 
 <?php foreach ($groupList as $group): ?>
+<div class="data-form">
+    <?php
+    if($group['title']=='Контакты') $variables['displayHeader']=false;
+    ?>
 	<?php if ($this->canShowGroupTitle($variables)): ?>
-		<h3>
-			<?= $this->escape($group['title']) ?>
-		</h3>
+		<span class="data-form__title">
+			<?= $group['title'] ?>
+			
+		</span>
 	<?php endif; ?>
 
 	<?php foreach ($this->getSubGroupList($group) as $subGroup): ?>
-		<div class="sub_group">
+		<div class="">
 			<?php foreach ($subGroup as $field): ?>
 				<div class="<?= $this->getFormFieldClass($field) ?>">
 					<?= $this->render($field, "data/form_field/{$field['type']}") ?>
@@ -27,4 +33,6 @@ $groupList = $variables['form']['groups'];
 			<?php endforeach; ?>
 		</div>
 	<?php endforeach; ?>
+</div>
 <?php endforeach; ?>
+

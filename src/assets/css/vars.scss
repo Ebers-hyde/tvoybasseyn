@@ -198,3 +198,39 @@ $small_tablet: 768px;
 $small_mobile: 440px;
 
 
+@mixin mobile {
+  @media (max-width: #{$small_tablet - 1px}) {
+    @content;
+  }
+}
+
+@mixin onlyMobile {
+  @media (max-width: $small_tablet) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (min-width: #{$large_tablet}) and (max-width: #{$large_desktop}) {
+    @content;
+  }
+}
+
+@mixin tabletAndMobile{
+  @media (max-width: #{$large_desktop}) {
+    @content;
+  }
+}
+
+
+@mixin desktop {
+  @media (min-width: #{$large_desktop + 1px}) {
+    @content;
+  }
+}
+
+@mixin container {
+  @media (min-width: #{$large_tablet}) and (max-width: #{$large_desktop}) {
+    @content;
+  }
+}

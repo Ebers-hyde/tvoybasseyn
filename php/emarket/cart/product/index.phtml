@@ -7,18 +7,30 @@
  */
 
 $product = $variables;
+
+
 ?>
 
-<div class="goods_in_cart clearfix">
-	<a href="<?= $this->getPath($product['page']) ?>">
-		<?= $this->render($product, 'emarket/cart/product/image') ?>
-		<?= $this->render($product, 'emarket/cart/product/name') ?>
-	</a>
-
-	<?= $this->render($product, 'emarket/cart/product/price') ?>
-	<?= $this->render($product, 'emarket/cart/product/discount') ?>
-	<?= $this->render($product, 'emarket/cart/product/total') ?>
-	<?= $this->render($product, 'emarket/cart/product/remove') ?>
+<div class="cart__list__item">
+    <div class="cart__list__icon">
+        <a href="<?= $this->getPath($product['page']) ?>">
+        <img class="cart__img" src="<?=$this->thumb($this->getPhotoPath($product['page']),114)[0]?>">
+        </a>
+        </div>
+    <div class="cart__list__text">
+        <span class="cart__list__text__name">
+            <?= $product['name'] ?>
+        </span>
+    </div>
+    <div class="cart__list__price">
+        <span class="cart__list__price__value">
+            <?= $this->render($product, 'emarket/cart/product/total_amount') ?>
+        </span>
+        <span class="cart__list__price__counter" data-id="<?=$product['id']?>" id="order_item_<?=$product['id']?>">
+            <img src="resources/img/remove.svg" class="svg cart-counter-icon">
+            <span class="cart__list__price__counter_val"><?=$product['amount']?></span>
+            <img src="resources/img/add.svg" class="increment_product_quantity svg cart-counter-icon">
+        </span>
+    </div>
 </div>
-
 <?= $this->render($product['page'], 'emarket/cart/product/suggested_product_list') ?>

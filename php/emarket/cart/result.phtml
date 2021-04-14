@@ -6,46 +6,20 @@
  * @var array $variables
  */
 $drawFormButton = isset($variables['drawFormButton']) ? $variables['drawFormButton'] : false;
-$isPromoCodesAvailable = $this->macros('emarket', 'isPromoCodesAvailable');
+$amount = (int) isset($variables['total-amount']) ? $variables['total-amount'] : 0;
 ?>
 
 <div class="order_result">
-	<div class="container mobile_all_width">
-		<div class="row background_gray">
-			<?php if ($isPromoCodesAvailable): ?>
-				<?= $this->render($variables, 'emarket/cart/promocode') ?>
-				<div class="col-sm-12 col-lg-6 order_pricing">
-			<?php else: ?>
-				<div class="col-sm-12 col-lg-offset-7 col-lg-4 order_pricing">
-			<?php endif; ?>
 
-				<p>
-					<?=$this->translate('order-discount')?>:
+	<?php if($drawFormButton): ?>
+	<p>
+		<input type="submit" value="<?= $this->translate('begin_purchase') ?>">
+	</p>
 
-					<span id="order_discount">
-						<?= $this->getOrderDiscount($variables) ?>
-					</span>
-				</p>
+	<?= $this->render('purchase-step-order-federal-law', 'library/personalDataNotice') ?>
+	<?php else: ?>
+	<input type="submit" class="btn btn--blue" value="<?= $this->translate('begin_purchase') ?>">
 
-				<p class="result_sum">
-					<?= $this->translate('summary-price') ?>:
-					<span id="order_price">
-						<?= $this->getOrderPrice($variables) ?>
-					</span>
-				</p>
+	<?php endif; ?>
 
-				<?php if($drawFormButton): ?>
-					<p>
-						<input type="submit" value="<?= $this->translate('begin_purchase') ?>">
-					</p>
-
-					<?= $this->render('purchase-step-order-federal-law', 'library/personalDataNotice') ?>
-				<?php else: ?>
-					<a href="<?= $this->macros('emarket', 'getPurchaseLink') ?>" class="blue_btn">
-						<?= $this->translate('begin_purchase') ?>
-					</a>
-				<?php endif; ?>
-			</div>
-		</div>
-	</div>
 </div>

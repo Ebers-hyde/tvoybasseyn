@@ -1,0 +1,77 @@
+<?php
+/**
+ * Всплывающее окно с товарами в корзине.
+ *
+ * @var umiTemplaterPHP|ViewPhpExtension|DemomarketPhpExtension $this
+ * @var array $variables
+ * @var array $productList
+ */
+
+$cart = $this->getCommonVar('cart');
+$productList = $this->getOrderItems($cart);
+$amount = (int) isset($cart['total-amount']) ? $cart['total-amount'] : 0;
+
+?>
+
+<div class="basket_tooltip">
+    <div class="cart__list">
+        <?php foreach ($productList as $product):  ?>
+		
+        <div class="cart__list__item cart__list__item_mod product-element" data-id="<?= $product["id"]?>" id="order_item_<?= $product["id"]?>">
+            <div class="cart__list__icon">
+                <a href="<?= $this->getPath($product['page']) ?>">
+                    <img class="cart__img" src="<?=$this->getPhotoPath($product['page'])?>">
+                </a>
+            </div>
+            <div class="cart__list__text"><span class="cart__list__text__name">
+                    <?= $product['name'] ?></span><?php if(count($product['options']['option'])>0){ ?><span class="cart__list__text__desc">Размер: <?=$product['options']['option'][0]['name']?></span><?php } ?></div>
+            <div class="cart__list__price"><span class="cart__list__price__value">
+                    <?=$product['price']['actual']?>₽</span><span class="cart__list__price__counter">
+                    <svg class="cart-counter-icon cart-counter-icon_remove" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path opacity="0.54" fill-rule="evenodd" clip-rule="evenodd" d="M8.75 8.48696e-05H5L3.75 0L0 8.48696e-05V1.25008H3.75H5H8.75V8.48696e-05Z" transform="translate(3.125 8.125) scale(1 -1)" fill="#6E6E6E"/>
+                    </svg>
+                    <span
+                        class="cart__list__price__counter_val">
+                        <?=$product['amount']?></span>
+                    <svg class="increment_product_quantity svg cart-counter-icon cart-counter-icon_add" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path opacity="0.54" fill-rule="evenodd" clip-rule="evenodd" d="M8.75 3.75H5V0H3.75V3.75H0V5H3.75V8.75H5V5H8.75V3.75Z" transform="translate(3.125 11.875) scale(1 -1)" fill="#6E6E6E"/>
+                    </svg>
+                    </span>
+            </div>
+            <div id="order_item_<?= $product["id"]?>" class="order_delete ">
+                <img class="remove-item svg " src="images/icons/delete.svg">
+            </div>
+        </div>
+
+        <?php endforeach; ?>
+
+    </div>
+
+    <div class="basket_tooltip-price">
+        <?php if (count($productList) > 0): ?>
+        <div class="tooltip_price">
+
+            <span class="order_item_count">
+                <?= $amount ?>
+            </span>
+            <span class="order_suffix">
+                <?php if(($amount === 1) || ($amount > 20 && $amount % 10 === 1)){ ?>товар
+                <?php }
+            else if(($amount >= 2 && $amount <= 4) || ($amount > 20 && $amount % 10 >= 2 && $amount % 10 <= 4)){?>товара
+                <?php }
+            else{ ?>товаров
+                <?php } ?> </span> <br>на
+            <span class="cart__priceTotal">
+                <?= $this->getOrderPrice($cart) ?>
+            </span>
+
+
+        </div>
+        <?php endif; ?>
+        <a href="/emarket/purchasing_one_step/">
+            <button class="btn_orange tooltip_btn">
+                Оформить заказ <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path opacity="0.9" fill-rule="evenodd" clip-rule="evenodd" d="M0 1.4L1.4 0L7.4 6L1.4 12L0 10.6L4.6 6L0 1.4Z" transform="translate(8.59998 6)" fill="black"/></svg>
+            </button>
+        </a>
+    </div>
+</div>

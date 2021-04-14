@@ -1,0 +1,17 @@
+<?php
+/**
+ * Общая цена товарного наименования при заходе умноженная на количество
+ *
+ * @var umiTemplaterPHP|ViewPhpExtension|DemomarketPhpExtension $this
+ * @var array $variables
+ */
+
+$product = $variables;
+?>
+
+<div class="order_sum sum_rub">
+    <span><?= $product['price']['prefix']
+        .number_format(
+            ceil( $product['price']['actual'] * $product['amount']), 0, '.', ' ')
+    .$product['price']['suffix']?> </span>
+</div>

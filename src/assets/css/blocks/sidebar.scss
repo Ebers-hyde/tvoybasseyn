@@ -158,9 +158,11 @@
         }
 
         &-list {
-            width: calc((100% - 3.8rem * 3)/4);
-            margin-bottom: 4rem;
+            width: 230px;
+            margin: 0 10px;
+            margin-bottom: 3rem;
             align-items: flex-start;
+            min-height: 60px;
 
             &--hide {
                 display: none;
@@ -169,17 +171,22 @@
         }
 
         &-title {
-            font-weight: bold;
+            font-weight: 600;
             font-size: 1.4rem;
             line-height: 142.3%;
             color: #000000;
             margin-bottom: 1.5rem;
+            a{
+                font-size: 1.4rem;
+            }
         }
 
         &-link {
             color: #000000;
             transition: all 0.5s;
             position: relative;
+            font-size: 1.4rem;
+            line-height: 1.8rem;
 
             &::before {
                 content: "";

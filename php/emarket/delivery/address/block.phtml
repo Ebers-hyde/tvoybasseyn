@@ -5,66 +5,190 @@
  *
  * @var umiTemplaterPHP|ViewPhpExtension|DemomarketPhpExtension $this
  * @var array $variables
- * @var bool $isRenderSaveButton
  */
 
-$isRenderSaveButton = isset($variables['isRenderSaveButton']) && $variables['isRenderSaveButton'];
-$selfDeliveryList = $this->getSelfDeliveryList($variables);
+$umiObjects = umiObjectsCollection::getInstance();
+
+$subway = new selector('objects');
+$subway->types('object-type')->id(320);
+$subway->order('name')->asc();
+
 ?>
 
-<div class="delivery_address onestep del_row order_img_1">
-	<div class="del_content">
-		<h3 class="up input_capt">
-			<?php if (isEmptyArray($selfDeliveryList)): ?>
-				<?= $this->translate('choose_delivery_address') ?>
-			<?php else: ?>
-				<?= $this->translate('choose-delivery-address-and-self-delivery') ?>
-			<?php endif; ?>
-		</h3>
+<div data-adress="902" class="delivery_address onestep del_row order_img_1 pt-5  delivery__choose-adress" data-adress="delivery">
+    <div class="del_content">
+        <span class="data-form__title">
+            <?= $this->translate('choose_delivery_address') ?>
+        </span>
 
-		<input type="hidden" name="delivery-address" value="new" />
+        <input type="radio" name="delivery-address" value="new" checked style="display: none;" />
 
-		<?php foreach ($this->getSelfDeliveryList($variables) as $delivery): ?>
-			<?= $this->render($delivery, 'emarket/delivery/address/self_delivery') ?>
-		<?php endforeach; ?>
 
-		<?php foreach ($this->getAddressList($variables) as $address): ?>
-			<?= $this->render($address, 'emarket/delivery/address/item') ?>
-		<?php endforeach; ?>
 
-		<?php if ($this->canShowNewDeliveryAddressOption($variables)): ?>
-			<div>
-				<label>
-					<input type="radio" name="delivery-address" value="new" />
-					<span></span>
-					<p>
-						<?= $this->translate('new_delivery_address') ?>
-					</p>
-				</label>
-			</div>
-		<?php endif; ?>
-	</div>
+        <div class="del_content">
+            <div id="new-address"> 
 
-	<?php if ($this->canShowNewDeliveryAddressForm($variables)): ?>
-		<div class="del_content">
-			<div id="new-address">
-				<?= $this->render(['form' => $this->getCreateForm($variables['type-id']), 'displayHeader' => false], 'data/form') ?>
-				<?php if ($isRenderSaveButton): ?>
-					<div class="del_content">
-						<input id="save-delivery" type="submit" value="<?= $this->translate('confirm-address') ?>">
-					</div>
-				<?php endif; ?>
-			</div>
-		</div>
+                <div class="data-form">
 
-		<script id="add_address_template" type="text/template">
-			<div class="form_element">
-				<label>
-					<input type="radio" name="delivery-address" value="<%= addressId %>" required checked="checked">
-					<span></span>
-					<p><%= address.join(', ') %></p>
-				</label>
-			</div>
-		</script>
-	<?php endif; ?>
+                <!-- <input id="data-form__input-adress" class="data-form__input-adress" type="text" placeholder="Введите ваш адрес целиком"> -->
+                <p>Введите ваш адрес целиком</p>
+                <!-- <textarea id="data-form__input-adress" name="" id="" cols="30" rows="10" style="height: 100px"></textarea> -->
+
+
+                    <div class="sub_group" style="display: block;">
+                        <div class="">
+                            <input id="data-form__input-city" class="data-form__input_type_string" type="text" name="data[new][city]" placeholder="Город" value="">
+                            <span class="sub_text">Город</span> 
+                        </div>
+                        <div class="">
+
+                            <input id="data-form__input-street" class="data-form__input_type_string data-form__input-street" type="text" name="data[new][street]"
+                                placeholder="Улица" value="">
+
+                            <span class="sub_text">Улица</span> </div>
+                    </div>
+                    <div class="sub_group_inline" style="display: flex;">
+                        <div class="">
+
+                            <input id="data-form__input-house" class="data-form__input_type_string" type="text" name="data[new][house]" placeholder="Дом"
+                                value="">
+
+                            <span class="sub_text">Дом</span> </div>
+                        <div class="">
+
+                            <input id="data-form__input-flat" class="data-form__input_type_string" type="text" name="data[new][flat]" placeholder="Квартира"
+                                value="">
+
+                            <span class="sub_text">Квартира</span> </div>
+                    </div>
+                    <div class="sub_group">
+                        <div class="">
+
+                            <textarea name="data[new][order_comments]" maxlength="250" class="data-form__input_type_text" placeholder="Комментарий"></textarea>
+
+                            <span class="sub_text">Комментарий</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- <script src="https://tvoybasseyn.ru/resources/jquery.fias.min.js"></script>
+<link href="https://tvoybasseyn.ru/resources/jquery.fias.min.js" rel="stylesheet">  -->
+
+<!-- <link href="https://cdn.jsdelivr.net/npm/suggestions-jquery@19.8.0/dist/css/suggestions.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/suggestions-jquery@19.8.0/dist/js/jquery.suggestions.min.js"></script>
+ -->
+
+<script>
+
+// $( document ).ready(function() {
+//     var token = "11b8adbf35744dda02c4b7e4ce92e225111e1077";
+//     var $region   = $("#data-form__input-region");
+//     var $city   = $("#data-form__input-city");
+//     var $street = $("#data-form__input-street");
+//     var $house  = $("#data-form__input-house");
+//     var $flat  = $("#data-form__input-flat");
+//     var $adress  = $("#data-form__input-adress");
+//     var cityCookie = 'г ' + getCookie('locate-city');  
+//     $('.delivery_address .sub_group, .delivery_address .sub_group_inline').hide();
+//     function getCookie(name) {
+//         let matches = document.cookie.match(new RegExp(
+//             "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+//         ));
+//         return matches ? decodeURIComponent(matches[1]) : undefined;
+//     }
+
+//     function join(arr /*, separator */) {
+//     var separator = arguments.length > 1 ? arguments[1] : ", ";
+//     return arr.filter(function(n){return n}).join(separator);
+//     }
+
+//     function geoQuality(qc_geo) {
+//     var localization = {
+//         "0": "точные",
+//         "1": "ближайший дом",
+//         "2": "улица",
+//         "3": "населенный пункт",
+//         "4": "город"
+//     };
+//     return localization[qc_geo] || qc_geo;
+//     }
+
+//     function geoLink(address) {
+//     return join(["<a target=\"_blank\" href=\"", 
+//                 "https://maps.yandex.ru/?text=", 
+//                 address.geo_lat, ",", address.geo_lon, "\">", 
+//                 address.geo_lat, ", ", address.geo_lon, "</a>"], "");
+//     }
+
+//     function showRegion(address) {
+//     $region.val(join([
+//         join([address.region_type, address.region], " "),
+//         join([address.area_type, address.area], " ")
+//     ]));
+//     }
+
+//     function showCity(address) {
+//     $city.val(join([
+//         join([address.city_type, address.city], " "),
+//         join([address.settlement_type, address.settlement], " ")
+//     ]));
+//     }
+
+//     function showStreet(address) {
+//     $street.val(
+//         join([address.street_type, address.street], " ")
+//     );
+//     }
+
+//     function showHouse(address) {
+//     $house.val(join([
+//         join([address.house_type, address.house], " "),
+//         join([address.block_type, address.block], " ")
+//     ]));
+//     }
+
+//     function showFlat(address) {
+//     $flat.val(
+//         join([address.flat_type, address.flat], " ")
+//     );
+//     }
+
+//     function showSelected(suggestion) {
+//     var address = suggestion.data;
+//     $('.sub_group, .sub_group_inline').show();
+//     showRegion(address);
+//     showCity(address);
+//     showStreet(address);
+//     showHouse(address);
+//     showFlat(address); 
+//     }
+
+//     $adress.suggestions({
+//     token: token,
+//     type: "ADDRESS",
+//     geoLocation: false,
+//     onSelect: showSelected
+//     });
+
+    
+// });
+</script>
+
+<!--div data-adress="29250" class="delivery__choose-adress">
+    <select name="" id="select_subway">
+        <option class="select__option" value="Выберите станцию">Выберите станцию</option>
+        <?php foreach($subway as $way):  ?>
+            <option class="select__option" value="<?=$way->name?>"><?=$way->name?></option>
+        <?php endforeach; ?>
+    </select>
+    <script>
+
+    </script>
+</div-->
+<div data-adress="624" class="delivery__choose-adress mt-5 delivery__map" data-adress="self">
+<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2003.1003374829208!2d30.339779616171192!3d59.86408007507304!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46963aaafda9c53f%3A0xe1c4654a691678a0!2z0YPQuy4g0JHQsNGB0YHQtdC50L3QsNGPLCA3MyDQutC-0YDQv9GD0YEgMSwg0KHQsNC90LrRgi3Qn9C10YLQtdGA0LHRg9GA0LMsIDE5NjIxMQ!5e0!3m2!1sru!2sru!4v1578538792759!5m2!1sru!2sru" width="600" height="450" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
 </div>

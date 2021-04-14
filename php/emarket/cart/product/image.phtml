@@ -10,19 +10,6 @@ $product = $variables;
 ?>
 
 <div class="col-md-2 col-sm-12 col-xs-12 order_img">
-	<?= $this->render(
-		[
-			'id' => $product['element_id'],
-			'field_name' => 'photo',
-			'src' => $this->getOrderItemPhotoPath($product),
-			'alt' => $this->getPhotoAlt($product['page']),
-			'title' => $this->getPhotoTitle($product['page']),
-			'width' => 215,
-			'height' => 150,
-			'objectId' => $product['page']->getObjectId(),
-			'folderHash' => $this->getPhotoDirHash($product['page']),
-			'fileHash' => $this->getPhotoPathHash($product['page']),
-		],
-		'library/thumbnail'
-	) ?>
+	<img src="<?=$this->thumb($this->getPhotoPath($product['page']),215)?>">
 </div>
+ 

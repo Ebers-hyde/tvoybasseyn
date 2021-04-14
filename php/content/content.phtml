@@ -4,6 +4,6 @@
 <?php if ($this->is404Page($variables)): ?>
 	<?= $this->render($variables, 'content/notfound') ?>
 <?php else: ?>
-	<?=($this->isHomePage($variables)||$page->id==2892)?$this->render($variables, 'content/home/index'):$this->render($variables,$this->renderPages($page)) ?>
+	<?=($this->isHomePage($variables))?$this->render($variables, 'content/home/index'):$this->render($variables,$this->renderPages($page)) ?>
 <?php endif; ?>
 

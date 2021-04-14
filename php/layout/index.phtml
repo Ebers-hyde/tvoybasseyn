@@ -49,6 +49,9 @@
 
 		exit();
 	}
+
+    $cart = $this->getCommonVar('cart');
+    $amount = (int) isset($cart['total-amount']) ? $cart['total-amount'] : 0;
 ?>
 <!DOCTYPE html>
 <html>
@@ -79,6 +82,28 @@
 
         <?= $this->render($variables, 'layout/main') ?>
 
+
+        <aside class="js-offcanvas cart-modal" data-offcanvas-options='{"modifiers":"right,fixed,overlay","resize":"true"}' id="cart"
+            role="complementary">
+            <div class="offcanvas-inner">
+                <div class="cart-header">
+                    <div class="d-flex">
+                        <img class="cart-header__icon" src="/templates/axlab_2018/images/icons/cart.svg">
+                        <span class="cart-header__text">Корзина
+                            <?php if ($amount == 0): ?>
+                            <span class="order_item_count">
+                                <?= $amount ?>
+                            </span> товаров
+                            <?php endif ?></span>
+                    </div>
+                    <img class="cart__close" src="/templates/axlab_2018/images/icons/close.svg">
+                </div>
+                <div class="container">
+
+                    <?= $this->render($cart, 'layout/header/cart_popup') ?>
+                </div>
+            </div>
+        </aside>
         
         <script type='text/javascript'>
         (function () {
@@ -293,6 +318,12 @@
                 spb: 'ул. Бассейная, д.73, корпус 1',
 				msk: 'Киевское шоссе, БЦ Румянцево, корпус Е', 
 				any: 'ул. Бассейная, д.73, корпус 1'
+            },
+            map: {
+                spb: '<iframe class="contacts__map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2003.1004996777938!2d30.339779615783712!3d59.86407738184916!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46963aaafda9c53f%3A0xe1c4654a691678a0!2z0YPQuy4g0JHQsNGB0YHQtdC50L3QsNGPLCA3MyDQutC-0YDQv9GD0YEgMSwg0KHQsNC90LrRgi3Qn9C10YLQtdGA0LHRg9GA0LMsIDE5NjIxMQ!5e0!3m2!1sru!2sru!4v1580406932524!5m2!1sru!2sru" width="600" height="450" frameborder="0" style="border:0;" allowfullscreen=""></iframe>',
+                // msk: '',
+				msk: '<iframe class="contacts__map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2252.1254147928125!2d37.43568151604289!3d55.63463230856709!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46b55289d4fa639f%3A0xcaf392ca401cb288!2z0JHQuNC30L3QtdGBLdC_0LDRgNC6INCg0YPQvNGP0L3RhtC10LLQvg!5e0!3m2!1sru!2sru!4v1583156838556!5m2!1sru!2sru"  style="border:0;" allowfullscreen=""></iframe>', 
+				any: '<iframe class="contacts__map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2003.1004996777938!2d30.339779615783712!3d59.86407738184916!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46963aaafda9c53f%3A0xe1c4654a691678a0!2z0YPQuy4g0JHQsNGB0YHQtdC50L3QsNGPLCA3MyDQutC-0YDQv9GD0YEgMSwg0KHQsNC90LrRgi3Qn9C10YLQtdGA0LHRg9GA0LMsIDE5NjIxMQ!5e0!3m2!1sru!2sru!4v1580406932524!5m2!1sru!2sru" width="600" height="450" frameborder="0" style="border:0;" allowfullscreen=""></iframe>'
             },
             system_email_to: {
                 spb: '959',

@@ -10,13 +10,13 @@ $paymentList = isset($variables['onestep']['payment']) ? $variables['onestep']['
 ?>
 
 <?php if ($paymentList): ?>
-	<div id="payment_choose" class="payment onestep del_row">
+	<div class="payment onestep del_row order_img_2">
 		<div class="del_content">
 			<h3 class="up input_capt">
 				<?= $this->translate('payment_type') ?>
 			</h3>
 
-			<?= $this->render(["paymentList" => $paymentList, "isOneStep" => true], 'emarket/payment/choose/list') ?>
+			<?= $this->render($paymentList, 'emarket/payment/choose/list') ?>
 		</div>
 	</div>
 <?php endif; ?>
