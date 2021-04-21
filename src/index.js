@@ -66,6 +66,7 @@ import './assets/css/blocks/select-phone.scss';
 import './assets/css/blocks/price.scss';
 import './assets/css/blocks/categorie.scss';
 import './assets/css/blocks/toogles.scss';
+import './assets/css/blocks/configurator.scss';
 
 
 // JS

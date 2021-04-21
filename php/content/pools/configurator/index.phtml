@@ -1,0 +1,66 @@
+<?php
+$p = $variables['page'];
+$pic = $p->getValue('header_pic');
+$header = $this->escape($variables['header']);
+?>
+
+<div class="center-wrap" style="padding-top: 2.1rem;">
+    <?= $this->render($variables, 'layout/header/titleWithBread') ?>
+</div>
+
+<div class="center-wrap" style="padding-top: 2.1rem;">
+    <div class="configurator">
+        <div class="configurator__options">
+            <div class="configurator__option">
+                <h6 class="configurator__option-header">Выберите модель *</h6>
+                <div class="configurator__option-window">
+                    <span class="series__modelName"><b>ROYAL 12037</b></span>
+                    <img class="series__modelImage" src="/images/catalog/abpool/royal_12037/left/R12037.svg">
+                    <span class="series__modelPrice"><b>780 000 ₽</b></span>
+                    <div class="product__specifications">
+                        <p class="product__specifications-item">Длина, м — <span>12 м</span></p>
+                        <p class="product__specifications-item">Ширина, м — <span>3.7 м</span></p>
+                        <p class="product__specifications-item">Глубина, м — <span>1.4 - 1.9 м</span></p>
+                    </div>
+                </div>
+            </div>
+            <div class="configurator__option">
+                <h6 class="configurator__option-header">Вариант исполнения</h6>
+                <div class="configurator__option-window centered">
+                    <div><span>Liner</span></div>
+                    <div><span><b>0 ₽</b></span></div>
+                </div>
+                <div class="configurator__option-window centered">
+                    <div><span>Cristal</span></div>
+                    <div><span><b>+140 000 ₽</b></span></div>
+                </div>
+            </div>
+            <div class="configurator__option">
+                <h6 class="configurator__option-header">Опции</h6>
+                <div class="configurator__option-grid">
+                    <div class="configurator__option-window centered">
+                        <img src="dist/assets/images/configurator/option_1.png" alt="">
+                        <div><span>Система самоочистки</span></div>
+                        <div><span><b>+140 000 ₽</b></span></div>
+                    </div>
+                    <div class="configurator__option-window centered">
+                        <img src="dist/assets/images/configurator/option_2.png" alt="">
+                        <div><span>Liner</span></div>
+                        <div><span><b>0 ₽</b></span></div>
+                    </div>
+                    <div class="configurator__option-window centered">
+                        <img src="dist/assets/images/configurator/option_3.png" alt="">
+                        <div><span>Liner</span></div>
+                        <div><span><b>0 ₽</b></span></div>
+                    </div>
+                    <div class="configurator__option-window centered">
+                        <img src="dist/assets/images/configurator/option_4.png" alt="">
+                        <div><span>Liner</span></div>
+                        <div><span><b>0 ₽</b></span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

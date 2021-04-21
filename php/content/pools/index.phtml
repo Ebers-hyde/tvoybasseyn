@@ -7,7 +7,7 @@ $catalog = $this->getProductsListFromCategory($variables['pageId'],100);
     <?= $this->render($variables, 'layout/header/titleWithBread') ?>
 </div>
     <div class="catalog-list">
-        <?php foreach($catalog['items'] as $category): ?>
+        <?php foreach($catalog['items'] as $category):  if ($category->name == 'Конфгуратор') continue;?>
         <?= $this->render($category, 'content/pools/preview') ?>
         <?php endforeach; ?>
         <?php if(count($catalog['items'])%3==2){ ?>

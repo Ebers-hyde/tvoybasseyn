@@ -1,4 +1,17 @@
-<?php $module = 'index'; if($variables['module']=='catalog'||$variables['domain-id']==2) $module = 'catalog'; ?>
+
+
+<?php $module = 'index'; if($variables['module']=='catalog'||$variables['domain-id']==2) $module = 'catalog'; 
+
+$catalog = $this->getChildCategories(['pageId'=>4573]);
+$childCategoryList = $catalog['lines'];
+if(!empty($variables['parents'])){
+  if(isset($variables['parents'][1]))
+    $subList = $this->getChildCategories(['pageId'=>$variables['parents'][1]->id]);
+  else
+    $subList = $this->getChildCategories($variables);
+}
+?>
+
 <header class="header anchors header--<?=$module?>">
       <div class="header__wrap">
         <div class="header__burger desktop--hide">
@@ -92,12 +105,13 @@
         </div>
       </aside>
     <section class="content">
+        <div class="content__overlay hidden"></div>
         <?= $this->render($this->macros('system', 'listErrorMessages'), 'library/errors') ?>
         <?= $this->render($variables, "{$variables['module']}/{$variables['method']}") ?>
 
         <?= $this->render($variables, 'blocks/forms/helpForm') ?>
 
-        <div class="mobile-menu mobile-menu--index">
+        <div class="mobile-menu mobile-menu--<?=$module?>">
           <div class="mobile-menu__wrap">
             <div class="mobile-menu__header">
               <div class="mobile-menu__act mobile-menu__act--close">
@@ -105,9 +119,14 @@
                   <path opacity="0.79" fill-rule="evenodd" clip-rule="evenodd" d="M15 1.5L13.5 0L7.5 6L1.5 0L0 1.5L6 7.5L0 13.5L1.5 15L7.5 9L13.5 15L15 13.5L9 7.5L15 1.5Z" fill="#575757"></path>
                 </svg>
               </div>
+              <div class="mobile-menu__act mobile-menu__act--back">
+              <svg xmlns="http://www.w3.org/2000/svg" width="15.969" height="12" viewBox="0 0 15.969 12"><defs><style>.cls-1{fill:#999;fill-rule:evenodd;}</style></defs><path data-name="Rounded Rectangle 982 copy" class="cls-1" d="M34,32H22.414l3.3,3.3A1,1,0,1,1,24.3,36.713l-4.978-4.978c-0.01-.01-0.024-0.012-0.034-0.022s-0.015-.041-0.03-0.058a0.974,0.974,0,0,1-.213-0.407,0.909,0.909,0,0,1-.024-0.123,0.982,0.982,0,0,1,.267-0.838c0.011-.011.025-0.014,0.036-0.024L24.3,25.287A1,1,0,0,1,25.713,26.7l-3.3,3.3H34A1,1,0,0,1,34,32Z" transform="translate(-19.031 -25)"></path></svg>
+              <span>Назад</span>
+              </div>
             </div>
             <div class="mobile-menu__list">
-              <nav class="sidebar__nav">
+              <nav class="sidebar__nav sidebar__nav--<?=$module?>">
+                <?php if($module === 'index'):?>
                 <ul class="sidebar__nav-list">
                   <li class="sidebar__nav-item"><a class="sidebar__nav-link" href="/pools_catalog/">
                       <svg viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -152,6 +171,44 @@
                         <path d="M6.81311 0V20H19.3406V0H6.81311ZM13.0768 5.97196C14.1484 5.97196 15.017 6.84057 15.017 7.91209C15.017 8.9836 14.1484 9.85222 13.0768 9.85222C12.0053 9.85222 11.1367 8.9836 11.1367 7.91209C11.1367 6.84057 12.0053 5.97196 13.0768 5.97196ZM9.56036 14.028C9.56036 12.0859 11.1347 10.5116 13.0768 10.5116C15.019 10.5116 16.5933 12.0859 16.5933 14.028H9.56036Z"></path>
                       </svg>Контакты</a></li>
                 </ul>
+                <?php else:?>
+                <ul class="sidebar__nav-list">
+                  <?php foreach($childCategoryList as $item){  ?>
+                  <? $subList = $this->getChildCategories(['pageId'=>$item['id']]); ?>
+                  <? $active = ''; ?>
+            
+                  <?php if ($item['id']==$variables['pageId']||$item['id']==$variables['parents'][1]->id) { $active = '';  } ?>
+
+                  <li class="sidebar__nav-item">
+                  <?php if ($subList['lines']):?>
+                  <a class="sidebar__nav-link sidebar__nav-linkDrop" data-drop="<?=$item['id']?>" href="<?=$item['link']?>">
+                    <svg class="sidebar__nav-linkArrow" viewBox="0 0 10 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M1.19621 0.209796C0.9026 -0.00805849 0.485936 0.0161474 0.21967 0.282414C-0.0732233 0.575307 -0.0732233 1.05018 0.21967 1.34307L7.93934 9.06274L0.21967 16.7824L0.147052 16.8665C-0.0708026 17.1601 -0.0465966 17.5768 0.21967 17.8431C0.512563 18.136 0.987437 18.136 1.28033 17.8431L9.53033 9.59307L9.60295 9.50896C9.8208 9.21534 9.7966 8.79868 9.53033 8.53241L1.28033 0.282414L1.19621 0.209796Z"></path>
+                    </svg><span><?=$item['text']?></span>
+                  </a>
+                  <?php else:?>
+                    <a class="sidebar__nav-link" data-drop="<?=$item['id']?>" href="<?=$item['link']?>">
+                    <span><?=$item['text']?></span>
+                    </a>
+                  <?php endif;?>
+                  </li>
+                <?php } ?>
+                </ul>
+                <?php foreach($childCategoryList as $item){  ?>
+      	        <? $subList = $this->getChildCategories(['pageId'=>$item['id']]); ?>
+                <? $active = ''; ?>
+
+                <?php if ($item['id']==$variables['pageId']||$item['id']==$variables['parents'][1]->id) { $active = '';  } ?>
+
+                <div class="sidebar__drop--mobile" data-drop="<?=$item['id']?>">
+                <?php foreach($subList['lines'] as $item){  ?>
+                  <ul class="sidebar__drop--mobile-list">
+                    <li class="sidebar__drop--mobile-title"><a href="<?=$item['link']?>"><?=$item['text']?></a></li>  
+                  </ul>
+                <?php } ?>
+                </div>
+                <?php } ?>
+                <?php endif;?>
               </nav>
               <div class="sidebar__bottom"> 
                 <a class="sidebar__bottom-shop" href="/shop/">Перейти в Интернет-Магазин</a>

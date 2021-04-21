@@ -14,7 +14,7 @@ if(!empty($variables['parents'])){
 
     <?php if ($item['id']==$variables['pageId']||$item['id']==$variables['parents'][1]->id) { $active = '';  } ?>
 
-        <div class="sidebar__drop" data-drop="item<?=$item['id']?>">
+        <div class="sidebar__drop" data-drop="<?=$item['id']?>">
           <?php foreach($subList['lines'] as $item){  ?>
             <ul class="sidebar__drop-list">
               <li class="sidebar__drop-title"><a href="<?=$item['link']?>"><?=$item['text']?></a></li>

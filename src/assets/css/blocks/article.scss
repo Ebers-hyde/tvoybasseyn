@@ -2,8 +2,11 @@
     font-size: 16px;
     line-height: 141.4%;
     color: #777777;
-    max-width: 750px;
     margin: 0 auto 50px;
+    max-width:700px;
+    margin: 0 auto;
+    margin-bottom: 6rem;
+
     p{ 
         line-height: 154.56%;
         margin-bottom: 20px;
@@ -38,14 +41,8 @@
         margin: 30px 0 25px;
         color: #000;
     }
-}
 
-
-
-.article{
-    max-width:700px;
-    margin: 0 auto;
-    margin-bottom: 6rem;
+    
     
     .article-contents {
         background: #f3f5f7;
@@ -209,7 +206,7 @@
     text-align: left;
     margin-bottom: 22px;
 
-    @media screen and (max-width:$large_mobile) {
+    @include mobile{
         font-size: 14px;
         font-style: normal;
         font-weight: 400;
@@ -218,7 +215,7 @@
         text-align: left;
         margin-bottom: 22px;
         margin-top: 8px;
-    } 
+    }
     
 }
 
