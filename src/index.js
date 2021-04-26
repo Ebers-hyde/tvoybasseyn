@@ -44,6 +44,7 @@ import './assets/css/blocks/footer.scss';
 import './assets/css/blocks/mobile-menu.scss';
 import './assets/css/blocks/popup.scss';
 import './assets/css/blocks/popup-form.scss';
+import './assets/css/blocks/series.scss';
 
 
 import './assets/css/blocks/btn.scss';
@@ -57,6 +58,7 @@ import './assets/css/blocks/basket.scss';
 import './assets/css/blocks/breadcrumbs.scss';
 import './assets/css/blocks/quantity.scss';
 import './assets/css/blocks/discount.scss';
+import './assets/css/blocks/filters.scss';
 
 import './assets/css/blocks/banner.scss';
 import './assets/css/blocks/history-slider.scss';
@@ -86,6 +88,7 @@ import './assets/js/product';
 import './assets/js/popup';
 import './assets/js/mobile-menu';
 import './assets/js/product-slider';
+import './assets/js/configurator';
 import './assets/js/filter';
 import './assets/js/select';
 import './assets/js/video';
@@ -95,5 +98,6 @@ import './assets/js/toogles';
 import './assets/js/drop-down';
 import './assets/js/compare';
 import './assets/js/likes';
+
 
 

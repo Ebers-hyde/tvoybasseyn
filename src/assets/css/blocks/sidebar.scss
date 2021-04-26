@@ -320,12 +320,12 @@
         .sidebar__nav-link {
             flex-direction: row-reverse;
             justify-content: flex-end;
-            align-items: center;
-            border-bottom: 1px solid #535A65;
-            padding: 1.8rem 0;
             &Drop {
                 justify-content: space-between;
             }
+            align-items: center;
+            border-bottom: 1px solid #535A65;
+            padding: 1.8rem 0;
             &:hover {
                 background-color: transparent;
 
@@ -352,13 +352,13 @@
             }
 
             svg {
-                width: 1rem;
+                min-width: 1rem;
                 margin-right: 0;
                 fill: #535A65;
                 transition: all 1s;
 
                 .mobile-menu & {
-                    width: 0.5rem;
+                    min-width: 0.5rem;
                 }
             }
         }

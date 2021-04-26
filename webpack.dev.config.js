@@ -9,14 +9,14 @@ const PATHS = {
 }
 const devWebpackConfig = merge(baseWebpackConfig, {
 	mode: 'development',
-	devServer: {
-		port: 8081,
-		hot: true,
-		overlay: {
-			warnings: true,
-			errors: true
-		}
-	},
+	// devServer: {
+	// 	port: 8081,
+	// 	hot: true,
+	// 	overlay: {
+	// 		warnings: true,
+	// 		errors: true
+	// 	}
+	// },
 	module: {
 		rules: [{
 				test: /\.css$/,

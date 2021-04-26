@@ -35,12 +35,15 @@
 
 		.sidebar__nav-link {
 			flex-direction: row-reverse;
-			justify-content: space-between;
+			justify-content: flex-end;
 			align-items: center;
 			border-bottom: 1px solid #535A65;
 			padding: 1.8rem 0;
 			color: #535A65;
 			font-size: 1.6rem;
+			&Drop {
+				justify-content: space-between;
+			}
 
 			&:hover {
 				background-color: transparent;

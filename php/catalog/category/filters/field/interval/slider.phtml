@@ -16,18 +16,17 @@ $data = $this->getSliderFilterFieldData($variables);
 	<svg class="select__arrow" width="6" height="4" viewBox="0 0 6 4" fill="none" xmlns="http://www.w3.org/2000/svg">
 	<path d="M2.86243 4L0.643236 0.25L5.08162 0.25L2.86243 4Z"></path>
 	</svg>
-	<div class="select__variants">
+	<div class="select__variants select__variants-range">
 		<div class="col-md-12 delta_price clearfix">
 			<input type="text" name="<?= $data['name_from'] ?>" value="<?= $data['selected_min'] ?>" data-minimum="<?= $data['min'] ?>" class="min float_left" />
-			<span>&mdash;</span>
 			<input type="text" name="<?= $data['name_to'] ?>" value="<?= $data['selected_max'] ?>" data-maximum="<?= $data['max'] ?>" class="max float_right" />
 		</div>
 
 		<div class="col-md-12 allHide clearfix">
 			<div class="col-md-12 price_progress">
+				<div class="range"></div>
 				<span class="min_val"></span>
 				<span class="max_val"></span>
-				<div class="range"></div>
 			</div>
 		</div>
 	</div>

@@ -9,14 +9,14 @@ $header = $this->escape($variables['header']);
 </div>
 
 <div class="center-wrap" style="padding-top: 2.1rem;">
-    <div class="configurator">
+    <div class="configurator active">
         <div class="configurator__options">
             <div class="configurator__option">
-                <h6 class="configurator__option-header">Выберите модель *</h6>
-                <div class="configurator__option-window">
-                    <span class="series__modelName"><b>ROYAL 12037</b></span>
+                <h6 class="configurator__option-header">Выберите модель <span style="color: red">*</span></h6>
+                <div class="configurator__option-window pool_window">
+                    <span class="series__modelName">ROYAL 12037</span>
                     <img class="series__modelImage" src="/images/catalog/abpool/royal_12037/left/R12037.svg">
-                    <span class="series__modelPrice"><b>780 000 ₽</b></span>
+                    <span class="series__modelPrice">780 000 ₽</span>
                     <div class="product__specifications">
                         <p class="product__specifications-item">Длина, м — <span>12 м</span></p>
                         <p class="product__specifications-item">Ширина, м — <span>3.7 м</span></p>
@@ -27,40 +27,640 @@ $header = $this->escape($variables['header']);
             <div class="configurator__option">
                 <h6 class="configurator__option-header">Вариант исполнения</h6>
                 <div class="configurator__option-window centered">
+                    <div class="info_icon-container">
+                        <svg class="info_icon" width="19" height="19" viewBox="0 0 19 19" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="9.29319" cy="9.29319" r="8.79319" fill="white" />
+                            <path d="M8.47921 7.23784H10.38L10.304 14.2077H8.40318L8.47921 7.23784ZM9.4372 5.89969C9.09253 5.89969 8.80361 5.79325 8.57045 5.58036C8.33728 5.35734 8.2207 5.08363 8.2207 4.75923C8.2207 4.43483 8.33728 4.16618 8.57045 3.9533C8.80361 3.73027 9.09253 3.61876 9.4372 3.61876C9.78188 3.61876 10.0708 3.7252 10.304 3.93809C10.5371 4.14084 10.6537 4.39935 10.6537 4.71361C10.6537 5.04815 10.5371 5.33199 10.304 5.56516C10.0809 5.78818 9.79201 5.89969 9.4372 5.89969Z" fill="#CBCBCB" />
+                        </svg>
+                    </div>
+                    <div class="window_info">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat deserunt alias repellat maiores.</p>
+                    </div>
                     <div><span>Liner</span></div>
-                    <div><span><b>0 ₽</b></span></div>
+                    <div><span>0 ₽</span></div>
                 </div>
                 <div class="configurator__option-window centered">
+                    <div class="info_icon-container">
+                        <svg class="info_icon" width="19" height="19" viewBox="0 0 19 19" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="9.29319" cy="9.29319" r="8.79319" fill="white" />
+                            <path d="M8.47921 7.23784H10.38L10.304 14.2077H8.40318L8.47921 7.23784ZM9.4372 5.89969C9.09253 5.89969 8.80361 5.79325 8.57045 5.58036C8.33728 5.35734 8.2207 5.08363 8.2207 4.75923C8.2207 4.43483 8.33728 4.16618 8.57045 3.9533C8.80361 3.73027 9.09253 3.61876 9.4372 3.61876C9.78188 3.61876 10.0708 3.7252 10.304 3.93809C10.5371 4.14084 10.6537 4.39935 10.6537 4.71361C10.6537 5.04815 10.5371 5.33199 10.304 5.56516C10.0809 5.78818 9.79201 5.89969 9.4372 5.89969Z" fill="#CBCBCB" />
+                        </svg>
+                    </div>
+                    <div class="window_info">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat deserunt alias repellat maiores.</p>
+                    </div>
                     <div><span>Cristal</span></div>
-                    <div><span><b>+140 000 ₽</b></span></div>
+                    <div><span>+140 000 ₽</span></div>
                 </div>
             </div>
             <div class="configurator__option">
                 <h6 class="configurator__option-header">Опции</h6>
                 <div class="configurator__option-grid">
                     <div class="configurator__option-window centered">
+                        <div class="info_icon-container">
+                            <svg class="info_icon" width="19" height="19" viewBox="0 0 19 19" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="9.29319" cy="9.29319" r="8.79319" fill="white" />
+                                <path d="M8.47921 7.23784H10.38L10.304 14.2077H8.40318L8.47921 7.23784ZM9.4372 5.89969C9.09253 5.89969 8.80361 5.79325 8.57045 5.58036C8.33728 5.35734 8.2207 5.08363 8.2207 4.75923C8.2207 4.43483 8.33728 4.16618 8.57045 3.9533C8.80361 3.73027 9.09253 3.61876 9.4372 3.61876C9.78188 3.61876 10.0708 3.7252 10.304 3.93809C10.5371 4.14084 10.6537 4.39935 10.6537 4.71361C10.6537 5.04815 10.5371 5.33199 10.304 5.56516C10.0809 5.78818 9.79201 5.89969 9.4372 5.89969Z" fill="#CBCBCB" />
+                            </svg>
+                        </div>
+                        <div class="window_info">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat deserunt alias repellat maiores.</p>
+                        </div>
                         <img src="dist/assets/images/configurator/option_1.png" alt="">
                         <div><span>Система самоочистки</span></div>
-                        <div><span><b>+140 000 ₽</b></span></div>
+                        <div><span>+140 000 ₽</span></div>
                     </div>
                     <div class="configurator__option-window centered">
+                        <div class="info_icon-container">
+                            <svg class="info_icon" width="19" height="19" viewBox="0 0 19 19" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="9.29319" cy="9.29319" r="8.79319" fill="white" />
+                                <path d="M8.47921 7.23784H10.38L10.304 14.2077H8.40318L8.47921 7.23784ZM9.4372 5.89969C9.09253 5.89969 8.80361 5.79325 8.57045 5.58036C8.33728 5.35734 8.2207 5.08363 8.2207 4.75923C8.2207 4.43483 8.33728 4.16618 8.57045 3.9533C8.80361 3.73027 9.09253 3.61876 9.4372 3.61876C9.78188 3.61876 10.0708 3.7252 10.304 3.93809C10.5371 4.14084 10.6537 4.39935 10.6537 4.71361C10.6537 5.04815 10.5371 5.33199 10.304 5.56516C10.0809 5.78818 9.79201 5.89969 9.4372 5.89969Z" fill="#CBCBCB" />
+                            </svg>
+                        </div>
+                        <div class="window_info">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat deserunt alias repellat maiores.</p>
+                        </div>
                         <img src="dist/assets/images/configurator/option_2.png" alt="">
-                        <div><span>Liner</span></div>
-                        <div><span><b>0 ₽</b></span></div>
+                        <div><span>Самонесущая конструкция</span></div>
                     </div>
                     <div class="configurator__option-window centered">
+                        <div class="info_icon-container">
+                            <svg class="info_icon" width="19" height="19" viewBox="0 0 19 19" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="9.29319" cy="9.29319" r="8.79319" fill="white" />
+                                <path d="M8.47921 7.23784H10.38L10.304 14.2077H8.40318L8.47921 7.23784ZM9.4372 5.89969C9.09253 5.89969 8.80361 5.79325 8.57045 5.58036C8.33728 5.35734 8.2207 5.08363 8.2207 4.75923C8.2207 4.43483 8.33728 4.16618 8.57045 3.9533C8.80361 3.73027 9.09253 3.61876 9.4372 3.61876C9.78188 3.61876 10.0708 3.7252 10.304 3.93809C10.5371 4.14084 10.6537 4.39935 10.6537 4.71361C10.6537 5.04815 10.5371 5.33199 10.304 5.56516C10.0809 5.78818 9.79201 5.89969 9.4372 5.89969Z" fill="#CBCBCB" />
+                            </svg>
+                        </div>
+                        <div class="window_info">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat deserunt alias repellat maiores.</p>
+                        </div>
                         <img src="dist/assets/images/configurator/option_3.png" alt="">
-                        <div><span>Liner</span></div>
-                        <div><span><b>0 ₽</b></span></div>
+                        <div><span>Бордюрный камень</span></div>
                     </div>
                     <div class="configurator__option-window centered">
+                        <div class="info_icon-container">
+                            <svg class="info_icon" width="19" height="19" viewBox="0 0 19 19" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="9.29319" cy="9.29319" r="8.79319" fill="white" />
+                                <path d="M8.47921 7.23784H10.38L10.304 14.2077H8.40318L8.47921 7.23784ZM9.4372 5.89969C9.09253 5.89969 8.80361 5.79325 8.57045 5.58036C8.33728 5.35734 8.2207 5.08363 8.2207 4.75923C8.2207 4.43483 8.33728 4.16618 8.57045 3.9533C8.80361 3.73027 9.09253 3.61876 9.4372 3.61876C9.78188 3.61876 10.0708 3.7252 10.304 3.93809C10.5371 4.14084 10.6537 4.39935 10.6537 4.71361C10.6537 5.04815 10.5371 5.33199 10.304 5.56516C10.0809 5.78818 9.79201 5.89969 9.4372 5.89969Z" fill="#CBCBCB" />
+                            </svg>
+                        </div>
+                        <div class="window_info">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat deserunt alias repellat maiores.</p>
+                        </div>
                         <img src="dist/assets/images/configurator/option_4.png" alt="">
-                        <div><span>Liner</span></div>
-                        <div><span><b>0 ₽</b></span></div>
+                        <div><span>Утепление чаши</span></div>
                     </div>
                 </div>
             </div>
         </div>
-
+        <div class="configurator__equipment">
+            <h5 class="configurator__equipment-title">Основное оборудование</h5>
+            <div class="configurator__equipment-grid">
+                <?=$this->render($variables,'content/pools/configurator/option_window')?>
+                <div class="configurator__option-window configurator__option-window_modified toggling_module">
+                    <div class="info_icon-container">
+                        <svg class="info_icon" width="19" height="19" viewBox="0 0 19 19" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="9.29319" cy="9.29319" r="8.79319" fill="white" />
+                            <path d="M8.47921 7.23784H10.38L10.304 14.2077H8.40318L8.47921 7.23784ZM9.4372 5.89969C9.09253 5.89969 8.80361 5.79325 8.57045 5.58036C8.33728 5.35734 8.2207 5.08363 8.2207 4.75923C8.2207 4.43483 8.33728 4.16618 8.57045 3.9533C8.80361 3.73027 9.09253 3.61876 9.4372 3.61876C9.78188 3.61876 10.0708 3.7252 10.304 3.93809C10.5371 4.14084 10.6537 4.39935 10.6537 4.71361C10.6537 5.04815 10.5371 5.33199 10.304 5.56516C10.0809 5.78818 9.79201 5.89969 9.4372 5.89969Z" fill="#CBCBCB" />
+                        </svg>
+                    </div>
+                    <div class="window_info">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat deserunt alias repellat maiores.</p>
+                    </div>
+                    <div><span>Франция</span></div>
+                    <div><span>46 000 ₽</span></div>
+                    <img class='option-window_country' src="dist/assets/images/configurator/gas_tank.png" alt="">
+                    <div class="change_icon"><img src="dist/assets/images/configurator/icons/change.png" alt=""></div>
+                </div>
+                <div class="configurator__option-window centered toggling_module">
+                    <div class="info_icon-container">
+                        <svg class="info_icon" width="19" height="19" viewBox="0 0 19 19" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="9.29319" cy="9.29319" r="8.79319" fill="white" />
+                            <path d="M8.47921 7.23784H10.38L10.304 14.2077H8.40318L8.47921 7.23784ZM9.4372 5.89969C9.09253 5.89969 8.80361 5.79325 8.57045 5.58036C8.33728 5.35734 8.2207 5.08363 8.2207 4.75923C8.2207 4.43483 8.33728 4.16618 8.57045 3.9533C8.80361 3.73027 9.09253 3.61876 9.4372 3.61876C9.78188 3.61876 10.0708 3.7252 10.304 3.93809C10.5371 4.14084 10.6537 4.39935 10.6537 4.71361C10.6537 5.04815 10.5371 5.33199 10.304 5.56516C10.0809 5.78818 9.79201 5.89969 9.4372 5.89969Z" fill="#CBCBCB" />
+                        </svg>
+                    </div>
+                    <div class="window_info">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat deserunt alias repellat maiores.</p>
+                    </div>
+                    <img src="dist/assets/images/configurator/equipment_main.png" alt="">
+                    <div><span>Трубы и фитинги</span></div>
+                    <div class="change_icon"><img src="dist/assets/images/configurator/icons/change.png" alt=""></div>
+                </div>
+                <div class="configurator__option-window centered toggling_module">
+                    <div class="info_icon-container">
+                        <svg class="info_icon" width="19" height="19" viewBox="0 0 19 19" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="9.29319" cy="9.29319" r="8.79319" fill="white" />
+                            <path d="M8.47921 7.23784H10.38L10.304 14.2077H8.40318L8.47921 7.23784ZM9.4372 5.89969C9.09253 5.89969 8.80361 5.79325 8.57045 5.58036C8.33728 5.35734 8.2207 5.08363 8.2207 4.75923C8.2207 4.43483 8.33728 4.16618 8.57045 3.9533C8.80361 3.73027 9.09253 3.61876 9.4372 3.61876C9.78188 3.61876 10.0708 3.7252 10.304 3.93809C10.5371 4.14084 10.6537 4.39935 10.6537 4.71361C10.6537 5.04815 10.5371 5.33199 10.304 5.56516C10.0809 5.78818 9.79201 5.89969 9.4372 5.89969Z" fill="#CBCBCB" />
+                        </svg>
+                    </div>
+                    <div class="window_info">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat deserunt alias repellat maiores.</p>
+                    </div>
+                    <img src="dist/assets/images/configurator/equipment_main.png" alt="">
+                    <div><span>Автоматика</span></div>
+                    <div class="change_icon"><img src="dist/assets/images/configurator/icons/change.png" alt=""></div>
+                </div>
+            </div>
+        </div>
+        <div class="configurator__equipment">
+            <h5 class="configurator__equipment-title">Дополнительное оборудование</h5>
+            <div class="configurator__equipment-grid">
+                <div class="configurator__option-window centered">
+                    <div class="info_icon-container">
+                        <svg class="info_icon" width="19" height="19" viewBox="0 0 19 19" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="9.29319" cy="9.29319" r="8.79319" fill="white" />
+                            <path d="M8.47921 7.23784H10.38L10.304 14.2077H8.40318L8.47921 7.23784ZM9.4372 5.89969C9.09253 5.89969 8.80361 5.79325 8.57045 5.58036C8.33728 5.35734 8.2207 5.08363 8.2207 4.75923C8.2207 4.43483 8.33728 4.16618 8.57045 3.9533C8.80361 3.73027 9.09253 3.61876 9.4372 3.61876C9.78188 3.61876 10.0708 3.7252 10.304 3.93809C10.5371 4.14084 10.6537 4.39935 10.6537 4.71361C10.6537 5.04815 10.5371 5.33199 10.304 5.56516C10.0809 5.78818 9.79201 5.89969 9.4372 5.89969Z" fill="#CBCBCB" />
+                        </svg>
+                    </div>
+                    <div class="window_info">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat deserunt alias repellat maiores.</p>
+                    </div>
+                    <img src="dist/assets/images/configurator/equipment_lights.png" alt="">
+                    <div><span>Подводное освещение</span></div>
+                </div>
+                <div class="configurator__option-window centered">
+                    <div class="info_icon-container">
+                        <svg class="info_icon" width="19" height="19" viewBox="0 0 19 19" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="9.29319" cy="9.29319" r="8.79319" fill="white" />
+                            <path d="M8.47921 7.23784H10.38L10.304 14.2077H8.40318L8.47921 7.23784ZM9.4372 5.89969C9.09253 5.89969 8.80361 5.79325 8.57045 5.58036C8.33728 5.35734 8.2207 5.08363 8.2207 4.75923C8.2207 4.43483 8.33728 4.16618 8.57045 3.9533C8.80361 3.73027 9.09253 3.61876 9.4372 3.61876C9.78188 3.61876 10.0708 3.7252 10.304 3.93809C10.5371 4.14084 10.6537 4.39935 10.6537 4.71361C10.6537 5.04815 10.5371 5.33199 10.304 5.56516C10.0809 5.78818 9.79201 5.89969 9.4372 5.89969Z" fill="#CBCBCB" />
+                        </svg>
+                    </div>
+                    <div class="window_info">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat deserunt alias repellat maiores.</p>
+                    </div>
+                    <img src="dist/assets/images/configurator/equipment_desinfection.png" alt="">
+                    <div><span>Дезинфекция</span></div>
+                </div>
+                <div class="configurator__option-window centered">
+                    <div class="info_icon-container">
+                        <svg class="info_icon" width="19" height="19" viewBox="0 0 19 19" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="9.29319" cy="9.29319" r="8.79319" fill="white" />
+                            <path d="M8.47921 7.23784H10.38L10.304 14.2077H8.40318L8.47921 7.23784ZM9.4372 5.89969C9.09253 5.89969 8.80361 5.79325 8.57045 5.58036C8.33728 5.35734 8.2207 5.08363 8.2207 4.75923C8.2207 4.43483 8.33728 4.16618 8.57045 3.9533C8.80361 3.73027 9.09253 3.61876 9.4372 3.61876C9.78188 3.61876 10.0708 3.7252 10.304 3.93809C10.5371 4.14084 10.6537 4.39935 10.6537 4.71361C10.6537 5.04815 10.5371 5.33199 10.304 5.56516C10.0809 5.78818 9.79201 5.89969 9.4372 5.89969Z" fill="#CBCBCB" />
+                        </svg>
+                    </div>
+                    <div class="window_info">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat deserunt alias repellat maiores.</p>
+                    </div>
+                    <img src="dist/assets/images/configurator/equipment_module.png" alt="">
+                    <div><span>Аттракционы</span></div>
+                </div>
+                <div class="configurator__option-window centered">
+                    <div class="info_icon-container">
+                        <svg class="info_icon" width="19" height="19" viewBox="0 0 19 19" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="9.29319" cy="9.29319" r="8.79319" fill="white" />
+                            <path d="M8.47921 7.23784H10.38L10.304 14.2077H8.40318L8.47921 7.23784ZM9.4372 5.89969C9.09253 5.89969 8.80361 5.79325 8.57045 5.58036C8.33728 5.35734 8.2207 5.08363 8.2207 4.75923C8.2207 4.43483 8.33728 4.16618 8.57045 3.9533C8.80361 3.73027 9.09253 3.61876 9.4372 3.61876C9.78188 3.61876 10.0708 3.7252 10.304 3.93809C10.5371 4.14084 10.6537 4.39935 10.6537 4.71361C10.6537 5.04815 10.5371 5.33199 10.304 5.56516C10.0809 5.78818 9.79201 5.89969 9.4372 5.89969Z" fill="#CBCBCB" />
+                        </svg>
+                    </div>
+                    <div class="window_info">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat deserunt alias repellat maiores.</p>
+                    </div>
+                    <img src="dist/assets/images/configurator/equipment_module.png" alt="">
+                    <div><span>Лестницы и поручни</span></div>
+                </div>
+            </div>
+        </div>
+        <div class="configurator__equipment">
+            <h5 class="configurator__equipment-title">Аттракционы</h5>
+            <div class="configurator__equipment-grid">
+                <div class="configurator__option-window centered toggling_module">
+                    <div class="info_icon-container">
+                        <svg class="info_icon" width="19" height="19" viewBox="0 0 19 19" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="9.29319" cy="9.29319" r="8.79319" fill="white" />
+                            <path d="M8.47921 7.23784H10.38L10.304 14.2077H8.40318L8.47921 7.23784ZM9.4372 5.89969C9.09253 5.89969 8.80361 5.79325 8.57045 5.58036C8.33728 5.35734 8.2207 5.08363 8.2207 4.75923C8.2207 4.43483 8.33728 4.16618 8.57045 3.9533C8.80361 3.73027 9.09253 3.61876 9.4372 3.61876C9.78188 3.61876 10.0708 3.7252 10.304 3.93809C10.5371 4.14084 10.6537 4.39935 10.6537 4.71361C10.6537 5.04815 10.5371 5.33199 10.304 5.56516C10.0809 5.78818 9.79201 5.89969 9.4372 5.89969Z" fill="#CBCBCB" />
+                        </svg>
+                    </div>
+                    <div class="window_info">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat deserunt alias repellat maiores.</p>
+                    </div>
+                    <img src="dist/assets/images/configurator/equipment_module.png" alt="">
+                    <div><span>Противоток</span></div>
+                </div>
+                <div class="configurator__option-window centered toggling_module">
+                    <div class="info_icon-container">
+                        <svg class="info_icon" width="19" height="19" viewBox="0 0 19 19" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="9.29319" cy="9.29319" r="8.79319" fill="white" />
+                            <path d="M8.47921 7.23784H10.38L10.304 14.2077H8.40318L8.47921 7.23784ZM9.4372 5.89969C9.09253 5.89969 8.80361 5.79325 8.57045 5.58036C8.33728 5.35734 8.2207 5.08363 8.2207 4.75923C8.2207 4.43483 8.33728 4.16618 8.57045 3.9533C8.80361 3.73027 9.09253 3.61876 9.4372 3.61876C9.78188 3.61876 10.0708 3.7252 10.304 3.93809C10.5371 4.14084 10.6537 4.39935 10.6537 4.71361C10.6537 5.04815 10.5371 5.33199 10.304 5.56516C10.0809 5.78818 9.79201 5.89969 9.4372 5.89969Z" fill="#CBCBCB" />
+                        </svg>
+                    </div>
+                    <div class="window_info">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat deserunt alias repellat maiores.</p>
+                    </div>
+                    <img src="dist/assets/images/configurator/equipment_module.png" alt="">
+                    <div><span>Гейзер</span></div>
+                </div>
+                <div class="configurator__option-window centered toggling_module">
+                    <div class="info_icon-container">
+                        <svg class="info_icon" width="19" height="19" viewBox="0 0 19 19" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="9.29319" cy="9.29319" r="8.79319" fill="white" />
+                            <path d="M8.47921 7.23784H10.38L10.304 14.2077H8.40318L8.47921 7.23784ZM9.4372 5.89969C9.09253 5.89969 8.80361 5.79325 8.57045 5.58036C8.33728 5.35734 8.2207 5.08363 8.2207 4.75923C8.2207 4.43483 8.33728 4.16618 8.57045 3.9533C8.80361 3.73027 9.09253 3.61876 9.4372 3.61876C9.78188 3.61876 10.0708 3.7252 10.304 3.93809C10.5371 4.14084 10.6537 4.39935 10.6537 4.71361C10.6537 5.04815 10.5371 5.33199 10.304 5.56516C10.0809 5.78818 9.79201 5.89969 9.4372 5.89969Z" fill="#CBCBCB" />
+                        </svg>
+                    </div>
+                    <div class="window_info">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat deserunt alias repellat maiores.</p>
+                    </div>
+                    <img src="dist/assets/images/configurator/equipment_module.png" alt="">
+                    <div><span>Гидромассаж</span></div>
+                </div>
+                <div class="configurator__option-window centered toggling_module">
+                    <div class="info_icon-container">
+                        <svg class="info_icon" width="19" height="19" viewBox="0 0 19 19" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="9.29319" cy="9.29319" r="8.79319" fill="white" />
+                            <path d="M8.47921 7.23784H10.38L10.304 14.2077H8.40318L8.47921 7.23784ZM9.4372 5.89969C9.09253 5.89969 8.80361 5.79325 8.57045 5.58036C8.33728 5.35734 8.2207 5.08363 8.2207 4.75923C8.2207 4.43483 8.33728 4.16618 8.57045 3.9533C8.80361 3.73027 9.09253 3.61876 9.4372 3.61876C9.78188 3.61876 10.0708 3.7252 10.304 3.93809C10.5371 4.14084 10.6537 4.39935 10.6537 4.71361C10.6537 5.04815 10.5371 5.33199 10.304 5.56516C10.0809 5.78818 9.79201 5.89969 9.4372 5.89969Z" fill="#CBCBCB" />
+                        </svg>
+                    </div>
+                    <div class="window_info">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat deserunt alias repellat maiores.</p>
+                    </div>
+                    <img src="dist/assets/images/configurator/equipment_module.png" alt="">
+                    <div><span>Водопад</span></div>
+                </div>
+                <div class="configurator__option-window centered toggling_module">
+                    <div class="info_icon-container">
+                        <svg class="info_icon" width="19" height="19" viewBox="0 0 19 19" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="9.29319" cy="9.29319" r="8.79319" fill="white" />
+                            <path d="M8.47921 7.23784H10.38L10.304 14.2077H8.40318L8.47921 7.23784ZM9.4372 5.89969C9.09253 5.89969 8.80361 5.79325 8.57045 5.58036C8.33728 5.35734 8.2207 5.08363 8.2207 4.75923C8.2207 4.43483 8.33728 4.16618 8.57045 3.9533C8.80361 3.73027 9.09253 3.61876 9.4372 3.61876C9.78188 3.61876 10.0708 3.7252 10.304 3.93809C10.5371 4.14084 10.6537 4.39935 10.6537 4.71361C10.6537 5.04815 10.5371 5.33199 10.304 5.56516C10.0809 5.78818 9.79201 5.89969 9.4372 5.89969Z" fill="#CBCBCB" />
+                        </svg>
+                    </div>
+                    <div class="window_info">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat deserunt alias repellat maiores.</p>
+                    </div>
+                    <img src="dist/assets/images/configurator/equipment_module.png" alt="">
+                    <div><span>Горки</span></div>
+                </div>
+            </div>
+        </div>
+        <div class="configurator__equipment">
+            <h5 class="configurator__equipment-title">Лестницы и поручни</h5>
+            <div class="configurator__equipment-grid">
+                <div class="configurator__option-window centered toggling_module">
+                    <div class="info_icon-container">
+                        <svg class="info_icon" width="19" height="19" viewBox="0 0 19 19" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="9.29319" cy="9.29319" r="8.79319" fill="white" />
+                            <path d="M8.47921 7.23784H10.38L10.304 14.2077H8.40318L8.47921 7.23784ZM9.4372 5.89969C9.09253 5.89969 8.80361 5.79325 8.57045 5.58036C8.33728 5.35734 8.2207 5.08363 8.2207 4.75923C8.2207 4.43483 8.33728 4.16618 8.57045 3.9533C8.80361 3.73027 9.09253 3.61876 9.4372 3.61876C9.78188 3.61876 10.0708 3.7252 10.304 3.93809C10.5371 4.14084 10.6537 4.39935 10.6537 4.71361C10.6537 5.04815 10.5371 5.33199 10.304 5.56516C10.0809 5.78818 9.79201 5.89969 9.4372 5.89969Z" fill="#CBCBCB" />
+                        </svg>
+                    </div>
+                    <div class="window_info">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat deserunt alias repellat maiores.</p>
+                    </div>
+                    <img src="dist/assets/images/configurator/equipment_module.png" alt="">
+                    <div><span>Поручень</span></div>
+                </div>
+                <div class="configurator__option-window centered toggling_module">
+                    <div class="info_icon-container">
+                        <svg class="info_icon" width="19" height="19" viewBox="0 0 19 19" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="9.29319" cy="9.29319" r="8.79319" fill="white" />
+                            <path d="M8.47921 7.23784H10.38L10.304 14.2077H8.40318L8.47921 7.23784ZM9.4372 5.89969C9.09253 5.89969 8.80361 5.79325 8.57045 5.58036C8.33728 5.35734 8.2207 5.08363 8.2207 4.75923C8.2207 4.43483 8.33728 4.16618 8.57045 3.9533C8.80361 3.73027 9.09253 3.61876 9.4372 3.61876C9.78188 3.61876 10.0708 3.7252 10.304 3.93809C10.5371 4.14084 10.6537 4.39935 10.6537 4.71361C10.6537 5.04815 10.5371 5.33199 10.304 5.56516C10.0809 5.78818 9.79201 5.89969 9.4372 5.89969Z" fill="#CBCBCB" />
+                        </svg>
+                    </div>
+                    <div class="window_info">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat deserunt alias repellat maiores.</p>
+                    </div>
+                    <img src="dist/assets/images/configurator/equipment_module.png" alt="">
+                    <div><span>Лестница</span></div>
+                </div>
+            </div>
+        </div>
+        <div class="configurator__equipment">
+            <h5 class="configurator__equipment-title">Покрытие воды</h5>
+            <div class="configurator__equipment-grid">
+                <div class="configurator__option-window centered toggling_module">
+                    <div class="info_icon-container">
+                        <svg class="info_icon" width="19" height="19" viewBox="0 0 19 19" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="9.29319" cy="9.29319" r="8.79319" fill="white" />
+                            <path d="M8.47921 7.23784H10.38L10.304 14.2077H8.40318L8.47921 7.23784ZM9.4372 5.89969C9.09253 5.89969 8.80361 5.79325 8.57045 5.58036C8.33728 5.35734 8.2207 5.08363 8.2207 4.75923C8.2207 4.43483 8.33728 4.16618 8.57045 3.9533C8.80361 3.73027 9.09253 3.61876 9.4372 3.61876C9.78188 3.61876 10.0708 3.7252 10.304 3.93809C10.5371 4.14084 10.6537 4.39935 10.6537 4.71361C10.6537 5.04815 10.5371 5.33199 10.304 5.56516C10.0809 5.78818 9.79201 5.89969 9.4372 5.89969Z" fill="#CBCBCB" />
+                        </svg>
+                    </div>
+                    <div class="window_info">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat deserunt alias repellat maiores.</p>
+                    </div>
+                    <img src="dist/assets/images/configurator/equipment_module.png" alt="">
+                    <div><span>Пузырьковая пленка</span></div>
+                </div>
+                <div class="configurator__option-window centered toggling_module">
+                    <div class="info_icon-container">
+                        <svg class="info_icon" width="19" height="19" viewBox="0 0 19 19" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="9.29319" cy="9.29319" r="8.79319" fill="white" />
+                            <path d="M8.47921 7.23784H10.38L10.304 14.2077H8.40318L8.47921 7.23784ZM9.4372 5.89969C9.09253 5.89969 8.80361 5.79325 8.57045 5.58036C8.33728 5.35734 8.2207 5.08363 8.2207 4.75923C8.2207 4.43483 8.33728 4.16618 8.57045 3.9533C8.80361 3.73027 9.09253 3.61876 9.4372 3.61876C9.78188 3.61876 10.0708 3.7252 10.304 3.93809C10.5371 4.14084 10.6537 4.39935 10.6537 4.71361C10.6537 5.04815 10.5371 5.33199 10.304 5.56516C10.0809 5.78818 9.79201 5.89969 9.4372 5.89969Z" fill="#CBCBCB" />
+                        </svg>
+                    </div>
+                    <div class="window_info">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat deserunt alias repellat maiores.</p>
+                    </div>
+                    <img src="dist/assets/images/configurator/equipment_module.png" alt="">
+                    <div><span>Жалюзийные покрытия</span></div>
+                </div>
+                <div class="configurator__option-window centered toggling_module">
+                    <div class="info_icon-container">
+                        <svg class="info_icon" width="19" height="19" viewBox="0 0 19 19" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="9.29319" cy="9.29319" r="8.79319" fill="white" />
+                            <path d="M8.47921 7.23784H10.38L10.304 14.2077H8.40318L8.47921 7.23784ZM9.4372 5.89969C9.09253 5.89969 8.80361 5.79325 8.57045 5.58036C8.33728 5.35734 8.2207 5.08363 8.2207 4.75923C8.2207 4.43483 8.33728 4.16618 8.57045 3.9533C8.80361 3.73027 9.09253 3.61876 9.4372 3.61876C9.78188 3.61876 10.0708 3.7252 10.304 3.93809C10.5371 4.14084 10.6537 4.39935 10.6537 4.71361C10.6537 5.04815 10.5371 5.33199 10.304 5.56516C10.0809 5.78818 9.79201 5.89969 9.4372 5.89969Z" fill="#CBCBCB" />
+                        </svg>
+                    </div>
+                    <div class="window_info">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat deserunt alias repellat maiores.</p>
+                    </div>
+                    <img src="dist/assets/images/configurator/equipment_module.png" alt="">
+                    <div><span>Павильон</span></div>
+                </div>
+            </div>
+        </div>
+        <div class="configurator__equipment">
+            <h5 class="configurator__equipment-title">Очистка дна и стен</h5>
+            <div class="configurator__equipment-grid">
+                <div class="configurator__option-window centered toggling_module">
+                    <div class="info_icon-container">
+                        <svg class="info_icon" width="19" height="19" viewBox="0 0 19 19" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="9.29319" cy="9.29319" r="8.79319" fill="white" />
+                            <path d="M8.47921 7.23784H10.38L10.304 14.2077H8.40318L8.47921 7.23784ZM9.4372 5.89969C9.09253 5.89969 8.80361 5.79325 8.57045 5.58036C8.33728 5.35734 8.2207 5.08363 8.2207 4.75923C8.2207 4.43483 8.33728 4.16618 8.57045 3.9533C8.80361 3.73027 9.09253 3.61876 9.4372 3.61876C9.78188 3.61876 10.0708 3.7252 10.304 3.93809C10.5371 4.14084 10.6537 4.39935 10.6537 4.71361C10.6537 5.04815 10.5371 5.33199 10.304 5.56516C10.0809 5.78818 9.79201 5.89969 9.4372 5.89969Z" fill="#CBCBCB" />
+                        </svg>
+                    </div>
+                    <div class="window_info">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat deserunt alias repellat maiores.</p>
+                    </div>
+                    <img src="dist/assets/images/configurator/equipment_module.png" alt="">
+                    <div><span>Вручную</span></div>
+                </div>
+                <div class="configurator__option-window centered toggling_module">
+                    <div class="info_icon-container">
+                        <svg class="info_icon" width="19" height="19" viewBox="0 0 19 19" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="9.29319" cy="9.29319" r="8.79319" fill="white" />
+                            <path d="M8.47921 7.23784H10.38L10.304 14.2077H8.40318L8.47921 7.23784ZM9.4372 5.89969C9.09253 5.89969 8.80361 5.79325 8.57045 5.58036C8.33728 5.35734 8.2207 5.08363 8.2207 4.75923C8.2207 4.43483 8.33728 4.16618 8.57045 3.9533C8.80361 3.73027 9.09253 3.61876 9.4372 3.61876C9.78188 3.61876 10.0708 3.7252 10.304 3.93809C10.5371 4.14084 10.6537 4.39935 10.6537 4.71361C10.6537 5.04815 10.5371 5.33199 10.304 5.56516C10.0809 5.78818 9.79201 5.89969 9.4372 5.89969Z" fill="#CBCBCB" />
+                        </svg>
+                    </div>
+                    <div class="window_info">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat deserunt alias repellat maiores.</p>
+                    </div>
+                    <img src="dist/assets/images/configurator/equipment_module.png" alt="">
+                    <div><span>Автоматически</span></div>
+                </div>
+            </div>
+        </div>
+        <div class="configurator__equipment">
+            <h5 class="configurator__equipment-title">Дезинфекция</h5>
+            <div class="configurator__equipment-grid">
+                <div class="configurator__option-window centered toggling_module">
+                    <div class="info_icon-container">
+                        <svg class="info_icon" width="19" height="19" viewBox="0 0 19 19" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="9.29319" cy="9.29319" r="8.79319" fill="white" />
+                            <path d="M8.47921 7.23784H10.38L10.304 14.2077H8.40318L8.47921 7.23784ZM9.4372 5.89969C9.09253 5.89969 8.80361 5.79325 8.57045 5.58036C8.33728 5.35734 8.2207 5.08363 8.2207 4.75923C8.2207 4.43483 8.33728 4.16618 8.57045 3.9533C8.80361 3.73027 9.09253 3.61876 9.4372 3.61876C9.78188 3.61876 10.0708 3.7252 10.304 3.93809C10.5371 4.14084 10.6537 4.39935 10.6537 4.71361C10.6537 5.04815 10.5371 5.33199 10.304 5.56516C10.0809 5.78818 9.79201 5.89969 9.4372 5.89969Z" fill="#CBCBCB" />
+                        </svg>
+                    </div>
+                    <div class="window_info">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat deserunt alias repellat maiores.</p>
+                    </div>
+                    <img src="dist/assets/images/configurator/equipment_module.png" alt="">
+                    <div><span>Ручная</span></div>
+                </div>
+                <div class="configurator__option-window centered toggling_module">
+                    <div class="info_icon-container">
+                        <svg class="info_icon" width="19" height="19" viewBox="0 0 19 19" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="9.29319" cy="9.29319" r="8.79319" fill="white" />
+                            <path d="M8.47921 7.23784H10.38L10.304 14.2077H8.40318L8.47921 7.23784ZM9.4372 5.89969C9.09253 5.89969 8.80361 5.79325 8.57045 5.58036C8.33728 5.35734 8.2207 5.08363 8.2207 4.75923C8.2207 4.43483 8.33728 4.16618 8.57045 3.9533C8.80361 3.73027 9.09253 3.61876 9.4372 3.61876C9.78188 3.61876 10.0708 3.7252 10.304 3.93809C10.5371 4.14084 10.6537 4.39935 10.6537 4.71361C10.6537 5.04815 10.5371 5.33199 10.304 5.56516C10.0809 5.78818 9.79201 5.89969 9.4372 5.89969Z" fill="#CBCBCB" />
+                        </svg>
+                    </div>
+                    <div class="window_info">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat deserunt alias repellat maiores.</p>
+                    </div>
+                    <img src="dist/assets/images/configurator/equipment_module.png" alt="">
+                    <div><span>Автоматическая</span></div>
+                </div>
+                <div class="configurator__option-window centered toggling_module">
+                    <div class="info_icon-container">
+                        <svg class="info_icon" width="19" height="19" viewBox="0 0 19 19" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="9.29319" cy="9.29319" r="8.79319" fill="white" />
+                            <path d="M8.47921 7.23784H10.38L10.304 14.2077H8.40318L8.47921 7.23784ZM9.4372 5.89969C9.09253 5.89969 8.80361 5.79325 8.57045 5.58036C8.33728 5.35734 8.2207 5.08363 8.2207 4.75923C8.2207 4.43483 8.33728 4.16618 8.57045 3.9533C8.80361 3.73027 9.09253 3.61876 9.4372 3.61876C9.78188 3.61876 10.0708 3.7252 10.304 3.93809C10.5371 4.14084 10.6537 4.39935 10.6537 4.71361C10.6537 5.04815 10.5371 5.33199 10.304 5.56516C10.0809 5.78818 9.79201 5.89969 9.4372 5.89969Z" fill="#CBCBCB" />
+                        </svg>
+                    </div>
+                    <div class="window_info">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat deserunt alias repellat maiores.</p>
+                    </div>
+                    <img src="dist/assets/images/configurator/equipment_module.png" alt="">
+                    <div><span>Дополнительная</span></div>
+                </div>
+            </div>
+        </div>
     </div>
+    <div class="configurator__pools">
+        <h3>Royal</h3>
+        <div class="configurator__pools-grid">
+            <div class="configurator__option-window toggle_pool">
+                <span class="series__modelName">ROYAL 12037</span>
+                <img class="series__modelImage" src="/images/catalog/abpool/royal_12037/left/R12037.svg">
+                <span class="series__modelPrice">780 000 ₽</span>
+                <div class="product__specifications">
+                    <p class="product__specifications-item">Длина, м — <span>12 м</span></p>
+                    <p class="product__specifications-item">Ширина, м — <span>3.7 м</span></p>
+                    <p class="product__specifications-item">Глубина, м — <span>1.4 - 1.9 м</span></p>
+                </div>
+            </div>
+            <div class="configurator__option-window toggle_pool">
+                <span class="series__modelName">ROYAL 10037</span>
+                <img class="series__modelImage" src="/images/catalog/abpool/royal_1037/left/R10037.svg">
+                <span class="series__modelPrice">670 000 ₽</span>
+                <div class="product__specifications">
+                    <p class="product__specifications-item">Длина — <span>10 м</span></p>
+                    <p class="product__specifications-item">Ширина — <span>3.7 м</span></p>
+                    <p class="product__specifications-item">Глубина — <span>1.4 - 1.75 м</span></p>
+                </div>
+            </div>
+            <div class="configurator__option-window toggle_pool">
+                <span class="series__modelName">ROYAL 9037</span>
+                <img class="series__modelImage" src="/images/catalog/abpool/royal_9037/left/R9037.svg">
+                <span class="series__modelPrice">610 000 ₽</span>
+                <div class="product__specifications">
+                    <p class="product__specifications-item">Длина — <span>9 м</span></p>
+                    <p class="product__specifications-item">Ширина — <span>3.7 м</span></p>
+                    <p class="product__specifications-item">Глубина — <span>1.4 - 1.7 м</span></p>
+                </div>
+            </div>
+            <div class="configurator__option-window toggle_pool">
+                <span class="series__modelName">ROYAL 8037</span>
+                <img class="series__modelImage" src="/images/catalog/abpool/royal_8037/left/R8037.svg">
+                <span class="series__modelPrice">560 000 ₽</span>
+                <div class="product__specifications">
+                    <p class="product__specifications-item">Длина — <span>8 м</span></p>
+                    <p class="product__specifications-item">Ширина — <span>3.7 м</span></p>
+                    <p class="product__specifications-item">Глубина — <span>1.4 - 1.65 м</span></p>
+                </div>
+            </div>
+        </div>
+        <h3>Supreme</h3>
+        <div class="configurator__pools-grid">
+            <div class="configurator__option-window toggle_pool">
+                <span class="series__modelName">SUPREME 7530</span>
+                <img class="series__modelImage" src="/images/catalog/abpool/supe_7530/left/S7530.svg">
+                <span class="series__modelPrice">470 000 ₽</span>
+                <div class="product__specifications">
+                    <p class="product__specifications-item">Длина, м — <span>7.5 м</span></p>
+                    <p class="product__specifications-item">Ширина, м — <span>3 м</span></p>
+                    <p class="product__specifications-item">Глубина, м — <span>1.7 м</span></p>
+                </div>
+            </div>
+            <div class="configurator__option-window toggle_pool">
+                <span class="series__modelName">SUPREME 6530</span>
+                <img class="series__modelImage" src="/images/catalog/abpool/supreme_6530/left/S6530.svg">
+                <span class="series__modelPrice">410 000 ₽</span>
+                <div class="product__specifications">
+                    <p class="product__specifications-item">Длина — <span>6.5 м</span></p>
+                    <p class="product__specifications-item">Ширина — <span>3 м</span></p>
+                    <p class="product__specifications-item">Глубина — <span>1.7 м</span></p>
+                </div>
+            </div>
+            <div class="configurator__option-window toggle_pool">
+                <span class="series__modelName">SUPREME 5530</span>
+                <img class="series__modelImage" src="/images/catalog/abpool/supreme_5530/left/S5530.svg">
+                <span class="series__modelPrice">350 000 ₽</span>
+                <div class="product__specifications">
+                    <p class="product__specifications-item">Длина — <span>5.5 м</span></p>
+                    <p class="product__specifications-item">Ширина — <span>3 м</span></p>
+                    <p class="product__specifications-item">Глубина — <span>1.7 м</span></p>
+                </div>
+            </div>
+            <div class="configurator__option-window toggle_pool">
+                <span class="series__modelName">SUPREME 4530</span>
+                <img class="series__modelImage" src="/images/catalog/abpool/supreme_4530/left/S4530.svg">
+                <span class="series__modelPrice">290 000 ₽</span>
+                <div class="product__specifications">
+                    <p class="product__specifications-item">Длина — <span>4.5 м</span></p>
+                    <p class="product__specifications-item">Ширина — <span>3 м</span></p>
+                    <p class="product__specifications-item">Глубина — <span>1.7 м</span></p>
+                </div>
+            </div>
+            <div class="configurator__option-window toggle_pool">
+                <span class="series__modelName">SUPREME MINI</span>
+                <img class="series__modelImage" src="/images/catalog/abpool/supreme_mini/left/S_mini.svg">
+                <span class="series__modelPrice">260 000 ₽</span>
+                <div class="product__specifications">
+                    <p class="product__specifications-item">Длина — <span>4 м</span></p>
+                    <p class="product__specifications-item">Ширина — <span>2.5 м</span></p>
+                    <p class="product__specifications-item">Глубина — <span>1.7 м</span></p>
+                </div>
+            </div>
+        </div>
+        <h3>Hugo</h3>
+        <div class="configurator__pools-grid_modified">
+            <div class="configurator__option-window toggle_pool">
+                <span class="series__modelName">HUGO 8237</span>
+                <img class="series__modelImage" src="/images/catalog/abpool/hugo_8237/left/H8237.svg">
+                <span class="series__modelPrice">550 000 ₽</span>
+                <div class="product__specifications">
+                    <p class="product__specifications-item">Длина, м — <span>8.2 м</span></p>
+                    <p class="product__specifications-item">Ширина, м — <span>3.7 м</span></p>
+                    <p class="product__specifications-item">Глубина, м — <span>1.5 м</span></p>
+                </div>
+            </div>
+            <div class="configurator__option-window toggle_pool">
+                <span class="series__modelName">HUGO 6232</span>
+                <img class="series__modelImage" src="/images/catalog/abpool/hugo_6232/left/H6232.svg">
+                <span class="series__modelPrice">400 000 ₽</span>
+                <div class="product__specifications">
+                    <p class="product__specifications-item">Длина — <span>6.2 м</span></p>
+                    <p class="product__specifications-item">Ширина — <span>3.2 м</span></p>
+                    <p class="product__specifications-item">Глубина — <span>1.5 м</span></p>
+                </div>
+            </div>
+            <div class="configurator__option-window toggle_pool">
+                <span class="series__modelName">HUGO 5227</span>
+                <img class="series__modelImage" src="/images/catalog/abpool/hugo_5227/left/H5227.svg">
+                <span class="series__modelPrice">330 000 ₽</span>
+                <div class="product__specifications">
+                    <p class="product__specifications-item">Длина — <span>5.2 м</span></p>
+                    <p class="product__specifications-item">Ширина — <span>2.7 м</span></p>
+                    <p class="product__specifications-item">Глубина — <span>1.5 м</span></p>
+                </div>
+            </div>
+            <div class="configurator__option-window toggle_pool">
+                <span class="series__modelName">HUGO 4222</span>
+                <img class="series__modelImage" src="/images/catalog/abpool/hugo_4222/left/H4222.svg">
+                <span class="series__modelPrice">240 000 ₽</span>
+                <div class="product__specifications">
+                    <p class="product__specifications-item">Длина — <span>4.2 м</span></p>
+                    <p class="product__specifications-item">Ширина — <span>2.2 м</span></p>
+                    <p class="product__specifications-item">Глубина — <span>1.5 м</span></p>
+                </div>
+            </div>
+            <div class="configurator__option-window toggle_pool">
+                <span class="series__modelName">HUGO 3222</span>
+                <img class="series__modelImage" src="/images/catalog/abpool/hugo_3222/left/H3222.svg">
+                <span class="series__modelPrice">200 000 ₽</span>
+                <div class="product__specifications">
+                    <p class="product__specifications-item">Длина — <span>3.2 м</span></p>
+                    <p class="product__specifications-item">Ширина — <span>2.2 м</span></p>
+                    <p class="product__specifications-item">Глубина — <span>1.5 м</span></p>
+                </div>
+            </div>
+            <div class="configurator__option-window toggle_pool">
+                <span class="series__modelName">HUGO 2222</span>
+                <img class="series__modelImage" src="/images/catalog/abpool/hugo_2222/left/H2222.svg">
+                <span class="series__modelPrice">150 000 ₽</span>
+                <div class="product__specifications">
+                    <p class="product__specifications-item">Длина — <span>2.2 м</span></p>
+                    <p class="product__specifications-item">Ширина — <span>2.2 м</span></p>
+                    <p class="product__specifications-item">Глубина — <span>1.5 м</span></p>
+                </div>
+            </div>
+        </div>
+        <h3>Art</h3>
+        <div class="configurator__pools-grid">
+            <div class="configurator__option-window toggle_pool">
+                <span class="series__modelName">ART 6530</span>
+                <img class="series__modelImage" src="/images/catalog/abpool/art_6530/left/A6530.svg">
+                <span class="series__modelPrice">350 000 ₽</span>
+                <div class="product__specifications">
+                    <p class="product__specifications-item">Длина, м — <span>6.5 м</span></p>
+                    <p class="product__specifications-item">Ширина, м — <span>3 м</span></p>
+                    <p class="product__specifications-item">Глубина, м — <span>1.5 м</span></p>
+                </div>
+            </div>
+            <div class="configurator__option-window toggle_pool">
+                <span class="series__modelName">ART 4025</span>
+                <img class="series__modelImage" src="/images/catalog/abpool/art_4025/left/A4025.svg">
+                <span class="series__modelPrice">190 000 ₽</span>
+                <div class="product__specifications">
+                    <p class="product__specifications-item">Длина — <span>4 м</span></p>
+                    <p class="product__specifications-item">Ширина — <span>2.5 м</span></p>
+                    <p class="product__specifications-item">Глубина — <span>1.3 м</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="configurator__estimate">
+    <h4>Предварительный расчёт</h4>
+    <table class="configurator__estimate-table">
+        <tr class="configurator__estimate-tableRow_modified">
+            <td>Наименование</td>
+            <td>Количество</td>
+            <td>Сумма</td>
+        </tr>
+        <tr>
+            <td>Композитный бассейн</td>
+            <td>1 шт</td>
+            <td>490 000 ₽</td>
+        </tr>
+        <tr>
+            <td>Скиммер ABS пластик (КНР)</td>
+            <td>1 шт</td>
+            <td>5 000 ₽</td>
+        </tr>
+        <tr>
+            <td>Форсунки ABS пластик (КНР)</td>
+            <td>2 шт</td>
+            <td>5 000 ₽</td>
+        </tr>
+        <tr>
+            <td>Фильтр D 900 с вентилем</td>
+            <td>1 шт</td>
+            <td>30 000 ₽</td>
+        </tr>
+        <tr class="configurator__estimate-tableRow_modified">
+            <td>Итого</td>
+            <td></td>
+            <td>1 384 938 ₽</td>
+        </tr>
+    </table>
+    <div class="configurator__estimate-buttons">
+        <button class="configurator__estimate-button">Оставить заявку</button>
+        <button class="configurator__estimate-button">Сохранить</button>
+    </div>
+    <p class="configurator__estimate-message">Внимание! Стоимость строительных и монтажных работ рассчитывается индивидуально после выезда специалиста на объект.</p>
 </div>

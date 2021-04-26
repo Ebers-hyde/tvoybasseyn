@@ -1,0 +1,109 @@
+.select__variants {
+  min-width: 15rem;
+  &-range {
+    overflow: hidden;
+    width: fit-content;
+    border: 1px solid #e5e5e5;
+    border-radius: 5px;
+    max-width: 18rem;
+    .delta_price {
+      display: flex;
+      max-width: 100%;
+      margin-bottom: 1rem;
+      input {
+        width: 7rem;
+        border: 1px solid #e5e5e5;
+        padding: 0.5rem;
+        &:nth-child(1) {
+          margin-right: 2.5rem;
+        }
+      }
+    }
+    .allHide {
+      span {
+        font-size: 1rem;
+        &.min_val {
+          margin-right: 11rem;
+        }
+      }
+    }
+  }
+  .check_container {
+    input {
+      margin: 4px;
+      appearance: checkbox;
+    }
+  }
+}
+
+.select__value-selected {
+  cursor: pointer;
+  &:hover {
+    background-color: #4081ff;
+  }
+  &:active {
+    background-color: #4081ff;
+  }
+}
+
+.pool-filters {
+  &__sort {
+    &-title {
+      display: block;
+      &:nth-child(1) {
+        display: none;
+      }
+    }
+  }
+  @media screen and (max-width: $small_tablet) {
+    &__sort {
+      display: block;
+      background: #fafafa;
+      padding: 1rem 2rem 1rem 2rem;
+      margin: 2.4rem 0 3rem;
+      &-left {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .select {
+          font-size: 1.4rem;
+          position: relative;
+          user-select: none;
+          display: inline-block;
+          &__value {
+            width: 15rem;
+            font-size: 1rem;
+          }
+          &__arrow {
+            top: 65%;
+          }
+        }
+      }
+      &-right {
+        display: none;
+      }
+      &-quantity {
+        font-size: 1.2rem;
+      }
+      &-title {
+        font-size: 1.2rem;
+        margin: 0;
+        &:nth-child(1) {
+          display: block;
+        }
+        &:nth-child(2) {
+          display: none;
+        }
+      }
+    }
+
+    &__wrap {
+      display: block;
+      .card {
+        width: 70%;
+        margin: auto;
+        margin-bottom: 1.8rem;
+      }
+    }
+  }
+}
