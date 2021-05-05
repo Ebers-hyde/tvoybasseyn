@@ -10,8 +10,8 @@ $data = $this->getCheckboxFilterFieldData($variables);
 ?>
 
 <div class="select__value-selected">
-	<input type="checkbox" name="<?= $data['name'] ?>" id="<?= $data['id'] ?>" value="<?= $data['value'] ?>" />
+	<input type="checkbox" class="filter_checkbox" name="<?= $data['name'] ?>" id="<?= $data['id'] ?>" value="<?= $data['value'] ?>" />
 	<label for="<?= $data['id'] ?>">
-		<span><?= $data['value'] ?></span>
+		<span class="param_value"><?= $data['value'] ?></span>
 	</label>
 </div>

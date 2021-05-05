@@ -1471,8 +1471,18 @@ site.filters = (function($) {
 	/** @type {Boolean} Флаг инициализации полей типов "Чекбокс" и "Радио-кнопка" при первой загрузке фильтров */
 	var _checkboxAndRadioFieldsAreInitialized = false;
 
+	var titles = {};
+       
+
 	/** Инициализирует фильтрацию на странице */
 	$(function() {
+
+		document.querySelectorAll('.filter_param').forEach(param => {
+            titles[param.parentElement.classList[2]] = param.firstElementChild.textContent;
+        });
+
+		console.log(titles);
+		
 		init();
 
 		if (hasFilterParam()) {
@@ -1587,9 +1597,29 @@ site.filters = (function($) {
 	 * @param {Object} data ответ от сервера с данными о фильтрации
 	 */
 	function showResult(data) {
+		document.querySelectorAll('.check_container').forEach(check => {
+			let i = check.querySelectorAll('.filter_checkbox:checked').length;
+			check.querySelectorAll('.filter_checkbox').forEach(val => {
+				if (i>=1 ) {
+					document.querySelector(`.${val.getAttribute('name').slice(7, -4)}`).firstElementChild.classList.add('filter_param--active');
+					if(i == 1) {
+						document.querySelector(`.${val.getAttribute('name').slice(7, -4)}`).firstElementChild.textContent = check.querySelector('.filter_checkbox:checked').getAttribute('value');
+						console.log(val.getAttribute('value'));
+					} else if (i>1) {
+						document.querySelector(`.${val.getAttribute('name').slice(7, -4)}`).firstElementChild.textContent = titles[val.getAttribute('name').slice(7, -4)] + ": " + i;
+					}
+				} else if(i == 0) {
+					document.querySelector(`.${val.getAttribute('name').slice(7, -4)}`).firstElementChild.classList.remove('filter_param--active');
+					document.querySelector(`.${val.getAttribute('name').slice(7, -4)}`).firstElementChild.textContent = titles[val.getAttribute('name').slice(7, -4)];
+				}
+			});
+			i=0;
+		});
 		var value = _resultButton.name + ' (' + data.total + ')';
 		getFilterResultPopUp().val(value);
 		_resultButton.$element.val(value);
+
+		
 	}
 
 	/**
@@ -1626,6 +1656,8 @@ site.filters = (function($) {
 		});
 		forEachField($fieldList, setField, null, response);
 		enableCheckboxAndRadioFields();
+
+
 		showResult(response);
 
 		/** Включает поля типов "Чекбокс" и "Радио-кнопка" при первой загрузке фильтров */
@@ -1700,6 +1732,7 @@ site.filters = (function($) {
 	 * @param {Object} event событие
 	 */
 	function onChange(event) {
+
 		var $field = $(event.target || event);
 		var newFieldParam = getFieldParam($field);
 		$.extend(_params, newFieldParam);
@@ -2017,15 +2050,15 @@ site.filters = (function($) {
 		if (!data) {
 			return;
 		}
-
+		
 		var fieldValue = $field.val();
 		var itemList = data.item || [];
-
 		$.each(itemList, function(i, item) {
 			if (item.value === fieldValue) {
 				enableField($field);
 			}
 		});
+		
 	}
 
 	/**

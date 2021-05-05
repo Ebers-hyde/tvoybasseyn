@@ -5,7 +5,7 @@
   "main": "webpack.config.js",
   "scripts": {
     "dev": "webpack-dev-server --open --config webpack.dev.config.js",
-    "build": "webpack --config webpack.build.config.js"
+    "build": "webpack --watch --config webpack.build.config.js"
   },
   "browserslist": [
     "> 1%",

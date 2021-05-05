@@ -1,21 +1,37 @@
 .configurator {
   margin-bottom: 10rem;
+  transition: 0.5s;
   display: none;
-  transition: 0.5s; 
+  &--active {
+    display: block;
+  }
+
   &__options {
     display: grid;
     grid-template-columns: 1.5fr 1fr 2.5fr;
-    gap: 22px;
+    gap: 22px; 
     margin-bottom: 3rem;
   }
   &__option {
+    display: none;
+    .pool_window {
+      border: 1px solid #e5e5e5;
+      border-radius: 5px;
+      cursor: pointer;
+      margin: 0px 0;
+      padding: 2rem;
+    }
+    &--active {
+      display: block;
+    }
+
     &-window {
       border: 1px solid #e5e5e5;
       border-radius: 5px; 
       cursor: pointer;
       margin: 0px 0;
       padding: 2rem;
-      overflow: hidden; 
+
       .series__modelName {
         padding: 0rem 2rem 0rem;
       }
@@ -52,6 +68,11 @@
         border: 1px solid #4081ff;
       }
     }
+
+    &-header {
+      font-size:14px;
+    }
+    
     &-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -61,6 +82,7 @@
     &:nth-child(1) {
       .configurator__option-window {
         height: 30.5rem;
+        text-align: center;
         .product__specifications {
           margin-top: 1rem;
         }
@@ -70,10 +92,28 @@
       .configurator__option-window {
         margin: 10px 0;
         position: relative;
+        text-align: center;
+        &.active {
+          border-color: #4081ff;
+        }
         .info_icon-container {
           position: absolute;
           top: 0.5rem;
-          left: 20.5rem;
+          right: 0.5rem;
+          .info_icon {
+            pointer-events: none;
+            circle {
+              stroke: #cbcbcb;
+            }
+          }
+          &:hover {
+            circle{
+              stroke: #4081ff;
+            }
+            path{
+              fill: #4081ff;
+            }
+          }
         }
       }
     }
@@ -82,20 +122,39 @@
         padding: auto 1.5rem;
         height: 14.7rem;
         position: relative;
+        text-align: center;
         img {
           margin-bottom: 1rem;
         }
         .info_icon-container {
           position: absolute;
           top: 0.5rem;
-          left: 25.8rem;
+          right: 0.5rem;
+          .info_icon {
+            pointer-events: none;
+            circle {
+              stroke: #cbcbcb;
+            }
+          }
+          &:hover {
+            circle{
+              stroke: #4081ff;
+            }
+            path{
+              fill: #4081ff;
+            }
+          }
         }
       }
     }
   }
   &__equipment {
+    display: none;
+    &--active {
+      display: block;
+    }
     &-title {
-      margin-bottom: 2rem;
+      margin-bottom: 2rem;  
     }
     &-grid {
       display: grid;
@@ -106,17 +165,40 @@
         position: relative;
         padding: auto;
         height: 17.3rem;
+        text-align: center;
+        &.active {
+          border-color: #4081ff;
+        }
         img {
           margin-bottom: 1.5rem;
         }
+        .info_icon {
+          pointer-events: none;
+          circle {
+            stroke: #cbcbcb;
+          }
+        }
+        
         .info_icon-container {
           position: absolute;
           top: 0;
           right: 0;
           padding: 5px;
           z-index: 9;
+          &:hover {
+            circle{
+              stroke: #4081ff;
+            }
+            path{
+              fill: #4081ff;
+            }
+          }
         }
+        
+ 
+        
         .change_icon {
+          overflow: hidden;
           display: none;
           background: rgba(255, 255, 255, 0.9);
           border-radius: 5px;
@@ -131,6 +213,7 @@
         &_modified {
           padding: 1rem;
           img.option-window_country {
+            max-width: 120px;
             position: absolute;
             bottom: 0;
             right: 0;
@@ -147,8 +230,11 @@
   }
 
   &__pools {
-    margin-bottom: 10rem;
+    &--active {
+      display: block;
+    }
     display: none;
+    margin-bottom: 10rem;
     transition: 0.5s;
     &-grid {
       display: grid;
@@ -222,24 +308,4 @@
       margin: auto;
     }
   }
-}
-
-.centered {
-  text-align: center;
-}
-
-.info_icon {
-  circle {
-    stroke: #cbcbcb;
-  }
-  &:hover {
-    stroke: #4081ff;
-    circle {
-      stroke: #4081ff;
-    }
-  }
-}
-
-.active {
-  display: block;
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Поле умных фильтров, которое нужно вывести с чекбоксом.
  *
@@ -11,18 +12,21 @@ $fieldName = $this->getFilterFieldAttribute($variables, 'name');
 $optionList = isset($variables['item']) ? $variables['item'] : [];
 ?>
 
-<div class="select">
-	<div class="select__value">
-	<div><?= $fieldTitle ?></div>
+<div class="select catalog_filter <?= $fieldName ?>">
+	<div class="select__value filter_param">
+		<div><?= $fieldTitle ?></div>
 	</div>
 	<svg class="select__arrow" width="6" height="4" viewBox="0 0 6 4" fill="none" xmlns="http://www.w3.org/2000/svg">
-	<path d="M2.86243 4L0.643236 0.25L5.08162 0.25L2.86243 4Z"></path>
+		<path d="M2.86243 4L0.643236 0.25L5.08162 0.25L2.86243 4Z"></path>
 	</svg>
 	<div class="select__variants">
 		<div class="check_container">
-			<?php foreach ($optionList as $index => $option): ?>
+			<?php foreach ($optionList as $index => $option) : ?>
 				<?= $this->render([$fieldName, $index, $option], 'catalog/category/filters/field/checkbox/option') ?>
 			<?php endforeach; ?>
+			<div class="catalog_filter-actions">
+				<input class="btn catalog_filter-actions__apply show_result" type="submit" value="<?= $this->translate('apply') ?>" />
+			</div>
 		</div>
 	</div>
 </div>

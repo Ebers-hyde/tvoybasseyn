@@ -10,6 +10,15 @@ const PATHS = {
 }
 const buildWebpackConfig = merge(baseWebpackConfig, {
 	mode: 'production',
+	target: 'web',
+	devServer: {
+		port: 8081,
+		hot: true,
+		overlay: {
+			warnings: true,
+			errors: true
+		}
+	},
 	module: {
 		rules: [{
 				test: /\.scss$/,
@@ -83,7 +92,7 @@ const buildWebpackConfig = merge(baseWebpackConfig, {
 		new MiniCssExtractPlugin({
 			filename: 'assets/css/[name].css',
 		}),
-	]
+	] 
 })
 
 module.exports = new Promise((resolve, reject) => {

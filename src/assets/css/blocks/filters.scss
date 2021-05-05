@@ -1,5 +1,5 @@
 .select__variants {
-  min-width: 15rem;
+  min-width: 22rem;
   &-range {
     overflow: hidden;
     width: fit-content;
@@ -36,15 +36,15 @@
   }
 }
 
-.select__value-selected {
-  cursor: pointer;
-  &:hover {
-    background-color: #4081ff;
+
+  .filter_param {
+    &--active {
+      background: #4081FF;
+      color: white;
+    }
   }
-  &:active {
-    background-color: #4081ff;
-  }
-}
+
+
 
 .pool-filters {
   &__sort {
@@ -55,6 +55,32 @@
       }
     }
   }
+  &__filter {
+    .select {
+      &:hover {
+        .filter_param--active {
+            color: white;
+            & + svg {
+                &:hover {
+                fill: white;
+                }    
+                fill: white;
+            }
+        }
+      }
+    }
+  } 
+
+  .select__value {
+    font-size: 13px;
+    font-weight: 500;
+    border-radius: 3px;
+    line-height: 2.9rem;
+  }
+  .productForm.desktop_filters{
+  display: flex;
+  }
+
   @media screen and (max-width: $small_tablet) {
     &__sort {
       display: block;
