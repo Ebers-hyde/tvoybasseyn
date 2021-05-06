@@ -97,27 +97,30 @@ const Configurator = class {
                     show_popup('configurator_popup');
                     let index = 1;
                     let items = window.json[section_id].groups[group_id].items;
-                    for (let i in items) {
-                        if(typeof items[i].prices[this.currentModel] === 'undefined') continue;
-                        this.popupGrid.querySelector('.popup-form__item:nth-child('+index+')').innerHTML = `<div class="configurator__option-window configurator__option-window_modified toggling_module">
-                            <div class="info_icon-container">
-                                <svg class="info_icon" width="19" height="19" viewBox="0 0 19 19" xmlns="http://www.w3.org/2000/svg">
-                                    <circle cx="9.29319" cy="9.29319" r="8.79319" fill="white" />
-                                    <path d="M8.47921 7.23784H10.38L10.304 14.2077H8.40318L8.47921 7.23784ZM9.4372 5.89969C9.09253 5.89969 8.80361 5.79325 8.57045 5.58036C8.33728 5.35734 8.2207 5.08363 8.2207 4.75923C8.2207 4.43483 8.33728 4.16618 8.57045 3.9533C8.80361 3.73027 9.09253 3.61876 9.4372 3.61876C9.78188 3.61876 10.0708 3.7252 10.304 3.93809C10.5371 4.14084 10.6537 4.39935 10.6537 4.71361C10.6537 5.04815 10.5371 5.33199 10.304 5.56516C10.0809 5.78818 9.79201 5.89969 9.4372 5.89969Z" fill="#CBCBCB" />
-                                </svg>
-                            </div>
-                            <div class="window_info">
-                                <p>${items[i].hint}</p>
-                            </div>
-                            <div><span>${items[i].name}</span></div>
-                            <div><span>${items[i].prices[this.currentModel]} ₽</span></div>
-                            <img class='option-window_country' src="${items[i].img}" alt="">
-                            <div class="change_icon"><img src="dist/assets/images/configurator/icons/change.svg" style="width: 289px;max-width: 289px;height: 100%;" alt=""></div>
-                        </div>`;
-                        index++;
-                    }
+                    if(items) {
+                        for (let i in items) {
+                            if(typeof items[i].prices === 'undefined') continue;
+                            this.popupGrid.querySelector('.popup-form__item:nth-child('+index+')').innerHTML = `<div class="configurator__option-window configurator__option-window_modified toggling_module">
+                                <div class="info_icon-container">
+                                    <svg class="info_icon" width="19" height="19" viewBox="0 0 19 19" xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="9.29319" cy="9.29319" r="8.79319" fill="white" />
+                                        <path d="M8.47921 7.23784H10.38L10.304 14.2077H8.40318L8.47921 7.23784ZM9.4372 5.89969C9.09253 5.89969 8.80361 5.79325 8.57045 5.58036C8.33728 5.35734 8.2207 5.08363 8.2207 4.75923C8.2207 4.43483 8.33728 4.16618 8.57045 3.9533C8.80361 3.73027 9.09253 3.61876 9.4372 3.61876C9.78188 3.61876 10.0708 3.7252 10.304 3.93809C10.5371 4.14084 10.6537 4.39935 10.6537 4.71361C10.6537 5.04815 10.5371 5.33199 10.304 5.56516C10.0809 5.78818 9.79201 5.89969 9.4372 5.89969Z" fill="#CBCBCB" />
+                                    </svg>
+                                </div>
+                                <div class="window_info">
+                                    <p>${items[i].hint}</p>
+                                </div>
+                                <div><span>${items[i].name}</span></div>
+                                <div><span>${items[i].prices[this.currentModel]} ₽</span></div>
+                                <img class='option-window_country' src="${items[i].img}" alt="">
+                                <div class="change_icon"><img src="dist/assets/images/configurator/icons/change.svg" style="width: 289px;max-width: 289px;height: 100%;" alt=""></div>
+                            </div>`;
+                            index++;
+                        }
+                    } else this.popupGrid.querySelectorAll('.popup-form__item').forEach(form_item => {
+                        form_item.innerHTML = "";
+                    });
                     this.configuratorPopup.querySelector('input[name="window_id"]').value = optionWindow.dataset.window_id;
-                    console.log(this.configuratorPopup.querySelector('input[name="window_id"]').value);
                 }else{
                     document.querySelector(`.configurator__equipment[data-section="${window.json[section_id].groups[group_id].target_section}"`).classList.toggle('configurator__equipment--active');
                     optionWindow.classList.toggle('active');
