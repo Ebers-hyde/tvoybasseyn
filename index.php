@@ -9,6 +9,7 @@
 </head>
 <body>
     Привет мир
+    <input type="text" placeholder="Введите приветствие">
 </body>
 </html>
  
