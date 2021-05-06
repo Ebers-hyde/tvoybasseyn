@@ -8,7 +8,7 @@
     <script>document.getElementsByTagName("html")[0].className += " js";</script>
 </head>
 <body>
-    Hello world
+    Привет мир
     <input type="text" placeholder="Введите приветствие">
 </body>
 </html>
