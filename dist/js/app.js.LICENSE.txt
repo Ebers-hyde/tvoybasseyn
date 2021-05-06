@@ -1,0 +1,2 @@
+/*! modernizr 3.6.0 (Custom Build) | MIT *
+ * https://modernizr.com/download/?-scriptdefer-strictmode-webp-domprefixes-prefixes-setclasses-shiv-testallprops-testprop-teststyles !*/

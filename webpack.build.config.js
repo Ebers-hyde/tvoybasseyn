@@ -1,4 +1,4 @@
-const merge = require('webpack-merge');
+const { merge } = require('webpack-merge');
 const baseWebpackConfig = require('./webpack.base.config');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -23,15 +23,14 @@ const buildWebpackConfig = merge(baseWebpackConfig, {
 		rules: [{
 				test: /\.scss$/,
 				use: [
-					'style-loader',
 					MiniCssExtractPlugin.loader,
 					'css-loader',
 					{
 						loader: 'postcss-loader',
 						options: {
 							sourceMap: true,
-							config: {
-								path: 'src/assets/js/postcss.config.js'
+							postcssOptions: {	
+								config: 'src/assets/js/postcss.config.js'
 							}
 						}
 					},
@@ -53,15 +52,14 @@ const buildWebpackConfig = merge(baseWebpackConfig, {
 			{
 				test: /\.css$/,
 				use: [
-					'style-loader',
 					MiniCssExtractPlugin.loader,
 					'css-loader',
 					{
 						loader: 'postcss-loader',
 						options: {
 							sourceMap: true,
-							config: {
-								path: './postcss.config.js'
+							postcssOptions: {
+								config: './postcss.config.js'
 							}
 						}
 					},

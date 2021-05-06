@@ -39,7 +39,7 @@
         padding: 0.5rem 1rem 0;
       }
       .window_info {
-        position: absolute;
+        position: absolute; 
         border-radius: 5px;
         border: 2px solid #4081ff;
         padding: 2rem;
@@ -50,6 +50,7 @@
         z-index: 10;
         display: none;
         pointer-events: none;
+        text-align: left;
         p {
           font-size: 1.5rem;
         }
