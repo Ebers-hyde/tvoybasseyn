@@ -9,6 +9,7 @@
 </head>
 <body>
     Hello world
+    <input type="text" placeholder="Введите приветствие">
 </body>
 </html>
  

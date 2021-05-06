@@ -96,7 +96,6 @@ const Configurator = class {
                 if( window.json[section_id].groups[group_id].action=='show_popup'){
                     show_popup('configurator_popup');
                     let index = 1;
-                    console.log(group_id);
                     let items = window.json[section_id].groups[group_id].items;
                     for (let i in items) {
                         if(typeof items[i].prices[this.currentModel] === 'undefined') continue;
@@ -118,6 +117,7 @@ const Configurator = class {
                         index++;
                     }
                     this.configuratorPopup.querySelector('input[name="window_id"]').value = optionWindow.dataset.window_id;
+                    console.log(this.configuratorPopup.querySelector('input[name="window_id"]').value);
                 }else{
                     document.querySelector(`.configurator__equipment[data-section="${window.json[section_id].groups[group_id].target_section}"`).classList.toggle('configurator__equipment--active');
                     optionWindow.classList.toggle('active');
