@@ -1,0 +1,41 @@
+<?php
+$category = $variables;
+$props = [];
+$mass = [];
+$t_props = [];
+foreach($category as $item){
+    $model = $item->getValue('model')[0];
+    if($p=$model->getValue('dlina')) $t_props['Длина'] = $p.' м';
+    if($p=$model->getValue('shirina')) $t_props['Ширина'] = $p.' м';
+    if($p=$model->getValue('glubina')) $t_props['Глубина'] = $p.' м';
+    if($p=$model->getValue('vysoty')) $t_props['Высота'] = $p.' м';
+    if($p=$model->getValue('price')) $t_props['price'] = $p;
+    $mass[$item->name]['props'] = $t_props;
+    $mass[$item->name]['name'] = $model->name;
+    $mass[$item->name]['price'] = ($p=$model->getValue('stoimost'))?$p:false;
+    $mass[$item->name]['pic'] = ($p=$model->getValue('menu_pic_ua'))?$p:false;
+    $mass[$item->name]['picHover'] = ($p=$model->getValue('menu_pic_a'))?$p:false;
+    $mass[$item->name]['url'] = $model->link;
+    $mass[$item->name]['cristal'] = intval($model->getValue('cena_cristal'))-intval($model->getValue('stoimost'));
+    
+}
+?>
+
+    <h3><?=$category[0]->getValue('group')?></h3>
+    <div class="configurator__pools-grid">
+        <?php foreach($mass as $k=>$model){ ?>
+            <div class="configurator__option-window toggle_pool" data-id="<?=$k?>" data-price="<?=$model['price']?>" data-cristal="<?=$model['cristal']?>">
+                <span class="series__modelName"><?=$model['name']?></span>
+                <img class="series__modelImage" src="<?=$model['pic']?>">
+                <?php if($model['price']): $model['price'] = str_replace(' ','',$model['price']); ?>
+                    <span class="series__modelPrice"><?=number_format($model['price'], 0, ',', ' ')?> ₽</span>
+                <?php endif; ?>
+                <div class="product__specifications">
+                    <?php foreach($model['props'] as $k=>$prop): ?>
+                        <p class="product__specifications-item"><?=$k?>  — <span><?=$prop?></span></p>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        <?php } ?>
+    </div>
+
