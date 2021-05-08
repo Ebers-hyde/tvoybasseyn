@@ -198,7 +198,7 @@
         
  
         
-        .change_icon {
+        .window_icon {
           overflow: hidden;
           display: none;
           background: rgba(255, 255, 255, 0.9);
@@ -211,16 +211,13 @@
           top: 0;
           right: 0;
         }
-        &_modified {
-          padding: 1rem;
-          img.option-window_country {
-            max-width: 120px;
-            position: absolute;
-            bottom: 0;
-            right: 0;
-            margin: 0;
-            border-bottom-right-radius: 5px;
-          }
+        img.option-window_country {
+          max-width: 100px;
+          position: absolute;
+          bottom: 0;
+          right: 0;
+          margin: 0;
+          border-bottom-right-radius: 5px;
         }
         &.change-window {
           display: none;

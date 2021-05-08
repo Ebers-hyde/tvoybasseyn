@@ -155,7 +155,7 @@ foreach($sections as $section){
             <h5 class="configurator__equipment-title">Основное оборудование</h5>
             <div class="configurator__equipment-grid">
                 <?php foreach($json[121199]['groups'] as $key=>$group): ?>
-                    <?=$this->render([$key,$group],'content/pools/configurator/option_window')?>
+                    <?=$this->render([$key,$group],'content/pools/configurator/option_window1')?>
                 <?php endforeach; ?>
             </div>
         </div>
@@ -163,7 +163,7 @@ foreach($sections as $section){
             <h5 class="configurator__equipment-title">Дополнительное оборудование</h5>
             <div class="configurator__equipment-grid">
                 <?php foreach($json[121200]['groups'] as $key=>$group): ?>
-                    <?=$this->render([$key,$group],'content/pools/configurator/option_window')?>
+                    <?=$this->render([$key,$group],'content/pools/configurator/option_window2')?>
                 <?php endforeach; ?>
             </div>
         </div>
