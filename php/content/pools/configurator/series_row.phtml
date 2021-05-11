@@ -18,7 +18,7 @@ foreach($category as $item){
     $mass[$item->name]['url'] = $model->link;
     $mass[$item->name]['cristal'] = intval($model->getValue('cena_cristal'))-intval($model->getValue('stoimost'));
     
-}
+} 
 ?>
 
     <h3><?=$category[0]->getValue('group')?></h3>
