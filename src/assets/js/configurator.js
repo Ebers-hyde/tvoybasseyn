@@ -15,26 +15,7 @@ const Configurator = class {
         this.togglingPools = null;
         this.variants = null;
         this.modelQuery = window.location.search ? window.location.search : null;
-        this.currentModel = '';
         this.bottomPrice = null;
-        this.poolJson = {
-            "supreme_6530": {
-                "name": 'Supreme 6530',
-                "price": '410 000',
-                "img": "/images/catalog/abpool/supreme_6530/left/S6530.svg",
-                "length": "6.5",
-                "width": "3",
-                "depth": "1.7"
-            },
-            "hugo_4222": {
-                "name": 'Hugo 4222',
-                "price": '240 000',
-                "img": "/images/catalog/abpool/hugo_4222/left/H4222.svg",
-                "length": "4.2",
-                "width": "2.2",
-                "depth": "1.5"
-            }
-        }
     }
 
     init() {
@@ -42,9 +23,10 @@ const Configurator = class {
         this.configuratorPools = document.querySelector('.configurator__pools') ? document.querySelector('.configurator__pools'): null;
         this.togglingPools = document.querySelectorAll('.toggle_pool') ? document.querySelectorAll('.toggle_pool') : null;
         this.options = document.querySelectorAll('.configurator__option');
-        this.optionWindows = document.querySelectorAll('.configurator__option-window:not(.option_variant .configurator__option-window)');
+        this.optionWindows = document.querySelectorAll('.configurator__option-window');
         this.bottomPrice = document.querySelector('#bottom_price');
         this.variants = document.querySelector('.option_variant');
+        this.cristal_price = document.querySelector('#cristal-price');
         this.equipmentLists = document.querySelectorAll('.equipment_list');
         this.infoBlocks = document.querySelectorAll('.window_info'); 
         this.infoIcons = document.querySelectorAll('.info_icon-container');
@@ -56,20 +38,10 @@ const Configurator = class {
 
         if(this.modelQuery !== null) {
             let modelId = this.modelQuery.split("=", 2)[1];
-            if(this.poolJson[modelId]) {
-                this.currentModel = modelId;
-                this.poolWindow.innerHTML = `
-            <span class="series__modelName">${this.poolJson[modelId].name}</span>
-                <img class="series__modelImage" src="${this.poolJson[modelId].img}">
-                <span class="series__modelPrice">${this.poolJson[modelId].price} ₽</span>
-                <div class="product__specifications">
-                    <p class="product__specifications-item">Длина — <span>${this.poolJson[modelId].length} м</span></p>
-                    <p class="product__specifications-item">Ширина — <span>${this.poolJson[modelId].width} м</span></p>
-                    <p class="product__specifications-item">Глубина — <span>${this.poolJson[modelId].depth} м</span></p>
-            </div>
-            `
-            this.configuratorPools.classList.remove('configurator__pools--active');
-            this.configuratorMain.classList.add('configurator--active');
+            if(window.json.models[modelId]) {
+                this.setPool(modelId);
+                this.bottomPrice.textContent = this.poolWindow.dataset.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " ₽";
+                this.cristal_price.textContent = "+" + this.poolWindow.dataset.cristal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " ₽";
             }
         }
 
@@ -91,65 +63,58 @@ const Configurator = class {
                 this.hideElem(optionWindow.querySelector('.window_icon'));
                 this.hideElem(optionWindow.querySelector('.window_info'));
             }
-    
-            optionWindow.onclick = (e) => {
-                let group_id = optionWindow.dataset.window_id;
-                let section_id = optionWindow.closest('.equipment_list').dataset.section;
-                if( window.json[section_id].groups[group_id].action=='show_popup'){
-                    show_popup('configurator_popup');
-                    let index = 1;
-                    let items = window.json[section_id].groups[group_id].items;
-                    if(items) {
-                        for (let i in items) {
-                            if(typeof items[i].prices === 'undefined') continue;
-                            this.popupGrid.querySelector('.popup-form__item:nth-child('+index+')').innerHTML = `<div class="configurator__option-window">
-                                <div class="info_icon-container">
-                                    <svg class="info_icon" width="19" height="19" viewBox="0 0 19 19" xmlns="http://www.w3.org/2000/svg">
-                                        <circle cx="9.29319" cy="9.29319" r="8.79319" fill="white" />
-                                        <path d="M8.47921 7.23784H10.38L10.304 14.2077H8.40318L8.47921 7.23784ZM9.4372 5.89969C9.09253 5.89969 8.80361 5.79325 8.57045 5.58036C8.33728 5.35734 8.2207 5.08363 8.2207 4.75923C8.2207 4.43483 8.33728 4.16618 8.57045 3.9533C8.80361 3.73027 9.09253 3.61876 9.4372 3.61876C9.78188 3.61876 10.0708 3.7252 10.304 3.93809C10.5371 4.14084 10.6537 4.39935 10.6537 4.71361C10.6537 5.04815 10.5371 5.33199 10.304 5.56516C10.0809 5.78818 9.79201 5.89969 9.4372 5.89969Z" fill="#CBCBCB" />
-                                    </svg>
-                                </div>
-                                <div class="window_info">
-                                    <p>${items[i].hint}</p>
-                                </div>
-                                <div><span>${items[i].name}</span></div>
-                                <div><span>${items[i].prices[this.currentModel]} ₽</span></div>
-                                <img class='option-window_country' src="${items[i].img}" alt="">
-                                <div class="window_icon"><img src="dist/assets/images/configurator/icons/change.svg" style="width: 289px;max-width: 289px;height: 100%;" alt=""></div>
-                            </div>`;
-                            index++;
-                        }
-                    } else this.popupGrid.querySelectorAll('.popup-form__item').forEach(form_item => {
-                        form_item.innerHTML = "";
-                    });
-                    this.configuratorPopup.querySelector('input[name="window_id"]').value = optionWindow.dataset.window_id;
-                }else{
-                    document.querySelector(`.configurator__equipment[data-section="${window.json[section_id].groups[group_id].target_section}"`).classList.toggle('configurator__equipment--active');
-                    optionWindow.classList.toggle('active');
-                }
-               
-            }
 
-            this.variants.onclick = (event) => {
+            if(!optionWindow.classList.contains('configurator__option-window_modified')) {
+                optionWindow.onclick = (e) => {
+                    let group_id = optionWindow.dataset.window_id;
+                    let section_id = optionWindow.closest('.equipment_list').dataset.section;
+                    if( window.json[section_id].groups[group_id].action=='show_popup'){
+                        show_popup('configurator_popup');
+                        let index = 1;
+                        let items = window.json[section_id].groups[group_id].items;
+                        if(items) {
+                            for (let i in items) {
+                                if(typeof items[i].prices === 'undefined') continue;
+                                this.popupGrid.querySelector('.popup-form__item:nth-child('+index+')').innerHTML = `<div class="configurator__option-window">
+                                    <div class="info_icon-container"> 
+                                        <svg class="info_icon" width="19" height="19" viewBox="0 0 19 19" xmlns="http://www.w3.org/2000/svg">
+                                            <circle cx="9.29319" cy="9.29319" r="8.79319" fill="white" />
+                                            <path d="M8.47921 7.23784H10.38L10.304 14.2077H8.40318L8.47921 7.23784ZM9.4372 5.89969C9.09253 5.89969 8.80361 5.79325 8.57045 5.58036C8.33728 5.35734 8.2207 5.08363 8.2207 4.75923C8.2207 4.43483 8.33728 4.16618 8.57045 3.9533C8.80361 3.73027 9.09253 3.61876 9.4372 3.61876C9.78188 3.61876 10.0708 3.7252 10.304 3.93809C10.5371 4.14084 10.6537 4.39935 10.6537 4.71361C10.6537 5.04815 10.5371 5.33199 10.304 5.56516C10.0809 5.78818 9.79201 5.89969 9.4372 5.89969Z" fill="#CBCBCB" />
+                                        </svg>
+                                    </div>
+                                    <div class="window_info">
+                                        <p>${items[i].hint}</p>
+                                    </div>
+                                    <div><span>${items[i].name}</span></div>
+                                    <div><span>${items[i].prices[this.currentModel]} ₽</span></div>
+                                    <img class='option-window_country' src="${items[i].img}" alt="">
+                                    <div class="window_icon"><img src="dist/assets/images/configurator/icons/change.svg" style="width: 289px;max-width: 289px;height: 100%;" alt=""></div>
+                                </div>`;
+                                index++;
+                            }
+                        } else this.popupGrid.querySelectorAll('.popup-form__item').forEach(form_item => {
+                            form_item.innerHTML = "";
+                        });
+                        this.configuratorPopup.querySelector('input[name="window_id"]').value = optionWindow.dataset.window_id;
+                    }else{
+                        document.querySelector(`.configurator__equipment[data-section="${window.json[section_id].groups[group_id].target_section}"`).classList.toggle('configurator__equipment--active');
+                        optionWindow.classList.toggle('active');
+                    }
+                   
+                }
                 
-                document.querySelectorAll('.equipment_list').forEach(list => {
-                    list.style.display = "block";
-                });
-                this.variants.querySelectorAll('.configurator__option-window').forEach(window => {
-                    window.classList.remove('active');
-                });
-                event.target.closest('.configurator__option-window').classList.add('active');
-                // let target = event.target.closest('.configurator__option-window');
-                // console.log(target);
-                // if(target.classList.contains('configurator__option-window')) {
-                //     target.style.borderColor = "#4081ff";
-                //     this.options[2].classList.add('configurator__option--active');
-                //     this.equipmentLists.forEach(list => {
-                //         list.classList.add('configurator__equipment--active');
-                //     })
-                // } else {
-                //     return
-                // }
+            } else {
+                optionWindow.onclick = () => {
+                    
+                        document.querySelectorAll('.equipment_list').forEach(list => {
+                        list.style.display = "block";
+                        });
+                        this.variants.querySelectorAll('.configurator__option-window').forEach(window => {
+                            window.classList.remove('active');
+                        });
+                        optionWindow.classList.add('active');
+                
+                }
             }
 
             /*this.variants.forEach(variant => {
@@ -196,12 +161,9 @@ const Configurator = class {
          
             this.togglingPools.forEach(pool => {
                 pool.onclick = () => {
-                    this.currentModel = pool.dataset.id;
-                    this.poolWindow.innerHTML = pool.innerHTML;
-                    this.bottomPrice.textContent = pool.dataset.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " ₽";
+                    this.setPool(pool.dataset.id);
+                    this.cristal_price.textContent = "+" + this.poolWindow.dataset.cristal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " ₽";
                     this.poolWindow.classList.remove("toggle_pool");
-                    this.configuratorPools.classList.remove('configurator__pools--active');
-                    this.configuratorMain.classList.add('configurator--active');
                     window.history.replaceState(null, 'Конфигуратор', `https://tvoybasseyn.ru/pools_catalog/konfgurator?model=${pool.dataset.id}`);
                 }
             });
@@ -219,6 +181,20 @@ const Configurator = class {
         if(elem) {
             elem.style.display = "none";
         }
+    }
+
+    setPool(model) {
+        this.configuratorPools.classList.remove('configurator__pools--active');
+        this.configuratorMain.classList.add('configurator--active');
+        this.poolWindow.dataset.id = document.querySelector(`.toggle_pool[data-id="${model}"]`).dataset.id;
+        this.poolWindow.dataset.price = document.querySelector(`.toggle_pool[data-id="${model}"]`).dataset.price;
+        this.poolWindow.dataset.cristal = document.querySelector(`.toggle_pool[data-id="${model}"]`).dataset.cristal;
+        this.poolWindow.innerHTML = document.querySelector(`.toggle_pool[data-id="${model}"]`).innerHTML;
+        this.bottomPrice.textContent = this.poolWindow.dataset.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " ₽";
+        let optionPrice = window.json[121198].groups[129383].items[129386].prices[model].toString(); //FOREACH
+        optionPrice = optionPrice.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+        document.querySelector(".option_price").textContent = "+" + optionPrice  + " ₽";
+        this.cristal_price.textContent = "+" + this.poolWindow.dataset.cristal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " ₽";
     }
 }
 

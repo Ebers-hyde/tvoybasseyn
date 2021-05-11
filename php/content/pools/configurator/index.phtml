@@ -40,8 +40,14 @@ foreach($modelsArr as $category){
     $model = $category->getValue('model')[0];
     $price = intval(str_replace(' ', '', $model->getValue('stoimost')));
     $price_cristal = intval(str_replace(' ', '', $model->getValue('cena_cristal')));
+    $model_width = $model->getValue('shirina');
+    $model_length = $model->getValue('dlina');
+    $model_depth = $model->getValue('glubina'); 
     $json['models'][$category->name]['price'] = ($price)?$price:false;
     $json['models'][$category->name]['cristal'] = ($price_cristal)?$price_cristal:false;
+    $json['models'][$category->name]['width'] = ($model_width)?$model_width . ' м':false;
+    $json['models'][$category->name]['length'] = ($model_length)?$model_length . ' м':false;
+    $json['models'][$category->name]['depth'] = ($model_depth)?$model_depth . ' м':false;
 //    $json['models'][$category->name]['difference'] = ($price_cristal>$price)?$price_cristal-$price:false;
 }
 ?>
@@ -58,21 +64,14 @@ foreach($modelsArr as $category){
         </script>
         <div class="configurator__options">
             <div class="configurator__option configurator__option--active">
-                <h6 class="configurator__option-header">Модель</h6>
+                <h6 class="configurator__option-header">Модель</h6> 
                 <div class="pool_window">
-                    <span class="series__modelName">ROYAL 12037</span>
-                    <img class="series__modelImage" src="/images/catalog/abpool/royal_12037/left/R12037.svg">
-                    <span class="series__modelPrice">780 000 ₽</span>
-                    <div class="product__specifications">
-                        <p class="product__specifications-item">Длина, м — <span>12 м</span></p>
-                        <p class="product__specifications-item">Ширина, м — <span>3.7 м</span></p>
-                        <p class="product__specifications-item">Глубина, м — <span>1.4 - 1.9 м</span></p>
-                    </div>
+                    
                 </div>
             </div>
             <div class="configurator__option configurator__option--active option_variant">
                 <h6 class="configurator__option-header">Вариант исполнения</h6>
-                <div class="configurator__option-window">
+                <div class="configurator__option-window configurator__option-window_modified">
                     <div class="info_icon-container">
                         <svg class="info_icon" width="19" height="19" viewBox="0 0 19 19" xmlns="http://www.w3.org/2000/svg">
                             <circle cx="9.29319" cy="9.29319" r="8.79319" fill="white" />
@@ -83,9 +82,9 @@ foreach($modelsArr as $category){
                         <p>Базовый вариант исполнения.</p>
                     </div>
                     <div><span>Liner</span></div>
-                    <div><span>0 ₽</span></div>
+                    <div><span id="base-price">0 ₽</span></div> 
                 </div>
-                <div class="configurator__option-window">
+                <div class="configurator__option-window configurator__option-window_modified">
                     <div class="info_icon-container">
                         <svg class="info_icon" width="19" height="19" viewBox="0 0 19 19" xmlns="http://www.w3.org/2000/svg">
                             <circle cx="9.29319" cy="9.29319" r="8.79319" fill="white" />
@@ -96,7 +95,7 @@ foreach($modelsArr as $category){
                         <p>Вариант исполнения с тремя дополнительными защитными слоями (слой прозрачной смолы, декоративны наполнитель, керамика).</p>
                     </div>
                     <div><span>Cristal</span></div>
-                    <div><span>+140 000 ₽</span></div>
+                    <div><span id="cristal-price"></span></div>
                 </div>
             </div>
             <div class="configurator__option equipment_list" data-section="121198">
@@ -128,6 +127,7 @@ foreach($modelsArr as $category){
                         </div>
                         <img src="dist/assets/images/configurator/option_2.png" alt="">
                         <div><span>Самонесущая конструкция</span></div>
+                        <div><span class="option_price series__modelPrice"></span></div>
                     </div>
                     <div class="configurator__option-window">
                         <div class="info_icon-container">
@@ -162,7 +162,9 @@ foreach($modelsArr as $category){
             <h5 class="configurator__equipment-title">Основное оборудование</h5>
             <div class="configurator__equipment-grid">
                 <?php foreach($json[121199]['groups'] as $key=>$group): ?>
-                    <?=$this->render([$key,$group],'content/pools/configurator/option_window1')?>
+                    <?php if ($key === array_key_last($json[121199]['groups'])) $group['custom_class'] = 'right_hint'; else $group['custom_class'] = '';?>
+                    <?=$this->render([$key,$group, $icon = "change"],'content/pools/configurator/option_window')?>
+
                 <?php endforeach; ?>
             </div>
         </div>
@@ -170,228 +172,36 @@ foreach($modelsArr as $category){
             <h5 class="configurator__equipment-title">Дополнительное оборудование</h5>
             <div class="configurator__equipment-grid">
                 <?php foreach($json[121200]['groups'] as $key=>$group): ?>
-                    <?=$this->render([$key,$group],'content/pools/configurator/option_window2')?>
+                    <?php if ($key === array_key_last($json[121200]['groups'])) $group['custom_class'] = 'right_hint'; else $group['custom_class'] = '';?>
+                    <?=$this->render([$key,$group, $icon = "show"],'content/pools/configurator/option_window')?>
                 <?php endforeach; ?>
             </div>
         </div>
         <div class="configurator__equipment" data-section="121201">
-            <h5 class="configurator__equipment-title">Аттракционы</h5>
+            <h5 class="configurator__equipment-title"><?=$json[121201]['name'];?></h5>
             <div class="configurator__equipment-grid">
-                <div class="configurator__option-window toggling_module">
-                    <div class="info_icon-container">
-                        <svg class="info_icon" width="19" height="19" viewBox="0 0 19 19" xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="9.29319" cy="9.29319" r="8.79319" fill="white" />
-                            <path d="M8.47921 7.23784H10.38L10.304 14.2077H8.40318L8.47921 7.23784ZM9.4372 5.89969C9.09253 5.89969 8.80361 5.79325 8.57045 5.58036C8.33728 5.35734 8.2207 5.08363 8.2207 4.75923C8.2207 4.43483 8.33728 4.16618 8.57045 3.9533C8.80361 3.73027 9.09253 3.61876 9.4372 3.61876C9.78188 3.61876 10.0708 3.7252 10.304 3.93809C10.5371 4.14084 10.6537 4.39935 10.6537 4.71361C10.6537 5.04815 10.5371 5.33199 10.304 5.56516C10.0809 5.78818 9.79201 5.89969 9.4372 5.89969Z" fill="#CBCBCB" />
-                        </svg>
-                    </div>
-                    <div class="window_info">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat deserunt alias repellat maiores.</p>
-                    </div>
-                    <img src="dist/assets/images/configurator/equipment_module.png" alt="">
-                    <div><span>Противоток</span></div>
-                </div>
-                <div class="configurator__option-window toggling_module">
-                    <div class="info_icon-container">
-                        <svg class="info_icon" width="19" height="19" viewBox="0 0 19 19" xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="9.29319" cy="9.29319" r="8.79319" fill="white" />
-                            <path d="M8.47921 7.23784H10.38L10.304 14.2077H8.40318L8.47921 7.23784ZM9.4372 5.89969C9.09253 5.89969 8.80361 5.79325 8.57045 5.58036C8.33728 5.35734 8.2207 5.08363 8.2207 4.75923C8.2207 4.43483 8.33728 4.16618 8.57045 3.9533C8.80361 3.73027 9.09253 3.61876 9.4372 3.61876C9.78188 3.61876 10.0708 3.7252 10.304 3.93809C10.5371 4.14084 10.6537 4.39935 10.6537 4.71361C10.6537 5.04815 10.5371 5.33199 10.304 5.56516C10.0809 5.78818 9.79201 5.89969 9.4372 5.89969Z" fill="#CBCBCB" />
-                        </svg>
-                    </div>
-                    <div class="window_info">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat deserunt alias repellat maiores.</p>
-                    </div>
-                    <img src="dist/assets/images/configurator/equipment_module.png" alt="">
-                    <div><span>Гейзер</span></div>
-                </div>
-                <div class="configurator__option-window toggling_module">
-                    <div class="info_icon-container">
-                        <svg class="info_icon" width="19" height="19" viewBox="0 0 19 19" xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="9.29319" cy="9.29319" r="8.79319" fill="white" />
-                            <path d="M8.47921 7.23784H10.38L10.304 14.2077H8.40318L8.47921 7.23784ZM9.4372 5.89969C9.09253 5.89969 8.80361 5.79325 8.57045 5.58036C8.33728 5.35734 8.2207 5.08363 8.2207 4.75923C8.2207 4.43483 8.33728 4.16618 8.57045 3.9533C8.80361 3.73027 9.09253 3.61876 9.4372 3.61876C9.78188 3.61876 10.0708 3.7252 10.304 3.93809C10.5371 4.14084 10.6537 4.39935 10.6537 4.71361C10.6537 5.04815 10.5371 5.33199 10.304 5.56516C10.0809 5.78818 9.79201 5.89969 9.4372 5.89969Z" fill="#CBCBCB" />
-                        </svg>
-                    </div>
-                    <div class="window_info">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat deserunt alias repellat maiores.</p>
-                    </div>
-                    <img src="dist/assets/images/configurator/equipment_module.png" alt="">
-                    <div><span>Гидромассаж</span></div>
-                </div>
-                <div class="configurator__option-window toggling_module">
-                    <div class="info_icon-container">
-                        <svg class="info_icon" width="19" height="19" viewBox="0 0 19 19" xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="9.29319" cy="9.29319" r="8.79319" fill="white" />
-                            <path d="M8.47921 7.23784H10.38L10.304 14.2077H8.40318L8.47921 7.23784ZM9.4372 5.89969C9.09253 5.89969 8.80361 5.79325 8.57045 5.58036C8.33728 5.35734 8.2207 5.08363 8.2207 4.75923C8.2207 4.43483 8.33728 4.16618 8.57045 3.9533C8.80361 3.73027 9.09253 3.61876 9.4372 3.61876C9.78188 3.61876 10.0708 3.7252 10.304 3.93809C10.5371 4.14084 10.6537 4.39935 10.6537 4.71361C10.6537 5.04815 10.5371 5.33199 10.304 5.56516C10.0809 5.78818 9.79201 5.89969 9.4372 5.89969Z" fill="#CBCBCB" />
-                        </svg>
-                    </div>
-                    <div class="window_info">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat deserunt alias repellat maiores.</p>
-                    </div>
-                    <img src="dist/assets/images/configurator/equipment_module.png" alt="">
-                    <div><span>Водопад</span></div>
-                </div>
-                <div class="configurator__option-window toggling_module">
-                    <div class="info_icon-container">
-                        <svg class="info_icon" width="19" height="19" viewBox="0 0 19 19" xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="9.29319" cy="9.29319" r="8.79319" fill="white" />
-                            <path d="M8.47921 7.23784H10.38L10.304 14.2077H8.40318L8.47921 7.23784ZM9.4372 5.89969C9.09253 5.89969 8.80361 5.79325 8.57045 5.58036C8.33728 5.35734 8.2207 5.08363 8.2207 4.75923C8.2207 4.43483 8.33728 4.16618 8.57045 3.9533C8.80361 3.73027 9.09253 3.61876 9.4372 3.61876C9.78188 3.61876 10.0708 3.7252 10.304 3.93809C10.5371 4.14084 10.6537 4.39935 10.6537 4.71361C10.6537 5.04815 10.5371 5.33199 10.304 5.56516C10.0809 5.78818 9.79201 5.89969 9.4372 5.89969Z" fill="#CBCBCB" />
-                        </svg>
-                    </div>
-                    <div class="window_info">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat deserunt alias repellat maiores.</p>
-                    </div>
-                    <img src="dist/assets/images/configurator/equipment_module.png" alt="">
-                    <div><span>Горки</span></div>
-                </div>
+                <?php foreach($json[121201]['groups'] as $key=>$group): ?>
+                    <?php if ($key === array_key_last($json[121200]['groups'])) $group['custom_class'] = 'right_hint'; else $group['custom_class'] = '';?>
+                    <?=$this->render([$key,$group, $icon = "change"],'content/pools/configurator/option_window')?>
+                <?php endforeach; ?>
             </div>
         </div>
-        <div class="configurator__equipment " data-section="121202">
-            <h5 class="configurator__equipment-title">Лестницы и поручни</h5>
+        <div class="configurator__equipment" data-section="121202">
+            <h5 class="configurator__equipment-title"><?=$json[121202]['name'];?></h5>
             <div class="configurator__equipment-grid">
-                <div class="configurator__option-window toggling_module">
-                    <div class="info_icon-container">
-                        <svg class="info_icon" width="19" height="19" viewBox="0 0 19 19" xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="9.29319" cy="9.29319" r="8.79319" fill="white" />
-                            <path d="M8.47921 7.23784H10.38L10.304 14.2077H8.40318L8.47921 7.23784ZM9.4372 5.89969C9.09253 5.89969 8.80361 5.79325 8.57045 5.58036C8.33728 5.35734 8.2207 5.08363 8.2207 4.75923C8.2207 4.43483 8.33728 4.16618 8.57045 3.9533C8.80361 3.73027 9.09253 3.61876 9.4372 3.61876C9.78188 3.61876 10.0708 3.7252 10.304 3.93809C10.5371 4.14084 10.6537 4.39935 10.6537 4.71361C10.6537 5.04815 10.5371 5.33199 10.304 5.56516C10.0809 5.78818 9.79201 5.89969 9.4372 5.89969Z" fill="#CBCBCB" />
-                        </svg>
-                    </div>
-                    <div class="window_info">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat deserunt alias repellat maiores.</p>
-                    </div>
-                    <img src="dist/assets/images/configurator/equipment_module.png" alt="">
-                    <div><span>Поручень</span></div>
-                </div>
-                <div class="configurator__option-window toggling_module">
-                    <div class="info_icon-container">
-                        <svg class="info_icon" width="19" height="19" viewBox="0 0 19 19" xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="9.29319" cy="9.29319" r="8.79319" fill="white" />
-                            <path d="M8.47921 7.23784H10.38L10.304 14.2077H8.40318L8.47921 7.23784ZM9.4372 5.89969C9.09253 5.89969 8.80361 5.79325 8.57045 5.58036C8.33728 5.35734 8.2207 5.08363 8.2207 4.75923C8.2207 4.43483 8.33728 4.16618 8.57045 3.9533C8.80361 3.73027 9.09253 3.61876 9.4372 3.61876C9.78188 3.61876 10.0708 3.7252 10.304 3.93809C10.5371 4.14084 10.6537 4.39935 10.6537 4.71361C10.6537 5.04815 10.5371 5.33199 10.304 5.56516C10.0809 5.78818 9.79201 5.89969 9.4372 5.89969Z" fill="#CBCBCB" />
-                        </svg>
-                    </div>
-                    <div class="window_info">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat deserunt alias repellat maiores.</p>
-                    </div>
-                    <img src="dist/assets/images/configurator/equipment_module.png" alt="">
-                    <div><span>Лестница</span></div>
-                </div>
+                <?php foreach($json[121202]['groups'] as $key=>$group): ?>
+                    <?php if ($key === array_key_last($json[121202]['groups'])) $group['custom_class'] = 'right_hint'; else $group['custom_class'] = '';?>
+                    <?=$this->render([$key,$group, $icon = "change"],'content/pools/configurator/option_window')?>
+                <?php endforeach; ?>
             </div>
         </div>
-        <div class="configurator__equipment ">
-            <h5 class="configurator__equipment-title">Покрытие воды</h5>
+        <div class="configurator__equipment" data-section="121205">
+            <h5 class="configurator__equipment-title"><?=$json[121205]['name'];?></h5>
             <div class="configurator__equipment-grid">
-                <div class="configurator__option-window toggling_module">
-                    <div class="info_icon-container">
-                        <svg class="info_icon" width="19" height="19" viewBox="0 0 19 19" xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="9.29319" cy="9.29319" r="8.79319" fill="white" />
-                            <path d="M8.47921 7.23784H10.38L10.304 14.2077H8.40318L8.47921 7.23784ZM9.4372 5.89969C9.09253 5.89969 8.80361 5.79325 8.57045 5.58036C8.33728 5.35734 8.2207 5.08363 8.2207 4.75923C8.2207 4.43483 8.33728 4.16618 8.57045 3.9533C8.80361 3.73027 9.09253 3.61876 9.4372 3.61876C9.78188 3.61876 10.0708 3.7252 10.304 3.93809C10.5371 4.14084 10.6537 4.39935 10.6537 4.71361C10.6537 5.04815 10.5371 5.33199 10.304 5.56516C10.0809 5.78818 9.79201 5.89969 9.4372 5.89969Z" fill="#CBCBCB" />
-                        </svg>
-                    </div>
-                    <div class="window_info">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat deserunt alias repellat maiores.</p>
-                    </div>
-                    <img src="dist/assets/images/configurator/equipment_module.png" alt="">
-                    <div><span>Пузырьковая пленка</span></div>
-                </div>
-                <div class="configurator__option-window toggling_module">
-                    <div class="info_icon-container">
-                        <svg class="info_icon" width="19" height="19" viewBox="0 0 19 19" xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="9.29319" cy="9.29319" r="8.79319" fill="white" />
-                            <path d="M8.47921 7.23784H10.38L10.304 14.2077H8.40318L8.47921 7.23784ZM9.4372 5.89969C9.09253 5.89969 8.80361 5.79325 8.57045 5.58036C8.33728 5.35734 8.2207 5.08363 8.2207 4.75923C8.2207 4.43483 8.33728 4.16618 8.57045 3.9533C8.80361 3.73027 9.09253 3.61876 9.4372 3.61876C9.78188 3.61876 10.0708 3.7252 10.304 3.93809C10.5371 4.14084 10.6537 4.39935 10.6537 4.71361C10.6537 5.04815 10.5371 5.33199 10.304 5.56516C10.0809 5.78818 9.79201 5.89969 9.4372 5.89969Z" fill="#CBCBCB" />
-                        </svg>
-                    </div>
-                    <div class="window_info">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat deserunt alias repellat maiores.</p>
-                    </div>
-                    <img src="dist/assets/images/configurator/equipment_module.png" alt="">
-                    <div><span>Жалюзийные покрытия</span></div>
-                </div>
-                <div class="configurator__option-window toggling_module">
-                    <div class="info_icon-container">
-                        <svg class="info_icon" width="19" height="19" viewBox="0 0 19 19" xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="9.29319" cy="9.29319" r="8.79319" fill="white" />
-                            <path d="M8.47921 7.23784H10.38L10.304 14.2077H8.40318L8.47921 7.23784ZM9.4372 5.89969C9.09253 5.89969 8.80361 5.79325 8.57045 5.58036C8.33728 5.35734 8.2207 5.08363 8.2207 4.75923C8.2207 4.43483 8.33728 4.16618 8.57045 3.9533C8.80361 3.73027 9.09253 3.61876 9.4372 3.61876C9.78188 3.61876 10.0708 3.7252 10.304 3.93809C10.5371 4.14084 10.6537 4.39935 10.6537 4.71361C10.6537 5.04815 10.5371 5.33199 10.304 5.56516C10.0809 5.78818 9.79201 5.89969 9.4372 5.89969Z" fill="#CBCBCB" />
-                        </svg>
-                    </div>
-                    <div class="window_info">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat deserunt alias repellat maiores.</p>
-                    </div>
-                    <img src="dist/assets/images/configurator/equipment_module.png" alt="">
-                    <div><span>Павильон</span></div>
-                </div>
-            </div>
-        </div>
-        <div class="configurator__equipment">
-            <h5 class="configurator__equipment-title">Очистка дна и стен</h5>
-            <div class="configurator__equipment-grid">
-                <div class="configurator__option-window toggling_module">
-                    <div class="info_icon-container">
-                        <svg class="info_icon" width="19" height="19" viewBox="0 0 19 19" xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="9.29319" cy="9.29319" r="8.79319" fill="white" />
-                            <path d="M8.47921 7.23784H10.38L10.304 14.2077H8.40318L8.47921 7.23784ZM9.4372 5.89969C9.09253 5.89969 8.80361 5.79325 8.57045 5.58036C8.33728 5.35734 8.2207 5.08363 8.2207 4.75923C8.2207 4.43483 8.33728 4.16618 8.57045 3.9533C8.80361 3.73027 9.09253 3.61876 9.4372 3.61876C9.78188 3.61876 10.0708 3.7252 10.304 3.93809C10.5371 4.14084 10.6537 4.39935 10.6537 4.71361C10.6537 5.04815 10.5371 5.33199 10.304 5.56516C10.0809 5.78818 9.79201 5.89969 9.4372 5.89969Z" fill="#CBCBCB" />
-                        </svg>
-                    </div>
-                    <div class="window_info">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat deserunt alias repellat maiores.</p>
-                    </div>
-                    <img src="dist/assets/images/configurator/equipment_module.png" alt="">
-                    <div><span>Вручную</span></div>
-                </div>
-                <div class="configurator__option-window toggling_module">
-                    <div class="info_icon-container">
-                        <svg class="info_icon" width="19" height="19" viewBox="0 0 19 19" xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="9.29319" cy="9.29319" r="8.79319" fill="white" />
-                            <path d="M8.47921 7.23784H10.38L10.304 14.2077H8.40318L8.47921 7.23784ZM9.4372 5.89969C9.09253 5.89969 8.80361 5.79325 8.57045 5.58036C8.33728 5.35734 8.2207 5.08363 8.2207 4.75923C8.2207 4.43483 8.33728 4.16618 8.57045 3.9533C8.80361 3.73027 9.09253 3.61876 9.4372 3.61876C9.78188 3.61876 10.0708 3.7252 10.304 3.93809C10.5371 4.14084 10.6537 4.39935 10.6537 4.71361C10.6537 5.04815 10.5371 5.33199 10.304 5.56516C10.0809 5.78818 9.79201 5.89969 9.4372 5.89969Z" fill="#CBCBCB" />
-                        </svg>
-                    </div>
-                    <div class="window_info">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat deserunt alias repellat maiores.</p>
-                    </div>
-                    <img src="dist/assets/images/configurator/equipment_module.png" alt="">
-                    <div><span>Автоматически</span></div>
-                </div>
-            </div>
-        </div>
-        <div class="configurator__equipment " data-section="121205">
-            <h5 class="configurator__equipment-title">Дезинфекция</h5>
-            <div class="configurator__equipment-grid">
-                <div class="configurator__option-window toggling_module">
-                    <div class="info_icon-container">
-                        <svg class="info_icon" width="19" height="19" viewBox="0 0 19 19" xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="9.29319" cy="9.29319" r="8.79319" fill="white" />
-                            <path d="M8.47921 7.23784H10.38L10.304 14.2077H8.40318L8.47921 7.23784ZM9.4372 5.89969C9.09253 5.89969 8.80361 5.79325 8.57045 5.58036C8.33728 5.35734 8.2207 5.08363 8.2207 4.75923C8.2207 4.43483 8.33728 4.16618 8.57045 3.9533C8.80361 3.73027 9.09253 3.61876 9.4372 3.61876C9.78188 3.61876 10.0708 3.7252 10.304 3.93809C10.5371 4.14084 10.6537 4.39935 10.6537 4.71361C10.6537 5.04815 10.5371 5.33199 10.304 5.56516C10.0809 5.78818 9.79201 5.89969 9.4372 5.89969Z" fill="#CBCBCB" />
-                        </svg>
-                    </div>
-                    <div class="window_info">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat deserunt alias repellat maiores.</p>
-                    </div>
-                    <img src="dist/assets/images/configurator/equipment_module.png" alt="">
-                    <div><span>Ручная</span></div>
-                </div>
-                <div class="configurator__option-window toggling_module">
-                    <div class="info_icon-container">
-                        <svg class="info_icon" width="19" height="19" viewBox="0 0 19 19" xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="9.29319" cy="9.29319" r="8.79319" fill="white" />
-                            <path d="M8.47921 7.23784H10.38L10.304 14.2077H8.40318L8.47921 7.23784ZM9.4372 5.89969C9.09253 5.89969 8.80361 5.79325 8.57045 5.58036C8.33728 5.35734 8.2207 5.08363 8.2207 4.75923C8.2207 4.43483 8.33728 4.16618 8.57045 3.9533C8.80361 3.73027 9.09253 3.61876 9.4372 3.61876C9.78188 3.61876 10.0708 3.7252 10.304 3.93809C10.5371 4.14084 10.6537 4.39935 10.6537 4.71361C10.6537 5.04815 10.5371 5.33199 10.304 5.56516C10.0809 5.78818 9.79201 5.89969 9.4372 5.89969Z" fill="#CBCBCB" />
-                        </svg>
-                    </div>
-                    <div class="window_info">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat deserunt alias repellat maiores.</p>
-                    </div>
-                    <img src="dist/assets/images/configurator/equipment_module.png" alt="">
-                    <div><span>Автоматическая</span></div>
-                </div>
-                <div class="configurator__option-window toggling_module">
-                    <div class="info_icon-container">
-                        <svg class="info_icon" width="19" height="19" viewBox="0 0 19 19" xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="9.29319" cy="9.29319" r="8.79319" fill="white" />
-                            <path d="M8.47921 7.23784H10.38L10.304 14.2077H8.40318L8.47921 7.23784ZM9.4372 5.89969C9.09253 5.89969 8.80361 5.79325 8.57045 5.58036C8.33728 5.35734 8.2207 5.08363 8.2207 4.75923C8.2207 4.43483 8.33728 4.16618 8.57045 3.9533C8.80361 3.73027 9.09253 3.61876 9.4372 3.61876C9.78188 3.61876 10.0708 3.7252 10.304 3.93809C10.5371 4.14084 10.6537 4.39935 10.6537 4.71361C10.6537 5.04815 10.5371 5.33199 10.304 5.56516C10.0809 5.78818 9.79201 5.89969 9.4372 5.89969Z" fill="#CBCBCB" />
-                        </svg>
-                    </div>
-                    <div class="window_info">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat deserunt alias repellat maiores.</p>
-                    </div>
-                    <img src="dist/assets/images/configurator/equipment_module.png" alt="">
-                    <div><span>Дополнительная</span></div>
-                </div>
+                <?php foreach($json[121205]['groups'] as $key=>$group): ?>
+                    <?php if ($key === array_key_last($json[121205]['groups'])) $group['custom_class'] = 'right_hint'; else $group['custom_class'] = '';?>
+                    <?=$this->render([$key,$group, $icon = "change"],'content/pools/configurator/option_window')?>
+                <?php endforeach; ?>
             </div>
         </div>
     </div>
@@ -446,7 +256,10 @@ foreach($modelsArr as $category){
 
 <div class="configurator__bottom-buttons">
     <div class="center-wrap" >
-        <button class="btn btn--blue search__btn" type="submit">Сохранить набор</button>
-        <span id="bottom_price" class="series__modelPrice"></span>
+        <button class="btn-link" type="submit">Сохранить набор</button>
+        <div>
+            <span id="bottom_price"></span>
+            <button class="btn btn--blue showCalc__btn">Показать расчёт</button>
+        </div>
     </div>
 </div>

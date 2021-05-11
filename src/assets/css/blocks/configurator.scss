@@ -15,7 +15,7 @@
   &__option {
     display: none;
     .pool_window {
-      border: 1px solid #e5e5e5;
+      border: 1px solid #4081ff;
       border-radius: 5px;
       cursor: pointer;
       margin: 0px 0;
@@ -54,6 +54,10 @@
         p {
           font-size: 1.5rem;
         }
+      }
+
+      .right_hint {
+        right: 0px;
       }
       span {
         font-size: 1.5rem;
@@ -172,6 +176,8 @@
         }
         img {
           margin-bottom: 1.5rem;
+          height: 62px; 
+          max-width: 80px;
         }
         .info_icon {
           pointer-events: none;
@@ -317,19 +323,33 @@
     background: #fafafa;
     .center-wrap {
       height: 100%;
-      width: 80%;
-      width: 85%;
+      width: 70%;
       margin: 0;
       display: flex;
       flex-direction: row;
       justify-content: space-between;
       align-items: center;
+      div {
+        &:nth-child(2) {
+          display: flex;
+          height: 100%;
+        }
+      }
       button {
         height: 100%;
         padding: 0;
-        background-color: #ffffff;
+        font-size: 14px;
+      }
+      #bottom_price {
+        color: #353535;
+        font-size: 1.7rem;
+        font-weight: bold;
+        padding: 1.5rem 2rem 0;
+        display: block;
+      }
+      .showCalc__btn {
+        background-color: #4081FF;
         border: 1px solid #4081FF;
-        color: #4081FF;
       }
     }
   }
