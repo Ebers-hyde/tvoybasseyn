@@ -8,7 +8,7 @@ const Configurator = class {
         this.poolWindow =  null;
         this.options = null;
         this.equipmentLists = null;
-        this.changeIcons = null;
+        this.windowIcons = null;
         this.popupWindows = null;
         this.configuratorPopup = null;
         this.popupGrid = null;
@@ -16,6 +16,7 @@ const Configurator = class {
         this.variants = null;
         this.modelQuery = window.location.search ? window.location.search : null;
         this.currentModel = '';
+        this.bottomPrice = null;
         this.poolJson = {
             "supreme_6530": {
                 "name": 'Supreme 6530',
@@ -42,12 +43,13 @@ const Configurator = class {
         this.togglingPools = document.querySelectorAll('.toggle_pool') ? document.querySelectorAll('.toggle_pool') : null;
         this.options = document.querySelectorAll('.configurator__option');
         this.optionWindows = document.querySelectorAll('.configurator__option-window:not(.option_variant .configurator__option-window)');
+        this.bottomPrice = document.querySelector('#bottom_price');
         this.variants = document.querySelector('.option_variant');
         this.equipmentLists = document.querySelectorAll('.equipment_list');
         this.infoBlocks = document.querySelectorAll('.window_info'); 
         this.infoIcons = document.querySelectorAll('.info_icon-container');
         this.poolWindow = document.querySelector('.pool_window');
-        this.changeIcons = document.querySelectorAll('.change_icon');
+        this.windowIcons = document.querySelectorAll('.window_icon');
         this.popupWindows = document.querySelectorAll('.popup_window');
         this.configuratorPopup = document.querySelector('#configurator_popup');
         this.popupGrid = this.configuratorPopup.querySelector('.configurator__equipment-grid');
@@ -78,7 +80,7 @@ const Configurator = class {
 
         this.optionWindows.forEach(optionWindow => {
             optionWindow.onmouseover = (event) => {
-                this.showElem(optionWindow.querySelector('.change_icon'));
+                this.showElem(optionWindow.querySelector('.window_icon'));
                 if(event.target.classList.contains('info_icon-container')){
                     this.showElem(optionWindow.querySelector('.window_info'));
                 }else{
@@ -86,7 +88,7 @@ const Configurator = class {
                 }       
             }
             optionWindow.onmouseleave = () => {
-                this.hideElem(optionWindow.querySelector('.change_icon'));
+                this.hideElem(optionWindow.querySelector('.window_icon'));
                 this.hideElem(optionWindow.querySelector('.window_info'));
             }
     
@@ -100,7 +102,7 @@ const Configurator = class {
                     if(items) {
                         for (let i in items) {
                             if(typeof items[i].prices === 'undefined') continue;
-                            this.popupGrid.querySelector('.popup-form__item:nth-child('+index+')').innerHTML = `<div class="configurator__option-window configurator__option-window_modified toggling_module">
+                            this.popupGrid.querySelector('.popup-form__item:nth-child('+index+')').innerHTML = `<div class="configurator__option-window">
                                 <div class="info_icon-container">
                                     <svg class="info_icon" width="19" height="19" viewBox="0 0 19 19" xmlns="http://www.w3.org/2000/svg">
                                         <circle cx="9.29319" cy="9.29319" r="8.79319" fill="white" />
@@ -113,7 +115,7 @@ const Configurator = class {
                                 <div><span>${items[i].name}</span></div>
                                 <div><span>${items[i].prices[this.currentModel]} ₽</span></div>
                                 <img class='option-window_country' src="${items[i].img}" alt="">
-                                <div class="change_icon"><img src="dist/assets/images/configurator/icons/change.svg" style="width: 289px;max-width: 289px;height: 100%;" alt=""></div>
+                                <div class="window_icon"><img src="dist/assets/images/configurator/icons/change.svg" style="width: 289px;max-width: 289px;height: 100%;" alt=""></div>
                             </div>`;
                             index++;
                         }
@@ -187,7 +189,7 @@ const Configurator = class {
                     
                 }
                 form__item.onmouseleave = () => {
-                    this.hideElem(form__item.querySelector('.change_icon'));
+                    this.hideElem(form__item.querySelector('.window_icon'));
                     this.hideElem(form__item.querySelector('.window_info')); 
                 }
             });
@@ -196,6 +198,7 @@ const Configurator = class {
                 pool.onclick = () => {
                     this.currentModel = pool.dataset.id;
                     this.poolWindow.innerHTML = pool.innerHTML;
+                    this.bottomPrice.textContent = pool.dataset.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " ₽";
                     this.poolWindow.classList.remove("toggle_pool");
                     this.configuratorPools.classList.remove('configurator__pools--active');
                     this.configuratorMain.classList.add('configurator--active');
