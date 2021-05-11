@@ -16,6 +16,7 @@ const Configurator = class {
         this.variants = null;
         this.modelQuery = window.location.search ? window.location.search : null;
         this.currentModel = '';
+        this.bottomPrice = null;
         this.poolJson = {
             "supreme_6530": {
                 "name": 'Supreme 6530',
@@ -42,6 +43,7 @@ const Configurator = class {
         this.togglingPools = document.querySelectorAll('.toggle_pool') ? document.querySelectorAll('.toggle_pool') : null;
         this.options = document.querySelectorAll('.configurator__option');
         this.optionWindows = document.querySelectorAll('.configurator__option-window:not(.option_variant .configurator__option-window)');
+        this.bottomPrice = document.querySelector('#bottom_price');
         this.variants = document.querySelector('.option_variant');
         this.equipmentLists = document.querySelectorAll('.equipment_list');
         this.infoBlocks = document.querySelectorAll('.window_info'); 
@@ -196,6 +198,7 @@ const Configurator = class {
                 pool.onclick = () => {
                     this.currentModel = pool.dataset.id;
                     this.poolWindow.innerHTML = pool.innerHTML;
+                    this.bottomPrice.textContent = pool.dataset.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " ₽";
                     this.poolWindow.classList.remove("toggle_pool");
                     this.configuratorPools.classList.remove('configurator__pools--active');
                     this.configuratorMain.classList.add('configurator--active');

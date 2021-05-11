@@ -306,4 +306,31 @@
       margin: auto;
     }
   }
+  &__bottom-buttons {
+    width: calc(100vw - 28rem);
+    position: fixed;
+    z-index: 83;
+    height: 60px;
+    bottom: 0;
+    padding: 1rem 0;
+    left: 28rem;
+    background: #fafafa;
+    .center-wrap {
+      height: 100%;
+      width: 80%;
+      width: 85%;
+      margin: 0;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      button {
+        height: 100%;
+        padding: 0;
+        background-color: #ffffff;
+        border: 1px solid #4081FF;
+        color: #4081FF;
+      }
+    }
+  }
 }

@@ -437,21 +437,9 @@ foreach($sections as $section){
     <p class="configurator__estimate-message">Внимание! Стоимость строительных и монтажных работ рассчитывается индивидуально после выезда специалиста на объект.</p>
 </div>
 
-<div style="
-    width: calc(100vw - 28rem);
-    position: fixed;
-    z-index: 83;
-    height: 60px;
-    bottom: 0;
-    padding: 1rem 0;
-    left: 28rem;
-    background: #fafafa;
-"><div class="center-wrap" style="
-    height: 100%;
-"><button class="btn btn--blue search__btn" type="submit" style="
-    height: 100%;
-    padding: 0;
-    background-color: #ffffff;
-    border: 1px solid #4081FF;
-    color: #4081FF;
-">Сохранить набор</button></div></div>
+<div class="configurator__bottom-buttons">
+    <div class="center-wrap" >
+        <button class="btn btn--blue search__btn" type="submit">Сохранить набор</button>
+        <span id="bottom_price" class="series__modelPrice"></span>
+    </div>
+</div>
