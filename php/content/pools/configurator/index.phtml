@@ -36,7 +36,14 @@ foreach($sections as $section){
     $json[$section->getId()]['name'] = $section->getName();
     $json[$section->getId()]['hide'] = $section->getValue('hide');
 }
-
+foreach($modelsArr as $category){
+    $model = $category->getValue('model')[0];
+    $price = intval(str_replace(' ', '', $model->getValue('stoimost')));
+    $price_cristal = intval(str_replace(' ', '', $model->getValue('cena_cristal')));
+    $json['models'][$category->name]['price'] = ($price)?$price:false;
+    $json['models'][$category->name]['cristal'] = ($price_cristal)?$price_cristal:false;
+//    $json['models'][$category->name]['difference'] = ($price_cristal>$price)?$price_cristal-$price:false;
+}
 ?>
 
 <div class="center-wrap" style="padding-top: 2.1rem;">
