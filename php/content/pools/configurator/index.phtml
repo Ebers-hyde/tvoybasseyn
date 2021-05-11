@@ -36,7 +36,14 @@ foreach($sections as $section){
     $json[$section->getId()]['name'] = $section->getName();
     $json[$section->getId()]['hide'] = $section->getValue('hide');
 }
-
+foreach($modelsArr as $category){
+    $model = $category->getValue('model')[0];
+    $price = intval(str_replace(' ', '', $model->getValue('stoimost')));
+    $price_cristal = intval(str_replace(' ', '', $model->getValue('cena_cristal')));
+    $json['models'][$category->name]['price'] = ($price)?$price:false;
+    $json['models'][$category->name]['cristal'] = ($price_cristal)?$price_cristal:false;
+//    $json['models'][$category->name]['difference'] = ($price_cristal>$price)?$price_cristal-$price:false;
+}
 ?>
 
 <div class="center-wrap" style="padding-top: 2.1rem;">
@@ -155,7 +162,7 @@ foreach($sections as $section){
             <h5 class="configurator__equipment-title">Основное оборудование</h5>
             <div class="configurator__equipment-grid">
                 <?php foreach($json[121199]['groups'] as $key=>$group): ?>
-                    <?=$this->render([$key,$group],'content/pools/configurator/option_window')?>
+                    <?=$this->render([$key,$group],'content/pools/configurator/option_window1')?>
                 <?php endforeach; ?>
             </div>
         </div>
@@ -163,7 +170,7 @@ foreach($sections as $section){
             <h5 class="configurator__equipment-title">Дополнительное оборудование</h5>
             <div class="configurator__equipment-grid">
                 <?php foreach($json[121200]['groups'] as $key=>$group): ?>
-                    <?=$this->render([$key,$group],'content/pools/configurator/option_window')?>
+                    <?=$this->render([$key,$group],'content/pools/configurator/option_window2')?>
                 <?php endforeach; ?>
             </div>
         </div>
@@ -437,21 +444,9 @@ foreach($sections as $section){
     <p class="configurator__estimate-message">Внимание! Стоимость строительных и монтажных работ рассчитывается индивидуально после выезда специалиста на объект.</p>
 </div>
 
-<div style="
-    width: calc(100vw - 28rem);
-    position: fixed;
-    z-index: 83;
-    height: 60px;
-    bottom: 0;
-    padding: 1rem 0;
-    left: 28rem;
-    background: #fafafa;
-"><div class="center-wrap" style="
-    height: 100%;
-"><button class="btn btn--blue search__btn" type="submit" style="
-    height: 100%;
-    padding: 0;
-    background-color: #ffffff;
-    border: 1px solid #4081FF;
-    color: #4081FF;
-">Сохранить набор</button></div></div>
+<div class="configurator__bottom-buttons">
+    <div class="center-wrap" >
+        <button class="btn btn--blue search__btn" type="submit">Сохранить набор</button>
+        <span id="bottom_price" class="series__modelPrice"></span>
+    </div>
+</div>
