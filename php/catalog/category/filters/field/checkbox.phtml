@@ -10,6 +10,11 @@
 $fieldTitle = $this->getFilterFieldAttribute($variables, 'title');
 $fieldName = $this->getFilterFieldAttribute($variables, 'name');
 $optionList = isset($variables['item']) ? $variables['item'] : [];
+if(count($optionList) <= 1) return false;;
+
+// usort($optionList, function ($item1, $item2) {
+//     return $item2['is-selected'] <=> $item1['is-selected'];
+// });
 ?>
 
 <div class="select catalog_filter <?= $fieldName ?>">
@@ -24,9 +29,40 @@ $optionList = isset($variables['item']) ? $variables['item'] : [];
 			<?php foreach ($optionList as $index => $option) : ?>
 				<?= $this->render([$fieldName, $index, $option], 'catalog/category/filters/field/checkbox/option') ?>
 			<?php endforeach; ?>
-			<div class="catalog_filter-actions">
-				<input class="btn catalog_filter-actions__apply show_result" type="submit" value="<?= $this->translate('apply') ?>" />
-			</div>
+			
 		</div>
 	</div>
+	<div class="catalog_filter-actions">
+		<input class="btn catalog_filter-actions__apply show_result" type="submit" value="<?= $this->translate('apply') ?>" />
+	</div>
 </div>
+
+<style>
+.catalog_filter-actions {
+    position: absolute;
+    top: 18.6rem;
+    z-index: 2;
+    width: 100%;
+    display: none;
+}
+.select--active .select__variants {
+    border: 1px solid #4081ff;
+    padding-bottom: 38px;
+	max-height: 19.4rem;
+	top: 98%;
+}
+.pool-filters .show_result {
+    width: 100%;
+	border-radius: 0;
+}
+.select--active .catalog_filter-actions {
+    display: block;
+}
+.btn:hover {
+    background-color: #4081FF;
+    color: #fff;
+}
+.btn:active:focus, .btn:focus {
+    outline: none;
+}
+</style>

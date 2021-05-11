@@ -1,12 +1,44 @@
 <?php
-/**
- * Поле умных фильтров, которое нужно вывести со слайдером.
- *
- * @var umiTemplaterPHP|ViewPhpExtension|DemomarketPhpExtension $this
- * @var array $variables
- */
 
 $data = $this->getSliderFilterFieldData($variables);
+if($data['max'] == 0) return false;;
+if ($data["title"] == "Цена") {
+	$currency_slected = getCookie('customer_currency'); 
+	$info = $this->macros('emarket', 'currencySelector');
+	foreach($info["items"] as $curr_unit) {
+		if (intval($curr_unit["id"]) !== intval($currency_slected)) {
+			$rate = $curr_unit["rate"];
+		}
+	}
+
+	$data['min'] = floor($data['min']*$rate);
+	$data['max'] = ceil($data['max']*$rate);
+
+?>
+
+<div class="select slider_field">
+	<div id="CurrRate" style="display:none"><?=$rate?></div>
+	<div class="select__value">
+	<div><?= $data['title'] ?></div>
+	</div>
+	<svg class="select__arrow" width="6" height="4" viewBox="0 0 6 4" fill="none" xmlns="http://www.w3.org/2000/svg">
+	<path d="M2.86243 4L0.643236 0.25L5.08162 0.25L2.86243 4Z"></path>
+	</svg>
+	<div class="select__variants select__variants-range">
+		<div class="col-md-12 delta_price clearfix" style="margin-top:1rem">
+			<div style="margin-right: 10px;"><span style="margin-right: 5px;">от</span><input type="text" id="fake_<?= $data['name_from'] ?>" data-name="fake_<?= $data['name_from'] ?>" value="<?= floor($data['selected_min']*$rate) ?>" data-minimum="<?= $data['min'] ?>" class="min" /></div>
+			<div><span style="margin-right: 5px;">до</span><input type="text" id="fake_<?= $data['name_to'] ?>" data-name="fake_<?= $data['name_to'] ?>" value="<?= ceil($data['selected_max']*$rate) ?>" data-maximum="<?= $data['max'] ?>" class="max" /></div>
+		</div>
+
+		<input type="hidden" name="<?= $data['name_from'] ?>" value="<?= $data['selected_min'] ?>" />
+		<input type="hidden" name="<?= $data['name_to'] ?>" value="<?= $data['selected_max'] ?>" />
+	</div>
+</div>
+
+
+
+<?php
+}else{
 ?>
 
 <div class="select slider_field">
@@ -16,18 +48,13 @@ $data = $this->getSliderFilterFieldData($variables);
 	<svg class="select__arrow" width="6" height="4" viewBox="0 0 6 4" fill="none" xmlns="http://www.w3.org/2000/svg">
 	<path d="M2.86243 4L0.643236 0.25L5.08162 0.25L2.86243 4Z"></path>
 	</svg>
-	<div class="select__variants select__variants-range">
+	<div class="select__variants select__variants-range" style="margin-top:1rem">
 		<div class="col-md-12 delta_price clearfix">
-			<input type="text" name="<?= $data['name_from'] ?>" value="<?= $data['selected_min'] ?>" data-minimum="<?= $data['min'] ?>" class="min float_left" />
-			<input type="text" name="<?= $data['name_to'] ?>" value="<?= $data['selected_max'] ?>" data-maximum="<?= $data['max'] ?>" class="max float_right" />
+		<div style="margin-right: 10px;"><span style="margin-right: 5px;">от</span><input type="text" name="<?= $data['name_from'] ?>" value="<?= $data['selected_min'] ?>" data-minimum="<?= $data['min'] ?>" class="min" /></div>
+		<div><span style="margin-right: 5px;">до</span><input type="text" name="<?= $data['name_to'] ?>" value="<?= $data['selected_max'] ?>" data-maximum="<?= $data['max'] ?>" class="max" /></div>
 		</div>
 
-		<div class="col-md-12 allHide clearfix">
-			<div class="col-md-12 price_progress">
-				<div class="range"></div>
-				<span class="min_val"></span>
-				<span class="max_val"></span>
-			</div>
-		</div>
 	</div>
 </div>
+
+<?php } ?>
