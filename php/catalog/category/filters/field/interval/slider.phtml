@@ -32,6 +32,9 @@ if ($data["title"] == "Цена") {
 
 		<input type="hidden" name="<?= $data['name_from'] ?>" value="<?= $data['selected_min'] ?>" />
 		<input type="hidden" name="<?= $data['name_to'] ?>" value="<?= $data['selected_max'] ?>" />
+		<div class="catalog_slider-actions">
+		<input class="btn catalog_slider-actions__apply show_result" type="submit" value="<?= $this->translate('apply') ?>" />
+		</div>
 	</div>
 </div>
 

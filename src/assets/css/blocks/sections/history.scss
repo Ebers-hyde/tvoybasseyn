@@ -25,10 +25,9 @@
 
         .card{
             width: calc((100% - 1.8rem * 4)/5);
-
+            margin-bottom: 2.8rem;
             @media screen and (max-width:1400px) {
                 width: calc((100% - 2.8rem * 3)/4);
-                margin-bottom: 2.8rem;
             }
         }
 
