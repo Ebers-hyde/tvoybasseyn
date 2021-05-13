@@ -89,6 +89,7 @@ site.filters = (function ($) {
 
     /** Инициализирует поля со слайдером */
     function initSliderFields() {
+      updateFakePrice();
       $(".slider_field", _$form).each(function () {
         var $field = $(this);
 
@@ -370,6 +371,24 @@ site.filters = (function ($) {
      * Возвращает параметры полей с интервалом значений
      * @returns {Object} {paramName1: paramValue1, paramName2: paramValue2, ...}
      */
+
+    function updateFakePrice() {
+      var rate = parseFloat($("#CurrRate").html());
+      if (rate == 0) {
+        rate = 1;
+      }
+      let fake1 = document.querySelector("input[data-name='fake_filter[price][from]']");
+      let fake2 = document.querySelector("input[data-name='fake_filter[price][to]']");
+      let price1 = document.querySelector("input[name='filter[price][from]']");
+      let price2 = document.querySelector("input[name='filter[price][to]']");
+      fake1.addEventListener('input', function (e) {
+        price1.value = fake1.value / rate;
+      }, false);
+      fake2.addEventListener('input', function (e) {
+        price2.value = fake2.value / rate;
+      }, false);
+    }
+
     function getRangeParams() {
       var $fieldList = getAllFields();
       var params = {};

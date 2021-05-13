@@ -30,12 +30,12 @@
  const jsCommon = 'js/*.js';
  const less = 'less/*.less';
  const cssLibraries = 'css/lib/*.css';
- const compiledCss = '../../tvoybasseyn.ru/compiled/*.css';
- const compiledJs = '../../tvoybasseyn.ru/compiled/*.js';
- const rimrafCss = '../../tvoybasseyn.ru/compiled/*.min.css';
- const rimrafJs = '../../tvoybasseyn.ru/compiled/*-min.js';
+ const compiledCss = '../../tvoybasseyn.ru v3/compiled/*.css';
+ const compiledJs = '../../tvoybasseyn.ru v3/compiled/*.js';
+ const rimrafCss = '../../tvoybasseyn.ru v3/compiled/*.min.css';
+ const rimrafJs = '../../tvoybasseyn.ru v3/compiled/*-min.js';
  
- const destination = '../../tvoybasseyn.ru/compiled';
+ const destination = '../../tvoybasseyn.ru v3/compiled';
  
  gulp.task('build-js-libraries', function() {
 	 return gulp.src(jsLibraries)
