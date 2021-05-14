@@ -53,6 +53,7 @@ const Configurator = class {
         this.optionWindows.forEach(optionWindow => {
             optionWindow.onmouseover = (event) => {
                 this.showElem(optionWindow.querySelector('.window_icon'));
+                this.showElem(optionWindow.querySelector('.clear_icon-container'));
                 if(event.target.classList.contains('info_icon-container')){
                     this.showElem(optionWindow.querySelector('.window_info'));
                 }else{
@@ -62,6 +63,7 @@ const Configurator = class {
             optionWindow.onmouseleave = () => {
                 this.hideElem(optionWindow.querySelector('.window_icon'));
                 this.hideElem(optionWindow.querySelector('.window_info'));
+                this.hideElem(optionWindow.querySelector('.clear_icon-container'));
             }
 
             if(!optionWindow.classList.contains('configurator__option-window_modified')) {
@@ -86,7 +88,7 @@ const Configurator = class {
                                         <p>${items[i].hint}</p>
                                     </div>
                                     <div><span>${items[i].name}</span></div>
-                                    <div><span>${items[i].prices[this.currentModel]} ₽</span></div>
+                                    <div><span>${items[i].prices[this.poolWindow.dataset.id]} ₽</span></div>
                                     <img class='option-window_country' src="${items[i].img}" alt="">
                                     <div class="window_icon"><img src="dist/assets/images/configurator/icons/change.svg" style="width: 289px;max-width: 289px;height: 100%;" alt=""></div>
                                 </div>`;
@@ -97,23 +99,26 @@ const Configurator = class {
                         });
                         this.configuratorPopup.querySelector('input[name="window_id"]').value = optionWindow.dataset.window_id;
                     }else{
-                        document.querySelector(`.configurator__equipment[data-section="${window.json[section_id].groups[group_id].target_section}"`).classList.toggle('configurator__equipment--active');
                         optionWindow.classList.toggle('active');
+                        document.querySelector(`.configurator__equipment[data-section="${window.json[section_id].groups[group_id].target_section}"`).classList.toggle('configurator__equipment--active');
+                        if(document.querySelector(`.configurator__equipment[data-section="${window.json[section_id].groups[group_id].target_section}"`).classList.contains('configurator__equipment--active')) {
+                            optionWindow.querySelector(".window_icon img").src = "dist/assets/images/configurator/icons/hide.svg";
+                        } else {
+                            optionWindow.querySelector(".window_icon img").src = "dist/assets/images/configurator/icons/show.svg";
+                        }
                     }
                    
                 }
                 
             } else {
                 optionWindow.onclick = () => {
-                    
+                        this.variants.querySelectorAll(".configurator__option-window").forEach(variant => {
+                            variant.classList.remove("active");
+                        })
+                        optionWindow.classList.add("active");
                         document.querySelectorAll('.equipment_list').forEach(list => {
                         list.style.display = "block";
                         });
-                        this.variants.querySelectorAll('.configurator__option-window').forEach(window => {
-                            window.classList.remove('active');
-                        });
-                        optionWindow.classList.add('active');
-                
                 }
             }
 
@@ -142,7 +147,7 @@ const Configurator = class {
                 form__item.onclick = () =>{
                     let popupWindow = document.querySelector('.configurator__option-window[data-window_id="'+this.configuratorPopup.querySelector('input[name="window_id"]').value+'"]');
                     popupWindow.innerHTML = form__item.querySelector('.configurator__option-window').innerHTML;
-                    popupWindow.classList.add('configurator__option-window_modified');
+                    popupWindow.classList.toggle('active');
                     close_popup('configurator_popup');
                 }
                 form__item.onmouseover = (event) => {
@@ -191,9 +196,6 @@ const Configurator = class {
         this.poolWindow.dataset.cristal = document.querySelector(`.toggle_pool[data-id="${model}"]`).dataset.cristal;
         this.poolWindow.innerHTML = document.querySelector(`.toggle_pool[data-id="${model}"]`).innerHTML;
         this.bottomPrice.textContent = this.poolWindow.dataset.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " ₽";
-        let optionPrice = window.json[121198].groups[129383].items[129386].prices[model].toString(); //FOREACH
-        optionPrice = optionPrice.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
-        document.querySelector(".option_price").textContent = "+" + optionPrice  + " ₽";
         this.cristal_price.textContent = "+" + this.poolWindow.dataset.cristal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " ₽";
     }
 }

@@ -59,14 +59,33 @@
   }
   &__filter {
     .select {
+      .clear_filters {
+        display: none;
+      }
+      .filter_param--active {
+        padding-right: 32px;
+        & ~ .select__arrow {
+            display: none;
+        }
+        & ~ .clear_filters {
+          display: block;
+          position: absolute;
+          top: 6px;
+          right: 8px;
+          z-index: 3;
+        }
+        &:after {
+          content: "|";
+          position: relative;
+          font-size: 40px;
+          left: 5px;
+        } 
+    }
       &:hover {
         .filter_param--active {
             color: white;
-            & + svg {
-                &:hover {
-                fill: white;
-                }    
-                fill: white;
+            & + .select__arrow {
+                display: none;
             }
         }
       }
@@ -200,4 +219,3 @@
       outline: none;
     }
   }
-  

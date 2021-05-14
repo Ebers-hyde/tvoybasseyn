@@ -154,5 +154,18 @@
                 margin-bottom: 8px;;
             }
         }
+        .btn--blue {
+            display: none;
+        }
+        @media screen and (max-width:$large_mobile) {
+            .yandex_map {
+                display: none;
+            }
+            .btn--blue {
+                display: block;
+                margin: 5% 20%;
+                padding: 0;
+            }
+        }
     }
 }

@@ -66,6 +66,7 @@ site.filters = (function ($) {
     initFilterData();
     initResetButton();
     initSliderFields();
+    updateFakePrice();
     initDateFields();
 
     /** Инициализирует основные параметры фильтрации */
@@ -89,7 +90,7 @@ site.filters = (function ($) {
 
     /** Инициализирует поля со слайдером */
     function initSliderFields() {
-      updateFakePrice();
+      
       $(".slider_field", _$form).each(function () {
         var $field = $(this);
 
@@ -185,7 +186,7 @@ site.filters = (function ($) {
           if (i == 1) {
             document.querySelector(
               `.${getFilterAttribute(val.getAttribute("name"))}`
-            ).firstElementChild.textContent = check
+            ).firstElementChild.textContent = titles[getFilterAttribute(val.getAttribute("name"))] + ": " + check
               .querySelector(".filter_checkbox:checked")
               .getAttribute("value");
           } else if (i > 1) {
@@ -322,6 +323,43 @@ site.filters = (function ($) {
     $field.attr("disabled", "");
   }
 
+  function updateFakePrice() {
+    let fake1 = document.querySelector("input[data-name='fake_filter[price][from]']");
+    let fake2 = document.querySelector("input[data-name='fake_filter[price][to]']");
+    let price1 = document.querySelector("input[name='filter[price][from]']");
+    let price2 = document.querySelector("input[name='filter[price][to]']");
+    if($("#CurrRate").length && fake1 && fake2 && price1 && price2){
+      var rate = parseFloat($("#CurrRate").html());
+      if (rate == 0) {
+        rate = 1;
+      }
+      
+      fake1.addEventListener('input', function (e) {
+        price1.value = checkFake1(fake1,fake2) / rate;
+      }, false);
+      fake2.addEventListener('input', function (e) {
+        price2.value = checkFake2(fake1,fake2) / rate;
+      }, false);
+    }
+  }
+
+  function checkFake1(fake1, fake2) {
+    let ret = fake1.value;
+
+    if(fake1.value <= 0) return fake1.dataset.minimum;
+    if(fake1.value > fake2.value) return fake2.value;
+    if(fake1.value > fake2.dataset.maximum) return fake2.dataset.maximum;
+    return ret;
+  }
+  function checkFake2(fake1, fake2) {
+    let ret = fake2.value;
+
+    if(fake2.value <= fake1.value) return fake1.value;
+    if(fake2.value <= fake1.dataset.minimum) return fake1.dataset.minimum;
+    if(fake2.value > fake2.dataset.maximum) return fake2.dataset.maximum;
+    return ret;
+  }
+
   /**
    * Обработчик события изменения значения поля
    * @param {Object} event событие
@@ -372,22 +410,7 @@ site.filters = (function ($) {
      * @returns {Object} {paramName1: paramValue1, paramName2: paramValue2, ...}
      */
 
-    function updateFakePrice() {
-      var rate = parseFloat($("#CurrRate").html());
-      if (rate == 0) {
-        rate = 1;
-      }
-      let fake1 = document.querySelector("input[data-name='fake_filter[price][from]']");
-      let fake2 = document.querySelector("input[data-name='fake_filter[price][to]']");
-      let price1 = document.querySelector("input[name='filter[price][from]']");
-      let price2 = document.querySelector("input[name='filter[price][to]']");
-      fake1.addEventListener('input', function (e) {
-        price1.value = fake1.value / rate;
-      }, false);
-      fake2.addEventListener('input', function (e) {
-        price2.value = fake2.value / rate;
-      }, false);
-    }
+    
 
     function getRangeParams() {
       var $fieldList = getAllFields();

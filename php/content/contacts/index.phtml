@@ -12,7 +12,8 @@ $catalog = $this->getProductsListFromCategory($variables['pageId'],100);
 
     <div style="padding-top: 4em;">
         <strong class="contactStores__itemTitle">Санкт-Петербург</strong>
-        <div>
+        <button class="btn btn--blue btn_showMap" data-city="spb">Показать карту</button>
+        <div class="yandex_map" data-city="spb">
             <script type="text/javascript" charset="utf-8" async src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3Adc12af408884d839cc28b0427e74c99eed5e906e9346058ea8f930ea0e057eb2&amp;width=100%25&amp;height=400&amp;lang=ru_RU&amp;scroll=true"></script>
         </div>
         <div class="contactStores__item">
@@ -57,7 +58,8 @@ $catalog = $this->getProductsListFromCategory($variables['pageId'],100);
     </div>
     <div style="padding-top: 4em;">
         <strong class="contactStores__itemTitle">Москва</strong>
-        <div>
+        <button class="btn btn--blue btn_showMap" data-city="msc">Показать карту</button>
+        <div class="yandex_map" data-city="msc">
         <script type="text/javascript" charset="utf-8" async src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3A62d05220fa198dbb8a6a36680ab125f2b8c0e5df504680ff744f595acbb022bb&amp;width=100%25&amp;height=400&amp;lang=ru_RU&amp;scroll=true"></script>
         </div>
         <div class="contactStores__item">
@@ -97,3 +99,10 @@ $catalog = $this->getProductsListFromCategory($variables['pageId'],100);
     </div>
 </div>
 
+<script>
+    $(".btn_showMap").click(function() {
+        var btn = $(this);
+        $(`.yandex_map[data-city='${btn.data("city")}']`).show();
+        btn.hide();
+    })
+</script>
