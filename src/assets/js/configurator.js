@@ -51,6 +51,7 @@ const Configurator = class {
         }
 
         this.optionWindows.forEach(optionWindow => {
+            let initialWindow = optionWindow.innerHTML;
             optionWindow.onmouseover = (event) => {
                 this.showElem(optionWindow.querySelector('.window_icon'));
                 this.showElem(optionWindow.querySelector('.clear_icon-container'));
@@ -67,9 +68,15 @@ const Configurator = class {
             }
 
             if(!optionWindow.classList.contains('configurator__option-window_modified')) {
-                optionWindow.onclick = (e) => {
+                
+                optionWindow.onclick = (event) => {
                     let group_id = optionWindow.dataset.window_id;
                     let section_id = optionWindow.closest('.equipment_list').dataset.section;
+                    if(event.target.classList.contains('clear_icon')) {
+                        optionWindow.innerHTML = initialWindow;
+                        optionWindow.classList.remove('active');
+                        return;
+                    }
                     if( window.json[section_id].groups[group_id].action=='show_popup'){
                         show_popup('configurator_popup');
                         let index = 1;
@@ -78,6 +85,9 @@ const Configurator = class {
                             for (let i in items) {
                                 if(typeof items[i].prices === 'undefined') continue;
                                 this.popupGrid.querySelector('.popup-form__item:nth-child('+index+')').innerHTML = `<div class="configurator__option-window">
+                                <div class="clear_icon-container">
+                                    <img class="clear_icon" src="dist/assets/images/configurator/icons/clear_cross.svg"></img>
+                                </div>
                                     <div class="info_icon-container"> 
                                         <svg class="info_icon" width="19" height="19" viewBox="0 0 19 19" xmlns="http://www.w3.org/2000/svg">
                                             <circle cx="9.29319" cy="9.29319" r="8.79319" fill="white" />
@@ -172,7 +182,7 @@ const Configurator = class {
                     window.history.replaceState(null, 'Конфигуратор', `https://tvoybasseyn.ru/pools_catalog/konfgurator?model=${pool.dataset.id}`);
                 }
             });
-            
+
         });
     }
 

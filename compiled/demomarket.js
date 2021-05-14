@@ -1083,9 +1083,14 @@ site.Cart = {
 			e.preventDefault();
 			var $button = $(this);
 
+			$(this).hide();
+			$(this).next().css('display', 'flex');
+
 			if ($button.hasClass('not_buy')) {
 				return;
 			}
+
+			
 
 			if (site.TradeOffers.isAvailable()) {
 				site.Cart.putElementInCart($button, {
@@ -1605,6 +1610,17 @@ site.filters = (function ($) {
   }
 
   function showResult(data) {
+    document.querySelectorAll('.clear_filters').forEach(clear => {
+      clear.onclick = () => {
+        clear.closest('.select').querySelectorAll('.filter_checkbox:checked').forEach(checkbox => {
+          checkbox.checked = false;
+          clear.closest('.select').classList.remove('select--active');
+          clear.closest('.select').querySelector('.filter_param').classList.remove('filter_param--active');
+          clear.closest('.select').querySelector('.filter_param').textContent = clear.closest('.select').querySelector('.filter_param').textContent.split(':')[0];
+        });
+      }
+    });
+
     document.querySelectorAll(".check_container").forEach((check) => {
       let i = check.querySelectorAll(".filter_checkbox:checked").length;
       check.querySelectorAll(".filter_checkbox").forEach((val) => {
@@ -1636,6 +1652,7 @@ site.filters = (function ($) {
       });
       i = 0;
     });
+
     var value = _resultButton.name + " (" + data.total + ")";
     getFilterResultPopUp().val(value);
     _resultButton.$element.val(value);

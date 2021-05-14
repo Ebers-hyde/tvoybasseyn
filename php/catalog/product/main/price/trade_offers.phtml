@@ -28,7 +28,7 @@
 						<?= $this->escape($value) ?>
 					</div>
 				<?php endforeach; */ ?>
-				<select data-characteristic-name="<?= $this->escape($title) ?>" class="<?= $this->getCharacteristicBlockClass($title) ?>" style="display:none">
+				<select data-characteristic-name="<?= $this->escape($title) ?>" class="<?= $this->getCharacteristicBlockClass($title) ?>">
 					<option selected="selected" data-offer-id-list="" data-value="">
 						<?= $this->translate('js-not-selected') ?>
 					</option>

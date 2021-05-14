@@ -68,11 +68,20 @@
             display: none;
         }
         & ~ .clear_filters {
-          display: block;
+          display: flex;
           position: absolute;
-          top: 6px;
-          right: 8px;
+          top: 0;
+          right: 0;
+          width: 32px;
+          height: 30px;
           z-index: 3;
+          justify-content: center;
+          align-items: center;
+          cursor: pointer;
+          img {
+            width: 16px;
+            height: 16px;
+          }
         }
         &:after {
           content: "|";
@@ -183,7 +192,7 @@
   .select--active .select__variants {
   border: 1px solid #4081ff;
   max-height: 19.4rem;
-  top: 98%;
+  top: 96%;
   }
   .pool-filters .show_result {
     width: 100%;

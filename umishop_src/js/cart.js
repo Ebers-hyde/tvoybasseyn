@@ -29,9 +29,14 @@ site.Cart = {
 			e.preventDefault();
 			var $button = $(this);
 
+			$(this).hide();
+			$(this).next().css('display', 'flex');
+
 			if ($button.hasClass('not_buy')) {
 				return;
 			}
+
+			
 
 			if (site.TradeOffers.isAvailable()) {
 				site.Cart.putElementInCart($button, {

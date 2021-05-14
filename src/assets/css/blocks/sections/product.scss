@@ -560,3 +560,36 @@
         color: #000;
     }
 }
+.product__power-list {
+    display: block;
+}
+
+.ui-selectmenu-text {
+    background-color: #4081FF;
+    color: #fff;
+    border: none;
+    line-height: 3.2rem;
+    padding: 5px 66px;
+    font-size: 14px;
+    border-radius: 0.4rem;
+}
+
+.ui-selectmenu-button.ui-button {
+    width: 100%;
+}
+
+.ui-widget.ui-widget-content {
+    padding: 10px;
+    font-size: 14px;
+    border-radius: 3px;
+}
+
+.ui-menu .ui-menu-item-wrapper {
+    padding: 6px 1em 3px .4em;
+}
+
+.ui-menu-item div.ui-state-active, .ui-menu-item div:hover, .ui-menu-item:hover  {
+    border: 1px solid #4081FF;
+    border-radius: 5px;
+    background: none;
+}
