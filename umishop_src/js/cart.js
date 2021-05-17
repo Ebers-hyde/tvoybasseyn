@@ -138,6 +138,13 @@ site.Cart = {
 			site.Cart.remove(this.id.match(/\d+/).pop());
 		});
 
+		$('.cart__show-list-trigger').on('click', function(e) {
+			e.preventDefault();
+			$('.order-1').hide();
+			$('.order-2').removeClass('col-md-7');
+			$('.order-2').addClass('col-md-12');
+		})
+
 		/** Изменение количества товара через клавиатуру */
 		$('.quantity').on('focusin', function() {
 			var $input = $(this);
