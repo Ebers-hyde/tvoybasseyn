@@ -11,6 +11,18 @@ var likes = {
             $(this).addClass("card__heart--active"))
         });
 
+        $(".card__plus").on("click", function() {
+            $.ajax({
+                url: `/emarket/addToCompare/${$(this).data('element_id')}.json`,
+                method: 'GET',
+                success: function(res) {
+                    if(res) {
+                        console.log(res);
+                    }
+                }
+            })
+        });
+
         if(JSON.parse(unescape($.cookie('favorites'))).indexOf($(".product").data("id")) != -1)
         {  
             $(".comparisons--heart").addClass("comparisons__active");

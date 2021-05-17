@@ -182,7 +182,7 @@ foreach($modelsArr as $category){
             <h5 class="configurator__equipment-title"><?=$json[121201]['name'];?></h5>
             <div class="configurator__equipment-grid">
                 <?php foreach($json[121201]['groups'] as $key=>$group): ?>
-                    <?php if ($key === array_key_last($json[121200]['groups'])) $group['custom_class'] = 'right_hint'; else $group['custom_class'] = '';?>
+                    <?php if (count($json[121201]['groups']) > 1 && $key === array_key_last($json[121200]['groups'])) $group['custom_class'] = 'right_hint'; else $group['custom_class'] = '';?>
                     <?=$this->render([$key,$group, $icon = "choose"],'content/pools/configurator/option_window')?>
                 <?php endforeach; ?>
             </div>
@@ -191,7 +191,7 @@ foreach($modelsArr as $category){
             <h5 class="configurator__equipment-title"><?=$json[121202]['name'];?></h5>
             <div class="configurator__equipment-grid">
                 <?php foreach($json[121202]['groups'] as $key=>$group): ?>
-                    <?php if ($key === array_key_last($json[121202]['groups'])) $group['custom_class'] = 'right_hint'; else $group['custom_class'] = '';?>
+                    <?php if (count($json[121202]['groups']) > 1 && $key === array_key_last($json[121202]['groups'])) $group['custom_class'] = 'right_hint'; else $group['custom_class'] = '';?>
                     <?=$this->render([$key,$group, $icon = "choose"],'content/pools/configurator/option_window')?>
                 <?php endforeach; ?> 
             </div>

@@ -16,6 +16,7 @@ const Configurator = class {
         this.variants = null;
         this.modelQuery = window.location.search ? window.location.search : null;
         this.bottomPrice = null;
+        this.showCalcBtn = null;
     }
 
     init() {
@@ -35,6 +36,7 @@ const Configurator = class {
         this.popupWindows = document.querySelectorAll('.popup_window');
         this.configuratorPopup = document.querySelector('#configurator_popup');
         this.popupGrid = this.configuratorPopup.querySelector('.configurator__equipment-grid');
+        this.showCalcBtn = document.querySelector('.showCalc__btn');
 
         if(this.modelQuery !== null) {
             let modelId = this.modelQuery.split("=", 2)[1];
@@ -153,37 +155,45 @@ const Configurator = class {
             //     }
             // })
 
-            this.configuratorPopup.querySelectorAll('.popup-form__item').forEach(form__item => {
-                form__item.onclick = () =>{
-                    let popupWindow = document.querySelector('.configurator__option-window[data-window_id="'+this.configuratorPopup.querySelector('input[name="window_id"]').value+'"]');
-                    popupWindow.innerHTML = form__item.querySelector('.configurator__option-window').innerHTML;
-                    popupWindow.classList.toggle('active');
-                    close_popup('configurator_popup');
-                }
-                form__item.onmouseover = (event) => {
-                    if(event.target.classList.contains('info_icon-container')){
-                        this.showElem(form__item.querySelector('.window_info')); 
-                    }else{
-                        this.hideElem(form__item.querySelector('.window_info')); 
-                    }
-                    
-                }
-                form__item.onmouseleave = () => {
-                    this.hideElem(form__item.querySelector('.window_icon'));
+        });
+
+        this.configuratorPopup.querySelectorAll('.popup-form__item').forEach(form__item => {
+            form__item.onclick = () =>{
+                let popupWindow = document.querySelector('.configurator__option-window[data-window_id="'+this.configuratorPopup.querySelector('input[name="window_id"]').value+'"]');
+                popupWindow.innerHTML = form__item.querySelector('.configurator__option-window').innerHTML;
+                popupWindow.classList.toggle('active');
+                close_popup('configurator_popup');
+            }
+            form__item.onmouseover = (event) => {
+                if(event.target.classList.contains('info_icon-container')){
+                    this.showElem(form__item.querySelector('.window_info')); 
+                }else{
                     this.hideElem(form__item.querySelector('.window_info')); 
                 }
-            });
-         
-            this.togglingPools.forEach(pool => {
-                pool.onclick = () => {
-                    this.setPool(pool.dataset.id);
-                    this.cristal_price.textContent = "+" + this.poolWindow.dataset.cristal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " ₽";
-                    this.poolWindow.classList.remove("toggle_pool");
-                    window.history.replaceState(null, 'Конфигуратор', `https://tvoybasseyn.ru/pools_catalog/konfgurator?model=${pool.dataset.id}`);
-                }
-            });
-
+                
+            }
+            form__item.onmouseleave = () => {
+                this.hideElem(form__item.querySelector('.window_icon'));
+                this.hideElem(form__item.querySelector('.window_info')); 
+            }
         });
+     
+        this.togglingPools.forEach(pool => {
+            pool.onclick = () => {
+                this.setPool(pool.dataset.id);
+                this.cristal_price.textContent = "+" + this.poolWindow.dataset.cristal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " ₽";
+                this.poolWindow.classList.remove("toggle_pool");
+                window.history.replaceState(null, 'Конфигуратор', `https://tvoybasseyn.ru/pools_catalog/konfgurator?model=${pool.dataset.id}`);
+            }
+        });
+
+        this.showCalcBtn.onclick = function() {
+            document.querySelector('.configurator__estimate').scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            })
+        }
+
     }
 
     showElem(elem) {
