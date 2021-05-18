@@ -84,51 +84,6 @@ if (mobileMenu) {
     }
 };
 
-
-
-/*let link = document.querySelectorAll('.sidebar__nav-link');
-let drop = document.querySelectorAll('.sidebar__drop');
-let overlay = document.querySelector('.content__overlay');
-let catalogSidebar = document.querySelector('.sidebar--catalog');
-
-$(function () {
-    link.forEach(linkDrop);
-
-    function linkDrop(item, index) {
-        if(catalogSidebar) {
-            $(item).mouseover(function () {
-                $('.sidebar__drop').removeClass('active');
-                $('.sidebar__drop[data-drop="'+$(item).data('drop')+'"]').addClass('active');
-                overlay.classList.remove('hidden');
-            });
-        }
-    
-        /*$(item).mouseout(function () {
-            $('.sidebar__drop[data-drop="'+$(item).data('drop')+'"]').removeClass('active')
-        });
-    }
-
-    $('.content__overlay').click(function() {
-        overlay.classList.add('hidden');
-        $('.sidebar__drop').removeClass('active');
-    });
-    /*drop.forEach(dropDrop);
-
-    function dropDrop(item, index) {
-        $(item).mouseover(function () { 
-            $(this).addClass('active') 
-        });
-    
-        $(item).mouseout(function () { 
-            $(this).removeClass('active')
-        }); 
-    } 
-    
-    
-});*/
-
-
-
 let linkMob = document.querySelector('.mobile-menu .sidebar__nav-item--equipment');
 let dropMob = document.querySelector('.mobile-menu .sidebar__drop--equipment');
 

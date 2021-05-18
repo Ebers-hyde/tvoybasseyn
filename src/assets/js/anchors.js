@@ -1,4 +1,4 @@
-$('.anchors a:not([data-anchors])').on("click", function(e){
+$('.anchors a:not([data-anchors]):not(.sidebar__nav-linkFollow)').on("click", function(e){
     e.preventDefault();
     var elementid = $(this).attr("href");
     if ( document.querySelector("#"+elementid) ) {

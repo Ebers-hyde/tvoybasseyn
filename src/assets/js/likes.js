@@ -12,15 +12,25 @@ var likes = {
         });
 
         $(".card__plus").on("click", function() {
-            $.ajax({
-                url: `/emarket/addToCompare/${$(this).data('element_id')}.json`,
-                method: 'GET',
-                success: function(res) {
-                    if(res) {
-                        console.log(res);
+            if($(this).hasClass('card__plus--active')) {
+                $.ajax({
+                    url: `/emarket/removeFromCompare/${$(this).data('element_id')}.json`,
+                    type: 'GET',
+                    success: () => {
+                        console.log(124);
+                        $(this).removeClass("card__plus--active");
                     }
-                }
-            })
+                })
+            } else {
+                $.ajax({
+                    url: `/emarket/addToCompare/${$(this).data('element_id')}.json`,
+                    type: 'GET',
+                    success: () => {
+                        console.log(123);
+                        $(this).addClass("card__plus--active");
+                    }
+                })
+            }
         });
 
         if(JSON.parse(unescape($.cookie('favorites'))).indexOf($(".product").data("id")) != -1)

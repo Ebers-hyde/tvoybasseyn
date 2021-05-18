@@ -1,0 +1,16 @@
+[
+    {
+        "baseFilePath": "\\umishop_src\\js\\cart.js",
+        "pathsTemplate": [
+            "%2F${snakeCase(words[0][0][0])||'umishop_src'}%2F${lowerCase(words[0][1][0])||'js'}%2F${lowerCase(words[0][2][0])||'cart'}.${lowerCase(words[0][1][0])||'js'}"
+        ],
+        "templateId": "32c831e0-c26b-4b55-82bb-6c78e5a01cef"
+    },
+    {
+        "baseFilePath": "\\umishop_src\\js\\cart.js",
+        "pathsTemplate": [
+            "%2F${snakeCase(words[0][0][0])||'umishop_src'}%2F${lowerCase(words[0][1][0])||'js'}%2F${lowerCase(words[0][2][0])||'cart'}.${lowerCase(words[0][1][0])||'js'}"
+        ],
+        "templateId": "d439a826-55ca-473f-9139-607e0a619a8e"
+    }
+]

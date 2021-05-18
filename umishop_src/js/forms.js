@@ -309,6 +309,9 @@ site.forms = {
 
 				// Обработчик события выбора способа доставки
 				$('input[type="radio"]', deliverySelector).click(function() {
+					$("div[data-adress]").attr( "style", "display: none !important;")
+					$(`div[data-adress="${$(this).val()}"]`).attr( "style", "display: block !important;")
+
 					if ($paymentBlock.length > 0) {
 						$paymentBlock.show(animationSpeed);
 					}
