@@ -11,8 +11,30 @@
  * @var iUmiHierarchyElement $variables
  */
 
-if(is_array($variables)) $product = $product['product']; else $product = $variables;
-if(is_array($variables)) $classes = $product['classes']; 
+if(is_array($variables)) $product = $variables['product']; else $product = $variables;
+if(is_array($variables)) $compareList = $variables['compareList'];
+if(is_array($variables)) $cartItems = $variables['cartItems'];
+if(is_array($variables)) $classes = $variables['classes'];
+
+$productName = $product->getName();
+$productAmount;
+$productCartId;
+$quantityStyle = "";
+$addToCartStyle = "";
+if(count($cartItems) > 0) {
+  foreach($cartItems as $i) {
+    if($i['name'] == $productName) {
+      $addToCartStyle = "display: none";
+      $productAmount = $i['amount'];
+      $productCartId = $i['id'];
+    } else {
+      $quantityStyle = "display: none";
+    }
+  }
+} else {
+  $quantityStyle = "display: none";
+}
+
 
 $prices = $this->macros('emarket', 'price', array($product->getId()));
 $price = ceil($prices['price']['actual']);
@@ -26,12 +48,13 @@ if(empty($prices['price']['prefix'])) $prices['price']['prefix'] = '';
 $price = ($price)?$prices['price']['prefix'].$price.'&nbsp'.$prices['price']['suffix']:'Цену уточняйте';
 
 $ids = json_decode($this->getCookie('favorites'));
+
 ?>
 
-<div class="card <?= $this->getNewLabelClass($product) ?> <?=$classes?>" data-element_id="<?= $product->getId() ?>" umi:region="row" umi:element-id="<?= $product->getId() ?>">
+<div class="card <?= $this->getNewLabelClass($product) ?> <?=$classes?>" data-order_id="<?=$productCartId?>" data-element_id="<?= $product->getId() ?>" umi:region="row" umi:element-id="<?= $product->getId() ?>">
 
 	<?php if($sale){ ?><p class="card__filter">скидка</p><?php } ?>
-	<?php if($delivery_free){ ?><p class="card__filter card__filter--bg">доставка безплатная</p><?php } ?>
+	<?php if($delivery_free){ ?><p class="card__filter card__filter--bg">доставка бесплатная</p><?php } ?>
 
 	<a class="card__img" href="<?= $this->getPath($product) ?>">
 		<div><img src="<?=$this->thumb($this->getPhotoPath($product),200,'auto')[0]?>" alt="">
@@ -44,26 +67,27 @@ $ids = json_decode($this->getCookie('favorites'));
 
 	<div class="card__bottom">
 		<div class="basket-wrap">
-		<a class="basket add_to_cart_button <?=$this->getAddToCartButtonClass($product)?>" href="<?= $this->getAddToCartLink($product) ?>">
+		<a class="basket add_to_cart_button <?=$this->getAddToCartButtonClass($product)?>" href="<?= $this->getAddToCartLink($product) ?>" style="<?=$addToCartStyle?>">
 			<svg viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
 			<path fill-rule="evenodd" clip-rule="evenodd" d="M6.76598 13.5765L6.76934 13.5763H17.9238C18.1984 13.5763 18.4399 13.3941 18.5154 13.1301L20.9763 4.51681C21.0293 4.33112 20.9922 4.13148 20.876 3.97736C20.7597 3.82323 20.5778 3.73254 20.3848 3.73254H5.34709L4.9073 1.75338C4.84465 1.47188 4.59503 1.27161 4.30664 1.27161H0.615234C0.275414 1.27161 0 1.54702 0 1.88684C0 2.22666 0.275414 2.50208 0.615234 2.50208H3.81317L6.03442 12.498C6.21923 13.2621 6.36006 13.5636 6.76598 13.5765ZM17.4597 12.3458L19.5691 4.96301H5.62042L7.26105 12.3458H17.4597Z"></path>
 			<path d="M6 17C6 18.1028 6.89722 19 8 19C9.10278 19 10 18.1028 10 17C10 15.8972 9.10278 15 8 15C6.89722 15 6 15.8972 6 17ZM8 16.3333C8.36753 16.3333 8.66667 16.6325 8.66667 17C8.66667 17.3675 8.36753 17.6667 8 17.6667C7.63247 17.6667 7.33333 17.3675 7.33333 17C7.33333 16.6325 7.63247 16.3333 8 16.3333Z"></path>
 			<path d="M15 17C15 18.1028 15.8972 19 17 19C18.1028 19 19 18.1028 19 17C19 15.8972 18.1028 15 17 15C15.8972 15 15 15.8972 15 17ZM17 16.3333C17.3675 16.3333 17.6667 16.6325 17.6667 17C17.6667 17.3675 17.3675 17.6667 17 17.6667C16.6325 17.6667 16.3333 17.3675 16.3333 17C16.3333 16.6325 16.6325 16.3333 17 16.3333Z"></path>
 			</svg><span>В корзину</span>
 		</a>
-		<div class="product__quantity">
-            <div class="quantity"><span class="quantity__down">
+		<div class="product__quantity" style="<?=$quantityStyle?>">
+            <div class="quantity"><span class="quantity__down change_product_quantity">
                 <svg width="12" height="2" viewBox="0 0 12 2" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M0.503418 1.33307H11.498C11.7742 1.33307 11.998 1.10921 11.998 0.833069C11.998 0.556927 11.7742 0.333069 11.498 0.333069H0.503418C0.227276 0.333069 0.00341797 0.556927 0.00341797 0.833069C0.00341797 1.10921 0.227276 1.33307 0.503418 1.33307Z"></path>
                 </svg></span>
-              <input type="text" value="1"><span class="quantity__up">
+              <input type="text" value="<?=$productAmount ? $productAmount : 1?>" class="current_quantity"><span class="quantity__up change_product_quantity">
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M7.83323 2C8.08636 2 8.29559 2.18801 8.32875 2.43205L8.33333 2.4999L8.33413 7.33333H13.1695C13.4457 7.33333 13.6695 7.55719 13.6695 7.83333C13.6695 8.08646 13.4814 8.29566 13.2374 8.32877L13.1695 8.33333H8.33413L8.33549 13.1661C8.33555 13.4422 8.11174 13.6662 7.8356 13.6662C7.58247 13.6662 7.37323 13.4782 7.34007 13.2341L7.33549 13.1663L7.33413 8.33333H2.50146C2.22532 8.33333 2.00146 8.10948 2.00146 7.83333C2.00146 7.5802 2.18957 7.37101 2.43362 7.3379L2.50146 7.33333H7.33413L7.33333 2.5001C7.33327 2.22396 7.55708 2 7.83323 2Z"></path>
                 </svg></span>
             </div> 
         </div>
 		</div>
-		<div class="card__plus" data-element_id="<?= $product->getId() ?>">
+		<div class="card__plus <?=(in_array($product->id,$compareList)?'card__plus--active':'')?>" data-element_id="<?= $product->getId() ?>">
+		
 		<svg width="13" height="14" viewBox="0 0 13 14" fill="none" xmlns="http://www.w3.org/2000/svg">
 			<path fill-rule="evenodd" clip-rule="evenodd" d="M0.125 2.25004V0.833374H12.875V2.25004H0.125ZM0.125 7.20837V5.79171H12.875V7.20837H0.125ZM0.125 12.1667V10.75H5.79167V12.1667H0.125ZM12.875 10.75V12.1667H11.1042V13.9375H9.6875V12.1667H7.91667V10.75H9.6875V8.97921H11.1042V10.75H12.875Z"></path>
 		</svg>

@@ -2551,6 +2551,11 @@
 			return $count;
 		}
 
+		public function getComparisonProducts() {
+			$elements = $this->macros('emarket', 'getCompareElements');
+			return $elements;
+		}
+
 		/**
 		 * Возвращает список товаров для сравнения
 		 * @param array $variables результат работы макроса emarket::compare().

@@ -1115,6 +1115,7 @@ site.Cart = {
 			$buyModal.modal('show');
 		});
 
+
 		/** Нажатие на кнопку "Купить в один клик". */
 		$('a.buy_one_click_button').on('click', function(e) {
 			e.preventDefault();
@@ -1220,25 +1221,27 @@ site.Cart = {
 		});
 
 		/** Изменение количества товара через кнопки "плюс/минус" */
-		$('.change_product_quantity a').on('click', function(e) {
-			e.preventDefault();
+		$('.change_product_quantity').on('click', function(e) {
 
 			if (!site.Cart.ready) {
 				return;
 			}
 
-			site.Cart.ready = false;
+			//site.Cart.ready = false;
 
 			var $button = $(this);
-			var orderItemId = $button.parent().data('id');
-			var orderItemBlock = $('#order_item_' + orderItemId);
+			var $parent = $('.pool-filters').length != 0 ? $button.closest('.card') : $('.add_to_cart_block');
+			var orderItemId = $parent.data('order_id');
+			var quantityNode = $parent.find('.current_quantity');
+			var oldValue = quantityNode.val();
 
-			var quantityNode = $('.quantity', orderItemBlock);
-			var oldQuantity = parseInt(quantityNode.val(), 10);
-			var newQuantity = $button.hasClass('increment_product_quantity') ? oldQuantity + 1 : oldQuantity - 1;
-
-			quantityNode.val(newQuantity);
-			site.Cart.modify(orderItemId, newQuantity, oldQuantity);
+			quantityNode.val($button.hasClass('quantity__up') ? (+quantityNode.val() + 1) : (+quantityNode.val() - 1));
+			site.Cart.modify(orderItemId, quantityNode.val(), oldValue);
+		
+			if(+quantityNode.val() <= 0) {
+				$parent.find('.product__quantity').hide();
+				$parent.find('.add_to_cart_button').show();
+			}
 		});
 
 		/** Применение промокода */
@@ -1277,8 +1280,7 @@ site.Cart = {
 				basket.get(function(data) {
 					site.Cart.updateOrderItemCount(data.summary.amount);
 					site.Cart.ready = true;
-
-					site.Cart.changeAddedProductButton($button);
+					site.Cart.changeAddedProductButton($button,data);
 				});
 			}
 		});
@@ -1298,8 +1300,18 @@ site.Cart = {
 	 * Изменяет внешний вид кнопки "Купить" при добавлении товара в корзину
 	 * @param {jQuery} $button кнопка товара "Купить"
 	 */
-	changeAddedProductButton: function($button) {
+	changeAddedProductButton: function($button,data=null) {
+		Object.entries(data.items.item).forEach(function(item, i, arr) {
+			if($button.closest('.card').find('.card__title').text() == item[1].name) {
+				$button.closest('.card').attr('data-order_id', item[1].id);
+			};
+			if($('.product__title').text() == item[1].name) {
+				$('.add_to_cart_block').attr('data-order_id', item[1].id);
+			}
+		});
+
 		$button.addClass('added_product');
+		
 		site.Cart.changeButtonHtml($button, getLabel('js-product-added-successfully-label'));
 
 		setTimeout(function() {
@@ -1331,7 +1343,6 @@ site.Cart = {
 
 			if (orderItemCount > 0) {
 				site.Cart.drawPopulatedCart(id, data);
-				console.log(data);
 			} else {
 				site.Cart.drawEmptyCart();
 			}

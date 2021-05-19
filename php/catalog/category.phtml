@@ -11,7 +11,10 @@ $catalog = $this->getCatalog($variables);
 $productList = $this->getPages($catalog);
 $pagination = $this->getPagination($catalog);
 $this->setCommonVar('smart_filters', $this->getSmartFilters($variables));
+$compareList = $this->getComparisonProducts();
+$cart = $this->macros('emarket', 'cart');
 ?>
+
 <?php if ($variables['page']->getValue('shablon')): ?>
 	<?= $this->render($variables, $variables['page']->getValue('shablon')) ?>
 <?php else: ?>
@@ -129,7 +132,7 @@ $this->setCommonVar('smart_filters', $this->getSmartFilters($variables));
             </div>
             <div class="pool-filters__wrap goods" id="catalog_category">
               <?php foreach ($productList as $product): ?>
-                <?= $this->render($product, 'catalog/product/preview/index') ?>
+                <?= $this->render(['product'=>$product,'compareList'=>$compareList,'cartItems'=>$cart['items']], 'catalog/product/preview/index') ?>
               <?php endforeach; ?>
               <div class="card" style="opacity:0;padding: 0;margin: 0;"></div>
               <div class="card" style="opacity:0;padding: 0;margin: 0;"></div>

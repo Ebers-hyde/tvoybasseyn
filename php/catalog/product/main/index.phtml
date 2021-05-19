@@ -22,6 +22,9 @@ $propList = $this->getProductPropertyChunks($product);
 
 $brandId = $product->getValue('brend');
 $brand = $this->getRelation($brandId);
+
+$cart = $this->macros('emarket', 'cart');
+$variables['cartItems'] = $cart['items'];
 ?>
 
 <section class="product" data-id="<?=$product->id?>">
@@ -51,7 +54,7 @@ $brand = $this->getRelation($brandId);
 			</div>
 		<?php endforeach; ?> 
       <div class="product__column anchors">
-        <?= $this->render($product, 'catalog/product/main/price/trade_offers') ?>
+        <?= $this->render($product,  'catalog/product/main/price/trade_offers') ?>
         <?php if (!$this->hasTradeOffers($product->getId())): ?>
           <?= $this->render($product, 'catalog/product/preview/optioned/list') ?>
         <?php endif; ?>
