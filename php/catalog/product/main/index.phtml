@@ -33,7 +33,6 @@ $variables['cartItems'] = $cart['items'];
   <div class="center-wrap"> 
     <div class="product__wrap toogles__wrap">
 	    <?=(count($imageList)>1)?$this->render($variables, 'catalog/product/main/slider'):''?>
-      
       <div class="product__inner-right desktop--hide">
         <div class="product__inner-postpone comparisons comparisons--bg comparisons--heart">
           <svg viewBox="0 0 15 13" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -47,7 +46,7 @@ $variables['cartItems'] = $cart['items'];
 				<div class="toogles__item-content" <?=($i==2)?'style="display:block"':''?>> 
 				<div>
 					<div class="product__img">
-					<div rel="fancybox_group" data-href="<?= $image ?>" class="fancybox" data-fancybox="gallery"><img src="<?= $image ?>" style="object-fit: contain;" alt=""></div>
+					<a rel="fancybox_group" href="<?= $image ?>" class="fancybox" data-fancybox="gallery"><img src="<?= $image ?>" style="object-fit: contain;" alt=""></a>
 					</div>
 				</div>
 				</div>

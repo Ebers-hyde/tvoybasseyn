@@ -196,7 +196,9 @@
     }
 
     .product__quantity {
-        height: 31px;
+        .quantity {
+            height: 31px;
+        }
         input {
             line-height: 3rem;
         }
@@ -210,7 +212,9 @@
 }
 
 .product__quantity {
-    height: 41px;
+    .quantity {
+        height: 41px;
+    }
     span {
         height: 100%;
     }

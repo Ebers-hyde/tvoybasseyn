@@ -75,6 +75,9 @@
                     background-color: red;
                 }
             }
+            &:focus {
+                color: white;
+            }
 
             svg {
                 fill: rgba(211, 211, 211, 1);

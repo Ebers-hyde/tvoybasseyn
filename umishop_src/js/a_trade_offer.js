@@ -119,14 +119,14 @@ site.TradeOffers = {
 			$button.data('old-class', $button.attr('class'));
 		}
 
-		if (!this.isAllCharacteristicsFilled() || !this.getOfferId()) {
+		/*if (!this.isAllCharacteristicsFilled() || !this.getOfferId()) {
 
 			if (!$button.hasClass('not_buy')) {
 				$button.addClass('not_buy');
 			}
 
 			return;
-		}
+		}*/
 
 		$button.attr('class', $button.data('old-class'));
 	},

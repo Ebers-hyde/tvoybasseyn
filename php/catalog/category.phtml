@@ -41,7 +41,7 @@ $cart = $this->macros('emarket', 'cart');
             <div class="pool-filters__sort">
               
               <div class="pool-filters__sort-left">
-                <div class="pool-filters__sort-quantity">28 товаров</div>
+                <div class="pool-filters__sort-quantity">Товаров: <?=$catalog['total']?></div>
                 <?php if (!$this->isRootCatalog($variables)): $sort = ['price'=>'По цене','name'=>'По имени','ord'=>'По умолчанию']; ?>
                 <span class="pool-filters__sort-title">Сортировать</span>
                 <div class="select">

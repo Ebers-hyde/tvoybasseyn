@@ -749,14 +749,14 @@ site.TradeOffers = {
 			$button.data('old-class', $button.attr('class'));
 		}
 
-		if (!this.isAllCharacteristicsFilled() || !this.getOfferId()) {
+		/*if (!this.isAllCharacteristicsFilled() || !this.getOfferId()) {
 
 			if (!$button.hasClass('not_buy')) {
 				$button.addClass('not_buy');
 			}
 
 			return;
-		}
+		}*/
 
 		$button.attr('class', $button.data('old-class'));
 	},
@@ -1210,14 +1210,20 @@ site.Cart = {
 		})
 
 		/** Изменение количества товара через клавиатуру */
-		$('.quantity').on('focusin', function() {
+		$('.current_quantity').on('focus', function() {
 			var $input = $(this);
-			$input.data('oldValue', $input.val());
+			$input.data('oldvalue', $input.val());
 		}).change(function() {
 			var $input = $(this);
-			var orderItemId = $input.siblings('.change_product_quantity').data('id');
-			var oldValue = $input.data('oldValue');
+			var $parent = $('.pool-filters').length != 0 ? $input.closest('.card') : $('.add_to_cart_block');
+			var orderItemId = $parent.data('order_id');
+			var oldValue = $input.data('oldvalue');
 			site.Cart.modify(orderItemId, $input.val(), oldValue);
+
+			if(+$input.val() <= 0) {
+				$parent.find('.product__quantity').hide();
+				$parent.find('.add_to_cart_button').show();
+			}
 		});
 
 		/** Изменение количества товара через кнопки "плюс/минус" */
@@ -1304,20 +1310,20 @@ site.Cart = {
 		Object.entries(data.items.item).forEach(function(item, i, arr) {
 			if($button.closest('.card').find('.card__title').text() == item[1].name) {
 				$button.closest('.card').attr('data-order_id', item[1].id);
+				$button.closest('.card').find('.current_quantity').val(1);
 			};
 			if($('.product__title').text() == item[1].name) {
 				$('.add_to_cart_block').attr('data-order_id', item[1].id);
+				$('.add_to_cart_block').find('.current_quantity').val(1);
 			}
 		});
 
-		$button.addClass('added_product');
 		
-		site.Cart.changeButtonHtml($button, getLabel('js-product-added-successfully-label'));
+		/*site.Cart.changeButtonHtml($button, getLabel('js-product-added-successfully-label'));
 
 		setTimeout(function() {
 			site.Cart.changeButtonHtml($button, getLabel('js-buy-button-label'));
-			$button.removeClass('added_product');
-		}, 1500)
+		}, 1500)*/
 	},
 
 	/**
@@ -1339,6 +1345,7 @@ site.Cart = {
 	 */
 	redraw: function(id) {
 		return function(data) {
+
 			var orderItemCount = data.summary.amount || 0;
 
 			if (orderItemCount > 0) {
