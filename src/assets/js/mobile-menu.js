@@ -13,6 +13,7 @@ closeMenu.addEventListener('click', function(){
 
 
 window.showMenu = function () {
+	document.querySelector('body').style.overflow = 'hidden';
 	menu.classList.add('mobile-menu--active');
 	menu.classList.add('mobile-menu--opacity0');
 	raf(function(){
@@ -28,6 +29,7 @@ window.showMenu = function () {
 }
 
 window.hideMenu = function() {
+	document.querySelector('body').style.overflow = 'auto';
 	menuWrap.classList.remove('mobile-menu__wrap--left0');
 
 	function xxx() {

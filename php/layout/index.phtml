@@ -81,29 +81,6 @@
         <!-- /Yandex.Metrika counter -->
 
         <?= $this->render($variables, 'layout/main') ?>
-
-
-        <aside class="js-offcanvas cart-modal" data-offcanvas-options='{"modifiers":"right,fixed,overlay","resize":"true"}' id="cart"
-            role="complementary">
-            <div class="offcanvas-inner">
-                <div class="cart-header">
-                    <div class="d-flex">
-                        <img class="cart-header__icon" src="/templates/axlab_2018/images/icons/cart.svg">
-                        <span class="cart-header__text">Корзина
-                            <?php if ($amount == 0): ?>
-                            <span class="order_item_count">
-                                <?= $amount ?>
-                            </span> товаров
-                            <?php endif ?></span>
-                    </div>
-                    <img class="cart__close" src="/templates/axlab_2018/images/icons/close.svg">
-                </div>
-                <div class="container">
-
-                    <?= $this->render($cart, 'layout/header/cart_popup') ?>
-                </div>
-            </div>
-        </aside>
         
         <script type='text/javascript'>
         (function () {

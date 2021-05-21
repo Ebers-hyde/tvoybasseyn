@@ -9,6 +9,10 @@
         @media screen and (max-width:$large_mobile) {
             padding-right: 10%;
         }
+        .categorie {
+            display: block;
+            height: 200px;
+        }
     }
 
     .popular-categories__item {

@@ -29,15 +29,19 @@
                         <?php $j++; endforeach; ?>
                     </div>
                     <div class="best-offers-slider desktop--hide">
+                        <?php if(count($cat) > 1):?>
                         <div class="swiper-container">
                             <div class="swiper-wrapper">
-                                <?php $j=0; foreach($cat['items'] as $product): ?>
+                                <?php $j=0; foreach($cat as $product): ?>
                                     <div class="swiper-slide">
                                         <?= $this->render($product, 'catalog/product/preview/index') ?>
                                     </div>
                                 <?php $j++; endforeach; ?>
                             </div>
                         </div>
+                        <?php else:?>
+                            <?= $this->render($cat[0], 'catalog/product/preview/index') ?>
+                        <?php endif;?>
                     </div> 
                 </div>
             </div>
