@@ -7,15 +7,15 @@ $catalog = $this->getProductsListFromCategory($variables['pageId'],100);
     <?= $this->render($variables, 'layout/header/titleWithBread') ?>
 </div>
     <div class="catalog-list">
-        <?php foreach($catalog['items'] as $category):  if ($category->name == 'Конфгуратор') continue;?>
+        <?php foreach($catalog['items'] as $category):  if ($category->name == 'Конфгуратор'||$category->name == 'Распродажа') continue;?>
         <?= $this->render($category, 'content/pools/preview') ?>
         <?php endforeach; ?>
         <?php if(count($catalog['items'])%3==2){ ?>
-            <div class=" catalog-list__category"></div>
+            <div class=" catalog-list__category" style="opacity:0"></div>
         <?php } ?>
         <?php if(count($catalog['items'])%3==1){ ?>
-            <div class=" catalog-list__category"></div>
-            <div class=" catalog-list__category"></div>
+            <div class=" catalog-list__category" style="opacity:0"></div>
+            <div class=" catalog-list__category" style="opacity:0"></div>
         <?php } ?>
     </div>
 <div class="center-wrap" style="padding-top: 2.1rem;">
