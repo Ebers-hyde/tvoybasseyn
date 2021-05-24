@@ -26,8 +26,8 @@ if ($data["title"] == "Цена") {
 	</svg>
 	<div class="select__variants select__variants-range">
 		<div class="col-md-12 delta_price clearfix" style="margin-top:1rem">
-			<div style="margin-right: 10px;"><span style="margin-right: 5px;">от</span><input type="text" id="fake_<?= $data['name_from'] ?>" data-name="fake_<?= $data['name_from'] ?>" value="<?= floor($data['selected_min']*$rate) ?>" data-minimum="<?= $data['min'] ?>" class="min" /></div>
-			<div><span style="margin-right: 5px;">до</span><input type="text" id="fake_<?= $data['name_to'] ?>" data-name="fake_<?= $data['name_to'] ?>" value="<?= ceil($data['selected_max']*$rate) ?>" data-maximum="<?= $data['max'] ?>" class="max" /></div>
+			<div style="margin-right: 10px;"><span style="margin-right: 5px;">от</span><input type="text" id="fake_<?= $data['name_from'] ?>" data-name="fake_<?= $data['name_from'] ?>" value="<?= floor($data['selected_min']*$rate) ?>" autocomplete="off" data-minimum="<?= $data['min'] ?>" class="min" /></div>
+			<div><span style="margin-right: 5px;">до</span><input type="text" id="fake_<?= $data['name_to'] ?>" data-name="fake_<?= $data['name_to'] ?>" value="<?= ceil($data['selected_max']*$rate) ?>" autocomplete="off" data-maximum="<?= $data['max'] ?>" class="max" /></div>
 		</div>
 
 		<input type="hidden" name="<?= $data['name_from'] ?>" value="<?= $data['selected_min'] ?>" />

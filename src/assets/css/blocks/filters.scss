@@ -49,6 +49,16 @@
 
 
 .pool-filters {
+  &__item {
+    width: 100%;
+    padding: .5rem;
+    height: 50px;
+    justify-content: center;
+    text-align: center;
+    .pool-filters__item-title {
+      font-size: 11px;
+    }
+  }
   &__sort {
     &-title {
       display: block;
@@ -115,6 +125,9 @@
         z-index: 3;
       }
     }
+    &-up {
+      margin-bottom: 1rem;
+    }
   } 
 
   .select__value {
@@ -170,16 +183,15 @@
     }
 
     &__wrap {
-      display: block;
+      display: flex;
       .card {
-        width: 70%;
+        width: 48%;
         margin: auto;
         margin-bottom: 1.8rem;
       }
     }
   }
 }
-
 
   .catalog_filter-actions {
     position: absolute;

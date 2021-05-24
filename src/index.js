@@ -83,6 +83,7 @@ import './assets/js/best-offers-slider';
 import './assets/js/collection-slider';
 import './assets/js/article-slider';
 import './assets/js/kit-slider';
+import './assets/js/filters-slider';
 import './assets/js/product__tabs-slider';
 import './assets/js/product';
 import './assets/js/popup';

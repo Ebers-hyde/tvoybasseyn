@@ -29,17 +29,14 @@
 					</div>
 				<?php endforeach; */ ?>
 				<select data-characteristic-name="<?= $this->escape($title) ?>" class="<?= $this->getCharacteristicBlockClass($title) ?>">
-					<option selected="selected" data-offer-id-list="" data-value="">
-						<?= $this->translate('js-not-selected') ?>
-					</option>
 					<?php foreach ($valueList as $value => $offerIdList): ?>
-						<option data-offer-id-list="<?= implode(';', $offerIdList) ?>" data-value="<?= $this->escape($value) ?>">
+						<option <?=($value === array_key_first($valueList))?'selected="selected"':''?> data-offer-id-list="<?= implode(';', $offerIdList) ?>" data-value="<?= $this->escape($value) ?>">
 							<?= $this->escape($value) ?>
 						</option>
 					<?php endforeach; ?>
 				</select>
 			</div>
-		</div>
-	<?php endforeach; ?>
+		</div>  
+	<?php endforeach; ?> 
 </div>
 

@@ -25,13 +25,11 @@ $groupList[1]['displayHeader']=0;
 	<?php endif; ?>
 
 	<?php foreach ($this->getSubGroupList($group) as $subGroup): ?>
-		<div class="">
 			<?php foreach ($subGroup as $field): ?>
 				<div class="<?= $this->getFormFieldClass($field) ?>">
 					<?= $this->render($field, "data/form_field/{$field['type']}") ?>
 				</div>
 			<?php endforeach; ?>
-		</div>
 	<?php endforeach; ?>
 </div>
 <?php endforeach; ?>

@@ -124,3 +124,25 @@
         }
     }
 }
+
+#oneclick_modal {
+    .popup {
+        @media screen and (max-width:$small_mobile) {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        input[type=tel] {
+            &:hover {
+                &+label {
+                    span.inputs__content {
+                        transform: translateY(-200%);
+                        font-size: 1.4rem;
+                        left: 0px;
+                    }
+                }
+            }
+        }
+    }
+}

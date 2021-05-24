@@ -347,10 +347,15 @@ site.filters = (function ($) {
       }
       
       fake1.addEventListener('input', function (e) {
-        price1.value = checkFake1(fake1,fake2) / rate;
+        price1.value = checkFake1(this,fake2) / rate;
+        if(this.value.length > 2)
+        onChange(price1);
       }, false);
       fake2.addEventListener('input', function (e) {
-        price2.value = checkFake2(fake1,fake2) / rate;
+        price2.value = checkFake2(fake1,this) / rate;
+        console.log(this.value.length);
+        if(this.value.length > 2)
+        onChange(price2);
       }, false);
     }
   }
@@ -358,17 +363,26 @@ site.filters = (function ($) {
   function checkFake1(fake1, fake2) {
     let ret = fake1.value;
 
-    if(fake1.value <= 0) return fake1.dataset.minimum;
-    if(fake1.value > fake2.value) return fake2.value;
-    if(fake1.value > fake2.dataset.maximum) return fake2.dataset.maximum;
+    if(parseInt(fake1.value) <= 0) return fake1.dataset.minimum;
+    if(parseInt(fake1.value) > parseInt(fake2.value)) return fake1.dataset.minimum;
+    if(parseInt(fake1.value) > parseInt(fake2.dataset.maximum)) return fake2.dataset.maximum;
     return ret;
   }
   function checkFake2(fake1, fake2) {
     let ret = fake2.value;
 
-    if(fake2.value <= fake1.value) return fake1.value;
-    if(fake2.value <= fake1.dataset.minimum) return fake1.dataset.minimum;
-    if(fake2.value > fake2.dataset.maximum) return fake2.dataset.maximum;
+    if(parseInt(fake2.value) <= parseInt(fake1.value)) {
+      console.log('to <= from');
+      return fake2.dataset.maximum;
+    }
+    if(parseInt(fake2.value) <= parseInt(fake1.dataset.minimum)) { 
+      console.log('to <= fromMinimum');
+      return fake2.dataset.maximum; 
+    }
+    if(parseInt(fake2.value) > parseInt(fake2.dataset.maximum)) {
+      console.log('to > toMaximum');
+      return fake2.dataset.maximum;
+    }
     return ret;
   }
 

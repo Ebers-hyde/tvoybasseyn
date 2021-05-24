@@ -6,6 +6,8 @@
     $i = 1;
     $cats = ['Хит'=>$best,'Скидка'=>$sales,'Новинка'=>$new,'Доставка бесплтная'=>$delivery];
 ?>
+
+<?php if(!empty($best)):?>
 <section class="best-offers">
     <div class="center-wrap toogles__wrap">
     <div class="best-offers__top">
@@ -51,3 +53,4 @@
     <div class="best-offers__btn btn btn--border mobile--hide">загрузить еще</div>
     </div>
 </section>
+<?php endif;?>

@@ -42,10 +42,10 @@ if(count($cartItems) > 0) {
               </svg><a href="">Нашли дешевле?</a>
             </div>
           </div>
-          <div class="btn btn--border desktop--hide">Купить в 1 клик</div>
+          <a class="btn btn--border desktop--hide buy_one_click_button item_one_click <?= $this->getBuyOneClickButtonClass($product) ?>">Купить в 1 клик</a>
         </div>
 		
-        <div class="product__row add_to_cart_block" data-order_id="<?=$productCartId?>" data-element_id="<?= $variables['pageId'] ?>">
+        <div class="product__row add_to_cart_block" data-offer_id="" data-order_id="<?=$productCartId?>" data-element_id="<?= $variables['pageId'] ?>">
           <div class="product__row-basket">
             <a class="basket basket--blue add_to_cart_button <?= $buyButtonClass ?>" style="<?= $addToCartStyle ?>" href="<?= $this->getAddToCartLink($product) ?>">
               <svg viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">

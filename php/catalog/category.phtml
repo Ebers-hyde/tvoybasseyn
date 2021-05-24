@@ -24,7 +24,7 @@ $cart = $this->macros('emarket', 'cart');
         <section class="pool-filters">
           <div class="center-wrap">
             <?= $this->render($variables, 'layout/header/titleWithBread') ?>
-            <div class="pool-filters__list">
+            <div class="pool-filters__list mobile--hide">
               <?php foreach ($childCategoryList as $category): ?>
                 <a class="pool-filters__item" href="<?=$category->link?>">
                   <div class="pool-filters__item-img">
@@ -37,6 +37,19 @@ $cart = $this->macros('emarket', 'cart');
               <div class="pool-filters__item pool-filters__item--hide"></div>
               <div class="pool-filters__item pool-filters__item--hide"></div>
               <div class="pool-filters__item pool-filters__item--hide"></div>
+            </div>
+            <div class="pool-filters__list desktop--hide pool-filters__slider">
+                <div class="swiper-container">
+                  <div class="swiper-wrapper">
+                    <?php foreach ($childCategoryList as $category): ?>
+                      <div class="swiper-slide">
+                      <a class="pool-filters__item" href="<?=$category->link?>">
+                        <div class="pool-filters__item-title"><?=$category->name?></div>
+                      </a>
+                    </div>
+                    <?php endforeach; ?>
+                  </div>
+                </div>
             </div>
             <div class="pool-filters__sort">
               

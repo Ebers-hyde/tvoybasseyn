@@ -32,7 +32,13 @@ $variables['cartItems'] = $cart['items'];
  
   <div class="center-wrap"> 
     <div class="product__wrap toogles__wrap">
-	    <?=(count($imageList)>1)?$this->render($variables, 'catalog/product/main/slider'):''?>
+      <?php if(count($imageList)>1): ?>
+        <?= $this->render($variables, 'catalog/product/main/slider')?>
+      <?php else:?>
+        <div class="product__img desktop--hide">
+					<img src="<?= $imageList[0] ?>" style="object-fit: contain;" alt=""></a>
+				</div>
+      <?php endif;?>
       <div class="product__inner-right desktop--hide">
         <div class="product__inner-postpone comparisons comparisons--bg comparisons--heart">
           <svg viewBox="0 0 15 13" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -51,7 +57,7 @@ $variables['cartItems'] = $cart['items'];
 				</div>
 				</div>
 			</div>
-		<?php endforeach; ?> 
+		<?php endforeach; ?>
       <div class="product__column anchors">
         <?= $this->render($product,  'catalog/product/main/price/trade_offers') ?>
         <?php if (!$this->hasTradeOffers($product->getId())): ?>

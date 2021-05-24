@@ -638,6 +638,7 @@ site.TradeOffers = {
 
 	/** @type {Null|Integer} идентификатор выбранного торгового предложения */
 	offerId: null,
+	basketOffers: null,
 
 	/**
 	 * Карта выбранных характеристик
@@ -663,6 +664,10 @@ site.TradeOffers = {
 	init: function() {
 		var that = this;
 
+		basket.get(function(data){
+			that.basketOffers = data;
+		});
+
 		that.bindSwitchBuyButtonsActivity();
 
 		that.getSelectList().selectmenu({
@@ -672,11 +677,18 @@ site.TradeOffers = {
 		that.getSelectList().bind('selectmenuselect', function(event, ui) {
 			var $characteristicName = $(event.currentTarget).data('characteristic-name');
 			that.setCharacteristic($characteristicName, $(ui.item.element));
-
 			if (!that.resolveSelectedOfferId()) {
 				alert(getLabel('js-error-cannot-resolve-trade-offer'));
 			}
 		});
+
+		$('.additional_options-item').not('[style="display:none"]').each(function(){
+			var cn = $(this).find('[data-characteristic-name]');
+			that.setCharacteristic(cn.data('characteristic-name'),cn.find('[selected="selected"]'));
+			that.resolveSelectedOfferId();
+		});
+		
+
 	},
 
 	/**
@@ -744,11 +756,57 @@ site.TradeOffers = {
 	 * @param {*|jQuery|HTMLElement} $button кнопка
 	 */
 	switchBuyButtonActivity: function($button) {
-
+		let is_active = false;
 		if (!$button.data('old-class')) {
 			$button.data('old-class', $button.attr('class'));
 		}
+		
+		if(!site.TradeOffers.basketOffers){
+			basket.get(function(data){	
+				site.TradeOffers.basketOffers = data;
+				Object.entries(site.TradeOffers.basketOffers.items.item).forEach(function(item, i, arr) {
+					if(typeof item[1].offer !== 'undefined' && item[1].page.id == $('.product').data('id')){
+						if($('.add_to_cart_block').attr('data-offer_id') == item[1].offer.id) {
+							is_active = item[1];
+						}
+					}
+				});
+				if(!is_active){
+					$button.show();
+					$('.add_to_cart_block').attr('data-order_id', '');
+					$('.product__quantity').hide();
+				}else{
+					$button.hide();
+					$('.product__quantity').show();
+					$('.add_to_cart_block').attr('data-order_id', is_active.id);
+					$('.add_to_cart_block').find('.current_quantity').val(is_active.amount);
+				}
+			});
+		}else{
+			Object.entries(site.TradeOffers.basketOffers.items.item).forEach(function(item, i, arr) {
+				if(typeof item[1].offer !== 'undefined' && item[1].page.id == $('.product').data('id')){
+					if($('.add_to_cart_block').attr('data-offer_id') == item[1].offer.id) {
+						is_active = item[1];
+					}
+				}
+			});
+			if(!is_active){
+				$button.show();
+				$('.add_to_cart_block').attr('data-order_id', '');
+				$('.product__quantity').hide();
+			}else{
+				$button.hide();
+				$('.product__quantity').show();
+				$('.add_to_cart_block').attr('data-order_id', is_active.id);
+				$('.add_to_cart_block').find('.current_quantity').val(is_active.amount);
+			}
+		}
 
+		
+		
+
+
+		
 		/*if (!this.isAllCharacteristicsFilled() || !this.getOfferId()) {
 
 			if (!$button.hasClass('not_buy')) {
@@ -849,6 +907,8 @@ site.TradeOffers = {
 
 		for (var filteredOfferId in filteredOfferIdList) {
 			this.setOfferId(filteredOfferId);
+			$('.add_to_cart_block').attr('data-offer_id',filteredOfferId);
+			console.log(filteredOfferId);
 			this.changePrice();
 			this.changeImage();
 			this.switchBuyButtonListActivity();
@@ -927,7 +987,7 @@ site.TradeOffers = {
 	 * @returns {boolean}
 	 */
 	isAvailable: function() {
-		return $('div.additional_options').length > 0;
+		return $('.additional_options-item').not('[style="display:none"]').length > 0;
 	},
 
 	/**
@@ -1097,6 +1157,7 @@ site.Cart = {
 					'offer_id': site.TradeOffers.getOfferId(),
 					'price_type_id': $('#price_type_id').data('price-type-id')
 				});
+				console.log(site.TradeOffers.getOfferId());
 				return;
 			}
 
@@ -1237,7 +1298,7 @@ site.Cart = {
 
 			var $button = $(this);
 			var $parent = $('.pool-filters').length != 0 ? $button.closest('.card') : $('.add_to_cart_block');
-			var orderItemId = $parent.data('order_id');
+			var orderItemId = $parent.attr('data-order_id');
 			var quantityNode = $parent.find('.current_quantity');
 			var oldValue = quantityNode.val();
 
@@ -1284,6 +1345,7 @@ site.Cart = {
 			url: '/udata' + url,
 			success: function() {
 				basket.get(function(data) {
+					console.log(data);
 					site.Cart.updateOrderItemCount(data.summary.amount);
 					site.Cart.ready = true;
 					site.Cart.changeAddedProductButton($button,data);
@@ -1308,15 +1370,30 @@ site.Cart = {
 	 */
 	changeAddedProductButton: function($button,data=null) {
 		Object.entries(data.items.item).forEach(function(item, i, arr) {
+
 			if($button.closest('.card').find('.card__title').text() == item[1].name) {
 				$button.closest('.card').attr('data-order_id', item[1].id);
 				$button.closest('.card').find('.current_quantity').val(1);
 			};
-			if($('.product__title').text() == item[1].name) {
-				$('.add_to_cart_block').attr('data-order_id', item[1].id);
-				$('.add_to_cart_block').find('.current_quantity').val(1);
+
+			if(typeof item[1].offer !== 'undefined'){
+				if($('.add_to_cart_block').attr('data-offer_id') == item[1].offer.id) {
+					$('.add_to_cart_block').find('.current_quantity').val(item[1].amount);
+					$('.add_to_cart_block').attr('data-order_id', item[1].id);
+				}
+			}else{
+				if($('.product').data('id') == item[1].page.id) {
+					console.log($('.product__title').text());
+					console.log(item[1].name);
+						$('.add_to_cart_block').attr('data-order_id', item[1].id);
+						$('.add_to_cart_block').find('.current_quantity').val(1);
+				}
 			}
 		});
+		if(site.TradeOffers.isAvailable()) {
+			console.log('TradeOffers isAvailable');
+			site.TradeOffers.basketOffers = data;
+		}
 
 		
 		/*site.Cart.changeButtonHtml($button, getLabel('js-product-added-successfully-label'));
@@ -1345,7 +1422,10 @@ site.Cart = {
 	 */
 	redraw: function(id) {
 		return function(data) {
-
+			if(site.TradeOffers.isAvailable()) {
+				console.log('TradeOffers isAvailable');
+				site.TradeOffers.basketOffers = data;
+			}
 			var orderItemCount = data.summary.amount || 0;
 
 			if (orderItemCount > 0) {
@@ -1819,10 +1899,15 @@ site.filters = (function ($) {
       }
       
       fake1.addEventListener('input', function (e) {
-        price1.value = checkFake1(fake1,fake2) / rate;
+        price1.value = checkFake1(this,fake2) / rate;
+        if(this.value.length > 2)
+        onChange(price1);
       }, false);
       fake2.addEventListener('input', function (e) {
-        price2.value = checkFake2(fake1,fake2) / rate;
+        price2.value = checkFake2(fake1,this) / rate;
+        console.log(this.value.length);
+        if(this.value.length > 2)
+        onChange(price2);
       }, false);
     }
   }
@@ -1830,17 +1915,26 @@ site.filters = (function ($) {
   function checkFake1(fake1, fake2) {
     let ret = fake1.value;
 
-    if(fake1.value <= 0) return fake1.dataset.minimum;
-    if(fake1.value > fake2.value) return fake2.value;
-    if(fake1.value > fake2.dataset.maximum) return fake2.dataset.maximum;
+    if(parseInt(fake1.value) <= 0) return fake1.dataset.minimum;
+    if(parseInt(fake1.value) > parseInt(fake2.value)) return fake1.dataset.minimum;
+    if(parseInt(fake1.value) > parseInt(fake2.dataset.maximum)) return fake2.dataset.maximum;
     return ret;
   }
   function checkFake2(fake1, fake2) {
     let ret = fake2.value;
 
-    if(fake2.value <= fake1.value) return fake1.value;
-    if(fake2.value <= fake1.dataset.minimum) return fake1.dataset.minimum;
-    if(fake2.value > fake2.dataset.maximum) return fake2.dataset.maximum;
+    if(parseInt(fake2.value) <= parseInt(fake1.value)) {
+      console.log('to <= from');
+      return fake2.dataset.maximum;
+    }
+    if(parseInt(fake2.value) <= parseInt(fake1.dataset.minimum)) { 
+      console.log('to <= fromMinimum');
+      return fake2.dataset.maximum; 
+    }
+    if(parseInt(fake2.value) > parseInt(fake2.dataset.maximum)) {
+      console.log('to > toMaximum');
+      return fake2.dataset.maximum;
+    }
     return ret;
   }
 

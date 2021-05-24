@@ -98,7 +98,8 @@
         text-decoration-line: underline;
         display: block;
         text-align: left;
-        min-height: 5.1rem;
+        height: 5.1rem;
+        overflow: hidden;
         transition: all 0.5s;
 
         &:hover {

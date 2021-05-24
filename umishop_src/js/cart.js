@@ -43,6 +43,7 @@ site.Cart = {
 					'offer_id': site.TradeOffers.getOfferId(),
 					'price_type_id': $('#price_type_id').data('price-type-id')
 				});
+				console.log(site.TradeOffers.getOfferId());
 				return;
 			}
 
@@ -183,7 +184,7 @@ site.Cart = {
 
 			var $button = $(this);
 			var $parent = $('.pool-filters').length != 0 ? $button.closest('.card') : $('.add_to_cart_block');
-			var orderItemId = $parent.data('order_id');
+			var orderItemId = $parent.attr('data-order_id');
 			var quantityNode = $parent.find('.current_quantity');
 			var oldValue = quantityNode.val();
 
@@ -230,6 +231,7 @@ site.Cart = {
 			url: '/udata' + url,
 			success: function() {
 				basket.get(function(data) {
+					console.log(data);
 					site.Cart.updateOrderItemCount(data.summary.amount);
 					site.Cart.ready = true;
 					site.Cart.changeAddedProductButton($button,data);
@@ -254,15 +256,30 @@ site.Cart = {
 	 */
 	changeAddedProductButton: function($button,data=null) {
 		Object.entries(data.items.item).forEach(function(item, i, arr) {
+
 			if($button.closest('.card').find('.card__title').text() == item[1].name) {
 				$button.closest('.card').attr('data-order_id', item[1].id);
 				$button.closest('.card').find('.current_quantity').val(1);
 			};
-			if($('.product__title').text() == item[1].name) {
-				$('.add_to_cart_block').attr('data-order_id', item[1].id);
-				$('.add_to_cart_block').find('.current_quantity').val(1);
+
+			if(typeof item[1].offer !== 'undefined'){
+				if($('.add_to_cart_block').attr('data-offer_id') == item[1].offer.id) {
+					$('.add_to_cart_block').find('.current_quantity').val(item[1].amount);
+					$('.add_to_cart_block').attr('data-order_id', item[1].id);
+				}
+			}else{
+				if($('.product').data('id') == item[1].page.id) {
+					console.log($('.product__title').text());
+					console.log(item[1].name);
+						$('.add_to_cart_block').attr('data-order_id', item[1].id);
+						$('.add_to_cart_block').find('.current_quantity').val(1);
+				}
 			}
 		});
+		if(site.TradeOffers.isAvailable()) {
+			console.log('TradeOffers isAvailable');
+			site.TradeOffers.basketOffers = data;
+		}
 
 		
 		/*site.Cart.changeButtonHtml($button, getLabel('js-product-added-successfully-label'));
@@ -291,7 +308,10 @@ site.Cart = {
 	 */
 	redraw: function(id) {
 		return function(data) {
-
+			if(site.TradeOffers.isAvailable()) {
+				console.log('TradeOffers isAvailable');
+				site.TradeOffers.basketOffers = data;
+			}
 			var orderItemCount = data.summary.amount || 0;
 
 			if (orderItemCount > 0) {
