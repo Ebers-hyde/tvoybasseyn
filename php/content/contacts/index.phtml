@@ -3,38 +3,12 @@ $page = $variables['page'];
 $catalog = $this->getProductsListFromCategory($variables['pageId'],100);
 
 ?>
-<div class="center-wrap" style="padding-top: 2.1rem;">
+
+<div class="center-wrap mobile--hide" style="padding-top: 2.1rem;">
     <h5>Контакты</h5>
 </div>
 
-<div class="center-wrap contactStores" style="padding-top: 2.1rem;">
-<!--script type="text/javascript" charset="utf-8" async src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3Af5c67ada48c3ab4ef5360ebb79c24d1a5bcd4fded81cadbc1f3b3fe1b7d27156&amp;width=100%25&amp;height=451&amp;lang=ru_RU"></script-->
-    <!--<div class="contactStore">
-        <div class="contactStore__info">
-            <h4>Санкт-Петербург</h4>
-            <p>ПН-ПТ 10:00 - 19:00</p>
-            <p>СБ-ВС 11:00 - 18:00</p>
-            <p>ул. Бассейная, д.73, корпус 1</p>
-        </div>
-        <div class="contactStore__show">
-        <svg width="39" height="12" viewBox="0 0 39 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M38.5303 6.53033C38.8232 6.23744 38.8232 5.76256 38.5303 5.46967L33.7574 0.696699C33.4645 0.403806 32.9896 0.403806 32.6967 0.696699C32.4038 0.989593 32.4038 1.46447 32.6967 1.75736L36.9393 6L32.6967 10.2426C32.4038 10.5355 32.4038 11.0104 32.6967 11.3033C32.9896 11.5962 33.4645 11.5962 33.7574 11.3033L38.5303 6.53033ZM0 6.75L38 6.75V5.25L0 5.25L0 6.75Z" fill="#515151"/>
-        </svg>
-        </div>
-    </div>
-    <div class="contactStore">
-        <div class="contactStore__info">
-            <h4>Москва</h4>
-            <p>10:00 - 21:00</p>
-            <p>Киевское шоссе, БЦ</p>
-            <p>Румянцево, корпус Е</p>
-        </div>
-        <div class="contactStore__show">
-        <svg width="39" height="12" viewBox="0 0 39 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M38.5303 6.53033C38.8232 6.23744 38.8232 5.76256 38.5303 5.46967L33.7574 0.696699C33.4645 0.403806 32.9896 0.403806 32.6967 0.696699C32.4038 0.989593 32.4038 1.46447 32.6967 1.75736L36.9393 6L32.6967 10.2426C32.4038 10.5355 32.4038 11.0104 32.6967 11.3033C32.9896 11.5962 33.4645 11.5962 33.7574 11.3033L38.5303 6.53033ZM0 6.75L38 6.75V5.25L0 5.25L0 6.75Z" fill="#515151"/>
-        </svg>
-        </div>
-    </div>-->
+<div class="contactStores mobile--hide">
     <div style="padding-top: 4em;">
         <strong class="contactStores__itemTitle">Санкт-Петербург</strong>
         <button class="btn btn--blue btn_showMap" data-city="spb">Показать карту</button>
@@ -115,6 +89,106 @@ $catalog = $this->getProductsListFromCategory($variables['pageId'],100);
             ИНН 7810721003
             </div>
         </div> 
+    </div>
+</div>
+
+<div class="contactStores desktop--hide" style="padding-top: 2.1rem;">
+<!--script type="text/javascript" charset="utf-8" async src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3Af5c67ada48c3ab4ef5360ebb79c24d1a5bcd4fded81cadbc1f3b3fe1b7d27156&amp;width=100%25&amp;height=451&amp;lang=ru_RU"></script-->
+    <div class="contactStore__previews">
+        <div class="center-wrap" style="margin-bottom: 2.1rem;">
+            <h5>Контакты</h5>
+        </div>
+        <div class="contactStore__preview" data-city="spb">
+            <div class="contactStore__info">
+                <h4>Санкт-Петербург</h4>
+                <div>
+                <p>ПН-ПТ 10:00 - 19:00</p>
+                <p>СБ-ВС 11:00 - 18:00</p>
+                </div>
+                <p>ул. Бассейная, д.73, корпус 1</p>
+            </div>
+            <div class="contactStore__show">
+            <svg width="39" height="12" viewBox="0 0 39 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M38.5303 6.53033C38.8232 6.23744 38.8232 5.76256 38.5303 5.46967L33.7574 0.696699C33.4645 0.403806 32.9896 0.403806 32.6967 0.696699C32.4038 0.989593 32.4038 1.46447 32.6967 1.75736L36.9393 6L32.6967 10.2426C32.4038 10.5355 32.4038 11.0104 32.6967 11.3033C32.9896 11.5962 33.4645 11.5962 33.7574 11.3033L38.5303 6.53033ZM0 6.75L38 6.75V5.25L0 5.25L0 6.75Z" fill="#515151"/>
+            </svg>
+            </div>
+        </div>
+        <div class="contactStore__preview" data-city="msc">
+            <div class="contactStore__info">
+                <h4>Москва</h4>
+                <div>
+                <p>10:00 - 21:00</p>
+                </div>
+                <p>Киевское шоссе, БЦ</p>
+                <p>Румянцево, корпус Е</p>
+            </div>
+            <div class="contactStore__show">
+            <svg width="39" height="12" viewBox="0 0 39 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M38.5303 6.53033C38.8232 6.23744 38.8232 5.76256 38.5303 5.46967L33.7574 0.696699C33.4645 0.403806 32.9896 0.403806 32.6967 0.696699C32.4038 0.989593 32.4038 1.46447 32.6967 1.75736L36.9393 6L32.6967 10.2426C32.4038 10.5355 32.4038 11.0104 32.6967 11.3033C32.9896 11.5962 33.4645 11.5962 33.7574 11.3033L38.5303 6.53033ZM0 6.75L38 6.75V5.25L0 5.25L0 6.75Z" fill="#515151"/>
+            </svg>
+            </div>
+        </div>
+    </div>
+    <div class="contactStore__full" data-city="spb">
+        <div class="contactStore__header">
+            <svg width="10" height="18" viewBox="0 0 10 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9.70711 17.7071C9.34662 18.0676 8.77939 18.0953 8.3871 17.7903L8.29289 17.7071L0.292893 9.70711C-0.0675915 9.34662 -0.0953215 8.77939 0.209704 8.3871L0.292893 8.29289L8.29289 0.292893C8.68342 -0.0976313 9.31658 -0.0976314 9.70711 0.292892C10.0676 0.653376 10.0953 1.22061 9.79029 1.6129L9.70711 1.70711L2.41421 9L9.70711 16.2929C10.0976 16.6834 10.0976 17.3166 9.70711 17.7071Z" fill="black"/>
+            </svg>
+            <h4>Санкт-Петербург</h4>
+        </div>
+        <div class="yandex_map">
+            <script type="text/javascript" charset="utf-8" async src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3Adc12af408884d839cc28b0427e74c99eed5e906e9346058ea8f930ea0e057eb2&amp;width=100%25&amp;height=400&amp;lang=ru_RU&amp;scroll=true"></script>
+        </div>
+        <div class="contactStore__info">
+            <h4>ул.Бассейная, д.73, корпус 1</h4>
+            <div>
+            <p>ПН-ПТ 10:00 - 19:00</p>
+            <p>СБ-ВС 11:00 - 18:00</p>
+            </div>
+            <div>
+            <p>+7 (812) 970-71-71</p>
+            <p>+7 (812) 716-77-11</p>
+            </div>
+            <div>
+            <p>sale@tvoybasseyn.ru</p>
+            </div>
+            <div>
+            <p>ОБЩЕСТВО С ОГРАНИЧЕННОЙ</p>
+            <p>ОТВЕТСТВЕННОСТЬЮ "НОВОПУЛ"</p>
+            <p>ОГРН 1187847025838</p>
+            <p>ИНН 7810721003</p>
+            </div>
+        </div>
+    </div>
+    <div class="contactStore__full" data-city="msc">
+        <div class="contactStore__header">
+            <svg width="10" height="18" viewBox="0 0 10 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9.70711 17.7071C9.34662 18.0676 8.77939 18.0953 8.3871 17.7903L8.29289 17.7071L0.292893 9.70711C-0.0675915 9.34662 -0.0953215 8.77939 0.209704 8.3871L0.292893 8.29289L8.29289 0.292893C8.68342 -0.0976313 9.31658 -0.0976314 9.70711 0.292892C10.0676 0.653376 10.0953 1.22061 9.79029 1.6129L9.70711 1.70711L2.41421 9L9.70711 16.2929C10.0976 16.6834 10.0976 17.3166 9.70711 17.7071Z" fill="black"/>
+            </svg>
+            <h4>Москва</h4>
+        </div>
+        <div class="yandex_map" data-city="msc">
+            <script type="text/javascript" charset="utf-8" async src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3A62d05220fa198dbb8a6a36680ab125f2b8c0e5df504680ff744f595acbb022bb&amp;width=100%25&amp;height=400&amp;lang=ru_RU&amp;scroll=true"></script>
+        </div>
+        <div class="contactStore__info">
+            <h4>Киевское шоссе, БЦ Румянцево, корпус Е</h4>
+            <div>
+            <p>10:00 - 21:00</p>
+            </div>
+            <div>
+            <p>+7 (499) 113-71-71</p>
+            <p>+7 (499) 113-70-70</p>
+            </div>
+            <div>
+            <p>sale@tvoybasseyn.ru</p>
+            </div>
+            <div>
+            <p>ОБЩЕСТВО С ОГРАНИЧЕННОЙ</p>
+            <p>ОТВЕТСТВЕННОСТЬЮ "НОВОПУЛ"</p>
+            <p>ОГРН 1187847025838</p>
+            <p>ИНН 7810721003</p>
+            </div>
+        </div>
     </div>
 </div> 
 

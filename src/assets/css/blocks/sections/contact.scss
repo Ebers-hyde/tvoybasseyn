@@ -101,27 +101,75 @@
     }
 
 
-    &Stores{ 
-        /*.contactStore {
+    &Stores{
+        &.desktop--hide {
+            position: relative;
+            overflow: hidden;
+            height: 400px;
+        }
+        .contactStore__full {
+            display: none;
+            position: absolute;
+            width: 100%;
+            top: 0;
+            transform: translateX(100%);
+            transition: right ease 0.5s;
+            .contactStore__header {
+                height: 68px;
+                border-bottom: 1px solid #E2E6F0;
+                text-align: center;
+                padding-top: 24.5px;
+                position: relative;
+                svg {
+                    position: absolute;
+                    top: 25px;
+                    left: 25px;
+                }
+            }
+            .contactStore__info {
+                padding: 25px;
+                div:last-child {
+                    p {
+                        font-size: 12px;
+                    }
+                }
+            }
+            &-active {
+                display: block;
+                transform: none;
+            }
+        }
+        .contactStore__previews {
+            position: absolute;
+            width: 100%;
+            top: 0;
+            transform: none;
+            transition: left ease 0.5s;
+            &-hidden {
+                display: none;
+                transform: translateX(-100%);
+            }
+        } 
+        .contactStore__preview {
             display: flex;
             justify-content: space-between;
             align-items: center;
             border-top: 1px solid #E2E6F0;
-            border-bottom: 1px solid #E2E6F0;
             padding: 25px;
+        }
+        .contactStore__info {
             h4 {
+                margin-bottom: 2rem;
+                font-weight: bold;
+            }
+            div {
                 margin-bottom: 2rem;
             }
             p {
                 font-size: 14px;
-                &:nth-child(1) {
-                    margin-bottom: 0;
-                }
-                &:nth-child(2) {
-                    margin-bottom: 2rem;
-                }
+                margin-bottom: 0;
             }
-        }*/
+        }
         &__item{
             border: 1px solid #f2f2f2;
             padding: 32px;
@@ -148,7 +196,8 @@
             font-weight: 400; 
             font-size: 1.8rem;
             margin-bottom: 17px;
-            display: block; 
+            display: block;
+            padding-left: 25px;
         }
         &__itemName{
             font-weight: 700;
@@ -173,16 +222,6 @@
         }
         .btn--blue {
             display: none;
-        }
-        @media screen and (max-width:$large_mobile) {
-            .yandex_map {
-                display: none;
-            }
-            .btn--blue {
-                display: block;
-                margin: 5% 20%;
-                padding: 0;
-            }
         }
     }
 }

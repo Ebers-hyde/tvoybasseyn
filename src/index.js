@@ -97,8 +97,10 @@ import './assets/js/product__tabs-toggle';
 import './assets/js/sidebar__drop-yet';
 import './assets/js/toogles';
 import './assets/js/drop-down';
+import './assets/js/contact.js';
 import './assets/js/compare';
 import './assets/js/likes';
+import './assets/js/CustomSwipe.js';
 
 
 
