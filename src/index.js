@@ -85,6 +85,7 @@ import './assets/js/article-slider';
 import './assets/js/kit-slider';
 import './assets/js/filters-slider';
 import './assets/js/product__tabs-slider';
+import './assets/js/series';
 import './assets/js/product';
 import './assets/js/popup';
 import './assets/js/mobile-menu';

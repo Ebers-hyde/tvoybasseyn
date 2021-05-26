@@ -6,7 +6,26 @@
     font-weight: bold;
     font-size: 4.2rem;
     z-index: 2;
+    &-mobile {
+        display: flex;
+        padding: 15px 0;
+        justify-content: center;
+        background-color: #4081FF;
+        font-size: 20px;
+        font-weight: bold;
+        color: #fff;
+        .series__dropIcon {
+            margin-top: 8px;
+            width: 18px;
+            height: 10px;
+            background-image: url('/dist/assets/images/caret_down.svg');
+            &.opened {
+                background-image: url('/dist/assets/images/caret_up.svg');
+            }
+        }
+    }
 }
+
 .series__itemHoverImg {
     position: absolute;
     height: 100%;
@@ -30,6 +49,14 @@
     flex-wrap: wrap;
     margin-bottom: 7rem;
     position: relative;
+    &-mobile {
+        height: fit-content;
+        &.inactive {
+            height: 0;
+            opacity: 0;
+            visibility: hidden;
+        }
+    }
 }
 .series__modelImage {
     padding: 1rem 1rem;
@@ -59,6 +86,33 @@
 .series__model {
     max-width: calc(100% / 5);
     padding: 2rem 1rem;
+    &-mobile {
+        display: flex;
+        padding: 10px;
+        border-bottom: 1px solid #E2E6F0; 
+        h5 {
+            margin-top: 10px;
+        }
+        div {
+            width: 50%;
+            &:nth-child(2) {
+                font-size: 14px;
+                padding-left: 20px;
+                p {
+                    margin-top: 10px;
+                    font-size: 14px;
+                    span {
+                        font-weight: 600;
+                        padding-right: 8px;
+                    }
+                }
+                h4 {
+                    margin-top: 32px;
+                    font-weight: bold;
+                }
+            }
+        }
+    }
 }
 @media screen and (max-width:768px){
     .series__model {

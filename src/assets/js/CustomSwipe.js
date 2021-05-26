@@ -46,20 +46,21 @@ export default class CustomSwipe {
         this.xDiff = this.xDown - xUp;
         this.yDiff = this.yDown - yUp;
 
-        if ( Math.abs( this.xDiff ) > Math.abs( this.yDiff ) ) { // Most significant.
-            if ( this.xDiff > 0 ) {
-                this.onLeft();
+        if(evt.target.tagName !== "YMAPS") {
+            if ( Math.abs( this.xDiff ) > Math.abs( this.yDiff ) ) { // Most significant.
+                if ( this.xDiff > 0 ) {
+                    this.onLeft();
+                } else {
+                    this.onRight();
+                }
             } else {
-                this.onRight();
-            }
-        } else {
-            if ( this.yDiff > 0 ) {
-                this.onUp();
-            } else {
-                this.onDown();
+                if ( this.yDiff > 0 ) {
+                    this.onUp();
+                } else {
+                    this.onDown();
+                }
             }
         }
-
         // Reset values.
         this.xDown = null;
         this.yDown = null;
@@ -67,7 +68,7 @@ export default class CustomSwipe {
 
     run() {
         this.element.addEventListener('touchmove', function(evt) {
-            this.handleTouchMove(evt).bind(this);
+            this.handleTouchMove(evt);
         }.bind(this), false);
     }
 }

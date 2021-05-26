@@ -1,4 +1,4 @@
-const { default: ContactSwipe, default: CustomSwipe } = require("./CustomSwipe");
+const { default: CustomSwipe } = require("./CustomSwipe");
 
 if(document.querySelector('.contactStores')) {
     let previews = document.querySelectorAll('.contactStore__preview');
@@ -8,7 +8,7 @@ if(document.querySelector('.contactStores')) {
         let cityBlock = document.querySelector(`.contactStore__full[data-city='${city}']`);
         preview.onclick = function() {
             document.querySelector('.contactStore__previews').classList.add('contactStore__previews-hidden');
-            document.querySelector('.contactStores.desktop--hide').style.height = '787px'; 
+            document.querySelector('.contactStores.desktop--hide').style.height = '700px'; 
             cityBlock.classList.add('contactStore__full-active');
 
             document.querySelector(`.contactStore__full[data-city='${city}'] .contactStore__header`).onclick = function() {
@@ -29,7 +29,7 @@ if(document.querySelector('.contactStores')) {
         let contactSwiper = new CustomSwipe(preview);
         contactSwiper.onLeft(function() {
             document.querySelector('.contactStore__previews').classList.add('contactStore__previews-hidden');
-            document.querySelector('.contactStores.desktop--hide').style.height = '787px'; 
+            document.querySelector('.contactStores.desktop--hide').style.height = '700px'; 
             cityBlock.classList.add('contactStore__full-active');
 
             document.querySelector(`.contactStore__full[data-city='${city}'] .contactStore__header`).onclick = function() {

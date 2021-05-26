@@ -108,12 +108,11 @@
             height: 400px;
         }
         .contactStore__full {
-            display: none;
             position: absolute;
             width: 100%;
             top: 0;
             transform: translateX(100%);
-            transition: right ease 0.5s;
+            transition: all 0.5s ease-in-out;
             .contactStore__header {
                 height: 68px;
                 border-bottom: 1px solid #E2E6F0;
@@ -135,7 +134,6 @@
                 }
             }
             &-active {
-                display: block;
                 transform: none;
             }
         }
@@ -144,9 +142,8 @@
             width: 100%;
             top: 0;
             transform: none;
-            transition: left ease 0.5s;
+            transition: all 0.5s ease-in-out;
             &-hidden {
-                display: none;
                 transform: translateX(-100%);
             }
         } 
