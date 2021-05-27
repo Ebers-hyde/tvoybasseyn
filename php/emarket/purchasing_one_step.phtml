@@ -19,9 +19,9 @@ $cart = $this->macros('emarket', 'cart');
 ?>
 
 
-<div class="center-wrap" style="padding-top: 2.1rem;">
+<!-- <div class="center-wrap" style="padding-top: 2.1rem;">
 	<div class="pool-filters__title"><?= $this->translate('purchasing_one_step') ?></div>
-</div>
+</div> -->
 
 <div class="center-wrap" style="padding-top: 2.1rem;">
     <div class="page__content page__content_mob-bgc_white">
@@ -40,6 +40,27 @@ $cart = $this->macros('emarket', 'cart');
             </div>
             <div class="">
                 <form action="<?= $this->getPurchasingOneStepUrl() ?>" method="post" id="deliveryForm" class="without-steps">
+                    <div class="show_orderDetails desktop--hide">
+                    <div>
+                    <svg viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M5.4 14.4C4.41 14.4 3.6 15.21 3.6 16.2C3.6 17.19 4.41 18 5.4 18C6.39 18 7.2 17.19 7.2 16.2C7.2 15.21 6.39 14.4 5.4 14.4ZM0 0V1.8H1.8L5.04 8.64L3.78 10.8C3.69 11.07 3.6 11.43 3.6 11.7C3.6 12.69 4.41 13.5 5.4 13.5H16.2V11.7H5.76C5.67 11.7 5.58 11.61 5.58 11.52V11.43L6.39 9.89997H13.05C13.77 9.89997 14.31 9.53996 14.58 8.99996L17.82 3.15C18 2.97 18 2.88 18 2.7C18 2.16 17.64 1.8 17.1 1.8H3.78L2.97 0H0ZM14.4 14.4C13.41 14.4 12.6 15.21 12.6 16.2C12.6 17.19 13.41 18 14.4 18C15.39 18 16.2 17.19 16.2 16.2C16.2 15.21 15.39 14.4 14.4 14.4Z"></path>
+                    </svg>
+                    </div>
+                    <div>
+                    <span>Показать детали заказа</span>
+                    
+                    <svg fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill="#ccc" d="M17.7071 0.292893C18.0676 0.653377 18.0953 1.22061 17.7903 1.6129L17.7071 1.70711L9.70711 9.70711C9.34662 10.0676 8.77939 10.0953 8.3871 9.7903L8.29289 9.70711L0.292892 1.70711C-0.0976315 1.31658 -0.0976315 0.683417 0.292892 0.292893C0.653376 -0.0675913 1.22061 -0.0953212 1.6129 0.209704L1.70711 0.292893L9 7.58579L16.2929 0.292893C16.6834 -0.0976309 17.3166 -0.0976309 17.7071 0.292893Z" fill="white"/>
+                    </svg>
+
+                    </div>
+                    <div>
+                    <span><?= ceil($cart['total-price']['actual'])." ".$cart['total-price']['suffix'] ?></span>
+                    </div>
+                    </div>
+                    <div class="col-md-5 col-sm-12 order-1 order-md-2 desktop--hide inactive" data-full-cartlist="target">
+                        <?= $this->render($variables, 'emarket/purchasing_one_step/cart') ?>
+                    </div>
                     <div class="row">
                         <div class="col-md-7 col-sm-12 order-2 order-md-1">
                             <div class="row flex-column flex-lg-row">
@@ -61,9 +82,8 @@ $cart = $this->macros('emarket', 'cart');
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-5 col-sm-12 order-1 order-md-2" data-full-cartlist="target">
+                        <div class="col-md-5 col-sm-12 order-1 order-md-2 mobile--hide" data-full-cartlist="target">
                             <?= $this->render($variables, 'emarket/purchasing_one_step/cart') ?>
-                            
                         </div>
                     </div>
                 </form>

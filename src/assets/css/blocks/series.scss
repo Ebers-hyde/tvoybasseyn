@@ -18,9 +18,9 @@
             margin-top: 8px;
             width: 18px;
             height: 10px;
-            background-image: url('/dist/assets/images/caret_down.svg');
+            background-image: url("~img/caret_down.svg");
             &.opened {
-                background-image: url('/dist/assets/images/caret_up.svg');
+                background-image: url("~img/caret_up.svg");
             }
         }
     }
@@ -50,9 +50,11 @@
     margin-bottom: 7rem;
     position: relative;
     &-mobile {
-        height: fit-content;
+        overflow: hidden;
+        max-height: 1000px;
+        transition: max-height 0.5s ease;
         &.inactive {
-            height: 0;
+            max-height: 0;
             opacity: 0;
             visibility: hidden;
         }
@@ -143,4 +145,8 @@
 }
 .swiper-container-horizontal>.swiper-pagination-bullets .swiper-pagination-bullet {
     margin: 0 13px;
+}
+
+.series__wrap-mobile {
+    margin-bottom: 50px;
 }

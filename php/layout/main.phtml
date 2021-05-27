@@ -103,10 +103,15 @@ if (!empty($variables['parents'])) {
       <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M17 12.5C15.8 12.5 14.6 12.3 13.4 11.9C13.1 11.8 12.7 11.9 12.4 12.1L10.2 14.3C7.40004 12.9 5.1 10.5 3.6 7.7L5.8 5.5C6.1 5.2 6.2 4.8 6 4.5C5.7 3.4 5.5 2.2 5.5 1C5.5 0.4 5.1 0 4.5 0H1C0.4 0 0 0.4 0 1C0 10.4 7.6 18 17 18C17.6 18 18 17.6 18 17V13.5C18 12.9 17.6 12.5 17 12.5ZM16 9H18C18 4 14 0 9 0V2C12.9 2 16 5.1 16 9ZM12 9H14C14 6.2 11.8 4 9 4V6C10.7 6 12 7.3 12 9Z"></path>
       </svg></a>
-    <div class="header__basket desktop--hide" onclick="show_popup(&quot;basket&quot;)">
+    <div class="header__basket desktop--hide">
+      <a href="/emarket/purchasing_one_step/" data-anchors>
       <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M5.4 14.4C4.41 14.4 3.6 15.21 3.6 16.2C3.6 17.19 4.41 18 5.4 18C6.39 18 7.2 17.19 7.2 16.2C7.2 15.21 6.39 14.4 5.4 14.4ZM0 0V1.8H1.8L5.04 8.64L3.78 10.8C3.69 11.07 3.6 11.43 3.6 11.7C3.6 12.69 4.41 13.5 5.4 13.5H16.2V11.7H5.76C5.67 11.7 5.58 11.61 5.58 11.52V11.43L6.39 9.89997H13.05C13.77 9.89997 14.31 9.53996 14.58 8.99996L17.82 3.15C18 2.97 18 2.88 18 2.7C18 2.16 17.64 1.8 17.1 1.8H3.78L2.97 0H0ZM14.4 14.4C13.41 14.4 12.6 15.21 12.6 16.2C12.6 17.19 13.41 18 14.4 18C15.39 18 16.2 17.19 16.2 16.2C16.2 15.21 15.39 14.4 14.4 14.4Z"></path>
       </svg>
+      </a>
+    </div>
+    <div class="order_item_count order_item_count-mobile desktop--hide">
+        0
     </div>
     <div class="header__content mobile--hide">
       <div class="center-wrap">
@@ -356,12 +361,13 @@ if (!empty($variables['parents'])) {
           <div></div>
         </div>
         <div class="popup-form">
-          <?php if (count($productList) == 0) : ?>
+          <div class="empty_cart <?= (count($productList) == 0) ? '' : 'hidden'?>">
             <h2 class="popup-form__title">Ваша корзина пуста</h2>
             <div class="popup-form__text">Ознакомьтесь с нашим ассортиментом</div>
             <div class="popup-form__btn"><a class="btn btn--blue" href="/shop/">Каталог оборудования</a></div>
             <div class="popup-form__img"><img src="dist/assets/images/popap-img.png" alt=""></div>
-          <?php else : ?>
+          </div>
+          <div class="populated_cart <?= (count($productList) == 0) ? 'hidden' : ''?>">
             <h2 class="popup-form__title">Корзина</h2>            
             <?php foreach ($productList as $index => $product) : ?>
               <div class="order_item order_item-mobile" data-id="<?= $product["id"]?>" id="<?= "order_item_{$product['id']}" ?>">
@@ -395,7 +401,7 @@ if (!empty($variables['parents'])) {
 	            </p>
             </div>
             <a class="btn btn--blue" href="/emarket/purchasing_one_step/">Оформить заказ</a>
-          <?php endif; ?>
+          </div>
         </div>
       </div>
     </div>

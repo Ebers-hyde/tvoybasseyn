@@ -1176,6 +1176,17 @@ site.Cart = {
 			$buyModal.modal('show');
 		});
 
+		$('.show_orderDetails').on('click', function() {
+			$('.onestep-mobile').toggleClass('hidden');
+			$(this).toggleClass('open');
+		})
+
+		$('.header__basket.desktop--hide').on('click', function(evt) {
+			if(+$('.order_item_count-mobile').text() < 1 ) {
+				evt.preventDefault();
+			}
+		})
+
 
 		/** Нажатие на кнопку "Купить в один клик". */
 		$('a.buy_one_click_button').on('click', function(e) {
@@ -1345,7 +1356,6 @@ site.Cart = {
 			url: '/udata' + url,
 			success: function() {
 				basket.get(function(data) {
-					console.log(data);
 					site.Cart.updateOrderItemCount(data.summary.amount);
 					site.Cart.ready = true;
 					site.Cart.changeAddedProductButton($button,data);
@@ -1506,7 +1516,9 @@ site.Cart = {
 			return;
 		}
 
-		$itemCount.text(count);
+		$itemCount.each(function () {
+			$(this).text(count);
+		});
 		$itemCount.removeClass('not_show');
 
 		var cartHeader = getLabel('js-cart_header') + count;
