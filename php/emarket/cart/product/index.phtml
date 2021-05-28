@@ -12,30 +12,49 @@ $product = $variables;
 ?>
 
 <div class="cart__list__item">
-    <div class="cart__list__icon">
-        <a href="<?= $this->getPath($product['page']) ?>">
-        <img class="cart__img" src="<?=$this->thumb($this->getPhotoPath($product['page']),114)[0]?>">
-        </a>
+    <div class="cart__list__item-wrapper">
+        <div class="cart__list__icon">
+            <a href="<?= $this->getPath($product['page']) ?>">
+                <img class="cart__img" src="<?=$this->thumb($this->getPhotoPath($product['page']),114)[0]?>">
+            </a>
         </div>
-    <div class="cart__list__text">
-        <span class="cart__list__text__name">
-            <?= $product['name'] ?>
-        </span>
-    </div>
-    <div class="cart__list__price">
-        <span class="cart__list__price__value">
+        <div class="cart__list__text">
             <?= $this->render($product, 'emarket/cart/product/total_amount') ?>
-        </span>
-        <span class="cart__list__price__counter" data-id="<?=$product['id']?>" id="order_item_<?=$product['id']?>">
+            <p class="cart__list__text__name">
+                <?= $product['name'] ?>
+            </p>
+        </div>
+    </div>
+
+    <div style="display: flex; margin-left: 110px;">
+        <div class="product__quantity" style="<?= $quantityStyle ?>">
+            <div class="quantity"><span class="quantity__down change_product_quantity">
+              <svg width="12" height="2" viewBox="0 0 12 2" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0.503418 1.33307H11.498C11.7742 1.33307 11.998 1.10921 11.998 0.833069C11.998 0.556927 11.7742 0.333069 11.498 0.333069H0.503418C0.227276 0.333069 0.00341797 0.556927 0.00341797 0.833069C0.00341797 1.10921 0.227276 1.33307 0.503418 1.33307Z"></path>
+              </svg></span>
+            <input type="text" value="<?=$productAmount ? $productAmount : 1?>" class="current_quantity"><span class="quantity__up change_product_quantity">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M7.83323 2C8.08636 2 8.29559 2.18801 8.32875 2.43205L8.33333 2.4999L8.33413 7.33333H13.1695C13.4457 7.33333 13.6695 7.55719 13.6695 7.83333C13.6695 8.08646 13.4814 8.29566 13.2374 8.32877L13.1695 8.33333H8.33413L8.33549 13.1661C8.33555 13.4422 8.11174 13.6662 7.8356 13.6662C7.58247 13.6662 7.37323 13.4782 7.34007 13.2341L7.33549 13.1663L7.33413 8.33333H2.50146C2.22532 8.33333 2.00146 8.10948 2.00146 7.83333C2.00146 7.5802 2.18957 7.37101 2.43362 7.3379L2.50146 7.33333H7.33413L7.33333 2.5001C7.33327 2.22396 7.55708 2 7.83323 2Z"></path>
+              </svg></span>
+            </div> 
+        </div>
+          <svg viewBox="0 0 15 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M7.11941 1.92959L7.50008 2.37662L7.88076 1.92959C8.56104 1.13072 9.60647 0.625 10.6876 0.625C12.5931 0.625 14.0834 2.11531 14.0834 4.02083C14.0834 5.19534 13.5597 6.30011 12.5362 7.55141C11.507 8.80972 10.0253 10.1544 8.19129 11.8175L8.19058 11.8182L7.4988 12.4479L6.80926 11.825L6.80834 11.8241C4.97463 10.1578 3.4932 8.81153 2.46404 7.55242C1.44045 6.30014 0.916748 5.19535 0.916748 4.02083C0.916748 2.11531 2.40706 0.625 4.31258 0.625C5.39369 0.625 6.43912 1.13072 7.11941 1.92959Z"></path>
+          </svg>
+    </div>
+    
+    <!-- <div class="cart__list__price">
+        
+        <span class="cart__list__price__counter" data-id="<!?=$product['id']?>" id="order_item_<!?=$product['id']?>">
             <img src="resources/img/remove.svg" class="svg cart-counter-icon">
-            <span class="cart__list__price__counter_val"><?=$product['amount']?></span>
+            <span class="cart__list__price__counter_val"><!?=$product['amount']?></span>
             <img src="resources/img/add.svg" class="increment_product_quantity svg cart-counter-icon">
         </span>
     </div>
     <div class="cart__list__delete">
-        <a class="order_delete" href="#" data-id="<?=$product['id']?>">
+        <a class="order_delete" href="#" data-id="<!?=$product['id']?>">
         <svg width="15px", height="15px" xmlns="http://www.w3.org/2000/svg" data-name="Layer 1" viewBox="0 0 64 64"><line x1="9.37" x2="54.63" y1="9.37" y2="54.63" fill="none" stroke="#010101" stroke-miterlimit="10" stroke-width="4"/><line x1="9.37" x2="54.63" y1="54.63" y2="9.37" fill="none" stroke="#010101" stroke-miterlimit="10" stroke-width="4"/></svg>
         </a>
-    </div>
+    </div> -->
 </div>
 <?= $this->render($product['page'], 'emarket/cart/product/suggested_product_list') ?>

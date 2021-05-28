@@ -239,25 +239,6 @@
     font-size: 18px;
   }
   
-  .cart__list__item {
-    &:hover {
-      .order_delete {
-        opacity: 1;
-        transition: 0.3s linear;
-      }
-    }
-  }
-  .cart__list__price{
-    display: flex;
-    align-items: center;
-    margin-top: 0;
-    &__value{
-      display: block;
-      min-height: 20px;
-      line-height: 20px;
-      font-size: 20px;
-    }
-  }
   
   .basket_tooltip-price {
     padding-top: 30px;
@@ -299,14 +280,36 @@
     }
   }
   
+
+  .cart__list__icon {
+    width: 95px;
+    height: 95px;
+    margin-right: 15px;
+    img {
+      min-width: 95px;
+      min-height: 95px;
+      object-fit: contain;
+    }
+  }
+
+  .cart__list__text {
+    width: auto;
+    height: 95px;
+  }
   
   .cart__list {
     padding-top: 25px;
-  
     &__item {
+      .product__quantity {
+        min-width: 133px;
+        width: 133px;
+      }
+    }
+  
+    &__item-wrapper {
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: start;
       width: 100%;
       padding-bottom: 15px;
       position: relative;
@@ -319,50 +322,6 @@
           padding-right: 40px;
         }
   
-      }
-    }
-  
-    &__icon {
-      padding-right: 5px;
-  
-      a {
-        display: block;
-      }
-  
-      .cart__img {
-        max-height: 50px;
-        max-width: 60px;
-        object-fit: contain;
-      }
-    }
-  
-    &__text {
-      width: 180px;
-  
-      @include tablet {
-        padding: 0px 15px;
-      }
-  
-      @include mobile {
-        max-width: 160px;
-        padding-right: 10px;
-      }
-  
-      &__name {
-        display: block;
-        min-height: 29px;
-        line-height: 1.2;
-        font-size: 14px;
-        margin-right: 26px;
-  
-        @include mobile {
-          margin-right: 18px;
-        }
-      }
-  
-      &__desc {
-        color: #6E6E6E;
-        font-size: 12px;
       }
     }
   
@@ -720,23 +679,6 @@
   opacity: 1;
 }
 
-.cart__list__icon {
-  width: 17%;
-}
-
-.cart__list__text {
-  width: 50%;
-}
-
-.cart__list__price {
-  width: 40%;
-  .cart__list__price__counter {
-     width: 17%;
-     .cart__list__price__counter_val {
-       font-size: 16px;
-     }
-  }
-}
 
 div.popup.mobile-cart_popup {
   padding: 8rem 1.5rem 6rem;

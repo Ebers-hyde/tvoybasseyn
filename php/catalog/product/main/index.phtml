@@ -74,7 +74,7 @@ $variables['cartItems'] = $cart['items'];
         </div>
         <?=($more)?'<a class="product__specifications-link" href="productinfo" onclick="$(\'.product__tabs-item[data-toogles=2]\').trigger(\'click\')">Подробнее</a>':''?>
       </div> 
-      <div class="product__column">
+      <div class="product__column addToCartBlock">
 	  <?= $this->render($variables, 'catalog/product/main/price/index') ?>
 
       </div>

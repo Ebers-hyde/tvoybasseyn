@@ -92,7 +92,7 @@
                         title: 'Чат с оператором',
                         theme: 'light',
                         collapsedDesktop: 'never',
-                        collapsedTouch: 'never'
+                        collapsedTouch: 'always'
                     });
                 } catch(e) { }
             };
@@ -386,8 +386,36 @@
     </script>
 
  
-	<style>.list-group-item {color: #08c;  border-bottom: 1px dotted; margin-right: 24px;}.list-group-item:hover{color:#000}</style>  
- 
+	<style>
+        .list-group-item {
+            color: #08c;  
+            border-bottom: 1px dotted; 
+            margin-right: 24px;
+        }
+        .list-group-item:hover{
+            color:#000
+        }
+        .ya-chat-widget .ya-chat-button_mobile {
+            top: auto!important;
+        }
+        .ya-chat-widget .ya-chat-icon_size_large {
+            height: 30px!important;
+            width: 30px!important;
+        }
+        .ya-chat-widget .ya-chat-button_theme_dark .ya-chat-button__container_size_large, .ya-chat-widget .ya-chat-button_theme_light .ya-chat-button__container_size_large {
+            height: 40px!important;
+            width: 40px!important;
+            border-radius: 12.5px!important;
+        }
+        .ya-chat-widget .ya-chat-button_theme_dark.ya-chat-button_collapsed_always .ya-chat-button__container_size_large, .ya-chat-widget .ya-chat-button_theme_light.ya-chat-button_collapsed_always .ya-chat-button__container_size_large {
+            padding-left: 5px!important;
+            padding-right: 5px!important;
+        }
+        .ya-chat-widget.ya-chat-widget_theme_dark, .ya-chat-widget.ya-chat-widget_theme_light{
+            bottom: var(--yandex-mssngr-widget-button-offset-bottom,64px)!important;
+        }
+    </style>  
+    
 
  
     <script>
