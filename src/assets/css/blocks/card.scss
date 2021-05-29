@@ -53,7 +53,6 @@
         color: #000000;
         font-weight: bold;
         font-size: 1.8rem;
-        font-family: Geometria;
         line-height: 23/18*1;
         position: relative;
         text-align: left;
@@ -99,7 +98,8 @@
         text-decoration-line: underline;
         display: block;
         text-align: left;
-        min-height: 5.1rem;
+        height: 5.1rem;
+        overflow: hidden;
         transition: all 0.5s;
 
         &:hover {
@@ -165,7 +165,6 @@
         font-size: 1.1rem;
         line-height: 142.3%;
         color: #8F8F8F;
-        font-family: Geometria;
         text-align: left;
 
         span {
@@ -175,7 +174,6 @@
     }
 
     &__filter {
-        font-family: Geometria;
         font-style: normal;
         font-weight: bold;
         font-size: 1rem;
@@ -196,5 +194,29 @@
             background: #5282E1;
             left: 5.4rem;
         }
+    }
+
+    .product__quantity {
+        .quantity {
+            height: 31px;
+        }
+        input {
+            line-height: 3rem;
+        }
+    }
+}
+
+.card__plus--active {
+    svg {
+        fill: #4081FF;
+    }
+}
+
+.product__quantity {
+    .quantity {
+        height: 41px;
+    }
+    span {
+        height: 100%;
     }
 }

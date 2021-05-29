@@ -7,7 +7,18 @@
     margin: 0 auto;
     margin-bottom: 6rem;
 
+    p, span, li, a {
+        font-family: 'Montserrat'; 
+        font-size: 1.6rem;
+    }
+
+    &__text {
+        font-family: 'Montserrat'; 
+        font-size: 1.6rem;
+    }
+
     p{ 
+
         line-height: 154.56%;
         margin-bottom: 20px;
     }
@@ -19,7 +30,7 @@
         background: #f5f5f5;
     }
     table td, table th {
-        font-family: Arial;
+        font-family: 'Montserrat';
         font-size: 14px;
         line-height: 18px;
         border-left: 1px solid #e2e6e7;
@@ -97,6 +108,12 @@
             margin-right:-20px;
             width: calc(100% + 40px);
             max-width: calc(100% + 40px);
+        }
+    }
+    td {
+        span {
+            font-size: 16px;
+            font-family: 'Montserrat';
         }
     }
 }

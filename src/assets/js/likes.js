@@ -11,6 +11,28 @@ var likes = {
             $(this).addClass("card__heart--active"))
         });
 
+        $(".card__plus").on("click", function() {
+            if($(this).hasClass('card__plus--active')) {
+                $.ajax({
+                    url: `/emarket/removeFromCompare/${$(this).data('element_id')}.json`,
+                    type: 'GET',
+                    success: () => {
+                        console.log(124);
+                        $(this).removeClass("card__plus--active");
+                    }
+                })
+            } else {
+                $.ajax({
+                    url: `/emarket/addToCompare/${$(this).data('element_id')}.json`,
+                    type: 'GET',
+                    success: () => {
+                        console.log(123);
+                        $(this).addClass("card__plus--active");
+                    }
+                })
+            }
+        });
+
         if(JSON.parse(unescape($.cookie('favorites'))).indexOf($(".product").data("id")) != -1)
         {  
             $(".comparisons--heart").addClass("comparisons__active");

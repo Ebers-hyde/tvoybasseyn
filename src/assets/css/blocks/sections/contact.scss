@@ -101,9 +101,71 @@
     }
 
 
-    &Stores{ 
-        &__list{
-            
+    &Stores{
+        &.desktop--hide {
+            position: relative;
+            overflow: hidden;
+            height: 400px;
+        }
+        .contactStore__full {
+            position: absolute;
+            width: 100%;
+            top: 0;
+            transform: translateX(100%);
+            transition: all 0.5s ease-in-out;
+            .contactStore__header {
+                height: 68px;
+                border-bottom: 1px solid #E2E6F0;
+                text-align: center;
+                padding-top: 24.5px;
+                position: relative;
+                svg {
+                    position: absolute;
+                    top: 25px;
+                    left: 25px;
+                }
+            }
+            .contactStore__info {
+                padding: 25px;
+                div:last-child {
+                    p {
+                        font-size: 12px;
+                    }
+                }
+            }
+            &-active {
+                transform: none;
+            }
+        }
+        .contactStore__previews {
+            position: absolute;
+            width: 100%;
+            top: 0;
+            transform: none;
+            transition: all 0.5s ease-in-out;
+            &-hidden {
+                transform: translateX(-100%);
+            }
+        } 
+        .contactStore__preview {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #E2E6F0;
+            padding: 25px;
+        }
+        .contactStore__info {
+            h4 {
+                margin-bottom: 2rem;
+                font-weight: bold;
+            }
+            div {
+                margin-bottom: 2rem;
+            }
+            p {
+                font-size: 14px;
+                margin-bottom: 0;
+            }
         }
         &__item{
             border: 1px solid #f2f2f2;
@@ -131,7 +193,8 @@
             font-weight: 400; 
             font-size: 1.8rem;
             margin-bottom: 17px;
-            display: block; 
+            display: block;
+            padding-left: 25px;
         }
         &__itemName{
             font-weight: 700;
@@ -153,6 +216,9 @@
                 display:block;
                 margin-bottom: 8px;;
             }
+        }
+        .btn--blue {
+            display: none;
         }
     }
 }

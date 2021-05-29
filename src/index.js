@@ -83,7 +83,9 @@ import './assets/js/best-offers-slider';
 import './assets/js/collection-slider';
 import './assets/js/article-slider';
 import './assets/js/kit-slider';
+import './assets/js/filters-slider';
 import './assets/js/product__tabs-slider';
+import './assets/js/series';
 import './assets/js/product';
 import './assets/js/popup';
 import './assets/js/mobile-menu';
@@ -96,8 +98,10 @@ import './assets/js/product__tabs-toggle';
 import './assets/js/sidebar__drop-yet';
 import './assets/js/toogles';
 import './assets/js/drop-down';
+import './assets/js/contact.js';
 import './assets/js/compare';
 import './assets/js/likes';
+import './assets/js/CustomSwipe.js';
 
 
 

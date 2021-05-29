@@ -8,6 +8,7 @@ site.TradeOffers = {
 
 	/** @type {Null|Integer} идентификатор выбранного торгового предложения */
 	offerId: null,
+	basketOffers: null,
 
 	/**
 	 * Карта выбранных характеристик
@@ -33,6 +34,10 @@ site.TradeOffers = {
 	init: function() {
 		var that = this;
 
+		basket.get(function(data){
+			that.basketOffers = data;
+		});
+
 		that.bindSwitchBuyButtonsActivity();
 
 		that.getSelectList().selectmenu({
@@ -42,11 +47,18 @@ site.TradeOffers = {
 		that.getSelectList().bind('selectmenuselect', function(event, ui) {
 			var $characteristicName = $(event.currentTarget).data('characteristic-name');
 			that.setCharacteristic($characteristicName, $(ui.item.element));
-
 			if (!that.resolveSelectedOfferId()) {
 				alert(getLabel('js-error-cannot-resolve-trade-offer'));
 			}
 		});
+
+		$('.additional_options-item').not('[style="display:none"]').each(function(){
+			var cn = $(this).find('[data-characteristic-name]');
+			that.setCharacteristic(cn.data('characteristic-name'),cn.find('[selected="selected"]'));
+			that.resolveSelectedOfferId();
+		});
+		
+
 	},
 
 	/**
@@ -114,19 +126,65 @@ site.TradeOffers = {
 	 * @param {*|jQuery|HTMLElement} $button кнопка
 	 */
 	switchBuyButtonActivity: function($button) {
-
+		let is_active = false;
 		if (!$button.data('old-class')) {
 			$button.data('old-class', $button.attr('class'));
 		}
+		
+		if(!site.TradeOffers.basketOffers){
+			basket.get(function(data){	
+				site.TradeOffers.basketOffers = data;
+				Object.entries(site.TradeOffers.basketOffers.items.item).forEach(function(item, i, arr) {
+					if(typeof item[1].offer !== 'undefined' && item[1].page.id == $('.product').data('id')){
+						if($('.add_to_cart_block').attr('data-offer_id') == item[1].offer.id) {
+							is_active = item[1];
+						}
+					}
+				});
+				if(!is_active){
+					$button.show();
+					$('.add_to_cart_block').attr('data-order_id', '');
+					$('.product__quantity').hide();
+				}else{
+					$button.hide();
+					$('.product__quantity').show();
+					$('.add_to_cart_block').attr('data-order_id', is_active.id);
+					$('.add_to_cart_block').find('.current_quantity').val(is_active.amount);
+				}
+			});
+		}else{
+			Object.entries(site.TradeOffers.basketOffers.items.item).forEach(function(item, i, arr) {
+				if(typeof item[1].offer !== 'undefined' && item[1].page.id == $('.product').data('id')){
+					if($('.add_to_cart_block').attr('data-offer_id') == item[1].offer.id) {
+						is_active = item[1];
+					}
+				}
+			});
+			if(!is_active){
+				$button.show();
+				$('.add_to_cart_block').attr('data-order_id', '');
+				$('.product__quantity').hide();
+			}else{
+				$button.hide();
+				$('.product__quantity').show();
+				$('.add_to_cart_block').attr('data-order_id', is_active.id);
+				$('.add_to_cart_block').find('.current_quantity').val(is_active.amount);
+			}
+		}
 
-		if (!this.isAllCharacteristicsFilled() || !this.getOfferId()) {
+		
+		
+
+
+		
+		/*if (!this.isAllCharacteristicsFilled() || !this.getOfferId()) {
 
 			if (!$button.hasClass('not_buy')) {
 				$button.addClass('not_buy');
 			}
 
 			return;
-		}
+		}*/
 
 		$button.attr('class', $button.data('old-class'));
 	},
@@ -219,6 +277,8 @@ site.TradeOffers = {
 
 		for (var filteredOfferId in filteredOfferIdList) {
 			this.setOfferId(filteredOfferId);
+			$('.add_to_cart_block').attr('data-offer_id',filteredOfferId);
+			console.log(filteredOfferId);
 			this.changePrice();
 			this.changeImage();
 			this.switchBuyButtonListActivity();
@@ -297,7 +357,7 @@ site.TradeOffers = {
 	 * @returns {boolean}
 	 */
 	isAvailable: function() {
-		return $('div.additional_options').length > 0;
+		return $('.additional_options-item').not('[style="display:none"]').length > 0;
 	},
 
 	/**

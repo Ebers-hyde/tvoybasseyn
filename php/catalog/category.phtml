@@ -11,7 +11,10 @@ $catalog = $this->getCatalog($variables);
 $productList = $this->getPages($catalog);
 $pagination = $this->getPagination($catalog);
 $this->setCommonVar('smart_filters', $this->getSmartFilters($variables));
+$compareList = $this->getComparisonProducts();
+$cart = $this->macros('emarket', 'cart');
 ?>
+
 <?php if ($variables['page']->getValue('shablon')): ?>
 	<?= $this->render($variables, $variables['page']->getValue('shablon')) ?>
 <?php else: ?>
@@ -21,7 +24,7 @@ $this->setCommonVar('smart_filters', $this->getSmartFilters($variables));
         <section class="pool-filters">
           <div class="center-wrap">
             <?= $this->render($variables, 'layout/header/titleWithBread') ?>
-            <div class="pool-filters__list">
+            <div class="pool-filters__list mobile--hide">
               <?php foreach ($childCategoryList as $category): ?>
                 <a class="pool-filters__item" href="<?=$category->link?>">
                   <div class="pool-filters__item-img">
@@ -35,10 +38,23 @@ $this->setCommonVar('smart_filters', $this->getSmartFilters($variables));
               <div class="pool-filters__item pool-filters__item--hide"></div>
               <div class="pool-filters__item pool-filters__item--hide"></div>
             </div>
+            <div class="pool-filters__list desktop--hide pool-filters__slider">
+                <div class="swiper-container">
+                  <div class="swiper-wrapper">
+                    <?php foreach ($childCategoryList as $category): ?>
+                      <div class="swiper-slide">
+                      <a class="pool-filters__item" href="<?=$category->link?>">
+                        <div class="pool-filters__item-title"><?=$category->name?></div>
+                      </a>
+                    </div>
+                    <?php endforeach; ?>
+                  </div>
+                </div>
+            </div>
             <div class="pool-filters__sort">
               
               <div class="pool-filters__sort-left">
-                <div class="pool-filters__sort-quantity">28 товаров</div>
+                <div class="pool-filters__sort-quantity">Товаров: <?=$catalog['total']?></div>
                 <?php if (!$this->isRootCatalog($variables)): $sort = ['price'=>'По цене','name'=>'По имени','ord'=>'По умолчанию']; ?>
                 <span class="pool-filters__sort-title">Сортировать</span>
                 <div class="select">
@@ -129,7 +145,7 @@ $this->setCommonVar('smart_filters', $this->getSmartFilters($variables));
             </div>
             <div class="pool-filters__wrap goods" id="catalog_category">
               <?php foreach ($productList as $product): ?>
-                <?= $this->render($product, 'catalog/product/preview/index') ?>
+                <?= $this->render(['product'=>$product,'compareList'=>$compareList,'cartItems'=>$cart['items']], 'catalog/product/preview/index') ?>
               <?php endforeach; ?>
               <div class="card" style="opacity:0;padding: 0;margin: 0;"></div>
               <div class="card" style="opacity:0;padding: 0;margin: 0;"></div>

@@ -101,25 +101,6 @@
         &.active {
           border-color: #4081ff;
         }
-        .info_icon-container {
-          position: absolute;
-          top: 0.5rem;
-          right: 0.5rem;
-          .info_icon {
-            pointer-events: none;
-            circle {
-              stroke: #cbcbcb;
-            }
-          }
-          &:hover {
-            circle{
-              stroke: #4081ff;
-            }
-            path{
-              fill: #4081ff;
-            }
-          }
-        }
       }
     }
     &:nth-child(3) {
@@ -128,26 +109,23 @@
         height: 14.7rem;
         position: relative;
         text-align: center;
+        &.active {
+          border-color: #4081ff;
+        }
         img {
           margin-bottom: 1rem;
         }
-        .info_icon-container {
+        .clear_icon-container {
           position: absolute;
-          top: 0.5rem;
-          right: 0.5rem;
-          .info_icon {
-            pointer-events: none;
-            circle {
-              stroke: #cbcbcb;
-            }
-          }
-          &:hover {
-            circle{
-              stroke: #4081ff;
-            }
-            path{
-              fill: #4081ff;
-            }
+          width: 22px;
+          height: 22px;
+          top: 5px;
+          left: 5px;
+          display: none;
+          z-index: 1;
+          .clear_icon {
+            width: 100%;
+            height: 100%;
           }
         }
       }
@@ -173,11 +151,24 @@
         text-align: center;
         &.active {
           border-color: #4081ff;
+          .window_info + svg{
+            path{
+              fill: #4081FF;
+            }
+          }
         }
         img {
           margin-bottom: 1.5rem;
           height: 62px; 
           max-width: 80px;
+        }
+        .window_info + svg{
+          margin-bottom: 1.5rem;
+          height: 62px; 
+          max-width: 80px;
+          path{
+            fill: #C8CAD1;
+          }
         }
         .info_icon {
           pointer-events: none;
@@ -185,7 +176,6 @@
             stroke: #cbcbcb;
           }
         }
-        
         .info_icon-container {
           position: absolute;
           top: 0;
@@ -201,22 +191,7 @@
             }
           }
         }
-        
- 
-        
-        .window_icon {
-          overflow: hidden;
-          display: none;
-          background: rgba(255, 255, 255, 0.9);
-          border-radius: 5px;
-          backdrop-filter: blur(4px);
-          width: 100%;
-          height: 100%;
-          justify-content: center;
-          position: absolute;
-          top: 0;
-          right: 0;
-        }
+      
         img.option-window_country {
           max-width: 100px;
           position: absolute;
@@ -228,6 +203,19 @@
         &.change-window {
           display: none;
           border-radius: 5px;
+        }
+      }
+      .clear_icon-container {
+        position: absolute;
+        width: 22px;
+        height: 22px;
+        top: 5px;
+        left: 5px;
+        display: none;
+        z-index: 1;
+        .clear_icon {
+          width: 100%;
+          height: 100%;
         }
       }
     }
@@ -323,12 +311,16 @@
     background: #fafafa;
     .center-wrap {
       height: 100%;
-      width: 70%;
+      width: 100%;
       margin: 0;
       display: flex;
       flex-direction: row;
-      justify-content: space-between;
+      justify-content: center;
       align-items: center;
+      .btn-link {
+        position: absolute;
+        left: 0;
+      }
       div {
         &:nth-child(2) {
           display: flex;
@@ -344,7 +336,7 @@
         color: #353535;
         font-size: 1.7rem;
         font-weight: bold;
-        padding: 1.5rem 2rem 0;
+        padding: 1.5rem 1.5rem 1.5rem 1rem;
         display: block;
       }
       .showCalc__btn {
@@ -354,3 +346,39 @@
     }
   }
 }
+
+.window_icon {
+  overflow: hidden;
+  display: none;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 5px;
+  backdrop-filter: blur(4px);
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.info_icon-container {
+  position: absolute;
+  z-index: 5;
+  top: 0.5rem;
+  right: 0.5rem;
+  .info_icon {
+    pointer-events: none;
+    circle {
+      stroke: #cbcbcb;
+    }
+  }
+  &:hover {
+    circle{
+      stroke: #4081ff;
+    }
+    path{
+      fill: #4081ff;
+    }
+  }
+}
+

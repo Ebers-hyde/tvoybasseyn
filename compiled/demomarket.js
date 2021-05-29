@@ -638,6 +638,7 @@ site.TradeOffers = {
 
 	/** @type {Null|Integer} идентификатор выбранного торгового предложения */
 	offerId: null,
+	basketOffers: null,
 
 	/**
 	 * Карта выбранных характеристик
@@ -663,6 +664,10 @@ site.TradeOffers = {
 	init: function() {
 		var that = this;
 
+		basket.get(function(data){
+			that.basketOffers = data;
+		});
+
 		that.bindSwitchBuyButtonsActivity();
 
 		that.getSelectList().selectmenu({
@@ -672,11 +677,18 @@ site.TradeOffers = {
 		that.getSelectList().bind('selectmenuselect', function(event, ui) {
 			var $characteristicName = $(event.currentTarget).data('characteristic-name');
 			that.setCharacteristic($characteristicName, $(ui.item.element));
-
 			if (!that.resolveSelectedOfferId()) {
 				alert(getLabel('js-error-cannot-resolve-trade-offer'));
 			}
 		});
+
+		$('.additional_options-item').not('[style="display:none"]').each(function(){
+			var cn = $(this).find('[data-characteristic-name]');
+			that.setCharacteristic(cn.data('characteristic-name'),cn.find('[selected="selected"]'));
+			that.resolveSelectedOfferId();
+		});
+		
+
 	},
 
 	/**
@@ -744,19 +756,65 @@ site.TradeOffers = {
 	 * @param {*|jQuery|HTMLElement} $button кнопка
 	 */
 	switchBuyButtonActivity: function($button) {
-
+		let is_active = false;
 		if (!$button.data('old-class')) {
 			$button.data('old-class', $button.attr('class'));
 		}
+		
+		if(!site.TradeOffers.basketOffers){
+			basket.get(function(data){	
+				site.TradeOffers.basketOffers = data;
+				Object.entries(site.TradeOffers.basketOffers.items.item).forEach(function(item, i, arr) {
+					if(typeof item[1].offer !== 'undefined' && item[1].page.id == $('.product').data('id')){
+						if($('.add_to_cart_block').attr('data-offer_id') == item[1].offer.id) {
+							is_active = item[1];
+						}
+					}
+				});
+				if(!is_active){
+					$button.show();
+					$('.add_to_cart_block').attr('data-order_id', '');
+					$('.product__quantity').hide();
+				}else{
+					$button.hide();
+					$('.product__quantity').show();
+					$('.add_to_cart_block').attr('data-order_id', is_active.id);
+					$('.add_to_cart_block').find('.current_quantity').val(is_active.amount);
+				}
+			});
+		}else{
+			Object.entries(site.TradeOffers.basketOffers.items.item).forEach(function(item, i, arr) {
+				if(typeof item[1].offer !== 'undefined' && item[1].page.id == $('.product').data('id')){
+					if($('.add_to_cart_block').attr('data-offer_id') == item[1].offer.id) {
+						is_active = item[1];
+					}
+				}
+			});
+			if(!is_active){
+				$button.show();
+				$('.add_to_cart_block').attr('data-order_id', '');
+				$('.product__quantity').hide();
+			}else{
+				$button.hide();
+				$('.product__quantity').show();
+				$('.add_to_cart_block').attr('data-order_id', is_active.id);
+				$('.add_to_cart_block').find('.current_quantity').val(is_active.amount);
+			}
+		}
 
-		if (!this.isAllCharacteristicsFilled() || !this.getOfferId()) {
+		
+		
+
+
+		
+		/*if (!this.isAllCharacteristicsFilled() || !this.getOfferId()) {
 
 			if (!$button.hasClass('not_buy')) {
 				$button.addClass('not_buy');
 			}
 
 			return;
-		}
+		}*/
 
 		$button.attr('class', $button.data('old-class'));
 	},
@@ -849,6 +907,8 @@ site.TradeOffers = {
 
 		for (var filteredOfferId in filteredOfferIdList) {
 			this.setOfferId(filteredOfferId);
+			$('.add_to_cart_block').attr('data-offer_id',filteredOfferId);
+			console.log(filteredOfferId);
 			this.changePrice();
 			this.changeImage();
 			this.switchBuyButtonListActivity();
@@ -927,7 +987,7 @@ site.TradeOffers = {
 	 * @returns {boolean}
 	 */
 	isAvailable: function() {
-		return $('div.additional_options').length > 0;
+		return $('.additional_options-item').not('[style="display:none"]').length > 0;
 	},
 
 	/**
@@ -1083,15 +1143,21 @@ site.Cart = {
 			e.preventDefault();
 			var $button = $(this);
 
+			$(this).hide();
+			$(this).next().css('display', 'flex');
+
 			if ($button.hasClass('not_buy')) {
 				return;
 			}
+
+			
 
 			if (site.TradeOffers.isAvailable()) {
 				site.Cart.putElementInCart($button, {
 					'offer_id': site.TradeOffers.getOfferId(),
 					'price_type_id': $('#price_type_id').data('price-type-id')
 				});
+				console.log(site.TradeOffers.getOfferId());
 				return;
 			}
 
@@ -1109,6 +1175,18 @@ site.Cart = {
 
 			$buyModal.modal('show');
 		});
+
+		$('.show_orderDetails').on('click', function() {
+			$('.onestep-mobile').toggleClass('hidden');
+			$(this).toggleClass('open');
+		})
+
+		$('.header__basket.desktop--hide').on('click', function(evt) {
+			if(+$('.order_item_count-mobile').text() < 1 ) {
+				evt.preventDefault();
+			}
+		})
+
 
 		/** Нажатие на кнопку "Купить в один клик". */
 		$('a.buy_one_click_button').on('click', function(e) {
@@ -1184,40 +1262,64 @@ site.Cart = {
 		/** Кнопка-крестик удаления товара из корзины */
 		$('.order_delete').on('click', function(e) {
 			e.preventDefault();
-			site.Cart.remove(this.id.match(/\d+/).pop());
+			site.Cart.remove($(this).data("id"));
 		});
 
+		$('.cart__hide-list-trigger').on('click', function(e) {
+			e.preventDefault();
+			$('.order-1').hide();
+			$('.cart__show-list-trigger').show();
+			$('.order-2').removeClass('col-md-7');
+			$('.order-2').addClass('col-md-12');
+		})
+
+		$('.cart__show-list-trigger').on('click', function(e) {
+			e.preventDefault();
+			$(this).hide();
+			$('.order-1').show();
+			$('.order-2').removeClass('col-md-12');
+			$('.order-2').addClass('col-md-7');
+		})
+
 		/** Изменение количества товара через клавиатуру */
-		$('.quantity').on('focusin', function() {
+		$('.current_quantity').on('focus', function() {
 			var $input = $(this);
-			$input.data('oldValue', $input.val());
+			$input.data('oldvalue', $input.val());
 		}).change(function() {
 			var $input = $(this);
-			var orderItemId = $input.siblings('.change_product_quantity').data('id');
-			var oldValue = $input.data('oldValue');
+			var $parent = $('.pool-filters').length != 0 ? $input.closest('.card') : $('.add_to_cart_block');
+			var orderItemId = $parent.data('order_id');
+			var oldValue = $input.data('oldvalue');
 			site.Cart.modify(orderItemId, $input.val(), oldValue);
+
+			if(+$input.val() <= 0) {
+				$parent.find('.product__quantity').hide();
+				$parent.find('.add_to_cart_button').show();
+			}
 		});
 
 		/** Изменение количества товара через кнопки "плюс/минус" */
-		$('.change_product_quantity a').on('click', function(e) {
-			e.preventDefault();
+		$('.change_product_quantity').on('click', function(e) {
 
 			if (!site.Cart.ready) {
 				return;
 			}
 
-			site.Cart.ready = false;
+			//site.Cart.ready = false;
 
 			var $button = $(this);
-			var orderItemId = $button.parent().data('id');
-			var orderItemBlock = $('#order_item_' + orderItemId);
+			var $parent = $('.pool-filters').length != 0 ? $button.closest('.card') : $('.add_to_cart_block');
+			var orderItemId = $parent.attr('data-order_id');
+			var quantityNode = $parent.find('.current_quantity');
+			var oldValue = quantityNode.val();
 
-			var quantityNode = $('.quantity', orderItemBlock);
-			var oldQuantity = parseInt(quantityNode.val(), 10);
-			var newQuantity = $button.hasClass('increment_product_quantity') ? oldQuantity + 1 : oldQuantity - 1;
-
-			quantityNode.val(newQuantity);
-			site.Cart.modify(orderItemId, newQuantity, oldQuantity);
+			quantityNode.val($button.hasClass('quantity__up') ? (+quantityNode.val() + 1) : (+quantityNode.val() - 1));
+			site.Cart.modify(orderItemId, quantityNode.val(), oldValue);
+		
+			if(+quantityNode.val() <= 0) {
+				$parent.find('.product__quantity').hide();
+				$parent.find('.add_to_cart_button').show();
+			}
 		});
 
 		/** Применение промокода */
@@ -1256,8 +1358,7 @@ site.Cart = {
 				basket.get(function(data) {
 					site.Cart.updateOrderItemCount(data.summary.amount);
 					site.Cart.ready = true;
-
-					site.Cart.changeAddedProductButton($button);
+					site.Cart.changeAddedProductButton($button,data);
 				});
 			}
 		});
@@ -1277,14 +1378,39 @@ site.Cart = {
 	 * Изменяет внешний вид кнопки "Купить" при добавлении товара в корзину
 	 * @param {jQuery} $button кнопка товара "Купить"
 	 */
-	changeAddedProductButton: function($button) {
-		$button.addClass('added_product');
-		site.Cart.changeButtonHtml($button, getLabel('js-product-added-successfully-label'));
+	changeAddedProductButton: function($button,data=null) {
+		Object.entries(data.items.item).forEach(function(item, i, arr) {
+
+			if($button.closest('.card').find('.card__title').text() == item[1].name) {
+				$button.closest('.card').attr('data-order_id', item[1].id);
+				$button.closest('.card').find('.current_quantity').val(1);
+			};
+
+			if(typeof item[1].offer !== 'undefined'){
+				if($('.add_to_cart_block').attr('data-offer_id') == item[1].offer.id) {
+					$('.add_to_cart_block').find('.current_quantity').val(item[1].amount);
+					$('.add_to_cart_block').attr('data-order_id', item[1].id);
+				}
+			}else{
+				if($('.product').data('id') == item[1].page.id) {
+					console.log($('.product__title').text());
+					console.log(item[1].name);
+						$('.add_to_cart_block').attr('data-order_id', item[1].id);
+						$('.add_to_cart_block').find('.current_quantity').val(1);
+				}
+			}
+		});
+		if(site.TradeOffers.isAvailable()) {
+			console.log('TradeOffers isAvailable');
+			site.TradeOffers.basketOffers = data;
+		}
+
+		
+		/*site.Cart.changeButtonHtml($button, getLabel('js-product-added-successfully-label'));
 
 		setTimeout(function() {
 			site.Cart.changeButtonHtml($button, getLabel('js-buy-button-label'));
-			$button.removeClass('added_product');
-		}, 1500)
+		}, 1500)*/
 	},
 
 	/**
@@ -1306,6 +1432,10 @@ site.Cart = {
 	 */
 	redraw: function(id) {
 		return function(data) {
+			if(site.TradeOffers.isAvailable()) {
+				console.log('TradeOffers isAvailable');
+				site.TradeOffers.basketOffers = data;
+			}
 			var orderItemCount = data.summary.amount || 0;
 
 			if (orderItemCount > 0) {
@@ -1333,7 +1463,10 @@ site.Cart = {
 		$('#order_discount').text(formatPrice(orderDiscount, prefix, suffix));
 
 		var orderPrice = data.summary.price.actual || data.summary.price.original;
-		$('#order_price').text(formatPrice(orderPrice, prefix, suffix));
+		$('#order_price2').text(formatPrice(orderPrice, prefix, suffix));
+
+		var orderItemsQty = data.summary.amount;
+		$('.count-goods').text(orderItemsQty);
 
 		var orderItemBlock = $('#order_item_' + id);
 		var orderItemWasRemoved = true;
@@ -1383,7 +1516,9 @@ site.Cart = {
 			return;
 		}
 
-		$itemCount.text(count);
+		$itemCount.each(function () {
+			$(this).text(count);
+		});
 		$itemCount.removeClass('not_show');
 
 		var cartHeader = getLabel('js-cart_header') + count;
@@ -1495,6 +1630,7 @@ site.filters = (function ($) {
     initFilterData();
     initResetButton();
     initSliderFields();
+    updateFakePrice();
     initDateFields();
 
     /** Инициализирует основные параметры фильтрации */
@@ -1518,6 +1654,7 @@ site.filters = (function ($) {
 
     /** Инициализирует поля со слайдером */
     function initSliderFields() {
+      
       $(".slider_field", _$form).each(function () {
         var $field = $(this);
 
@@ -1603,6 +1740,17 @@ site.filters = (function ($) {
   }
 
   function showResult(data) {
+    document.querySelectorAll('.clear_filters').forEach(clear => {
+      clear.onclick = () => {
+        clear.closest('.select').querySelectorAll('.filter_checkbox:checked').forEach(checkbox => {
+          checkbox.checked = false;
+          clear.closest('.select').classList.remove('select--active');
+          clear.closest('.select').querySelector('.filter_param').classList.remove('filter_param--active');
+          clear.closest('.select').querySelector('.filter_param').textContent = clear.closest('.select').querySelector('.filter_param').textContent.split(':')[0];
+        });
+      }
+    });
+
     document.querySelectorAll(".check_container").forEach((check) => {
       let i = check.querySelectorAll(".filter_checkbox:checked").length;
       check.querySelectorAll(".filter_checkbox").forEach((val) => {
@@ -1613,7 +1761,7 @@ site.filters = (function ($) {
           if (i == 1) {
             document.querySelector(
               `.${getFilterAttribute(val.getAttribute("name"))}`
-            ).firstElementChild.textContent = check
+            ).firstElementChild.textContent = titles[getFilterAttribute(val.getAttribute("name"))] + ": " + check
               .querySelector(".filter_checkbox:checked")
               .getAttribute("value");
           } else if (i > 1) {
@@ -1634,6 +1782,7 @@ site.filters = (function ($) {
       });
       i = 0;
     });
+
     var value = _resultButton.name + " (" + data.total + ")";
     getFilterResultPopUp().val(value);
     _resultButton.$element.val(value);
@@ -1750,6 +1899,57 @@ site.filters = (function ($) {
     $field.attr("disabled", "");
   }
 
+  function updateFakePrice() {
+    let fake1 = document.querySelector("input[data-name='fake_filter[price][from]']");
+    let fake2 = document.querySelector("input[data-name='fake_filter[price][to]']");
+    let price1 = document.querySelector("input[name='filter[price][from]']");
+    let price2 = document.querySelector("input[name='filter[price][to]']");
+    if($("#CurrRate").length && fake1 && fake2 && price1 && price2){
+      var rate = parseFloat($("#CurrRate").html());
+      if (rate == 0) {
+        rate = 1;
+      }
+      
+      fake1.addEventListener('input', function (e) {
+        price1.value = checkFake1(this,fake2) / rate;
+        if(this.value.length > 2)
+        onChange(price1);
+      }, false);
+      fake2.addEventListener('input', function (e) {
+        price2.value = checkFake2(fake1,this) / rate;
+        console.log(this.value.length);
+        if(this.value.length > 2)
+        onChange(price2);
+      }, false);
+    }
+  }
+
+  function checkFake1(fake1, fake2) {
+    let ret = fake1.value;
+
+    if(parseInt(fake1.value) <= 0) return fake1.dataset.minimum;
+    if(parseInt(fake1.value) > parseInt(fake2.value)) return fake1.dataset.minimum;
+    if(parseInt(fake1.value) > parseInt(fake2.dataset.maximum)) return fake2.dataset.maximum;
+    return ret;
+  }
+  function checkFake2(fake1, fake2) {
+    let ret = fake2.value;
+
+    if(parseInt(fake2.value) <= parseInt(fake1.value)) {
+      console.log('to <= from');
+      return fake2.dataset.maximum;
+    }
+    if(parseInt(fake2.value) <= parseInt(fake1.dataset.minimum)) { 
+      console.log('to <= fromMinimum');
+      return fake2.dataset.maximum; 
+    }
+    if(parseInt(fake2.value) > parseInt(fake2.dataset.maximum)) {
+      console.log('to > toMaximum');
+      return fake2.dataset.maximum;
+    }
+    return ret;
+  }
+
   /**
    * Обработчик события изменения значения поля
    * @param {Object} event событие
@@ -1799,6 +1999,9 @@ site.filters = (function ($) {
      * Возвращает параметры полей с интервалом значений
      * @returns {Object} {paramName1: paramValue1, paramName2: paramValue2, ...}
      */
+
+    
+
     function getRangeParams() {
       var $fieldList = getAllFields();
       var params = {};
@@ -2497,6 +2700,9 @@ site.forms = {
 
 				// Обработчик события выбора способа доставки
 				$('input[type="radio"]', deliverySelector).click(function() {
+					$("div[data-adress]").attr( "style", "display: none !important;")
+					$(`div[data-adress="${$(this).val()}"]`).attr( "style", "display: block !important;")
+
 					if ($paymentBlock.length > 0) {
 						$paymentBlock.show(animationSpeed);
 					}

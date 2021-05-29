@@ -66,6 +66,7 @@ site.filters = (function ($) {
     initFilterData();
     initResetButton();
     initSliderFields();
+    updateFakePrice();
     initDateFields();
 
     /** Инициализирует основные параметры фильтрации */
@@ -89,6 +90,7 @@ site.filters = (function ($) {
 
     /** Инициализирует поля со слайдером */
     function initSliderFields() {
+      
       $(".slider_field", _$form).each(function () {
         var $field = $(this);
 
@@ -174,6 +176,17 @@ site.filters = (function ($) {
   }
 
   function showResult(data) {
+    document.querySelectorAll('.clear_filters').forEach(clear => {
+      clear.onclick = () => {
+        clear.closest('.select').querySelectorAll('.filter_checkbox:checked').forEach(checkbox => {
+          checkbox.checked = false;
+          clear.closest('.select').classList.remove('select--active');
+          clear.closest('.select').querySelector('.filter_param').classList.remove('filter_param--active');
+          clear.closest('.select').querySelector('.filter_param').textContent = clear.closest('.select').querySelector('.filter_param').textContent.split(':')[0];
+        });
+      }
+    });
+
     document.querySelectorAll(".check_container").forEach((check) => {
       let i = check.querySelectorAll(".filter_checkbox:checked").length;
       check.querySelectorAll(".filter_checkbox").forEach((val) => {
@@ -184,7 +197,7 @@ site.filters = (function ($) {
           if (i == 1) {
             document.querySelector(
               `.${getFilterAttribute(val.getAttribute("name"))}`
-            ).firstElementChild.textContent = check
+            ).firstElementChild.textContent = titles[getFilterAttribute(val.getAttribute("name"))] + ": " + check
               .querySelector(".filter_checkbox:checked")
               .getAttribute("value");
           } else if (i > 1) {
@@ -205,6 +218,7 @@ site.filters = (function ($) {
       });
       i = 0;
     });
+
     var value = _resultButton.name + " (" + data.total + ")";
     getFilterResultPopUp().val(value);
     _resultButton.$element.val(value);
@@ -321,6 +335,57 @@ site.filters = (function ($) {
     $field.attr("disabled", "");
   }
 
+  function updateFakePrice() {
+    let fake1 = document.querySelector("input[data-name='fake_filter[price][from]']");
+    let fake2 = document.querySelector("input[data-name='fake_filter[price][to]']");
+    let price1 = document.querySelector("input[name='filter[price][from]']");
+    let price2 = document.querySelector("input[name='filter[price][to]']");
+    if($("#CurrRate").length && fake1 && fake2 && price1 && price2){
+      var rate = parseFloat($("#CurrRate").html());
+      if (rate == 0) {
+        rate = 1;
+      }
+      
+      fake1.addEventListener('input', function (e) {
+        price1.value = checkFake1(this,fake2) / rate;
+        if(this.value.length > 2)
+        onChange(price1);
+      }, false);
+      fake2.addEventListener('input', function (e) {
+        price2.value = checkFake2(fake1,this) / rate;
+        console.log(this.value.length);
+        if(this.value.length > 2)
+        onChange(price2);
+      }, false);
+    }
+  }
+
+  function checkFake1(fake1, fake2) {
+    let ret = fake1.value;
+
+    if(parseInt(fake1.value) <= 0) return fake1.dataset.minimum;
+    if(parseInt(fake1.value) > parseInt(fake2.value)) return fake1.dataset.minimum;
+    if(parseInt(fake1.value) > parseInt(fake2.dataset.maximum)) return fake2.dataset.maximum;
+    return ret;
+  }
+  function checkFake2(fake1, fake2) {
+    let ret = fake2.value;
+
+    if(parseInt(fake2.value) <= parseInt(fake1.value)) {
+      console.log('to <= from');
+      return fake2.dataset.maximum;
+    }
+    if(parseInt(fake2.value) <= parseInt(fake1.dataset.minimum)) { 
+      console.log('to <= fromMinimum');
+      return fake2.dataset.maximum; 
+    }
+    if(parseInt(fake2.value) > parseInt(fake2.dataset.maximum)) {
+      console.log('to > toMaximum');
+      return fake2.dataset.maximum;
+    }
+    return ret;
+  }
+
   /**
    * Обработчик события изменения значения поля
    * @param {Object} event событие
@@ -370,6 +435,9 @@ site.filters = (function ($) {
      * Возвращает параметры полей с интервалом значений
      * @returns {Object} {paramName1: paramValue1, paramName2: paramValue2, ...}
      */
+
+    
+
     function getRangeParams() {
       var $fieldList = getAllFields();
       var params = {};

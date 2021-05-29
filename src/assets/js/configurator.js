@@ -16,6 +16,7 @@ const Configurator = class {
         this.variants = null;
         this.modelQuery = window.location.search ? window.location.search : null;
         this.bottomPrice = null;
+        this.showCalcBtn = null;
     }
 
     init() {
@@ -35,6 +36,7 @@ const Configurator = class {
         this.popupWindows = document.querySelectorAll('.popup_window');
         this.configuratorPopup = document.querySelector('#configurator_popup');
         this.popupGrid = this.configuratorPopup.querySelector('.configurator__equipment-grid');
+        this.showCalcBtn = document.querySelector('.showCalc__btn');
 
         if(this.modelQuery !== null) {
             let modelId = this.modelQuery.split("=", 2)[1];
@@ -51,8 +53,10 @@ const Configurator = class {
         }
 
         this.optionWindows.forEach(optionWindow => {
+            let initialWindow = optionWindow.innerHTML;
             optionWindow.onmouseover = (event) => {
                 this.showElem(optionWindow.querySelector('.window_icon'));
+                this.showElem(optionWindow.querySelector('.clear_icon-container'));
                 if(event.target.classList.contains('info_icon-container')){
                     this.showElem(optionWindow.querySelector('.window_info'));
                 }else{
@@ -62,12 +66,19 @@ const Configurator = class {
             optionWindow.onmouseleave = () => {
                 this.hideElem(optionWindow.querySelector('.window_icon'));
                 this.hideElem(optionWindow.querySelector('.window_info'));
+                this.hideElem(optionWindow.querySelector('.clear_icon-container'));
             }
 
             if(!optionWindow.classList.contains('configurator__option-window_modified')) {
-                optionWindow.onclick = (e) => {
+                
+                optionWindow.onclick = (event) => {
                     let group_id = optionWindow.dataset.window_id;
                     let section_id = optionWindow.closest('.equipment_list').dataset.section;
+                    if(event.target.classList.contains('clear_icon')) {
+                        optionWindow.innerHTML = initialWindow;
+                        optionWindow.classList.remove('active');
+                        return;
+                    }
                     if( window.json[section_id].groups[group_id].action=='show_popup'){
                         show_popup('configurator_popup');
                         let index = 1;
@@ -76,6 +87,9 @@ const Configurator = class {
                             for (let i in items) {
                                 if(typeof items[i].prices === 'undefined') continue;
                                 this.popupGrid.querySelector('.popup-form__item:nth-child('+index+')').innerHTML = `<div class="configurator__option-window">
+                                <div class="clear_icon-container">
+                                    <img class="clear_icon" src="dist/assets/images/configurator/icons/clear_cross.svg"></img>
+                                </div>
                                     <div class="info_icon-container"> 
                                         <svg class="info_icon" width="19" height="19" viewBox="0 0 19 19" xmlns="http://www.w3.org/2000/svg">
                                             <circle cx="9.29319" cy="9.29319" r="8.79319" fill="white" />
@@ -86,7 +100,7 @@ const Configurator = class {
                                         <p>${items[i].hint}</p>
                                     </div>
                                     <div><span>${items[i].name}</span></div>
-                                    <div><span>${items[i].prices[this.currentModel]} ₽</span></div>
+                                    <div><span>${items[i].prices[this.poolWindow.dataset.id]} ₽</span></div>
                                     <img class='option-window_country' src="${items[i].img}" alt="">
                                     <div class="window_icon"><img src="dist/assets/images/configurator/icons/change.svg" style="width: 289px;max-width: 289px;height: 100%;" alt=""></div>
                                 </div>`;
@@ -97,23 +111,26 @@ const Configurator = class {
                         });
                         this.configuratorPopup.querySelector('input[name="window_id"]').value = optionWindow.dataset.window_id;
                     }else{
-                        document.querySelector(`.configurator__equipment[data-section="${window.json[section_id].groups[group_id].target_section}"`).classList.toggle('configurator__equipment--active');
                         optionWindow.classList.toggle('active');
+                        document.querySelector(`.configurator__equipment[data-section="${window.json[section_id].groups[group_id].target_section}"`).classList.toggle('configurator__equipment--active');
+                        if(document.querySelector(`.configurator__equipment[data-section="${window.json[section_id].groups[group_id].target_section}"`).classList.contains('configurator__equipment--active')) {
+                            optionWindow.querySelector(".window_icon img").src = "dist/assets/images/configurator/icons/hide.svg";
+                        } else {
+                            optionWindow.querySelector(".window_icon img").src = "dist/assets/images/configurator/icons/show.svg";
+                        }
                     }
                    
                 }
                 
             } else {
                 optionWindow.onclick = () => {
-                    
+                        this.variants.querySelectorAll(".configurator__option-window").forEach(variant => {
+                            variant.classList.remove("active");
+                        })
+                        optionWindow.classList.add("active");
                         document.querySelectorAll('.equipment_list').forEach(list => {
                         list.style.display = "block";
                         });
-                        this.variants.querySelectorAll('.configurator__option-window').forEach(window => {
-                            window.classList.remove('active');
-                        });
-                        optionWindow.classList.add('active');
-                
                 }
             }
 
@@ -138,37 +155,45 @@ const Configurator = class {
             //     }
             // })
 
-            this.configuratorPopup.querySelectorAll('.popup-form__item').forEach(form__item => {
-                form__item.onclick = () =>{
-                    let popupWindow = document.querySelector('.configurator__option-window[data-window_id="'+this.configuratorPopup.querySelector('input[name="window_id"]').value+'"]');
-                    popupWindow.innerHTML = form__item.querySelector('.configurator__option-window').innerHTML;
-                    popupWindow.classList.add('configurator__option-window_modified');
-                    close_popup('configurator_popup');
-                }
-                form__item.onmouseover = (event) => {
-                    if(event.target.classList.contains('info_icon-container')){
-                        this.showElem(form__item.querySelector('.window_info')); 
-                    }else{
-                        this.hideElem(form__item.querySelector('.window_info')); 
-                    }
-                    
-                }
-                form__item.onmouseleave = () => {
-                    this.hideElem(form__item.querySelector('.window_icon'));
+        });
+
+        this.configuratorPopup.querySelectorAll('.popup-form__item').forEach(form__item => {
+            form__item.onclick = () =>{
+                let popupWindow = document.querySelector('.configurator__option-window[data-window_id="'+this.configuratorPopup.querySelector('input[name="window_id"]').value+'"]');
+                popupWindow.innerHTML = form__item.querySelector('.configurator__option-window').innerHTML;
+                popupWindow.classList.toggle('active');
+                close_popup('configurator_popup');
+            }
+            form__item.onmouseover = (event) => {
+                if(event.target.classList.contains('info_icon-container')){
+                    this.showElem(form__item.querySelector('.window_info')); 
+                }else{
                     this.hideElem(form__item.querySelector('.window_info')); 
                 }
-            });
-         
-            this.togglingPools.forEach(pool => {
-                pool.onclick = () => {
-                    this.setPool(pool.dataset.id);
-                    this.cristal_price.textContent = "+" + this.poolWindow.dataset.cristal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " ₽";
-                    this.poolWindow.classList.remove("toggle_pool");
-                    window.history.replaceState(null, 'Конфигуратор', `https://tvoybasseyn.ru/pools_catalog/konfgurator?model=${pool.dataset.id}`);
-                }
-            });
-            
+                
+            }
+            form__item.onmouseleave = () => {
+                this.hideElem(form__item.querySelector('.window_icon'));
+                this.hideElem(form__item.querySelector('.window_info')); 
+            }
         });
+     
+        this.togglingPools.forEach(pool => {
+            pool.onclick = () => {
+                this.setPool(pool.dataset.id);
+                this.cristal_price.textContent = "+" + this.poolWindow.dataset.cristal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " ₽";
+                this.poolWindow.classList.remove("toggle_pool");
+                window.history.replaceState(null, 'Конфигуратор', `https://tvoybasseyn.ru/pools_catalog/konfgurator?model=${pool.dataset.id}`);
+            }
+        });
+
+        this.showCalcBtn.onclick = function() {
+            document.querySelector('.configurator__estimate').scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            })
+        }
+
     }
 
     showElem(elem) {
@@ -191,9 +216,6 @@ const Configurator = class {
         this.poolWindow.dataset.cristal = document.querySelector(`.toggle_pool[data-id="${model}"]`).dataset.cristal;
         this.poolWindow.innerHTML = document.querySelector(`.toggle_pool[data-id="${model}"]`).innerHTML;
         this.bottomPrice.textContent = this.poolWindow.dataset.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " ₽";
-        let optionPrice = window.json[121198].groups[129383].items[129386].prices[model].toString(); //FOREACH
-        optionPrice = optionPrice.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
-        document.querySelector(".option_price").textContent = "+" + optionPrice  + " ₽";
         this.cristal_price.textContent = "+" + this.poolWindow.dataset.cristal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " ₽";
     }
 }

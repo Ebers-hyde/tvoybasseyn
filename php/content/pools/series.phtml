@@ -6,19 +6,18 @@ $catalog = $this->getProductsListFromCategory($variables['pageId'],100);
 <div class="center-wrap" style="padding-top: 2.1rem;">
     <?= $this->render($variables, 'layout/header/titleWithBread') ?>
 </div>
-<div class="center-wrap" style="padding-top: 2.1rem;">
-    <div class="series-list">
+
+<div class="series-list" style="padding-top: 2.1rem;">
         <?php foreach($catalog['items'] as $category): ?>
             <?= $this->render($category, 'content/pools/series/preview') ?>
         <?php endforeach; ?>
-    </div>
 </div>
 
-<div class="center-wrap" style="padding-top: 2.1rem;">
+<!--<div class="center-wrap" style="padding-top: 2.1rem;">
     <div class="article" style="padding-top: 2.1rem;">
         <?=$page->getValue('content')?>
     </div>
-</div>
+</div>-->
 
 <script>
     var items = $(".series__model");
