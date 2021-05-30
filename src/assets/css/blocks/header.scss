@@ -83,6 +83,11 @@
 		max-width: 25.6rem;
 		width: 100%;
 
+		@include mobile{
+			padding: 0 3rem;
+			max-width: 100%;
+		}
+
 		#building-page & {
 			max-width: 41rem;
 		}

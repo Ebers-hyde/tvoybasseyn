@@ -89,9 +89,12 @@
 			display: flex;
 			flex-direction: row;
 			transition: 1s;
+		
 		}
 		.sidebar__nav-list {
 			min-width: 100%;
+			height: calc(100vh - 167px);
+			overflow: auto;
 		}
 		.sidebar__nav-link {
 			padding: 1.5rem 0;

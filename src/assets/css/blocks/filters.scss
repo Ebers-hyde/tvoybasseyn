@@ -49,14 +49,21 @@
 
 
 .pool-filters {
+  &__slider{
+    .swiper-slide{
+      max-width: fit-content;
+    }
+    
+  }
   &__item {
     
     padding: .5rem;
     height: 50px;
-    justify-content: center;
+    justify-content: center; 
     text-align: center;
     @include mobile{
-      width: 100%;
+      width: fit-content;
+      max-width: 150px;
     }
     .pool-filters__item-title {
       font-size: 11px;
