@@ -14,7 +14,7 @@ $amount = $cart['total-amount'];
 
 
 <?php foreach ($productList as $index => $product): ?>
-<div class="cart__list__item order_item product-element <?= $this->getBorderClass($index) ?>" data-id="<?= $product["id"]?>" id="<?= "order_item_{$product['id']}" ?>">
+<div class="cart__list__item order_item product-element add_to_cart_block <?= $this->getBorderClass($index) ?>" <?=($product['offer']['id'])?'data-offer_id="'.$product['offer']['id'].'"':''?> data-order_id="<?= $product["id"]?>" data-id="<?= $product["id"]?>" id="<?= "order_item_{$product['id']}" ?>">
     <?= $this->render($product, 'emarket/cart/product/index') ?>
 </div>
 <?php endforeach; ?>

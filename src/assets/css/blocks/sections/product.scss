@@ -627,7 +627,7 @@
                 }            
             }
             .buy_one_click_button {
-                display: none;
+                display: none!important;
             }
         }
         .add_to_cart_block {
@@ -651,4 +651,5 @@
             }
         }
     }
+
 }

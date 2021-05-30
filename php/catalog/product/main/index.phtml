@@ -87,8 +87,8 @@ $variables['cartItems'] = $cart['items'];
           <div class="product__tabs-row mobile--hide">
             <div class="product__tabs-item toogles__item-title toogles__item-title--active" data-toogles="1">Описание</div>
             <?php if($more){ ?><div class="product__tabs-item toogles__item-title" data-toogles="2">Характеристики</div><?php } ?>
-            <div class="product__tabs-item toogles__item-title" data-toogles="3">Отзывы</div>
-            <div class="product__tabs-item toogles__item-title" data-toogles="4">Доставка и оплата</div>
+            <!-- <div class="product__tabs-item toogles__item-title" data-toogles="3">Отзывы</div> -->
+            <div class="product__tabs-item toogles__item-title" data-toogles="3">Доставка и оплата</div>
           </div>
           <div class="product__tabs-slider desktop--hide">
             <div class="swiper-container">
@@ -99,11 +99,11 @@ $variables['cartItems'] = $cart['items'];
                 <div class="swiper-slide">
                   <div class="product__tabs-item toogles__item-title" data-toogles="2">Характеристики</div>
                 </div>
-                <div class="swiper-slide">
+                <!-- <div class="swiper-slide">
                   <div class="product__tabs-item toogles__item-title" data-toogles="3">Отзывы</div>
-                </div>
+                </div> -->
                 <div class="swiper-slide">
-                  <div class="product__tabs-item toogles__item-title" data-toogles="4">Доставка и оплата</div>
+                  <div class="product__tabs-item toogles__item-title" data-toogles="3">Доставка и оплата</div>
                 </div>
               </div>
             </div>
@@ -125,7 +125,7 @@ $variables['cartItems'] = $cart['items'];
               <?= $this->render($variables, 'catalog/product/main/properties/index') ?>
             </div>
           </div>
-          <div class="toogles__item" data-toogles="3">
+          <!-- <div class="toogles__item" data-toogles="3">
             <div class="toogles__item-content">
               <div>
                 <div class="product__tabs-tab">
@@ -133,12 +133,47 @@ $variables['cartItems'] = $cart['items'];
                 </div>
               </div>
             </div>
-          </div>
-          <div class="toogles__item" data-toogles="4">
+          </div> -->
+          <div class="toogles__item" data-toogles="3">
             <div class="toogles__item-content">
               <div>
                 <div class="product__tabs-tab">
-                  <p>Доставка и оплата</p>
+                <h2>Способы оплаты</h2>
+<p>Интернет-магазин NOVOPOOL работает с физическими и с юридическими лицами. Мы предлагаем наличный и безналичный расчет, принимаем банковские карты популярных платежных систем: Visa, Mastercard, МИР.</p>
+<h3>Оплата для физических лиц</h3>
+<ul>
+	<li>В Санкт-Петербурге и Ленинградской области &ndash; наличными при получении товара.</li>
+	<li>В других регионах России &ndash; оплата по выставленному счету в любом удобном банке; денежный перевод на карту Сбербанка РФ.</li>
+</ul>
+<h3>Оплата для юридических лиц</h3>
+<ul>
+	<li>В Санкт-Петербурге и Ленинградской области &ndash; по безналичному расчету или наличными при оформлении заказа.</li>
+	<li>В других регионах России &ndash; по безналичному расчету.</li>
+</ul>
+<p>Отгрузка товаров проводится при проведении 100 % оплаты.</p>
+<h2>Доставка</h2>
+<p><strong>Доставка по Санкт-Петербургу</strong> осуществляется в течение 1-5 рабочих дней после оформления заказа при условии наличия товара на складе. Доставка производится ежедневно, включая выходные и праздничные дни (по предварительной договоренности), с 10:00 до 22:00.</p>
+<h3>Стоимость доставки по Санкт-Петербургу</h3>
+<p>Для заказов стоимостью менее 5 000 руб.:</p>
+<ul>
+	<li>в пределах КАД: 750 руб.</li>
+	<li>за пределами КАД (до 50 км): 1 500 руб.</li>
+	<li>за пределами КАД (далее 50 км): 1 500 руб.+ 25 руб./км</li>
+</ul>
+<p>Для заказов стоимостью более 5 000 руб.:</p>
+<ul>
+	<li>в пределах КАД: 500 руб.</li>
+	<li>за пределами КАД (до 50 км): 1 300 руб.</li>
+	<li>за пределами КАД (далее 50 км): 1 000 руб. + 25 руб./км</li>
+</ul>
+<p>Доставка сборных и каркасных бассейнов:</p>
+<ul>
+	<li>в пределах КАД: 1 000 руб.<br />за пределами КАД (до 50 км): 2 000 руб.<br />за пределами КАД (далее 50 км): 2 000 руб. + 25 руб./км</li>
+</ul>
+<h3>Самовывоз</h3>
+<p>Самовывоз товара производится по адресу: г. Санкт-Петербург, ул. Бассейная, д. 73, к1, пом. 7. Перед получением заказа, пожалуйста, убедитесь, что он сформирован и находится в пункте выдачи заказов, предварительно позвонив по телефону <span><a class="contacts__link" href="tel:+7 (812) 716-77-11">+7 (812) 716-77-11</a></span> (с 9:00 до 20:00).</p>
+<h3>Доставка в другие города России</h3>
+<p>В регионах России отгрузка товаров осуществляется посредством транспортных компаний, указанных в заказе. Статус выполнения заявки можно уточнить по телефону <span><a class="contacts__link" href="tel:+7 (812) 716-77-11">+7 (812) 716-77-11</a></span> (с 9:00 до 20:00).</p>
                 </div>
               </div>
             </div>

@@ -17,12 +17,15 @@ $productAmount;
 $productCartId;
 $quantityStyle = "";
 $addToCartStyle = "";
+
 if(count($cartItems) > 0) {
   foreach($cartItems as $i) {
-    if($i['name'] == $productName) {
+    if($i['element_id'] == $product->id) {
       $addToCartStyle = "display: none";
+      $quantityStyle = "display: block";
       $productAmount = $i['amount'];
       $productCartId = $i['id'];
+      break;
     } else {
       $quantityStyle = "display: none";
     }

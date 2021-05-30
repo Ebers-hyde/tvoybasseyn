@@ -1118,6 +1118,7 @@ var basket = {
  * Модуль корзины товаров
  * @type {Object}
  */
+ 
 site.Cart = {
 	/** @type {Boolean} Статус готовности корзины */
 	ready: true,
@@ -1263,6 +1264,7 @@ site.Cart = {
 		$('.order_delete').on('click', function(e) {
 			e.preventDefault();
 			site.Cart.remove($(this).data("id"));
+			$(this).closest('.cart__list__item').remove();
 		});
 
 		$('.cart__hide-list-trigger').on('click', function(e) {
@@ -1308,11 +1310,10 @@ site.Cart = {
 			//site.Cart.ready = false;
 
 			var $button = $(this);
-			var $parent = $('.pool-filters').length != 0 ? $button.closest('.card') : $('.add_to_cart_block');
+			var $parent = $('.pool-filters').length != 0 ? $button.closest('.card') : $button.closest('.add_to_cart_block');
 			var orderItemId = $parent.attr('data-order_id');
 			var quantityNode = $parent.find('.current_quantity');
 			var oldValue = quantityNode.val();
-
 			quantityNode.val($button.hasClass('quantity__up') ? (+quantityNode.val() + 1) : (+quantityNode.val() - 1));
 			site.Cart.modify(orderItemId, quantityNode.val(), oldValue);
 		
@@ -1384,6 +1385,7 @@ site.Cart = {
 			if($button.closest('.card').find('.card__title').text() == item[1].name) {
 				$button.closest('.card').attr('data-order_id', item[1].id);
 				$button.closest('.card').find('.current_quantity').val(1);
+				console.log('card mode');
 			};
 
 			if(typeof item[1].offer !== 'undefined'){
@@ -1391,12 +1393,12 @@ site.Cart = {
 					$('.add_to_cart_block').find('.current_quantity').val(item[1].amount);
 					$('.add_to_cart_block').attr('data-order_id', item[1].id);
 				}
+				console.log('offer mode');
 			}else{
 				if($('.product').data('id') == item[1].page.id) {
-					console.log($('.product__title').text());
-					console.log(item[1].name);
-						$('.add_to_cart_block').attr('data-order_id', item[1].id);
-						$('.add_to_cart_block').find('.current_quantity').val(1);
+					$('.add_to_cart_block').attr('data-order_id', item[1].id);
+					$('.add_to_cart_block').find('.current_quantity').val(1);
+					console.log('product mode');
 				}
 			}
 		});
@@ -1463,7 +1465,7 @@ site.Cart = {
 		$('#order_discount').text(formatPrice(orderDiscount, prefix, suffix));
 
 		var orderPrice = data.summary.price.actual || data.summary.price.original;
-		$('#order_price2').text(formatPrice(orderPrice, prefix, suffix));
+		$('#order_price2,.order_total').text(formatPrice(orderPrice, prefix, suffix));
 
 		var orderItemsQty = data.summary.amount;
 		$('.count-goods').text(orderItemsQty);

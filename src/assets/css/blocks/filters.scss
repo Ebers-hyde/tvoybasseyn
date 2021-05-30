@@ -50,11 +50,14 @@
 
 .pool-filters {
   &__item {
-    width: 100%;
+    
     padding: .5rem;
     height: 50px;
     justify-content: center;
     text-align: center;
+    @include mobile{
+      width: 100%;
+    }
     .pool-filters__item-title {
       font-size: 11px;
     }
