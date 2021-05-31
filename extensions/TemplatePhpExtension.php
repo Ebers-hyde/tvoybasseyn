@@ -1911,7 +1911,7 @@
 			$categoryId = $variables['pageId'];
 			$limit = null;
 			$ignorePaging = false;
-			$level = 2;
+			$level = 5;
 			$fieldName = $this->getSortField();
 			$isAscending = $this->isSortDirectionAscending();
 
@@ -1963,6 +1963,8 @@
 				[
 					$template,
 					$variables['pageId'],
+					0,
+					1
 				]
 			);
 
@@ -2021,7 +2023,7 @@
 			$template = null;
 			$categoryId = $variables['pageId'];
 			$isAdaptive = false;
-			$level = 1;
+			$level = 5;
 
 			try {
 				$data = $this->macros('catalog', 'getSmartFilters', [$template, $categoryId, $isAdaptive, $level]);

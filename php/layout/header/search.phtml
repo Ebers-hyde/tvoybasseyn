@@ -11,7 +11,7 @@ $action = $this->getCommonVar('pre_lang') . '/search/search_do/';
 ?>
 <div class="header__form">
     <form class="search" action="<?= $action ?>" id="searchForm">
-    <input class="search__input" type="search" name="search_string"	autocomplete="off" class="tooltip_toggle" placeholder="Я ищу ...">
+    <input class="search__input" type="search" name="search_string"	autocomplete="off" class="tooltip_toggle" placeholder="Я ищу ..." value="<?=(!empty($_GET['search_string'])?$_GET['search_string']:'')?>">
     <button class="btn btn--blue search__btn" type="submit">Найти</button>
     </form>
     <script id="search_result_template" type="text/template">

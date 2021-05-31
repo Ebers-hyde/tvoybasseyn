@@ -1,0 +1,27 @@
+<?php
+$page = $variables['page'];
+$catalog = $this->getProductsListFromCategory($variables['pageId'], 100);
+
+?>
+
+<div class="center-wrap" style="padding-top: 2.1rem;">
+  <?= $this->render($variables, 'layout/header/titleWithBread') ?>
+</div>
+
+<div class="center-wrap" style="padding-top: 2.1rem;">
+  <div class="catalog-list">
+    <?php foreach ($catalog['items'] as $category) : ?>
+      <div class="blog-main__section">
+        <a href="<?=$category->link ?>" target="_blank">
+        <h3 class="blog-main__title"><?= $this->escape($category->name) ?></h3></a>
+      </div>
+    <?php endforeach; ?>
+  </div>
+</div>
+
+
+<div class="center-wrap" style="padding-top: 2.1rem;">
+  <div class="article">
+    <?= $page->getValue('content') ?>
+  </div>
+</div>

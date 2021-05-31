@@ -7,24 +7,25 @@
  */
 
 $data = $this->getSearchResult();
+
+
 ?>
-<div class="right-slide__block" style="margin-bottom:20px;">
-	<?= $this->render($variables, 'layout/header/bottom/search') ?>
-</div>
-<div class="right-slide__block">
- 	<h1 class="right-slide__title"><?= $this->getSearchResultHeader($data) ?></h1>
-	<?php if (umiCount($data['lines']) > 0): ?>
-		<?= $this->render($data, "search/result") ?>
-	<?php endif; ?>
+
+
+<div class="center-wrap" style="padding-top: 2.1rem;">
+<div class="pool-filters__title"><?= str_replace(['страниц'],['товаров'],$this->getSearchResultHeader($data)) ?></div>
 </div>
 
-<style>
-	main .search_results .grey_border .search_box div:last-child a{
-		color: #007ad7;
-		font-family: inherit;
-		font-size: 18px;
-		display: inline-block;
-		margin-top: 4px;
-		margin-bottom: 0px;
-	}
-</style>
+<main class="center-wrap " style="padding-top: 2.1rem;">
+
+        <section class="pool-filters">
+          <div class="center-wrap">
+
+				<?php if (umiCount($data['lines']) > 0): ?>
+					<?= $this->render($data, "search/result") ?>
+				<?php endif; ?>
+    
+          </div>
+		</section>
+
+</main>
