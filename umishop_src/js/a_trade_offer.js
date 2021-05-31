@@ -47,6 +47,7 @@ site.TradeOffers = {
 		that.getSelectList().bind('selectmenuselect', function(event, ui) {
 			var $characteristicName = $(event.currentTarget).data('characteristic-name');
 			that.setCharacteristic($characteristicName, $(ui.item.element));
+
 			if (!that.resolveSelectedOfferId()) {
 				alert(getLabel('js-error-cannot-resolve-trade-offer'));
 			}
@@ -198,6 +199,7 @@ site.TradeOffers = {
 		var that = this;
 		var valueList = this.parseOption($option);
 
+
 		that.characteristicMap[name] = {};
 
 		for (var index in valueList) {
@@ -254,6 +256,8 @@ site.TradeOffers = {
 		var selectedMap = this.getCharacteristicMap();
 		var selectedOfferIdList = {};
 
+		
+
 		for (var name in selectedMap) {
 			for (var selectedId in selectedMap[name]) {
 				if (!selectedOfferIdList[selectedId]) {
@@ -275,10 +279,13 @@ site.TradeOffers = {
 			}
 		}
 
+		
+
 		for (var filteredOfferId in filteredOfferIdList) {
+			console.log(filteredOfferId);
 			this.setOfferId(filteredOfferId);
 			$('.add_to_cart_block').attr('data-offer_id',filteredOfferId);
-			console.log(filteredOfferId);
+			
 			this.changePrice();
 			this.changeImage();
 			this.switchBuyButtonListActivity();

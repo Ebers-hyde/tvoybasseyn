@@ -23,7 +23,7 @@ $productList = $this->vsk_pageByType($ids);
 $ids = [];
 ?>
 
-<div class="pool-filters__wrap goods" id="catalog_category">
+<div class="pool-filters__wrap goods" id="catalog_category" style="width:100%">
 	<?php foreach ($productList as $product): $ids[] = $product->id; ?>
 		<?= $this->render(['product'=>$product,'compareList'=>$compareList,'cartItems'=>$cart['items'],'context'=>$context[$product->id]], 'catalog/product/preview/index') ?>
 	<?php endforeach; ?>

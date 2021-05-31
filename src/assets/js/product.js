@@ -1,4 +1,4 @@
-if(document.querySelector('.product')) {
+if(document.querySelector('.product')&&document.querySelector('.open_modelsDropdown')) {
     document.querySelector('.open_modelsDropdown').onclick = function(evt) {
         evt.preventDefault();
         document.querySelector('.product__modelDropdowns').classList.toggle('opened');

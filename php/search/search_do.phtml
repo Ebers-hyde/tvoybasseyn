@@ -19,13 +19,13 @@ $data = $this->getSearchResult();
 <main class="center-wrap " style="padding-top: 2.1rem;">
 
         <section class="pool-filters">
-          <div class="center-wrap">
+
 
 				<?php if (umiCount($data['lines']) > 0): ?>
 					<?= $this->render($data, "search/result") ?>
 				<?php endif; ?>
     
-          </div>
+
 		</section>
 
 </main>
