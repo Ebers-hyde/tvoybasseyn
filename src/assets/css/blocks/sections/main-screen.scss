@@ -1,8 +1,9 @@
 .main-screen {
+    height: 390px;
     position: relative;
     padding: 9rem 0 17rem;
     @media screen and (max-width:$large_tablet) {
-        padding: 6.6rem 0 14rem;
+        padding: 115px 0 14rem;
     }
 
     &__title {
@@ -33,6 +34,7 @@
         font-weight: normal;
 
         @media screen and (max-width:$large_tablet) {
+            max-width: 30rem;
             font-size: 1.6rem;
             font-family: Geometria;
             font-weight: 400;
@@ -69,6 +71,7 @@
         }
 
         &--mobile {
+            height: 390px;
             &::before {
                 opacity: 0.43;
             }
@@ -87,7 +90,7 @@
                 z-index: 5;
 
                 @media screen and (max-width:$large_mobile) {
-                    height: 5.5rem;
+                    height: 0;
                 }
             }
         }
