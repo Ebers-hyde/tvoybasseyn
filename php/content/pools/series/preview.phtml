@@ -32,7 +32,7 @@ $old_price = ($p=$category->getValue('old_price'))?$p:false;
 $sale = $this->getProductsListFromCategory(325);
 
 ?>
-
+<?php if(!$this->ifMobile()): ?>
 <div class="center-wrap mobile--hide">
     <div class="series__wrap">
         <div class="series__item">
@@ -45,7 +45,7 @@ $sale = $this->getProductsListFromCategory(325);
                             <img src="<?=$photo?>" style="width:100%;object-fit:cover;border-radius: 4px;">
                         </div>
                     <?php } ?>  
-                </div>
+                </div> 
                     
             </div>
 
@@ -139,11 +139,11 @@ $sale = $this->getProductsListFromCategory(325);
                         <div class="product__purchase-discount">% Есть в распродаже</div>
                     <?php endif;?>
                 </a>
-            <?php } ?>
+            <?php } ?> 
         </div>
     </div>
 </div>
-
+<?php else: ?>
 <div class="series__wrap-mobile desktop--hide">
     <div class="series__item-mobile">
         <img src="<?=$photos[0]?>" style="width:100%;object-fit:cover;">
@@ -206,5 +206,6 @@ $sale = $this->getProductsListFromCategory(325);
         <?php } ?>
     </div>
 </div>
+<?php endif; ?>
 
 <?php } ?>
