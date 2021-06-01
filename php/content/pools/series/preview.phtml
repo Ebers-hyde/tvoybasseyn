@@ -2,182 +2,210 @@
 $prod = false;
 $category = $variables;
 $props = [];
-if (!empty($p = $category->getValue('drugie_modeli'))) {
+if(!empty($p = $category->getValue('drugie_modeli'))){
     $mass = [];
     $t_props = [];
-    foreach ($p as $model) {
-        if ($p = $model->getValue('dlina')) $t_props['Длина'] = $p . ' м';
-        if ($p = $model->getValue('shirina')) $t_props['Ширина'] = $p . ' м';
-        if ($p = $model->getValue('glubina')) $t_props['Глубина'] = $p . ' м';
-        if ($p = $model->getValue('vysoty')) $t_props['Высота'] = $p . ' м';
-        if ($p = $model->getValue('price')) $t_props['price'] = $p;
+    foreach($p as $model){
+        if($p=$model->getValue('dlina')) $t_props['Длина'] = $p.' м';
+        if($p=$model->getValue('shirina')) $t_props['Ширина'] = $p.' м';
+        if($p=$model->getValue('glubina')) $t_props['Глубина'] = $p.' м';
+        if($p=$model->getValue('vysoty')) $t_props['Высота'] = $p.' м';
+        if($p=$model->getValue('price')) $t_props['price'] = $p;
         $mass[$model->name]['props'] = $t_props;
-        $mass[$model->name]['price'] = ($p = $model->getValue('stoimost')) ? $p : false;
-        $mass[$model->name]['pic'] = ($p = $model->getValue('menu_pic_ua')) ? $p : false;
-        $mass[$model->name]['picHover'] = ($p = $model->getValue('menu_pic_a')) ? $p : false;
+        $mass[$model->name]['price'] = ($p=$model->getValue('stoimost'))?$p:false;
+        $mass[$model->name]['pic'] = ($p=$model->getValue('menu_pic_ua'))?$p:false;
+        $mass[$model->name]['picHover'] = ($p=$model->getValue('menu_pic_a'))?$p:false;
         $mass[$model->name]['url'] = $model->link;
     }
 
-    if ($category->getObjectTypeId() == 195) $prod = true;
-    if ($p = $category->getValue('dlina')) $props['Длина, м'] = $p . ' м';
-    if ($p = $category->getValue('shirina')) $props['Ширина, м '] = $p . ' м';
-    if ($p = $category->getValue('glubina')) $props['Глубина, м'] = $p . ' м';
-    if ($p = $category->getValue('vysoty')) $props['Высота, м'] = $p . ' м';
-    if ($p = $category->getValue('photos')) $photos = $this->thumb($p, 1200, 'auto');
-    if ($p = $category->getValue('photos')) $photosMobile = $this->thumb($p, 750, 'auto');
-    if ($p = $category->getValue('kolichestvo_segmentov')) $props['Сегменты, шт'] = $p;
-    $price = ($p = $category->getValue('stoimost')) ? $p : false;
-    if ($price) $prod = true;
-    $old_price = ($p = $category->getValue('old_price')) ? $p : false;
+if($category->getObjectTypeId()==195) $prod = true;
+if($p=$category->getValue('dlina')) $props['Длина, м'] = $p.' м';
+if($p=$category->getValue('shirina')) $props['Ширина, м '] = $p.' м';
+if($p=$category->getValue('glubina')) $props['Глубина, м'] = $p.' м';
+if($p=$category->getValue('vysoty')) $props['Высота, м'] = $p.' м';
+if($p=$category->getValue('photos')) $photos = $this->thumb($p,1200,'auto');
+if($p=$category->getValue('kolichestvo_segmentov')) $props['Сегменты, шт'] = $p;
+$price = ($p=$category->getValue('stoimost'))?$p:false;
+if($price) $prod = true;
+$old_price = ($p=$category->getValue('old_price'))?$p:false;
+
+$sale = $this->getProductsListFromCategory(325);
+
 ?>
-
-<?php if(!$this->isMobile()): ?>
-    <div class="center-wrap mobile--hide">
-        <div class="series__wrap">
-            <div class="series__item">
-                <span class="series__name"><?= $category->getValue('seriya') ?></span>
-                <img class="series__itemHoverImg" style="display:none" src="/images/catalog/abpool/royal_1037/royal-current_view.png">
-                <div class="series__itemGallery swiper-container" data-index="<?= $category->id ?>">
-                    <div class="swiper-wrapper">
-                        <?php foreach ($photos as $photo) { ?>
-                            <div class="swiper-slide">
-                                <img src="<?= $photo ?>" style="width:100%;object-fit:cover;border-radius: 4px;">
-                            </div>
-                        <?php } ?>
-                    </div>
-
-                </div>
-
-                <style>
-                    .series__itemGallery .swiper-slide img {
-                        height: 500px;
-                    }
-
-                    @media screen and (max-width:768px) {
-                        .series__itemGallery .swiper-slide img {
-                            height: 270px;
-                        }
-                    }
-                </style>
-
-                <div class="series__navigation" style="position: absolute;bottom: 7px;right: 14px;    z-index: 2;">
-                    <svg class="button-prev<?= $category->id ?>" width="53" height="54" viewBox="0 0 53 54" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <g opacity="0.6" filter="url(#filter0_d)">
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M34.0648 43.2308C38.8032 43.2308 42.6445 39.3897 42.6445 34.6513L42.6445 18.5795C42.6445 13.8411 38.8032 9.99999 34.0648 9.99999L18.5801 9.99999C13.8416 9.99999 10.0003 13.8411 10.0003 18.5795L10.0003 34.6513C10.0003 39.3897 13.8416 43.2308 18.58 43.2308L34.0648 43.2308ZM33.6828 39.2937C36.5064 39.2937 38.7954 37.0048 38.7954 34.1812L38.7954 19.0496C38.7954 16.226 36.5064 13.9372 33.6828 13.9372L18.962 13.9372C16.1384 13.9372 13.8494 16.226 13.8494 19.0496L13.8494 34.1812C13.8494 37.0048 16.1384 39.2937 18.962 39.2937L33.6828 39.2937Z" fill="white" />
-                            <path d="M33.6828 39.2937C36.5064 39.2937 38.7954 37.0048 38.7954 34.1812L38.7954 19.0496C38.7954 16.226 36.5064 13.9372 33.6828 13.9372L18.962 13.9372C16.1384 13.9372 13.8494 16.226 13.8494 19.0496L13.8494 34.1812C13.8494 37.0048 16.1384 39.2937 18.962 39.2937L33.6828 39.2937Z" fill="white" />
-                            <path d="M30.3516 34.9379C29.9912 35.2984 29.4239 35.3262 29.0316 35.0211L28.9374 34.9379L20.9374 26.9379C20.5769 26.5775 20.5492 26.0102 20.8542 25.6179L20.9374 25.5237L28.9374 17.5237C29.328 17.1332 29.9611 17.1332 30.3516 17.5237C30.7121 17.8842 30.7399 18.4514 30.4348 18.8437L30.3516 18.9379L23.0587 26.2308L30.3516 33.5237C30.7422 33.9143 30.7422 34.5474 30.3516 34.9379Z" fill="#3A485B" />
-                        </g>
-                        <defs>
-                            <filter id="filter0_d" x="0" y="-1.52588e-05" width="52.6442" height="53.2308" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-                                <feFlood flood-opacity="0" result="BackgroundImageFix" />
-                                <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" />
-                                <feOffset />
-                                <feGaussianBlur stdDeviation="5" />
-                                <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0" />
-                                <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow" />
-                                <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape" />
-                            </filter>
-                        </defs>
-                    </svg>
-
-                    <svg class="button-next<?= $category->id ?>" width="53" height="54" viewBox="0 0 53 54" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <g opacity="0.6" filter="url(#filter0_d)">
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M18.5798 10C13.8413 10 10 13.8412 10 18.5795L10 34.6514C10 39.3898 13.8413 43.2308 18.5798 43.2308H34.0645C38.803 43.2308 42.6442 39.3898 42.6442 34.6514V18.5795C42.6442 13.8412 38.803 10 34.0645 10L18.5798 10ZM18.9617 13.9372C16.1381 13.9372 13.8491 16.2261 13.8491 19.0496L13.8491 34.1812C13.8491 37.0048 16.1381 39.2937 18.9617 39.2937H33.6825C36.5061 39.2937 38.7951 37.0048 38.7951 34.1812V19.0496C38.7951 16.2261 36.5061 13.9372 33.6825 13.9372L18.9617 13.9372Z" fill="white" />
-                            <path d="M18.9617 13.9372C16.1381 13.9372 13.8491 16.2261 13.8491 19.0496L13.8491 34.1812C13.8491 37.0048 16.1381 39.2937 18.9617 39.2937H33.6825C36.5061 39.2937 38.7951 37.0048 38.7951 34.1812V19.0496C38.7951 16.2261 36.5061 13.9372 33.6825 13.9372L18.9617 13.9372Z" fill="white" />
-                            <path d="M22.2929 18.2929C22.6534 17.9324 23.2206 17.9047 23.6129 18.2097L23.7071 18.2929L31.7071 26.2929C32.0676 26.6534 32.0953 27.2206 31.7903 27.6129L31.7071 27.7071L23.7071 35.7071C23.3166 36.0976 22.6834 36.0976 22.2929 35.7071C21.9324 35.3466 21.9047 34.7794 22.2097 34.3871L22.2929 34.2929L29.5858 27L22.2929 19.7071C21.9024 19.3166 21.9024 18.6834 22.2929 18.2929Z" fill="#3A485B" />
-                        </g>
-                        <defs>
-                            <filter id="filter0_d" x="0" y="0" width="52.6442" height="53.2308" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-                                <feFlood flood-opacity="0" result="BackgroundImageFix" />
-                                <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" />
-                                <feOffset />
-                                <feGaussianBlur stdDeviation="5" />
-                                <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0" />
-                                <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow" />
-                                <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape" />
-                            </filter>
-                        </defs>
-                    </svg>
-
-                </div>
+<?php if(!$this->ifMobile()): ?>
+<div class="center-wrap mobile--hide">
+    <div class="series__wrap">
+        <div class="series__item">
+            <span class="series__name"><?=$category->getValue('seriya')?></span>
+            <img class="series__itemHoverImg" style="display:none" src="/images/catalog/abpool/royal_1037/royal-current_view.png">
+            <div class="series__itemGallery swiper-container" data-index="<?=$category->id?>">
+                <div class="swiper-wrapper">
+                    <?php foreach($photos as $photo){ ?>
+                        <div class="swiper-slide">
+                            <img src="<?=$photo?>" style="width:100%;object-fit:cover;border-radius: 4px;">
+                        </div>
+                    <?php } ?>  
+                </div> 
+                    
             </div>
-            <div class="series__modelsList mobile--hide">
-                <a class="series__model" href="<?= $category->link ?>" data-image="<?= $category->getValue('menu_pic_a') ?>">
-                    <span class="series__modelName"><?= $category->name ?></span>
-                    <img class="series__modelImage" src="<?= $category->getValue('menu_pic_ua') ?>">
-                    <?php if ($price) : $price = str_replace(' ', '', $price); ?>
-                        <span class="series__modelPrice"><?= number_format($price, 0, ',', ' ') ?> ₽</span>
+
+            <style>
+            .series__itemGallery .swiper-slide img{
+                height: 500px;
+            }
+            @media screen and (max-width:768px){
+                .series__itemGallery .swiper-slide img{
+                    height: 270px;
+                }
+            }
+            </style>
+
+            <div class="series__navigation" style="position: absolute;bottom: 7px;right: 14px;    z-index: 2;">
+                <svg class="button-prev<?=$category->id?>" width="53" height="54" viewBox="0 0 53 54" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <g opacity="0.6" filter="url(#filter0_d)">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M34.0648 43.2308C38.8032 43.2308 42.6445 39.3897 42.6445 34.6513L42.6445 18.5795C42.6445 13.8411 38.8032 9.99999 34.0648 9.99999L18.5801 9.99999C13.8416 9.99999 10.0003 13.8411 10.0003 18.5795L10.0003 34.6513C10.0003 39.3897 13.8416 43.2308 18.58 43.2308L34.0648 43.2308ZM33.6828 39.2937C36.5064 39.2937 38.7954 37.0048 38.7954 34.1812L38.7954 19.0496C38.7954 16.226 36.5064 13.9372 33.6828 13.9372L18.962 13.9372C16.1384 13.9372 13.8494 16.226 13.8494 19.0496L13.8494 34.1812C13.8494 37.0048 16.1384 39.2937 18.962 39.2937L33.6828 39.2937Z" fill="white"/>
+                    <path d="M33.6828 39.2937C36.5064 39.2937 38.7954 37.0048 38.7954 34.1812L38.7954 19.0496C38.7954 16.226 36.5064 13.9372 33.6828 13.9372L18.962 13.9372C16.1384 13.9372 13.8494 16.226 13.8494 19.0496L13.8494 34.1812C13.8494 37.0048 16.1384 39.2937 18.962 39.2937L33.6828 39.2937Z" fill="white"/>
+                    <path d="M30.3516 34.9379C29.9912 35.2984 29.4239 35.3262 29.0316 35.0211L28.9374 34.9379L20.9374 26.9379C20.5769 26.5775 20.5492 26.0102 20.8542 25.6179L20.9374 25.5237L28.9374 17.5237C29.328 17.1332 29.9611 17.1332 30.3516 17.5237C30.7121 17.8842 30.7399 18.4514 30.4348 18.8437L30.3516 18.9379L23.0587 26.2308L30.3516 33.5237C30.7422 33.9143 30.7422 34.5474 30.3516 34.9379Z" fill="#3A485B"/>
+                    </g>
+                    <defs>
+                    <filter id="filter0_d" x="0" y="-1.52588e-05" width="52.6442" height="53.2308" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                    <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                    <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"/>
+                    <feOffset/>
+                    <feGaussianBlur stdDeviation="5"/>
+                    <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
+                    <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow"/>
+                    <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape"/>
+                    </filter>
+                    </defs>
+                </svg>
+
+                <svg class="button-next<?=$category->id?>" width="53" height="54" viewBox="0 0 53 54" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <g opacity="0.6" filter="url(#filter0_d)">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M18.5798 10C13.8413 10 10 13.8412 10 18.5795L10 34.6514C10 39.3898 13.8413 43.2308 18.5798 43.2308H34.0645C38.803 43.2308 42.6442 39.3898 42.6442 34.6514V18.5795C42.6442 13.8412 38.803 10 34.0645 10L18.5798 10ZM18.9617 13.9372C16.1381 13.9372 13.8491 16.2261 13.8491 19.0496L13.8491 34.1812C13.8491 37.0048 16.1381 39.2937 18.9617 39.2937H33.6825C36.5061 39.2937 38.7951 37.0048 38.7951 34.1812V19.0496C38.7951 16.2261 36.5061 13.9372 33.6825 13.9372L18.9617 13.9372Z" fill="white"/>
+                    <path d="M18.9617 13.9372C16.1381 13.9372 13.8491 16.2261 13.8491 19.0496L13.8491 34.1812C13.8491 37.0048 16.1381 39.2937 18.9617 39.2937H33.6825C36.5061 39.2937 38.7951 37.0048 38.7951 34.1812V19.0496C38.7951 16.2261 36.5061 13.9372 33.6825 13.9372L18.9617 13.9372Z" fill="white"/>
+                    <path d="M22.2929 18.2929C22.6534 17.9324 23.2206 17.9047 23.6129 18.2097L23.7071 18.2929L31.7071 26.2929C32.0676 26.6534 32.0953 27.2206 31.7903 27.6129L31.7071 27.7071L23.7071 35.7071C23.3166 36.0976 22.6834 36.0976 22.2929 35.7071C21.9324 35.3466 21.9047 34.7794 22.2097 34.3871L22.2929 34.2929L29.5858 27L22.2929 19.7071C21.9024 19.3166 21.9024 18.6834 22.2929 18.2929Z" fill="#3A485B"/>
+                    </g>
+                    <defs>
+                    <filter id="filter0_d" x="0" y="0" width="52.6442" height="53.2308" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                    <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                    <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"/>
+                    <feOffset/>
+                    <feGaussianBlur stdDeviation="5"/>
+                    <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
+                    <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow"/>
+                    <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape"/>
+                    </filter>
+                    </defs>
+                </svg>
+
+            </div>
+        </div>
+        <div class="series__modelsList mobile--hide">
+                <?php 
+                $isInSale = $this->findPositionInList($sale, $category->name);
+                ?>
+                <a class="series__model" href="<?=$category->link?>" data-image="<?=$category->getValue('menu_pic_a')?>">
+                    <span class="series__modelName"><?=$category->name?></span>
+                    <img class="series__modelImage" src="<?=$category->getValue('menu_pic_ua')?>">
+                    <?php if($price): $price = str_replace(' ','',$price); ?>
+                        <span class="series__modelPrice"><?=number_format($price, 0, ',', ' ')?> ₽</span>
                     <?php endif; ?>
                     <div class="product__specifications">
-                        <?php foreach ($props as $k => $prop) : ?>
-                            <p class="product__specifications-item"><?= $k ?> — <span><?= $prop ?></span></p>
+                        <?php foreach($props as $k=>$prop): ?>
+                            <div class="product__specifications-item product__specifications-itemName"><?=$k?></div><div class="product__specifications-item product__specifications-itemDash">—</div><div class="product__specifications-item"><span><?=$prop?></span></div>
                         <?php endforeach; ?>
                     </div>
+                    <?php if($isInSale):?>
+                        <div class="product__purchase-discount">% Есть в распродаже</div>
+                    <?php endif;?>
                 </a>
-                <?php foreach ($mass as $k => $model) { ?>
-                    <a class="series__model" href="<?= $model['url'] ?>" data-image="<?= $model['picHover'] ?>">
-                        <span class="series__modelName"><?= $k ?></span>
-                        <img class="series__modelImage" src="<?= $model['pic'] ?>">
-                        <?php if ($model['price']) : $model['price'] = str_replace(' ', '', $model['price']); ?>
-                            <span class="series__modelPrice"><?= number_format($model['price'], 0, ',', ' ') ?> ₽</span>
-                        <?php endif; ?>
-                        <div class="product__specifications">
-                            <?php foreach ($model['props'] as $k => $prop) : ?>
-                                <p class="product__specifications-item"><?= $k ?> — <span><?= $prop ?></span></p>
-                            <?php endforeach; ?>
-                        </div>
-                    </a>
-                <?php } ?>
-            </div>
-        </div>
-    </div>
-<?php else: ?>
-    <div class="series__wrap-mobile desktop--hide">
-        <div class="series__item-mobile">
-            <img src="<?= $photosMobile[0] ?>" style="width:100%;object-fit:cover;">
-            <div class="series__name-mobile" data-list="<?= mb_strtolower($category->getValue('seriya')) ?>">
-                <span style="margin-right: 10px;"><?= $category->getValue('seriya') ?></span>
-                <div class="series__dropIcon">
+            <?php foreach($mass as $k=>$model){
+                $isInSale = $this->findPositionInList($sale, $k);
+                ?>
 
-                </div>
-            </div>
-        </div>
-        <div class="series__modelsList-mobile inactive" data-list="<?= mb_strtolower($category->getValue('seriya')) ?>">
-            <a class="series__model-mobile" href="<?= $category->link ?>">
-                <div>
-                    <h5 class="series__modelName-mobile"><?= $category->name ?></h5>
-                    <img class="series__modelImage-mobile" src="<?= $category->getValue('menu_pic_ua') ?>">
-                </div>
-                <div>
-                    <p>
-                        <?php foreach ($props as $k => $prop) : ?>
-                            <?= mb_strtolower(mb_substr($k, 0, 1)) ?> <span><?= mb_substr($prop, 0, -1) ?></span>
-                        <?php endforeach; ?>
-                    </p>
-                    <?php if ($price) : $price = str_replace(' ', '', $price); ?>
-                        <h4 class="series__modelPrice-mobile"><?= number_format($price, 0, ',', ' ') ?> ₽</h4>
+                <a class="series__model" href="<?=$model['url']?>" data-image="<?=$model['picHover']?>">
+                    <span class="series__modelName"><?=$k?></span>
+                    <img class="series__modelImage" src="<?=$model['pic']?>">
+                    <?php if($model['price']): $model['price'] = str_replace(' ','',$model['price']); ?>
+                        <span class="series__modelPrice"><?=number_format($model['price'], 0, ',', ' ')?> ₽</span>
                     <?php endif; ?>
-                </div>
-            </a>
-            <?php foreach ($mass as $k => $model) { ?>
-                <a class="series__model-mobile" href="<?= $model['url'] ?>">
-                    <div>
-                        <h5 class="series__modelName-mobile"><?= $k ?></h5>
-                        <img class="series__modelImage-mobile" src="<?= $model['pic'] ?>">
+                    <div class="product__specifications">
+                        <?php foreach($model['props'] as $k=>$prop): ?>
+                            <div class="product__specifications-item product__specifications-itemName"><?=$k.', м'?></div><div class="product__specifications-item product__specifications-itemDash">—</div><div class="product__specifications-item"><span><?=$prop?></span></div>
+                        <?php endforeach; ?>
                     </div>
-                    <div>
-                        <p>
-                            <?php foreach ($model['props'] as $k => $prop) : ?>
-                                <?= mb_strtolower(mb_substr($k, 0, 1)) ?> <span><?= mb_substr($prop, 0, -1) ?></span>
-                            <?php endforeach; ?>
-                        </p>
-                        <?php if ($model['price']) : $model['price'] = str_replace(' ', '', $model['price']); ?>
-                            <h4 class="series__modelPrice-mobile"><?= number_format($model['price'], 0, ',', ' ') ?> ₽</h4>
-                        <?php endif; ?>
-                    </div>
+                    <?php if($isInSale):?>
+                        <div class="product__purchase-discount">% Есть в распродаже</div>
+                    <?php endif;?>
                 </a>
             <?php } ?>
         </div>
     </div>
+</div>
+<?php else: ?>
+<div class="series__wrap-mobile desktop--hide">
+    <div class="series__item-mobile">
+        <img src="<?=$photos[0]?>" style="width:100%;object-fit:cover;">
+        <div class="series__name-mobile" data-list="<?=mb_strtolower($category->getValue('seriya'))?>">
+            <span style="margin-right: 10px;"><?=$category->getValue('seriya')?></span>
+            <div class="series__dropIcon">
+                
+            </div>
+        </div>
+    </div>
+    <div class="series__modelsList-mobile inactive" data-list="<?=mb_strtolower($category->getValue('seriya'))?>">
+            <a class="series__model-mobile" href="<?=$category->link?>">
+                <?php 
+                $isInSale = $this->findPositionInList($sale, $category->name);
+                ?>
+                <div>
+                    <h5 class="series__modelName-mobile"><?=$category->name?></h5>
+                    <div class="series__modelImage-mobile">
+                        <img src="<?=$category->getValue('menu_pic_ua')?>">
+                    </div>
+                </div>
+                <div>
+                    <p>
+                        <?php foreach($props as $k=>$prop): ?>
+                            <?=mb_strtolower(mb_substr($k, 0, 1))?> <span><?=mb_substr($prop, 0, -1)?></span>
+                        <?php endforeach; ?>
+                    </p>
+                    <?php if($price): $price = str_replace(' ','',$price); ?>
+                        <h4 class="series__modelPrice-mobile"><?=number_format($price, 0, ',', ' ')?> ₽</h4>
+                    <?php endif; ?>
+                    <?php if($isInSale):?>
+                        <div class="product__purchase-discount">% Есть в распродаже</div>
+                    <?php endif;?>
+                </div>
+            </a>
+        <?php foreach($mass as $k=>$model){ 
+            $isInSale = $this->findPositionInList($sale, $k);
+            ?>
+            <a class="series__model-mobile" href="<?=$model['url']?>">
+                <div>
+                    <h5 class="series__modelName-mobile"><?=$k?></h5>
+                    <div class="series__modelImage-mobile">
+                        <img src="<?=$model['pic']?>">
+                    </div>
+                </div>
+                <div>
+                    <p>
+                        <?php foreach($model['props'] as $k=>$prop): ?>
+                            <?=mb_strtolower(mb_substr($k, 0, 1))?> <span><?=mb_substr($prop, 0, -1)?></span>
+                        <?php endforeach; ?>
+                    </p>
+                    <?php if($model['price']): $model['price'] = str_replace(' ','',$model['price']); ?>
+                        <h4 class="series__modelPrice-mobile"><?=number_format($model['price'], 0, ',', ' ')?> ₽</h4>
+                    <?php endif; ?>
+                    <?php if($isInSale):?>
+                        <div class="product__purchase-discount">% Есть в распродаже</div>
+                    <?php endif;?>
+                </div>
+            </a>
+        <?php } ?>
+    </div>
+</div>
 <?php endif; ?>
+
 <?php } ?>

@@ -1,8 +1,11 @@
-if(document.querySelector('.product')&&document.querySelector('.open_modelsDropdown')) {
-    document.querySelector('.open_modelsDropdown').onclick = function(evt) {
-        evt.preventDefault();
-        document.querySelector('.product__modelDropdowns').classList.toggle('opened');
-    }
+if(document.querySelector('.product')&&document.querySelector('.toggle_modelsDropdown')) {
+
+    document.querySelectorAll('.toggle_modelsDropdown').forEach(btn => {
+        btn.onclick = function(evt) {
+            evt.preventDefault();
+            document.querySelector('.product__modelDropdowns').classList.toggle('opened');
+        }
+    })
 }
 
 if (document.querySelector('.product__power-list')) {

@@ -63,6 +63,15 @@
             }
         }
 
+		public function findPositionInList($list, $position) {
+			foreach($list["items"] as $item) {
+                if(strpos($item->name, $position) !== false) {
+                    return true;
+                }
+            }
+			return false;
+		}
+
         public function getProductsListFromCategory($parent_id = false, $limit = false) {
 			$hierarchy = umiHierarchy::getInstance();
 			$sel = new selector('pages');
