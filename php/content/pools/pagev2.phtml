@@ -1,3 +1,9 @@
+<?php 
+$sale = $this->getProductsListFromCategory(325);
+$isInSales = $this->findPositionInList($sale, $variables['header']);
+?>
+
+
 <section class="product" id="product-page">
     <div class="product__aquabioraphy">
         <img src="dist/assets/images/poolPage_royal.png" alt="">
@@ -11,7 +17,7 @@
             <div class="product__info2-model">
                 <div>
                     <h4>Модель</h4>
-                    <h2>Art <a class="open_modelsDropdown">6530</a></h2>
+                    <h2>Art <a class="toggle_modelsDropdown">6530</a></h2>
                 </div>
                 <div class="product__info2-scheme">
                 <img src="dist/assets/images/poolPage_scheme.png" alt="">
@@ -24,7 +30,7 @@
                 <div class="product__dropdown">
                     <div>
                         <h4>Модель</h4>
-                        <h2>Art 6530</h2>
+                        <h2>Art <a class="toggle_modelsDropdown">6530</a></h2>
                     </div>
                     <div>
                         <h4>Liner</h4>
@@ -74,9 +80,11 @@
                 <button class="btn btn--blue">Консультация</button>
                 <button>В калькулятор</button>
                 <a href="">Скачать чертеж</a>
+                <?php if($isInSales): ?>
                 <div class="product__purchase-discount">
                 % Доступно со скидкой
                 </div>
+                <?php endif;?>
             </div>
         </div>
     </div>

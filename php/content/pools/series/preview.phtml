@@ -28,6 +28,9 @@ if($p=$category->getValue('kolichestvo_segmentov')) $props['Сегменты, ш
 $price = ($p=$category->getValue('stoimost'))?$p:false;
 if($price) $prod = true;
 $old_price = ($p=$category->getValue('old_price'))?$p:false;
+
+$sale = $this->getProductsListFromCategory(325);
+
 ?>
 
 <div class="center-wrap mobile--hide">
@@ -99,6 +102,9 @@ $old_price = ($p=$category->getValue('old_price'))?$p:false;
             </div>
         </div>
         <div class="series__modelsList mobile--hide">
+                <?php 
+                $isInSale = $this->findPositionInList($sale, $category->name);
+                ?>
                 <a class="series__model" href="<?=$category->link?>" data-image="<?=$category->getValue('menu_pic_a')?>">
                     <span class="series__modelName"><?=$category->name?></span>
                     <img class="series__modelImage" src="<?=$category->getValue('menu_pic_ua')?>">
@@ -107,11 +113,17 @@ $old_price = ($p=$category->getValue('old_price'))?$p:false;
                     <?php endif; ?>
                     <div class="product__specifications">
                         <?php foreach($props as $k=>$prop): ?>
-                            <p class="product__specifications-item"><?=$k?>  — <span><?=$prop?></span></p>
+                            <div class="product__specifications-item product__specifications-itemName"><?=$k?></div><div class="product__specifications-item product__specifications-itemDash">—</div><div class="product__specifications-item"><span><?=$prop?></span></div>
                         <?php endforeach; ?>
                     </div>
+                    <?php if($isInSale):?>
+                        <div class="product__purchase-discount">% Есть в распродаже</div>
+                    <?php endif;?>
                 </a>
-            <?php foreach($mass as $k=>$model){ ?>
+            <?php foreach($mass as $k=>$model){
+                $isInSale = $this->findPositionInList($sale, $k);
+                ?>
+
                 <a class="series__model" href="<?=$model['url']?>" data-image="<?=$model['picHover']?>">
                     <span class="series__modelName"><?=$k?></span>
                     <img class="series__modelImage" src="<?=$model['pic']?>">
@@ -120,9 +132,12 @@ $old_price = ($p=$category->getValue('old_price'))?$p:false;
                     <?php endif; ?>
                     <div class="product__specifications">
                         <?php foreach($model['props'] as $k=>$prop): ?>
-                            <p class="product__specifications-item"><?=$k?>  — <span><?=$prop?></span></p>
+                            <div class="product__specifications-item product__specifications-itemName"><?=$k.', м'?></div><div class="product__specifications-item product__specifications-itemDash">—</div><div class="product__specifications-item"><span><?=$prop?></span></div>
                         <?php endforeach; ?>
                     </div>
+                    <?php if($isInSale):?>
+                        <div class="product__purchase-discount">% Есть в распродаже</div>
+                    <?php endif;?>
                 </a>
             <?php } ?>
         </div>
@@ -141,9 +156,14 @@ $old_price = ($p=$category->getValue('old_price'))?$p:false;
     </div>
     <div class="series__modelsList-mobile inactive" data-list="<?=mb_strtolower($category->getValue('seriya'))?>">
             <a class="series__model-mobile" href="<?=$category->link?>">
+                <?php 
+                $isInSale = $this->findPositionInList($sale, $category->name);
+                ?>
                 <div>
                     <h5 class="series__modelName-mobile"><?=$category->name?></h5>
-                    <img class="series__modelImage-mobile" src="<?=$category->getValue('menu_pic_ua')?>">
+                    <div class="series__modelImage-mobile">
+                        <img src="<?=$category->getValue('menu_pic_ua')?>">
+                    </div>
                 </div>
                 <div>
                     <p>
@@ -154,13 +174,20 @@ $old_price = ($p=$category->getValue('old_price'))?$p:false;
                     <?php if($price): $price = str_replace(' ','',$price); ?>
                         <h4 class="series__modelPrice-mobile"><?=number_format($price, 0, ',', ' ')?> ₽</h4>
                     <?php endif; ?>
+                    <?php if($isInSale):?>
+                        <div class="product__purchase-discount">% Есть в распродаже</div>
+                    <?php endif;?>
                 </div>
             </a>
-        <?php foreach($mass as $k=>$model){ ?>
+        <?php foreach($mass as $k=>$model){ 
+            $isInSale = $this->findPositionInList($sale, $k);
+            ?>
             <a class="series__model-mobile" href="<?=$model['url']?>">
                 <div>
                     <h5 class="series__modelName-mobile"><?=$k?></h5>
-                    <img class="series__modelImage-mobile" src="<?=$model['pic']?>">
+                    <div class="series__modelImage-mobile">
+                        <img src="<?=$model['pic']?>">
+                    </div>
                 </div>
                 <div>
                     <p>
@@ -171,6 +198,9 @@ $old_price = ($p=$category->getValue('old_price'))?$p:false;
                     <?php if($model['price']): $model['price'] = str_replace(' ','',$model['price']); ?>
                         <h4 class="series__modelPrice-mobile"><?=number_format($model['price'], 0, ',', ' ')?> ₽</h4>
                     <?php endif; ?>
+                    <?php if($isInSale):?>
+                        <div class="product__purchase-discount">% Есть в распродаже</div>
+                    <?php endif;?>
                 </div>
             </a>
         <?php } ?>

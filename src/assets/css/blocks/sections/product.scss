@@ -118,13 +118,20 @@
 
     &__specifications {
         margin-bottom: 0.2rem;
-
+        display: flex;
+        flex-wrap: wrap;
         &-item {
             font-size: 1.4rem;
             line-height: 142.3%;
             color: #676767;
             margin-bottom: 0.7rem;
             font-weight: 400;
+            &Name {
+                width: 85px;
+            }
+            &Dash {
+                width: 30px;
+            }
 
             &:last-child {
                 margin-bottom: 0px;
@@ -656,7 +663,7 @@
 
 .product__aquabioraphy {
     width: 100%; 
-    height: 354px; 
+    height: fit-content; 
     margin-bottom: 60px;
     position: relative;
 }
@@ -664,8 +671,8 @@
 .product__aquabioraphy-titles {
     position: absolute;
     color: white;
-    top: 49%;
-    left: 12%;
+    bottom: 15%;
+    left: 13%;
 }
 
 .product__aquabioraphy-title {
@@ -696,13 +703,6 @@
     margin-bottom: 20px;
     h4 {
         margin-bottom: 15px;
-    }
-    h2 {
-        a {
-            font-size: 29px;
-            border-bottom: 2px dashed;
-            text-decoration: none;
-        }
     }
 }
 
@@ -809,15 +809,16 @@
         text-decoration: underline;
         color: #4081FF;
     }
-    .product__purchase-discount {
-        font-size: 12px;
-        text-align: center;
-        max-width: 18rem;
-        width: 100%;
-        background-color: #FFD600;
-        padding: 5px 0;
-        font-weight: 600;
-    }
+}
+
+.product__purchase-discount {
+    font-size: 12px;
+    text-align: center;
+    max-width: 18rem;
+    width: 100%;
+    background-color: #FFD600;
+    padding: 5px 0;
+    font-weight: 600;
 }
 
 .product__dropdowns {
@@ -835,6 +836,12 @@
     &:last-child {
         border-bottom: none;
     }
+}
+
+.product__dropdown .toggle_modelsDropdown, .product__info2-model .toggle_modelsDropdown  { 
+    font-size: 29px;
+    border-bottom: 2px dashed;
+    text-decoration: none;
 }
 
 .product__dropdown-title {
