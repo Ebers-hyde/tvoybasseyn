@@ -182,7 +182,9 @@ $variables['cartItems'] = $cart['items'];
         <div class="product__manufacturer mobile--hide">
           <div class="manufacturer anchors"><a class="manufacturer__logo" data-anchors href="<?=$parent->link?>?filter%5Bbrend%5D%5B0%5D=<?=$brand->name?>">
               <div><?=$brand->name?></div></a>
-            <p class="manufacturer__text">Получите скидку 3% от суммы заказа</p><a data-anchors class="manufacturer__link" href="<?=$parent->link?>">Все товары категории<br></a><a class="manufacturer__link" href="productinfo" onclick="$('.product__tabs-item[data-toogles=2]').trigger('click')">Все характеристики</a>
+            <!-- <p class="manufacturer__text">Получите скидку 3% от суммы заказа</p> -->
+            <a data-anchors class="manufacturer__link" href="<?=$parent->link?>">Все товары категории<br></a>
+            <a class="manufacturer__link" href="productinfo" onclick="$('.product__tabs-item[data-toogles=2]').trigger('click')">Все характеристики</a>
           </div>
         </div>
       </div>

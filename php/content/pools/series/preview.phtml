@@ -32,7 +32,7 @@ $old_price = ($p=$category->getValue('old_price'))?$p:false;
 $sale = $this->getProductsListFromCategory(325);
 
 ?>
-<?php if(!$this->ifMobile()): ?>
+<?php if(!$this->isMobile()): ?>
 <div class="center-wrap mobile--hide">
     <div class="series__wrap">
         <div class="series__item">

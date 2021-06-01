@@ -304,7 +304,7 @@ site.TradeOffers = {
 	/** Вызывает изменения изображения товара на изображение выбранного предложения  */
 	changeImage: function() {
 		var that = this;
-		this.foreachOptionWithOffer('js-trade-offer-image', function(value) {
+		this.foreachOptionWithOffer('Изображение', function(value) {
 			that.setImage(value);
 		});
 	},
@@ -346,7 +346,8 @@ site.TradeOffers = {
 			return;
 		}
 
-		var $imageContainer = $('div.main_carousel div.slick-slide.slick-current.slick-active a');
+		var $imageContainer = $('.toogles__item--active .product__img a');
+		console.log($('img', $imageContainer));
 		$imageContainer.attr('href', value);
 		$('img', $imageContainer).attr('src', value);
 		$("a[rel=fancybox_group]").fancybox({
