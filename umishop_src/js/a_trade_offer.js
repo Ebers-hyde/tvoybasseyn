@@ -53,7 +53,7 @@ site.TradeOffers = {
 			}
 		});
 
-		$('.additional_options-item').not('[style="display:none"]').each(function(){
+		$('.additional_options-item:not(.hidden)').not('[style="display:none"]').each(function(){
 			var cn = $(this).find('[data-characteristic-name]');
 			that.setCharacteristic(cn.data('characteristic-name'),cn.find('[selected="selected"]'));
 			that.resolveSelectedOfferId();
@@ -256,8 +256,6 @@ site.TradeOffers = {
 		var selectedMap = this.getCharacteristicMap();
 		var selectedOfferIdList = {};
 
-		
-
 		for (var name in selectedMap) {
 			for (var selectedId in selectedMap[name]) {
 				if (!selectedOfferIdList[selectedId]) {
@@ -274,15 +272,14 @@ site.TradeOffers = {
 		var nameLength = Object.keys(selectedMap).length;
 
 		for (var offerId in selectedOfferIdList) {
+			console.log('offerId in selectedOfferIdList',Object.keys(selectedOfferIdList[offerId]).length,nameLength);
 			if (Object.keys(selectedOfferIdList[offerId]).length === nameLength) {
 				filteredOfferIdList[offerId] = offerId;
 			}
 		}
 
-		
 
 		for (var filteredOfferId in filteredOfferIdList) {
-			console.log(filteredOfferId);
 			this.setOfferId(filteredOfferId);
 			$('.add_to_cart_block').attr('data-offer_id',filteredOfferId);
 			
@@ -297,8 +294,9 @@ site.TradeOffers = {
 
 	/** Вызывает изменения цены товара на цену выбранного предложения  */
 	changePrice: function() {
+		
 		var that = this;
-		this.foreachOptionWithOffer(getLabel('js-trade-offer-price'), function(value) {
+		this.foreachOptionWithOffer('js-trade-offer-price', function(value) {
 			that.setPrice(value);
 		});
 	},
@@ -306,7 +304,7 @@ site.TradeOffers = {
 	/** Вызывает изменения изображения товара на изображение выбранного предложения  */
 	changeImage: function() {
 		var that = this;
-		this.foreachOptionWithOffer(getLabel('js-trade-offer-image'), function(value) {
+		this.foreachOptionWithOffer('js-trade-offer-image', function(value) {
 			that.setImage(value);
 		});
 	},
@@ -364,7 +362,7 @@ site.TradeOffers = {
 	 * @returns {boolean}
 	 */
 	isAvailable: function() {
-		return $('.additional_options-item').not('[style="display:none"]').length > 0;
+		return $('.additional_options-item:not(.hidden)').not('[style="display:none"]').length > 0;
 	},
 
 	/**

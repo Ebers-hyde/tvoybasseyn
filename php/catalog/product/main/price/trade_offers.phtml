@@ -30,9 +30,7 @@
 				<?php endforeach; */ ?>
 				<select data-characteristic-name="<?= $this->escape($title) ?>" class="<?= $this->getCharacteristicBlockClass($title) ?>">
 					<?php foreach ($valueList as $value => $offerIdList): ?>
-						<option <?=($value === array_key_first($valueList))?'selected="selected"':''?> data-offer-id-list="<?= implode(';', $offerIdList) ?>" data-value="<?= $this->escape($value) ?>">
-							<?= $this->escape($value) ?>
-						</option>
+						<option <?=($value === array_key_first($valueList))?'selected="selected"':''?> data-offer-id-list="<?= implode(';', $offerIdList) ?>" data-value="<?= $this->escape($value) ?>"><?= $this->escape($value) ?></option>
 					<?php endforeach; ?>
 				</select>
 			</div>

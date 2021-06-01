@@ -116,6 +116,7 @@ if (!empty($variables['parents'])) {
       0
     </div>
     <?php endif; ?>
+    <?php if(!$this->isMobile()): ?>
     <div class="header__content mobile--hide">
       <div class="center-wrap">
 
@@ -162,6 +163,7 @@ if (!empty($variables['parents'])) {
         </div>
       </div>
     </div>
+    <?php endif; ?>
   </div>
 
 
@@ -182,7 +184,7 @@ if (!empty($variables['parents'])) {
     <?= $this->render($variables, "{$variables['module']}/{$variables['method']}") ?>
 
     <?= $this->render($variables, 'blocks/forms/helpForm') ?>
-
+    <?php if($this->isMobile()): ?>
     <div class="mobile-menu mobile-menu--<?= $module ?>">
       <div class="mobile-menu__wrap">
         <div class="mobile-menu__header">
@@ -327,6 +329,7 @@ if (!empty($variables['parents'])) {
         </div>
       </div>
     </div>
+    <?php endif; ?>
     <div class="popup-wrap" id="privacy">
       <div class="popup">
         <div class="popup__close" onclick="close_popup('privacy')">
