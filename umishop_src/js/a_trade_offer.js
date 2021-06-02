@@ -296,7 +296,7 @@ site.TradeOffers = {
 	changePrice: function() {
 		
 		var that = this;
-		this.foreachOptionWithOffer('js-trade-offer-price', function(value) {
+		this.foreachOptionWithOffer(getLabel('js-trade-offer-price'), function(value) {
 			that.setPrice(value);
 		});
 	},
@@ -304,7 +304,7 @@ site.TradeOffers = {
 	/** Вызывает изменения изображения товара на изображение выбранного предложения  */
 	changeImage: function() {
 		var that = this;
-		this.foreachOptionWithOffer('Изображение', function(value) {
+		this.foreachOptionWithOffer(getLabel('js-trade-offer-image'), function(value) {
 			that.setImage(value);
 		});
 	},

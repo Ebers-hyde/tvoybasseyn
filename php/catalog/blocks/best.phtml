@@ -17,7 +17,7 @@
                 <?php if($cat){ ?><div class="best-offers__filter-link toogles__item-title <?=($i==1)?'toogles__item-title--active':''?>" data-toogles="<?=++$i?>"><?=$key?></div><?php } ?>
             <?php endforeach; ?>
         </div>
-        <a class="best-offers__catalog mobile--hide" href="">Весь каталог</a> 
+        <!-- <a class="best-offers__catalog mobile--hide" href="/">Весь каталог</a>  -->
     </div> 
     <?php $i = 1; foreach($cats as $key=>$cat): if(!$cat) continue;  ?>       
         <div class="toogles__item <?=($i==1)?'toogles__item--active':''?>" data-toogles="<?=++$i?>">
