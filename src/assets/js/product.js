@@ -4,6 +4,8 @@ if(document.querySelector('.product')&&document.querySelector('.toggle_modelsDro
         btn.onclick = function(evt) {
             evt.preventDefault();
             document.querySelector('.product__modelDropdowns').classList.toggle('opened');
+            document.querySelector('.product__info2').classList.toggle('inactive');
+            document.querySelector('.product__purchase').classList.toggle('inactive');
         }
     })
 }

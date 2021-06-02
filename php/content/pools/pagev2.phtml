@@ -1,6 +1,17 @@
 <?php 
 $sale = $this->getProductsListFromCategory(325);
 $isInSales = $this->findPositionInList($sale, $variables['header']);
+
+$page = $variables['page'];
+
+$price = 0;
+if($page->getValue('stoimost')) $price = str_replace(' ','',$page->getValue('stoimost'));
+if($price == 0) $price = '';
+else $price = number_format($price, 0, ',', ' ').' ₽';
+$price2 = 0;
+if($page->getValue('cena_cristal')) $price2 = str_replace(' ','',$page->getValue('cena_cristal'));
+if($price2 == 0) $price2 = '';
+else $price2 = number_format($price2, 0, ',', ' ').' ₽';
 ?>
 
 
@@ -9,72 +20,71 @@ $isInSales = $this->findPositionInList($sale, $variables['header']);
         <img src="dist/assets/images/poolPage_royal.png" alt="">
         <div class="product__aquabioraphy-titles">
             <h2 class="product__aquabioraphy-title">Аквабиография</h2>
-            <h2 class="product__aquabioraphy-serie">Art</h2>
+            <h2 class="product__aquabioraphy-serie"><?= ucfirst(strtolower(explode(' ', $this->escape($page->name))[0])) ?></h2>
         </div>
     </div>
     <div class="center-wrap product__main">
+        <div class="product__dropdowns product__modelDropdowns">
+            <div class="product__dropdown product__modelDropdown">
+                <div>
+                    <h4>Модель</h4>
+                    <h2><?= ucfirst(strtolower(explode(' ', $this->escape($page->name))[0])) ?> <a class="toggle_modelsDropdown"><?= explode(' ', $this->escape($page->name))[1] ?></a></h2>
+                </div>
+                <div>
+                    <h4>Liner</h4>
+                    <h2>670 000 ₽</h2>
+                </div>
+                <div>
+                    <h4>Cristal</h4>
+                    <h2>940 000 ₽</h2>
+                </div>
+                <div>
+                    <img src="dist/assets/images/poolPage_scheme.png" alt="">
+                </div>
+            </div>
+            <div class="product__dropdown product__modelDropdown">
+            <div>
+                    <h4>Модель</h4>
+                    <h2>Art 4025</h2>
+                </div>
+                <div>
+                    <h4>Liner</h4>
+                    <h2>670 000 ₽</h2>
+                </div>
+                <div>
+                    <h4>Cristal</h4>
+                    <h2>940 000 ₽</h2>
+                </div>
+                <div>
+                    <img src="dist/assets/images/poolPage_scheme.png" alt="">
+                </div>
+            </div>
+        </div>
         <div class="product__info2">    
             <div class="product__info2-model">
                 <div>
                     <h4>Модель</h4>
-                    <h2>Art <a class="toggle_modelsDropdown">6530</a></h2>
+                    <h2><?= ucfirst(strtolower(explode(' ', $this->escape($page->name))[0])) ?> <a class="toggle_modelsDropdown">
+                    <?= explode(' ', $this->escape($page->name))[1] ?>
+                    <svg width="13" height="10" viewBox="0 0 13 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M6.5 10L0.870835 0.25L12.1292 0.250001L6.5 10Z" fill="#484848"/>
+                    </svg>
+                    </a></h2>
                 </div>
                 <div class="product__info2-scheme">
-                <img src="dist/assets/images/poolPage_scheme.png" alt="">
-                    <span class="product__info2-length">12 м</span>
-                    <span class="product__info2-width">3,7 м</span>
-                    <span class="product__info2-depth">Глубина <span>1.4-1.9 м</span></span>
+                <img src="<?=$page->getValue('scheme_with_params')?>" alt="">
                 </div>
             </div>
-            <div class="product__dropdowns product__modelDropdowns">
-                <div class="product__dropdown">
-                    <div>
-                        <h4>Модель</h4>
-                        <h2>Art <a class="toggle_modelsDropdown">6530</a></h2>
-                    </div>
-                    <div>
-                        <h4>Liner</h4>
-                        <h2>670 000 ₽</h2>
-                    </div>
-                    <div>
-                        <h4>Cristal</h4>
-                        <h2>940 000 ₽</h2>
-                    </div>
-                    <div>
-                        <img src="dist/assets/images/poolPage_scheme.png" alt="">
-                    </div>
-                </div>
-                <div class="product__dropdown">
-                <div>
-                        <h4>Модель</h4>
-                        <h2>Art 4025</h2>
-                    </div>
-                    <div>
-                        <h4>Liner</h4>
-                        <h2>670 000 ₽</h2>
-                    </div>
-                    <div>
-                        <h4>Cristal</h4>
-                        <h2>940 000 ₽</h2>
-                    </div>
-                    <div>
-                        <img src="dist/assets/images/poolPage_scheme.png" alt="">
-                    </div>
-                </div>
+            <div class="product__info2-description">
+            <?=$page->getValue('content')?>
             </div>
-            <p class="product__info2-description">
-            Композитный бассейн ROYAL – одна из популярнейших линеек производства Аквабиография. Многие люди выбрали ROYAL из-за его классической формы и универсальных функций. Наша компания представляет четыре доступных в линейке модели.
-            ROYAL предлагает роскошь и стиль, как никто другой. Четкие линии, грандиозный вход и переменная глубина чаши делают ROYAL идеальным бассейном в любой обстановке.
-            Главным и несравнимым достоинством ROYAL безусловно является классическая римская лестница. Она является как парадным входом в бассейн, так и заметным украшением чаши в целом. Размер ступеней дает возможность с легкостью пользоваться бассейном людям всех возрастов и комплекций. При желании ступени можно оснастить диодной подсветкой, чтобы вариант исполнения Вашего бассейна стал эксклюзивным и неповторимым.
-            Традиционный модельный ряд ROYAL включает в себя 12, 10, 9 и 8 метровые версии. Во всех моделях реализована переменная глубина чаши с 1,4 – 1,7 м. и только в 12 метровой чаше глубина достигает почти 2-х метров.
-            </p>
         </div>
         <div class="product__purchase">
             <div class="product__purchase-prices">
                 <h4>Стоимость Liner</h4>
-                <h3>670 000 ₽</h3>
+                <h3><?=$price?></h3>
                 <h4>Стоимость Cristal</h4>
-                <h3>940 000 ₽</h3>
+                <h3><?=$price2?></h3>
             </div>
             <div class="product__purchase-links">
                 <button class="btn btn--blue">Консультация</button>
@@ -97,6 +107,28 @@ $isInSales = $this->findPositionInList($sale, $variables['header']);
                 </svg>
             </div>
         </div>
+        <!-- <div class="product__dropdown" style="display:flex">
+        <div>
+            <div class="article" style="margin:0;">
+                <h2 style="margin-bottom: 60px;">Вариант исполнения LINER®</h2>
+                <h4>FIBERGLASS POOL</h4>
+                <p>Базовый вариант исполнения. Cмесь полиэфирной смолы, армирующих материалов и барьерный винилэфирный слой. Отличный состав по своим свойствам, который идеально подходит для создания стационарного бассейна. Тем более в такой чаше нет ни единого шва, что делает ее очень прочной. На выбор дается 2 цвета - белый и голубой. Гарантия на чаши в исполнении Liner составляет 15 лет.</p>
+            </div> 
+        </div>
+        <div>
+            <div class="article" style="margin:0;">
+                <h2 style="margin-bottom: 60px;">Вариант исполнения CRISTAL®</h2>
+                <h4>GLASS CRISTAL®</h4>
+                <p>Прозрачный слой, созданный по новейшей технологии для создания непревзойденного глянцевого эффекта. Придаёт насыщенный зеркальный оттенок и глубину цвету. Надежно защищает от хим. реагентов, механического воздействия и ультрофиолетового излучения. Гарантия на чаши в исполнении Cristal - 30 лет.</p>
+    
+                <h4>GRANI CRISTAL®</h4>
+                <p>Инновационный материал в основе которого лежит технология литиевого гранита. Наши дизайнеры собрали девять цветов которые погрузят вас в мир натурального камня. Гранит, мрамор которые подчёркнут монументальность, престижность и индивидуальность вашего дизайнерского решения.</p>
+    
+                <h4>CERAMO CRISTAL®</h4>
+                <p>Керамический слой, повышающий жесткость конструкции. Дополнительный гидроизоляционный слой, уменьшает теплопотери до 20%</p>
+            </div> 
+        </div>
+        </div> -->
         <div class="product__dropdown">
             <h2 class="product__dropdown-title">Дополнительные опции</h2>
             <div class="product__dropdown-icon">
