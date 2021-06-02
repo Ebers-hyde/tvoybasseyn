@@ -823,6 +823,7 @@
 }
 
 .product__dropdown {
+    cursor: pointer;
     background-color: #FAFAFA;
     height: 154px;
     padding: 0 13%;
@@ -833,8 +834,25 @@
     &:last-child {
         border-bottom: none;
     }
-    &:hover {
-        opacity: 1;
+}
+
+.product__dropdownItem {
+    padding: 30px 13%;
+    height: auto;
+    background: #fff;
+    align-items: baseline;
+    &_flex {
+        display: flex;
+        div {
+            margin: 0 10px;
+            opacity: 0.7;
+            &:hover {
+                opacity: 1;
+            }
+        }
+    }
+    .services__text {
+        max-width: 90%;
     }
 }
 
@@ -908,6 +926,7 @@
     .product__dropdown {
         background-color: white;
         padding: 0;
+        cursor: default;
         h4 {
             margin-bottom: 15px;
         }

@@ -3,6 +3,7 @@ $sale = $this->getProductsListFromCategory(325);
 $isInSales = $this->findPositionInList($sale, $variables['header']);
 
 $page = $variables['page'];
+$cher = $page->getValue('chertezh');
 
 $price = 0;
 if($page->getValue('stoimost')) $price = str_replace(' ','',$page->getValue('stoimost'));
@@ -17,7 +18,7 @@ else $price2 = number_format($price2, 0, ',', ' ').' ₽';
 
 <section class="product" id="product-page">
     <div class="product__aquabioraphy">
-        <img src="dist/assets/images/poolPage_royal.png" alt="">
+        <img src="<?=$page->getValue('header_image')?>" alt="">
         <div class="product__aquabioraphy-titles">
             <h2 class="product__aquabioraphy-title">Аквабиография</h2>
             <h2 class="product__aquabioraphy-serie"><?= ucfirst(strtolower(explode(' ', $this->escape($page->name))[0])) ?></h2>
@@ -89,7 +90,7 @@ else $price2 = number_format($price2, 0, ',', ' ').' ₽';
             <div class="product__purchase-links">
                 <button class="btn btn--blue">Консультация</button>
                 <button>В калькулятор</button>
-                <a href="">Скачать чертеж</a>
+                <a href="<?=$cher->getFilePath(1)?>">Скачать чертеж</a>
                 <?php if($isInSales): ?>
                 <div class="product__purchase-discount">
                 % Доступно со скидкой
@@ -99,7 +100,7 @@ else $price2 = number_format($price2, 0, ',', ' ').' ₽';
         </div>
     </div>
     <div class="product__dropdowns">
-        <div class="product__dropdown">
+        <div class="product__dropdown" data-dropdown="variants">
             <h2 class="product__dropdown-title">Варианты исполнения</h2>
             <div class="product__dropdown-icon">
                 <svg width="18px" height="10px" xmlns="http://www.w3.org/2000/svg">
@@ -107,17 +108,17 @@ else $price2 = number_format($price2, 0, ',', ' ').' ₽';
                 </svg>
             </div>
         </div>
-        <!-- <div class="product__dropdown" style="display:flex">
+        <div class="product__dropdownItem hidden product__dropdownItem_flex" data-dropdown="variants">
         <div>
             <div class="article" style="margin:0;">
-                <h2 style="margin-bottom: 60px;">Вариант исполнения LINER®</h2>
+                <h2 style="margin-bottom: 60px;">LINER®</h2>
                 <h4>FIBERGLASS POOL</h4>
                 <p>Базовый вариант исполнения. Cмесь полиэфирной смолы, армирующих материалов и барьерный винилэфирный слой. Отличный состав по своим свойствам, который идеально подходит для создания стационарного бассейна. Тем более в такой чаше нет ни единого шва, что делает ее очень прочной. На выбор дается 2 цвета - белый и голубой. Гарантия на чаши в исполнении Liner составляет 15 лет.</p>
             </div> 
         </div>
         <div>
             <div class="article" style="margin:0;">
-                <h2 style="margin-bottom: 60px;">Вариант исполнения CRISTAL®</h2>
+                <h2 style="margin-bottom: 60px;">CRISTAL®</h2>
                 <h4>GLASS CRISTAL®</h4>
                 <p>Прозрачный слой, созданный по новейшей технологии для создания непревзойденного глянцевого эффекта. Придаёт насыщенный зеркальный оттенок и глубину цвету. Надежно защищает от хим. реагентов, механического воздействия и ультрофиолетового излучения. Гарантия на чаши в исполнении Cristal - 30 лет.</p>
     
@@ -128,8 +129,8 @@ else $price2 = number_format($price2, 0, ',', ' ').' ₽';
                 <p>Керамический слой, повышающий жесткость конструкции. Дополнительный гидроизоляционный слой, уменьшает теплопотери до 20%</p>
             </div> 
         </div>
-        </div> -->
-        <div class="product__dropdown">
+        </div>
+        <div class="product__dropdown" data-dropdown="options">
             <h2 class="product__dropdown-title">Дополнительные опции</h2>
             <div class="product__dropdown-icon">
                 <svg width="18px" height="10px" xmlns="http://www.w3.org/2000/svg">
@@ -137,13 +138,19 @@ else $price2 = number_format($price2, 0, ',', ' ').' ₽';
                 </svg>
             </div>
         </div>
-        <div class="product__dropdown">
+        <div class="product__dropdownItem hidden" data-dropdown="options">
+            <?= $this->render($variables, 'blocks/tabs/options') ?>
+        </div>
+        <div class="product__dropdown" data-dropdown="colors">
             <h2 class="product__dropdown-title">Доступные цвета</h2>
             <div class="product__dropdown-icon">
                 <svg width="18px" height="10px" xmlns="http://www.w3.org/2000/svg">
                     <path d="M17.7071 0.292893C18.0676 0.653377 18.0953 1.22061 17.7903 1.6129L17.7071 1.70711L9.70711 9.70711C9.34662 10.0676 8.77939 10.0953 8.3871 9.7903L8.29289 9.70711L0.292892 1.70711C-0.0976315 1.31658 -0.0976315 0.683417 0.292892 0.292893C0.653376 -0.0675913 1.22061 -0.0953212 1.6129 0.209704L1.70711 0.292893L9 7.58579L16.2929 0.292893C16.6834 -0.0976309 17.3166 -0.0976309 17.7071 0.292893Z" fill="#000"/>
                 </svg>
             </div>
+        </div>
+        <div class="product__dropdownItem hidden" data-dropdown="colors">
+            <?= $this->render($variables, 'blocks/tabs/colors') ?>
         </div>
         <div class="product__dropdown">
             <h2 class="product__dropdown-title">Готовые проекты</h2>
@@ -153,13 +160,16 @@ else $price2 = number_format($price2, 0, ',', ' ').' ₽';
                 </svg>
             </div>
         </div>
-        <div class="product__dropdown">
+        <div class="product__dropdown" data-dropdown="delivery">
             <h2 class="product__dropdown-title">Доставка и оплата</h2>
             <div class="product__dropdown-icon">
                 <svg width="18px" height="10px" xmlns="http://www.w3.org/2000/svg">
                     <path d="M17.7071 0.292893C18.0676 0.653377 18.0953 1.22061 17.7903 1.6129L17.7071 1.70711L9.70711 9.70711C9.34662 10.0676 8.77939 10.0953 8.3871 9.7903L8.29289 9.70711L0.292892 1.70711C-0.0976315 1.31658 -0.0976315 0.683417 0.292892 0.292893C0.653376 -0.0675913 1.22061 -0.0953212 1.6129 0.209704L1.70711 0.292893L9 7.58579L16.2929 0.292893C16.6834 -0.0976309 17.3166 -0.0976309 17.7071 0.292893Z" fill="#000"/>
                 </svg>
             </div>
+        </div>
+        <div class="product__dropdownItem hidden" data-dropdown="delivery">
+            <?= $this->render($variables, 'blocks/tabs/delivery') ?>
         </div>
     </div>
     <div class="center-wrap product__series">
