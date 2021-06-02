@@ -7,13 +7,12 @@
  */
 
 $data = $this->getSearchResult();
-
-
+$dataProducts = $this->getSearchResultProducts();
 ?>
 
 
 <div class="center-wrap" style="padding-top: 2.1rem;">
-<div class="pool-filters__title"><?= str_replace(['страниц'],['товаров'],$this->getSearchResultHeader($data)) ?></div>
+<div class="pool-filters__title">Найдено <?=umiCount($dataProducts['lines'])?> товаров и <?=umiCount($data['lines'])?> страниц</div>
 </div>
 
 <main class="center-wrap " style="padding-top: 2.1rem;">
@@ -21,8 +20,8 @@ $data = $this->getSearchResult();
         <section class="pool-filters">
 
 
-				<?php if (umiCount($data['lines']) > 0): ?>
-					<?= $this->render($data, "search/result") ?>
+				<?php if (umiCount($data['lines']) > 0 || umiCount($dataProducts['lines']) > 0): ?>
+					<?= $this->render([$data,$dataProducts], "search/result") ?>
 				<?php endif; ?>
     
 

@@ -7,14 +7,15 @@
  * @var array $pageList
  */
 
-$pageList = $variables['lines'];
+$pageList = $variables[0]['lines'];
+$productList = $variables[1]['lines'];
 
 $compareList = $this->getComparisonProducts();
 $cart = $this->macros('emarket', 'cart');
 
 $ids = [];
 $context = [];
-foreach($pageList as $pr){
+foreach($productList as $pr){
 	$ids[] = $pr['id'];
 	$context[$pr['id']] = $pr['context'];
 }
@@ -33,14 +34,14 @@ $ids = [];
 	<div class="card" style="opacity:0;padding: 0;margin: 0;"></div>
 </div>
 
-<?php /* if(count($ids)!=count($pageList)): ?>
+<?php if(count($pageList)): ?>
 	<div class="center-wrap" style="padding-top: 6rem;">
 		<div class="pool-filters__title">Статьи по вашему запросу</div>
 	</div>
 	<div class="center-wrap" style="padding-top: 2.1rem;">
 		<div class="news">
 			<div class="news_page">
-				<?php foreach ($pageList as $page): if(in_array($page['id'],$ids)) continue; ?>
+				<?php foreach ($pageList as $page):  ?>
 					<div class="blog-main__section">
 						<a href="<?=$page['link'] ?>" target="_blank">
 						<h3 class="blog-main__title"><?= $this->escape($page['name']) ?></h3></a>
@@ -52,7 +53,7 @@ $ids = [];
 
 	</div>
 
-<?php endif; */ ?>
+<?php endif; ?>
 
 <style>
 	.context{

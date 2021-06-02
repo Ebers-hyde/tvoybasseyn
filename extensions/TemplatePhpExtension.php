@@ -12,10 +12,10 @@
 	class TemplatePhpExtension extends ViewPhpExtension {
 
 		/** int максимальное количество товаров в блоке "Лучшие предложения" */
-		const MAX_BEST_OFFERS_COUNT = 15;
+		const MAX_BEST_OFFERS_COUNT = 5;
 
 		/** int максимальное количество товаров в карусели */
-		const MAX_CAROUSEL_PRODUCT_COUNT = 12;
+		const MAX_CAROUSEL_PRODUCT_COUNT = 5;
 
 		/** int максимальное количество товаров для сравнения */
 		const MAX_PRODUCT_COUNT_FOR_COMPARISON = 3;
@@ -2137,8 +2137,25 @@
 		 * ]
 		 * @throws Exception
 		 */
+		public function getSearchResultProducts() {
+			$data = $this->macros('search', 'search_do',array('default','','','228'));
+			$data = is_array($data) ? $data : [];
+			$data['lines'] = isset($data['lines']) ? $data['lines'] : [];
+			$data['per_page'] = isset($data['per_page']) ? $data['per_page'] : 0;
+			$currentPage = (int) getRequest('p');
+
+			foreach ($data['lines'] as $index => &$item) {
+				$item['id'] = isset($item['id']) ? $item['id'] : '';
+				$item['name'] = isset($item['name']) ? $item['name'] : '';
+				$item['link'] = isset($item['link']) ? $item['link'] : $this->getHomePageUrl();
+				$item['context'] = isset($item['context']) ? $item['context'] : '';
+				$item['number'] = $currentPage * $data['per_page'] + ($index + 1);
+			}
+
+			return $data;
+		}
 		public function getSearchResult() {
-			$data = $this->macros('search', 'search_do');
+			$data = $this->macros('search', 'search_do',array('default','','','312 227 338'));
 			$data = is_array($data) ? $data : [];
 			$data['lines'] = isset($data['lines']) ? $data['lines'] : [];
 			$data['per_page'] = isset($data['per_page']) ? $data['per_page'] : 0;
