@@ -4921,12 +4921,14 @@
 
 
 				
-		public function getProjects($product = null){
+		public function getProjects($product = null,$series = null){
 			$settings = $this->getSettingsContainer();
 			$sel = new selector('objects');
 			$sel->types('object-type')->id($settings->getValue('gallery_page'));
 			if($product)
 				$sel->where('tovar')->equals($product);
+			if($series)
+				$sel->where('series')->equals($series);
 			$sel->order('ord')->desc();
 			$sel->option('load-all-props')->value(true);
 			$sel->option('no-length', true);

@@ -29,11 +29,27 @@
         }
  
         // Получить универсальный список объектов отсортированный в админке
-		public function vsk_objByType($type, $where = false, $limit = 100) {
+		public function vsk_objByType($type, $where = [], $limit = 100, $method = 'equals') {
             $sel = new selector('objects');
             $sel->types('object-type')->id($type);
             if($where){
-                $sel->where($where[0])->equals($where[1]);
+				if(!empty($where['list'])){
+					foreach($where['list'] as $w){
+						if($w[2]=='isnotnull')
+							$sel->where($w[0])->isnotnull();
+						else if($w[2]=='equals')
+							$sel->where($w[0])->equals($w[1]);
+						else if($w[2]=='notequals')
+							$sel->where($w[0])->notequals($w[1]);
+					}
+				}else{
+					if($method=='isnotnull')
+						$sel->where($where[0])->isnotnull();
+					else if($method=='equals')
+						$sel->where($where[0])->equals($where[1]);
+					else if($method=='notequals')
+						$sel->where($where[0])->notequals($where[1]);
+				}
             }
             $sel->limit(0,$limit);
             $sel->order('ord')->asc();

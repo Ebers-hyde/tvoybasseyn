@@ -677,13 +677,13 @@ site.TradeOffers = {
 		that.getSelectList().bind('selectmenuselect', function(event, ui) {
 			var $characteristicName = $(event.currentTarget).data('characteristic-name');
 			that.setCharacteristic($characteristicName, $(ui.item.element));
-			
+
 			if (!that.resolveSelectedOfferId()) {
 				alert(getLabel('js-error-cannot-resolve-trade-offer'));
 			}
 		});
 
-		$('.additional_options-item').not('[style="display:none"]').each(function(){
+		$('.additional_options-item:not(.hidden)').not('[style="display:none"]').each(function(){
 			var cn = $(this).find('[data-characteristic-name]');
 			that.setCharacteristic(cn.data('characteristic-name'),cn.find('[selected="selected"]'));
 			that.resolveSelectedOfferId();
@@ -829,7 +829,6 @@ site.TradeOffers = {
 		var that = this;
 		var valueList = this.parseOption($option);
 
-		console.log(valueList, that.characteristicMap);
 
 		that.characteristicMap[name] = {};
 
@@ -887,8 +886,6 @@ site.TradeOffers = {
 		var selectedMap = this.getCharacteristicMap();
 		var selectedOfferIdList = {};
 
-		
-
 		for (var name in selectedMap) {
 			for (var selectedId in selectedMap[name]) {
 				if (!selectedOfferIdList[selectedId]) {
@@ -905,15 +902,14 @@ site.TradeOffers = {
 		var nameLength = Object.keys(selectedMap).length;
 
 		for (var offerId in selectedOfferIdList) {
+			console.log('offerId in selectedOfferIdList',Object.keys(selectedOfferIdList[offerId]).length,nameLength);
 			if (Object.keys(selectedOfferIdList[offerId]).length === nameLength) {
 				filteredOfferIdList[offerId] = offerId;
 			}
 		}
 
-		
 
 		for (var filteredOfferId in filteredOfferIdList) {
-			console.log(filteredOfferId);
 			this.setOfferId(filteredOfferId);
 			$('.add_to_cart_block').attr('data-offer_id',filteredOfferId);
 			
@@ -928,6 +924,7 @@ site.TradeOffers = {
 
 	/** Вызывает изменения цены товара на цену выбранного предложения  */
 	changePrice: function() {
+		
 		var that = this;
 		this.foreachOptionWithOffer(getLabel('js-trade-offer-price'), function(value) {
 			that.setPrice(value);
@@ -979,7 +976,8 @@ site.TradeOffers = {
 			return;
 		}
 
-		var $imageContainer = $('div.main_carousel div.slick-slide.slick-current.slick-active a');
+		var $imageContainer = $('.toogles__item--active .product__img a');
+		console.log($('img', $imageContainer));
 		$imageContainer.attr('href', value);
 		$('img', $imageContainer).attr('src', value);
 		$("a[rel=fancybox_group]").fancybox({
@@ -995,7 +993,7 @@ site.TradeOffers = {
 	 * @returns {boolean}
 	 */
 	isAvailable: function() {
-		return $('.additional_options-item').not('[style="display:none"]').length > 0;
+		return $('.additional_options-item:not(.hidden)').not('[style="display:none"]').length > 0;
 	},
 
 	/**
@@ -1855,7 +1853,7 @@ site.filters = (function ($) {
           var type = getFieldType($field).type;
           var checkboxOrRadio = type === "checkbox" || type === "radio";
           var isEnabled =
-            _params[name] && $field.val() == _params[name].replace(/\+/gi, " ");
+            _params[name] && $field.val() == " "; //_params[name].replace(/\+/gi, " ");
           return checkboxOrRadio && isEnabled;
         }
       );
@@ -1976,12 +1974,12 @@ site.filters = (function ($) {
     var rangeParams = getRangeParams();
     $.extend(_params, rangeParams);
     getFilters();
-    showFilterResultPopUp();
+    //showFilterResultPopUp();
 
-    setTimeout(function () {
-      getFilterResultPopUp().remove();
-      removePopUpArrow();
-    }, 9000);
+    // setTimeout(function () {
+    //   getFilterResultPopUp().remove();
+    //   removePopUpArrow();
+    // }, 9000);
 
     /**
      * Возвращает параметр с его значением поля

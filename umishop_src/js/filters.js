@@ -281,7 +281,7 @@ site.filters = (function ($) {
           var type = getFieldType($field).type;
           var checkboxOrRadio = type === "checkbox" || type === "radio";
           var isEnabled =
-            _params[name] && $field.val() == _params[name].replace(/\+/gi, " ");
+            _params[name] && $field.val() == " "; //_params[name].replace(/\+/gi, " ");
           return checkboxOrRadio && isEnabled;
         }
       );
@@ -402,12 +402,12 @@ site.filters = (function ($) {
     var rangeParams = getRangeParams();
     $.extend(_params, rangeParams);
     getFilters();
-    showFilterResultPopUp();
+    //showFilterResultPopUp();
 
-    setTimeout(function () {
-      getFilterResultPopUp().remove();
-      removePopUpArrow();
-    }, 9000);
+    // setTimeout(function () {
+    //   getFilterResultPopUp().remove();
+    //   removePopUpArrow();
+    // }, 9000);
 
     /**
      * Возвращает параметр с его значением поля

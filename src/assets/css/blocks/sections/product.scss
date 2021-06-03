@@ -837,7 +837,7 @@
 }
 
 .product__dropdownItem {
-    padding: 30px 13%;
+    padding: 30px;
     height: auto;
     background: #fff;
     align-items: baseline;
@@ -854,12 +854,33 @@
     .services__text {
         max-width: 90%;
     }
+    .product__dropdownItem-projectsLink {
+        font-size: 16px;
+        color: #4081FF;
+        span {
+            margin-right: 15px;
+        }
+    }
 }
 
 .product__modelDropdown {
+    height: 135px;
     opacity: 0.5;
     &:hover {
         opacity: 1;
+        color: black;
+    }
+}
+
+.close_modelDropdown {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    cursor: pointer;
+    z-index: 3;
+    svg {
+        width: 20px;
+        height: 20px;
     }
 }
 
@@ -926,7 +947,6 @@
     .product__dropdown {
         background-color: white;
         padding: 0;
-        cursor: default;
         h4 {
             margin-bottom: 15px;
         }
