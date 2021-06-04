@@ -1,0 +1,489 @@
+<?php
+$page = $variables['page'];
+
+?>
+<div class="right-slide__block pool">
+<?= $this->render($variables, 'layout/header/breadcrumbs') ?>
+    <span class="right-slide__title"><?= $this->escape($variables['header']) ?></span>
+
+
+   
+<section style="margin-bottom:80px">
+
+
+   
+
+    <div class="calculators">
+        <div class="container">
+
+            <div class="calculators__wrapper" style>
+                <div class="calculators__params">
+                <div style="
+    padding-bottom: 35px;
+">
+        <span style="
+    font-size: 30px;
+">Типовой расчет стоимости панельного бассейна</span>
+    </div>
+                    <div class="calculators__param slider-wrap">
+                        <span class="calculators__param-title">Система фильтрации</span>
+                        <div class="range-wrap" style="display: flex;height: 60px;">
+                        <div class="form_element" style="margin-right: 30px;">
+                            <label>
+                                <input type="radio" name="filter_system" value="pl" required checked />
+                                <span></span>
+                                <p>Переливная</p>
+                            </label>
+                        </div>
+                        <div class="form_element">
+                            <label>
+                                <input type="radio" name="filter_system" value="sk" required />
+                                <span></span>
+                                <p>Скиммерная</p>
+                            </label>
+                        </div>
+
+                        </div>
+                    </div>
+                    <div class="calculators__param slider-wrap">
+                        <span class="calculators__param-title">Длина</span>
+                        <input type="hidden" value="6.4" class="calculators__input_percent">
+                        <div class="range-wrap">
+                            <div class="range-slider-percent"></div>
+                        </div>
+                    </div>
+                    <div class="calculators__param slider-wrap">
+                        <span class="calculators__param-title">Ширина</span>
+                        <input type="hidden" value="5.6" class="calculators__input_years">
+                        <div class="range-wrap">
+                            <div class="range-slider-years"></div>
+                        </div>
+                    </div>
+                    <div class="et_pb_text_1" style="max-width:500px;    border: 10px solid #edeef8;padding:20px;margin:0 auto;">
+                        <ol>
+                            <li>В стоимость<strong> не включена</strong> стоимость доставки;</li>
+                            <li>В стоимость <strong>включены</strong> перфорации под следующее оборудование:</li>
+                        </ol>
+                        <ul>
+                            <li>для скиммерного бассейна — под скиммеры и стеновые форсунки</li>
+                            <li>для переливного бассейны — под отверстия в переливной лоток</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="calculators__result" style="    padding: 20px 0 0 20px;">
+
+                    <div class="calculators__result-form">
+                        <div class="calculators__result-image" style="height:300px;background-size: cover; background-position: center;"></div>
+                        <div>
+                            <div class="backgroundform">
+                            <div class="calculators__result-formTitle" style="">   
+                            <span class="title"></span>
+                            <span class="subtitle">Скиммерная фильтрация</span>
+                        </div> 
+                        <div class="calculators__result-formTotal" style="">
+                            <span class="perPrice"></span>
+                        </div>
+                                <div calss="backgroundform__wrapper">
+                                    <div class="objects__form" style="box-shadow:none;padding-right: 10px;">
+                                        <div class="objects__inline-wrap">
+                                            <input type="text" name="phone" placeholder="Ваш телефон" im-insert="true">
+                                            <input type="submit" class="order-lawyer" value="отправить">
+                                        </div>
+                                        <input type="hidden" name="form-target" value="Нужна консультация юриста?">
+                                        <div class="objects__politic">Нажимая на кнопку, вы даете согласие на обработку <a class="docs__privacy" href="#">персональных данных</a></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        
+        </div>
+    </div>
+</section>
+
+<section class="et_pb_section">
+    <div class="et_pb_section-left">
+        <p style="width:100%;font-size: 16px;">Компания “Твой Бассейн” производит панельные бассейны любой формы и типа. Все наши бассейны выполнены из стали высочайшего качества с использованием инновационного защитного покрытия Magnelis. Комбинация стали, цинка, магния и алюминия обеспечивает панелям высокую стойкость к коррозии и долговечность.</p>
+        <img style="width:100%;max-width:225px;margin-left:30px" src="https://tvoybasseyn.ru/wp-content/uploads/2018/06/arcelor.jpg">
+    </div>
+    <div class="et_pb_section-right">
+        <div class="et_pb_section-wrap">
+            <div class="" style="margin-bottom:20px;display: grid;grid-template-columns:auto 1fr;grid-template-rows: auto 1fr;grid-column-gap: 0px;grid-row-gap: 0px;">
+                <img src="https://tvoybasseyn.ru/wp-content/uploads/2018/06/p1.png" alt="" style="max-width:100px;margin-right:25px;grid-area: 1 / 1 / 3 / 2;align-self: center;">
+                <h4 style="grid-area: 1 / 2 / 2 / 3;align-self: end;">Панели</h4>				
+                <p style="grid-area: 2 / 2 / 3 / 3;font-size:16px;">Угловые модули изготовлены из цельного листа, это придает исключительную прочность конструкции. Уникальный двойной загиб обеспечивает жесткость панелей, без применения сварки и в разы повышает коррозионную стойкость конструкции.</p>
+            </div>
+            <div class="" style="margin-bottom:20px;display: grid;grid-template-columns: auto 1fr;grid-template-rows: auto 1fr;grid-column-gap: 0px;grid-row-gap: 0px;">
+                <img src="https://tvoybasseyn.ru/wp-content/uploads/2018/06/p2.jpg" alt="" style="max-width:100px;margin-right:25px;grid-area: 1 / 1 / 3 / 2;align-self: center;">
+                <h4 style="grid-area: 1 / 2 / 2 / 3;align-self: end;">Установочные винты</h4>				
+                <p style="grid-area: 2 / 2 / 3 / 3;font-size:16px;">Панели регулируются по высоте при помощи установочных винтов, удобно нивелировать конструкцию. Панели крепятся анкерами к бетонному основанию.</p>
+            </div>
+            <div class="" style="margin-bottom:20px;display: grid;grid-template-columns: auto 1fr;grid-template-rows: auto 1fr;grid-column-gap: 0px;grid-row-gap: 0px;">
+                <img src="https://tvoybasseyn.ru/wp-content/uploads/2018/06/p3.jpg" alt="" style="max-width:100px;margin-right:25px;grid-area: 1 / 1 / 3 / 2;align-self: center;">
+                <h4 style="grid-area: 1 / 2 / 2 / 3;align-self: end;">Болтовые соединения</h4>				
+                <p style="grid-area: 2 / 2 / 3 / 3;font-size:16px;">Между собой соединение панелей производится с помощью болтовых соединений.</p>
+            </div>
+            <div class="" style="margin-bottom:20px;display: grid;grid-template-columns: auto 1fr;grid-template-rows: auto 1fr;grid-column-gap: 0px;grid-row-gap: 0px;">
+                <img src="https://tvoybasseyn.ru/wp-content/uploads/2018/06/p4.jpg" alt="" style="max-width:100px;margin-right:25px;grid-area: 1 / 1 / 3 / 2;align-self: center;">
+                <h4 style="grid-area: 1 / 2 / 2 / 3;align-self: end;">Контрфорса</h4>				
+                <p style="grid-area: 2 / 2 / 3 / 3;font-size:16px;">Для создания конструкционной жесткости контрфорса имеет дополнительные загибы.</p>
+            </div>
+            <div class="" style="margin-bottom:20px;display: grid;grid-template-columns: auto 1fr;grid-template-rows: auto 1fr;grid-column-gap: 0px;grid-row-gap: 0px;">
+                <img src="https://tvoybasseyn.ru/wp-content/uploads/2018/06/p5.jpg" alt="" style="max-width:100px;margin-right:25px;grid-area: 1 / 1 / 3 / 2;align-self: center;">
+                <h4 style="grid-area: 1 / 2 / 2 / 3;align-self: end;">Анкера</h4>				
+                <p style="grid-area: 2 / 2 / 3 / 3;font-size:16px;">Контрфорса крепится к бетонному основанию с помощью анкеров.</p>
+            </div>
+        </div>
+        <div style="
+        min-width:250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+">
+            <img src="https://tvoybasseyn.ru/wp-content/uploads/2018/06/p0.jpg" alt=""><br>
+            <img src="https://tvoybasseyn.ru/wp-content/uploads/2018/06/test.jpg" alt=""><br>
+            <div><a href="https://tvoybasseyn.ru/wp-content/uploads/2018/06/Magnelis.pdf" target="_blank"><img src="https://tvoybasseyn.ru/wp-content/uploads/2018/06/pdf.png" style="margin-right:15px;width: 32px"><span style="font-size:20px">Документация</span></a></div>
+        </div>
+    </div>
+</section>
+
+
+
+</div> 
+
+
+<div class="et_pb_section  et_pb_section_3 et_pb_with_background et_section_regular">
+				
+				
+					
+					<div class=" et_pb_row et_pb_row_3">
+				
+				
+				<div class="et_pb_column et_pb_column_1_2  et_pb_column_6">
+				
+				<div class="et_pb_module et_pb_video  et_pb_video_0">
+				<div class="et_pb_video_box">
+					<div class="fluid-width-video-wrapper" style="padding-top: 56.2963%;"><iframe src="https://www.youtube.com/embed/xAIQbA1Xqcg?feature=oembed&amp;amp;wmode=opaque" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" id="fitvid0"></iframe></div>
+				</div>
+				
+			</div><div class="et_pb_text et_pb_module et_pb_bg_layout_dark et_pb_text_align_left  et_pb_text_3">
+				
+<h4>Magnelis® — новое металлическое покрытие для стального листа различных применений, обеспечивающее длительную защиту поверхности от воздействия царапин и от работы на износ.</h4>
+
+			</div> <!-- .et_pb_text -->
+			</div> <!-- .et_pb_column --><div class="et_pb_column et_pb_column_1_2  et_pb_column_7">
+				
+				<div class="et_pb_text et_pb_module et_pb_bg_layout_dark et_pb_text_align_left  et_pb_text_4">
+				
+<ul>
+<li>Наилучшие показатели коррозионной стойкости: до 10 раз выше, чем оцинкованная сталь.</li>
+<li>Самовосстанавливающаяся защита на обрезанных кромках и вырезанных отверстиях.</li>
+<li>Имеет наибольшую способность выдерживать воздействие агрессивных сред, в том числе хлористых.</li>
+<li>Наиболее экономически эффективное альтернативное решение по сравнению с обработкой изделий способом оцинкования погружением.</li>
+<li>Не оказывает негативного воздействия на окружающую среду. Не содержит шестивалентного хрома и тяжелых металлов, полная совместимость с Европейским регламентом REACH.</li>
+</ul>
+<p><b>Magnelis®</b>&nbsp;предоставляет лучшую защиту в хлористой и аммиачной средах.</p>
+
+			</div> <!-- .et_pb_text -->
+			</div> <!-- .et_pb_column -->
+			</div> <!-- .et_pb_row -->
+				
+            </div>
+            
+
+
+
+            <div class="et_pb_section  et_pb_section_4 et_section_regular">
+				
+				
+					
+                <div class=" et_pb_row et_pb_row_4">
+            
+            
+            <div class="et_pb_column et_pb_column_1_3  et_pb_column_8">
+            
+            <div class="et_pb_text et_pb_module et_pb_bg_layout_light et_pb_text_align_left  et_pb_text_5">
+            
+<h4>Производство бассейнов и закладных элементов из нержавеющей стали позволило предложить нашим клиентам эксклюзивный продукт с высоким сроком службы.</h4>
+
+        </div> <!-- .et_pb_text -->
+        </div> <!-- .et_pb_column --><div class="et_pb_column et_pb_column_1_3  et_pb_column_9">
+            
+            <div class="et_pb_blurb et_pb_module et_pb_bg_layout_light et_pb_text_align_left  et_pb_blurb_6 et_pb_blurb_position_left">
+            <div class="et_pb_blurb_content">
+                <div class="et_pb_main_blurb_image"><img src="https://tvoybasseyn.ru/wp-content/uploads/2018/06/stopwatch.png" alt="" class="et-waypoint et_pb_animation_top et-animated"></div>
+                <div class="et_pb_blurb_container">
+                    
+                    
+<p>Короткий срок возведения бассейна и быстрый запуск в эксплуатацию</p>
+
+                </div>
+            </div> <!-- .et_pb_blurb_content -->
+        </div> <!-- .et_pb_blurb --><div class="et_pb_blurb et_pb_module et_pb_bg_layout_light et_pb_text_align_left  et_pb_blurb_7 et_pb_blurb_position_left">
+            <div class="et_pb_blurb_content">
+                <div class="et_pb_main_blurb_image"><img src="https://tvoybasseyn.ru/wp-content/uploads/2018/06/coins.png" alt="" class="et-waypoint et_pb_animation_top et-animated"></div>
+                <div class="et_pb_blurb_container">
+                    
+                    
+<p>Низкая стоимость</p>
+
+                </div>
+            </div> <!-- .et_pb_blurb_content -->
+        </div> <!-- .et_pb_blurb --><div class="et_pb_blurb et_pb_module et_pb_bg_layout_light et_pb_text_align_left  et_pb_blurb_8 et_pb_blurb_position_left">
+            <div class="et_pb_blurb_content">
+                <div class="et_pb_main_blurb_image"><img src="https://tvoybasseyn.ru/wp-content/uploads/2018/06/pool.png" alt="" class="et-waypoint et_pb_animation_top et-animated"></div>
+                <div class="et_pb_blurb_container">
+                    
+                    
+<p>Свобода в выборе формы и размеров вашего бассейна</p>
+
+                </div>
+            </div> <!-- .et_pb_blurb_content -->
+        </div> <!-- .et_pb_blurb --><div class="et_pb_blurb et_pb_module et_pb_bg_layout_light et_pb_text_align_left  et_pb_blurb_9 et_pb_blurb_position_left">
+            <div class="et_pb_blurb_content">
+                <div class="et_pb_main_blurb_image"><img src="https://tvoybasseyn.ru/wp-content/uploads/2018/06/wrench.png" alt="" class="et-waypoint et_pb_animation_top et-animated"></div>
+                <div class="et_pb_blurb_container">
+                    
+                    
+<p>Высокая ремонтопригодность</p>
+
+                </div>
+            </div> <!-- .et_pb_blurb_content -->
+        </div> <!-- .et_pb_blurb --><div class="et_pb_blurb et_pb_module et_pb_bg_layout_light et_pb_text_align_left  et_pb_blurb_10 et_pb_blurb_position_left">
+            <div class="et_pb_blurb_content">
+                <div class="et_pb_main_blurb_image"><img src="https://tvoybasseyn.ru/wp-content/uploads/2018/06/building.png" alt="" class="et-waypoint et_pb_animation_top et-animated"></div>
+                <div class="et_pb_blurb_container">
+                    
+                    
+<p>Возможность установки бассейнов без заглубления в грунт (установка внутри зданий и на крышах)</p>
+
+                </div>
+            </div> <!-- .et_pb_blurb_content -->
+        </div> <!-- .et_pb_blurb -->
+        </div> <!-- .et_pb_column --><div class="et_pb_column et_pb_column_1_3  et_pb_column_10">
+            
+            <div class="et_pb_blurb et_pb_module et_pb_bg_layout_light et_pb_text_align_left  et_pb_blurb_11 et_pb_blurb_position_left">
+            <div class="et_pb_blurb_content">
+                <div class="et_pb_main_blurb_image"><img src="https://tvoybasseyn.ru/wp-content/uploads/2018/06/shield.png" alt="" class="et-waypoint et_pb_animation_top et-animated"></div>
+                <div class="et_pb_blurb_container">
+                    
+                    
+<p>Защита от ржавчины резаных кромок панелей</p>
+
+                </div>
+            </div> <!-- .et_pb_blurb_content -->
+        </div> <!-- .et_pb_blurb --><div class="et_pb_blurb et_pb_module et_pb_bg_layout_light et_pb_text_align_left  et_pb_blurb_12 et_pb_blurb_position_left">
+            <div class="et_pb_blurb_content">
+                <div class="et_pb_main_blurb_image"><img src="https://tvoybasseyn.ru/wp-content/uploads/2018/06/feather.png" alt="" class="et-waypoint et_pb_animation_top et-animated"></div>
+                <div class="et_pb_blurb_container">
+                    
+                    
+<p>Легкость. Малая масса конструкции чаши</p>
+
+                </div>
+            </div> <!-- .et_pb_blurb_content -->
+        </div> <!-- .et_pb_blurb --><div class="et_pb_blurb et_pb_module et_pb_bg_layout_light et_pb_text_align_left  et_pb_blurb_13 et_pb_blurb_position_left">
+            <div class="et_pb_blurb_content">
+                <div class="et_pb_main_blurb_image"><img src="https://tvoybasseyn.ru/wp-content/uploads/2018/06/clock.png" alt="" class="et-waypoint et_pb_animation_top et-animated"></div>
+                <div class="et_pb_blurb_container">
+                    
+                    
+<p>Долговечность конструкции. Гарантия от коррозии на панели до 30 лет. Уникальный материал, рассчитанный на работу в средне- и агрессивных средах. В 10 раз устойчивее к коррозии, чем оцинкованная сталь</p>
+
+                </div>
+            </div> <!-- .et_pb_blurb_content -->
+        </div> <!-- .et_pb_blurb -->
+        </div> <!-- .et_pb_column -->
+        </div> <!-- .et_pb_row -->
+            
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <style>
+                .et_pb_section {
+    position: relative;
+    background-color: #fff;
+}
+.et_pb_section-wrap{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    
+}
+.et_pb_section-right{
+    display:flex;margin-top: 30px;
+}
+.et_pb_section-left{
+    display: flex;
+}
+@media screen and (max-width:767px){
+    .et_pb_section-left{
+        flex-direction: column;
+    }
+    .et_pb_section-wrap{
+        width:100%;
+        min-width: 100%;
+    }
+}
+.et_pb_slider .et_pb_slide, .et_pb_section {
+    background-repeat: no-repeat;
+    background-position: center;
+    -webkit-background-size: 100%;
+    -webkit-background-size: cover;
+    -moz-background-size: 100%;
+    -moz-background-size: cover;
+    background-size: 100%;
+    background-size: cover;
+}
+.et_pb_section.et_pb_section_3.et_pb_with_background.et_section_regular:before {
+    content: ' ';
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(19, 24, 29, 0.41);
+    top: 0;
+}
+                .et_pb_section {
+    padding: 54px 0;
+}
+            .et_pb_section_3 {
+    background-image: url(https://tvoybasseyn.ru/wp-content/uploads/2018/06/magnelis-didier-bridoux-b.jpg);
+}
+
+.et_pb_section_3.et_pb_section {
+    background-color: rgba(45,45,45,0) !important;
+}
+.et_pb_row {
+    position: relative;
+    width: 80%;
+    max-width: 1080px;
+    margin: auto;
+}
+.et_pb_row {
+    padding: 27px 0;
+}
+
+.et_pb_column {
+    float: left;
+    position: relative;
+    background-position: center;
+    background-size: cover;
+}
+.et_pb_column, .et_pb_gutters3.et_pb_row .et_pb_column {
+    margin-right: 5.5%;
+}
+.et_pb_column_1_2, .et_pb_gutters3.et_pb_row .et_pb_column_1_2 {
+    width: 47.25%;
+}
+.et_pb_column {
+    float: left;
+    position: relative;
+    background-position: center;
+    background-size: cover;
+}
+.et_pb_column_1_2, .et_pb_gutters3.et_pb_row .et_pb_column_1_2 {
+    width: 47.25%;
+}
+
+.et_pb_row .et_pb_column:last-child, .et_pb_row .et_pb_column.et-last-child, .et_pb_row_inner .et_pb_column:last-child, .et_pb_row_inner .et_pb_column.et-last-child {
+    margin-right: 0 !important;
+}
+
+.et_pb_video {
+    position: relative;
+}
+ .et_pb_column_1_2 .et_pb_module, .et_pb_gutters3.et_pb_row .et_pb_column_1_2 .et_pb_module, .et_section_specialty .et_pb_gutters3.et_pb_row .et_pb_column_1_2 .et_pb_module, .et_section_specialty .et_pb_row .et_pb_column_1_2 .et_pb_gutters3.et_pb_row_inner .et_pb_module {
+    margin-bottom: 5.82%;
+}
+.et_pb_video_box {
+    display: block;
+    position: relative;
+    z-index: 1;
+    line-height: 0;
+}
+.fluid-width-video-wrapper {
+    width: 100%;
+    position: relative;
+    padding: 0;
+}
+.fluid-width-video-wrapper iframe, .fluid-width-video-wrapper object, .fluid-width-video-wrapper embed {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+.et_pb_slides:after, .et_pb_row:after, .et_pb_row_inner:after {
+    display: block;
+    visibility: hidden;
+    clear: both;
+    width: 0;
+    height: 0;
+    line-height: 0;
+    content: ".";
+}
+.et_pb_bg_layout_dark, .et_pb_bg_layout_dark h1, .et_pb_bg_layout_dark h2, .et_pb_bg_layout_dark h3, .et_pb_bg_layout_dark h4, .et_pb_bg_layout_dark h5, .et_pb_bg_layout_dark h6 {
+    color: #fff !important;
+}
+.et_pb_bg_layout_dark {
+    color: #ffffff !important;
+}
+
+.et_pb_column, .et_pb_gutters3.et_pb_row .et_pb_column {
+    margin-right: 5.5%;
+}
+.et_pb_column_1_3, .et_pb_gutters3.et_pb_row .et_pb_column_1_3 {
+    width: 29.666%;
+}
+.et_pb_main_blurb_image {
+    margin-bottom: 30px;
+    text-align: center;
+}
+.et_pb_blurb_position_left .et_pb_main_blurb_image, .et_pb_blurb_position_right .et_pb_main_blurb_image {
+    display: table-cell;
+    width: 32px;
+}
+.et_pb_blurb_position_left .et_pb_main_blurb_image img, .et_pb_blurb_position_right .et_pb_main_blurb_image img {
+    width: inherit;
+}
+.et_pb_blurb_position_left .et_pb_blurb_container, .et_pb_blurb_position_right .et_pb_blurb_container {
+    display: table-cell;
+    vertical-align: top;
+}
+.et_pb_blurb_position_left .et_pb_blurb_container {
+    padding-left: 15px;
+}
+.et_pb_blurb_content {
+    position: relative;
+    max-width: 550px;
+    margin: 0 auto;
+}
+.et_pb_blurb_position_left .et_pb_blurb_content {
+    text-align: left;
+}
+.et_pb_column_1_3 .et_pb_module, .et_pb_gutters3.et_pb_row .et_pb_column_1_3 .et_pb_module, .et_section_specialty .et_pb_gutters3.et_pb_row .et_pb_column_1_3 .et_pb_module, .et_section_specialty .et_pb_row .et_pb_column_2_3 .et_pb_gutters3.et_pb_row_inner .et_pb_column_1_3 .et_pb_module {
+    margin-bottom: 9.27%;
+}
+.et_pb_blurb_content p:last-of-type {
+    padding-bottom: 0;
+}
+
+            
+            </style>
+

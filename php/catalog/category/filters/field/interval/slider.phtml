@@ -17,7 +17,7 @@ if ($data["title"] == "Цена") {
 ?>
 
 <div class="select slider_field">
-	<div id="CurrRate" style="display:none"><?=$rate?></div>
+	<div id="CurrRate" class="hidden"><?=$rate?></div>
 	<div class="select__value">
 	<div><?= $data['title'] ?></div>
 	</div>
@@ -25,9 +25,9 @@ if ($data["title"] == "Цена") {
 	<path d="M2.86243 4L0.643236 0.25L5.08162 0.25L2.86243 4Z"></path>
 	</svg>
 	<div class="select__variants select__variants-range">
-		<div class="col-md-12 delta_price clearfix" style="margin-top:1rem">
-			<div style="margin-right: 10px;"><span style="margin-right: 5px;">от</span><input type="text" id="fake_<?= $data['name_from'] ?>" data-name="fake_<?= $data['name_from'] ?>" value="<?= floor($data['selected_min']*$rate) ?>" autocomplete="off" data-minimum="<?= $data['min'] ?>" class="min" /></div>
-			<div><span style="margin-right: 5px;">до</span><input type="text" id="fake_<?= $data['name_to'] ?>" data-name="fake_<?= $data['name_to'] ?>" value="<?= ceil($data['selected_max']*$rate) ?>" autocomplete="off" data-maximum="<?= $data['max'] ?>" class="max" /></div>
+		<div class="col-md-12 delta_price clearfix">
+			<div><span>от</span><input type="text" id="fake_<?= $data['name_from'] ?>" data-name="fake_<?= $data['name_from'] ?>" value="<?= floor($data['selected_min']*$rate) ?>" autocomplete="off" data-minimum="<?= $data['min'] ?>" class="min" /></div>
+			<div><span>до</span><input type="text" id="fake_<?= $data['name_to'] ?>" data-name="fake_<?= $data['name_to'] ?>" value="<?= ceil($data['selected_max']*$rate) ?>" autocomplete="off" data-maximum="<?= $data['max'] ?>" class="max" /></div>
 		</div>
 
 		<input type="hidden" name="<?= $data['name_from'] ?>" value="<?= $data['selected_min'] ?>" />
@@ -53,8 +53,8 @@ if ($data["title"] == "Цена") {
 	</svg>
 	<div class="select__variants select__variants-range">
 		<div class="col-md-12 delta_price clearfix">
-		<div style="margin-right: 10px;"><span style="margin-right: 5px;">от</span><input type="text" name="<?= $data['name_from'] ?>" value="<?= $data['selected_min'] ?>" data-minimum="<?= $data['min'] ?>" class="min" /></div>
-		<div><span style="margin-right: 5px;">до</span><input type="text" name="<?= $data['name_to'] ?>" value="<?= $data['selected_max'] ?>" data-maximum="<?= $data['max'] ?>" class="max" /></div>
+		<div><span>от</span><input type="text" name="<?= $data['name_from'] ?>" value="<?= $data['selected_min'] ?>" data-minimum="<?= $data['min'] ?>" class="min" /></div>
+		<div><span>до</span><input type="text" name="<?= $data['name_to'] ?>" value="<?= $data['selected_max'] ?>" data-maximum="<?= $data['max'] ?>" class="max" /></div>
 		</div>
 
 	</div>

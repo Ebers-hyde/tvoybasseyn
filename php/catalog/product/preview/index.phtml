@@ -21,26 +21,26 @@ $productName = $this->escape($product->getName());
 //if(!empty($context)) $context= '<br><i>'.$context.'</i>';
 $productAmount;
 $productCartId;
-$quantityStyle = "";
-$addToCartStyle = "";
+$quantityClass= "";
+$addToCartClass = "";
 if(count($cartItems) > 0) {
   foreach($cartItems as $i) {
 	if($i['element_id'] == $product->id && !empty($i['offer'])){
-		$addToCartStyle = "display: none";
-		$quantityStyle = "display: none";
+		$addToCartClass = "hidden";
+		$quantityClass = "";
 	  break;
 	}else if($i['element_id'] == $product->id) {
-      $addToCartStyle = "display: none";
-	  $quantityStyle = "display: block";
+      $addToCartClass = "hidden";
+	  $quantityClass = "product__quantity-active";
       $productAmount = $i['amount'];
       $productCartId = $i['id'];
 	  break;
     } else {
-      $quantityStyle = "display: none";
+      $quantityClass = "";
     }
   }
 } else {
-  $quantityStyle = "display: none";
+  $quantityClass = "";
 }
 
 
@@ -75,14 +75,14 @@ $ids = json_decode($this->getCookie('favorites'));
 
 	<div class="card__bottom">
 		<div class="basket-wrap">
-		<a class="basket add_to_cart_button <?=$this->getAddToCartButtonClass($product)?>" href="<?= $this->getAddToCartLink($product) ?>" style="<?=$addToCartStyle?>">
+		<a class="basket add_to_cart_button <?=$this->getAddToCartButtonClass($product)?> <?=$addToCartClass?>" href="<?= $this->getAddToCartLink($product) ?>">
 			<svg viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
 			<path fill-rule="evenodd" clip-rule="evenodd" d="M6.76598 13.5765L6.76934 13.5763H17.9238C18.1984 13.5763 18.4399 13.3941 18.5154 13.1301L20.9763 4.51681C21.0293 4.33112 20.9922 4.13148 20.876 3.97736C20.7597 3.82323 20.5778 3.73254 20.3848 3.73254H5.34709L4.9073 1.75338C4.84465 1.47188 4.59503 1.27161 4.30664 1.27161H0.615234C0.275414 1.27161 0 1.54702 0 1.88684C0 2.22666 0.275414 2.50208 0.615234 2.50208H3.81317L6.03442 12.498C6.21923 13.2621 6.36006 13.5636 6.76598 13.5765ZM17.4597 12.3458L19.5691 4.96301H5.62042L7.26105 12.3458H17.4597Z"></path>
 			<path d="M6 17C6 18.1028 6.89722 19 8 19C9.10278 19 10 18.1028 10 17C10 15.8972 9.10278 15 8 15C6.89722 15 6 15.8972 6 17ZM8 16.3333C8.36753 16.3333 8.66667 16.6325 8.66667 17C8.66667 17.3675 8.36753 17.6667 8 17.6667C7.63247 17.6667 7.33333 17.3675 7.33333 17C7.33333 16.6325 7.63247 16.3333 8 16.3333Z"></path>
 			<path d="M15 17C15 18.1028 15.8972 19 17 19C18.1028 19 19 18.1028 19 17C19 15.8972 18.1028 15 17 15C15.8972 15 15 15.8972 15 17ZM17 16.3333C17.3675 16.3333 17.6667 16.6325 17.6667 17C17.6667 17.3675 17.3675 17.6667 17 17.6667C16.6325 17.6667 16.3333 17.3675 16.3333 17C16.3333 16.6325 16.6325 16.3333 17 16.3333Z"></path>
 			</svg><span>В корзину</span>
 		</a>
-		<div class="product__quantity" style="<?=$quantityStyle?>">
+		<div class="product__quantity <?=$quantityClass?>">
             <div class="quantity"><span class="quantity__down change_product_quantity">
                 <svg width="12" height="2" viewBox="0 0 12 2" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M0.503418 1.33307H11.498C11.7742 1.33307 11.998 1.10921 11.998 0.833069C11.998 0.556927 11.7742 0.333069 11.498 0.333069H0.503418C0.227276 0.333069 0.00341797 0.556927 0.00341797 0.833069C0.00341797 1.10921 0.227276 1.33307 0.503418 1.33307Z"></path>
@@ -107,7 +107,7 @@ $ids = json_decode($this->getCookie('favorites'));
 		</div>
 	</div>
 	<p class="card__article">Артикул:<span><?=$product->getValue('articul')?></span></p>
-	<div class="context" style="display:none">
+	<div class="context hidden">
 		<?=$context?>
 	</div>
 </div> 

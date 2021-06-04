@@ -11,11 +11,11 @@ $rubric = $variables['page'];
 $newsList = $this->getRubricNews($rubric);
 ?>
 
-<div class="center-wrap" style="padding-top: 2.1rem;">
+<div class="center-wrap pt-2">
     <?= $this->render($variables, 'layout/header/titleWithBread') ?>
 </div>
 
-<div class="center-wrap" style="padding-top: 2.1rem;">
+<div class="center-wrap pt-2">
     
 	<div class="news" umi:button-position="top center" umi:element-id="<?= $rubric->getId() ?>" umi:region="list"
 		umi:module="news" umi:method="lastlist" umi:sortable="sortable">

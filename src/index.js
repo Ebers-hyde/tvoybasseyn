@@ -69,11 +69,14 @@ import './assets/css/blocks/price.scss';
 import './assets/css/blocks/categorie.scss';
 import './assets/css/blocks/toogles.scss';
 import './assets/css/blocks/configurator.scss';
+import './assets/css/blocks/ya_widget.scss';
 
 
 // JS
 import './assets/js/lib/modernizr.custom';
 import './assets/js/lib/js-offcanvas';
+import './assets/js/lib/ya_widget';
+import './assets/js/jQuery_scripts';
 import './assets/js/js-offcanvas';
 import './assets/js/anchors';
 import './assets/js/building-slider';
@@ -99,9 +102,11 @@ import './assets/js/sidebar__drop-yet';
 import './assets/js/toogles';
 import './assets/js/drop-down';
 import './assets/js/contact.js';
+import './assets/js/cityAndCurrency.js';
 import './assets/js/compare';
 import './assets/js/likes';
 import './assets/js/CustomSwipe.js';
+
 
 
 

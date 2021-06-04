@@ -628,187 +628,256 @@ $(function() {
 	site.common.init();
 });
 
-(function(w, $, getLabel) {
+(function (w, $, getLabel) {
+  /**
+   * Модуль торговых характеристик
+   * @type {Object}
+   */
+  site.TradeOffers = {
+    /** @type {Null|Integer} идентификатор выбранного торгового предложения */
+    offerId: null,
+    basketOffers: null,
 
-/**
- * Модуль торговых характеристик
- * @type {Object}
- */
-site.TradeOffers = {
+    /**
+     * Карта выбранных характеристик
+     * @type {Object}
+     * @example:
+     *
+     * {
+     *      'Размер': {     // Название характеристики
+     *          1: '48-50', // Идентификатор торгового предложения:  Значение характеристики
+     *          2: '48-50',
+     *          3: '48-50'
+     *      },
+     *      'Цвет': {
+     *          2: 'Синий',
+     *          4: 'Синий',
+     *          7: 'Синий'
+     *      }
+     * }
+     */
+    characteristicMap: {},
 
-	/** @type {Null|Integer} идентификатор выбранного торгового предложения */
-	offerId: null,
-	basketOffers: null,
+    /** Инициализация модуля */
+    init: function () {
+      var that = this;
 
-	/**
-	 * Карта выбранных характеристик
-	 * @type {Object}
-	 * @example:
-	 *
-	 * {
-	 *      'Размер': {     // Название характеристики
-	 *          1: '48-50', // Идентификатор торгового предложения:  Значение характеристики
-	 *          2: '48-50',
-	 *          3: '48-50'
-	 *      },
-	 *      'Цвет': {
-	 *          2: 'Синий',
-	 *          4: 'Синий',
-	 *          7: 'Синий'
-	 *      }
-	 * }
-	 */
-	characteristicMap: {},
+      basket.get(function (data) {
+        that.basketOffers = data;
+      });
 
-	/** Инициализация модуля */
-	init: function() {
-		var that = this;
+      that.bindSwitchBuyButtonsActivity();
 
-		basket.get(function(data){
-			that.basketOffers = data;
-		});
+      that.getSelectList().selectmenu({
+        select: function (event, ui) {},
+      });
 
-		that.bindSwitchBuyButtonsActivity();
+      that.getSelectList().bind("selectmenuselect", function (event, ui) {
+        var $characteristicName = $(event.currentTarget).data(
+          "characteristic-name"
+        );
+        that.setCharacteristic($characteristicName, $(ui.item.element));
 
-		that.getSelectList().selectmenu({
-			select: function( event, ui ) {}
-		});
+        if (!that.resolveSelectedOfferId()) {
+          alert(getLabel("js-error-cannot-resolve-trade-offer"));
+        }
+      });
 
-		that.getSelectList().bind('selectmenuselect', function(event, ui) {
-			var $characteristicName = $(event.currentTarget).data('characteristic-name');
-			that.setCharacteristic($characteristicName, $(ui.item.element));
+      $(".additional_options-item:not(.hidden)")
+        .not('[style="display:none"]')
+        .each(function () {
+          var cn = $(this).find("[data-characteristic-name]");
+          that.setCharacteristic(
+            cn.data("characteristic-name"),
+            cn.find('[selected="selected"]')
+          );
+          that.resolveSelectedOfferId();
+        });
+    },
 
-			if (!that.resolveSelectedOfferId()) {
-				alert(getLabel('js-error-cannot-resolve-trade-offer'));
-			}
-		});
+    /**
+     * Возвращает список контейнеров (<select>) вариантов значений характеристик
+     * @returns {*|jQuery|HTMLElement}
+     */
+    getSelectList: function () {
+      return $("div.additional_options-list select");
+    },
 
-		$('.additional_options-item:not(.hidden)').not('[style="display:none"]').each(function(){
-			var cn = $(this).find('[data-characteristic-name]');
-			that.setCharacteristic(cn.data('characteristic-name'),cn.find('[selected="selected"]'));
-			that.resolveSelectedOfferId();
-		});
-		
+    /**
+     * Возвращает список вариантов (<option>) значений характеристики с заданным именем
+     * @param {String} name имя характеристики
+     * @returns {*|jQuery|HTMLElement}
+     */
+    getSelectOptionListByName: function (name) {
+      return $(
+        'div.additional_options-list select[data-characteristic-name = "' +
+          name +
+          '"] option[data-offer-id-list]'
+      );
+    },
 
-	},
+    /** Прикрепляет определение выбрано ли торговое предложение к кнопкам помещения товара в корзину */
+    bindSwitchBuyButtonsActivity: function () {
+      var that = this;
 
-	/**
-	 * Возвращает список контейнеров (<select>) вариантов значений характеристик
-	 * @returns {*|jQuery|HTMLElement}
-	 */
-	getSelectList: function() {
-		return $('div.additional_options-list select');
-	},
+      that.getBuyButtonList().bind("click", function () {
+        that.switchBuyButtonActivity($(this));
+        that.highlightEmptyCharacteristicContainer();
+      });
+    },
 
-	/**
-	 * Возвращает список вариантов (<option>) значений характеристики с заданным именем
-	 * @param {String} name имя характеристики
-	 * @returns {*|jQuery|HTMLElement}
-	 */
-	getSelectOptionListByName: function(name) {
-		return $('div.additional_options-list select[data-characteristic-name = "' + name + '"] option[data-offer-id-list]');
-	},
+    /** Подсвечивает контейнеры вариантов значений характеристик, которые были не указаны */
+    highlightEmptyCharacteristicContainer: function () {
+      for (var name in this.getNotFilledCharacteristicNameList()) {
+        this.highlightEmptyContainer(
+          $('div.additional_options-text[data-title = "' + name + '"]')
+        );
+        this.highlightEmptyContainer(
+          $(
+            'div.additional_options-list[data-title = "' +
+              name +
+              '"] span.ui-selectmenu-text'
+          )
+        );
+      }
+    },
 
-	/** Прикрепляет определение выбрано ли торговое предложение к кнопкам помещения товара в корзину */
-	bindSwitchBuyButtonsActivity: function() {
-		var that = this;
+    /**
+     * Подсвечивает пустой контейнер
+     * @param {*|jQuery|HTMLElement} $container контейнер
+     */
+    highlightEmptyContainer: function ($container) {
+      $container.effect("highlight", { color: "red" }, 2000);
+    },
 
-		that.getBuyButtonList().bind('click', function() {
-			that.switchBuyButtonActivity($(this));
-			that.highlightEmptyCharacteristicContainer();
-		});
-	},
+    /**
+     * Возвращает список кнопок помещения товара в корзину
+     * @returns {*|jQuery|HTMLElement}
+     */
+    getBuyButtonList: function () {
+      return $(".addToCartBlock a.add_to_cart_button");
+    },
 
-	/** Подсвечивает контейнеры вариантов значений характеристик, которые были не указаны */
-	highlightEmptyCharacteristicContainer: function() {
-		for (var name in this.getNotFilledCharacteristicNameList()) {
-			this.highlightEmptyContainer($('div.additional_options-text[data-title = "' + name + '"]'));
-			this.highlightEmptyContainer($('div.additional_options-list[data-title = "' + name + '"] span.ui-selectmenu-text'));
-		}
-	},
+    /** Переключает активность кнопок помещения товара в корзину */
+    switchBuyButtonListActivity: function () {
+      var that = this;
 
-	/**
-	 * Подсвечивает пустой контейнер
-	 * @param {*|jQuery|HTMLElement} $container контейнер
-	 */
-	highlightEmptyContainer: function($container) {
-		$container.effect("highlight", {color: "red"}, 2000);
-	},
+      that.getBuyButtonList().each(function () {
+        that.switchBuyButtonActivity($(this));
+      });
+    },
 
-	/**
-	 * Возвращает список кнопок помещения товара в корзину
-	 * @returns {*|jQuery|HTMLElement}
-	 */
-	getBuyButtonList: function() {
-		return $('a.add_to_cart_button, a.buy_one_click_button');
-	},
+    /**
+     * Переключает активность кнопки помещения товара в корзину
+     * @param {*|jQuery|HTMLElement} $button кнопка
+     */
+    switchBuyButtonActivity: function ($button) {
+      let is_active = false;
+      if (!$button.data("old-class")) {
+        $button.data("old-class", $button.attr("class"));
+      }
 
-	/** Переключает активность кнопок помещения товара в корзину */
-	switchBuyButtonListActivity: function() {
-		var that = this;
+      if (!site.TradeOffers.basketOffers) {
+        basket.get(function (data) {
+          site.TradeOffers.basketOffers = data;
+          if (typeof site.TradeOffers.basketOffers.items != "undefined") {
+            if (Object.entries(site.TradeOffers.basketOffers.items).length) {
+              Object.entries(site.TradeOffers.basketOffers.items.item).forEach(
+                function (item, i, arr) {
+                  if (
+                    typeof item[1].offer !== "undefined" &&
+                    item[1].page.id == $(".product").data("id")
+                  ) {
+                    if (
+                      $(".addToCartBlock .add_to_cart_block").attr(
+                        "data-offer_id"
+                      ) == item[1].offer.id
+                    ) {
+                      is_active = item[1];
+                    }
+                  }
+                }
+              );
+              	
+              if (!is_active) {
+                $button.removeClass("hidden");
+                $(".addToCartBlock .add_to_cart_block").attr(
+                  "data-order_id",
+                  ""
+                );
+                $(".addToCartBlock .product__quantity").removeClass(
+                  "product__quantity-active"
+                );
+              } else {
+                $button.addClass("hidden");
 
-		that.getBuyButtonList().each(function() {
-			that.switchBuyButtonActivity($(this));
-		});
-	},
-
-	/**
-	 * Переключает активность кнопки помещения товара в корзину
-	 * @param {*|jQuery|HTMLElement} $button кнопка
-	 */
-	switchBuyButtonActivity: function($button) {
-		let is_active = false;
-		if (!$button.data('old-class')) {
-			$button.data('old-class', $button.attr('class'));
-		}
-		
-		if(!site.TradeOffers.basketOffers){
-			basket.get(function(data){	
-				site.TradeOffers.basketOffers = data;
-				Object.entries(site.TradeOffers.basketOffers.items.item).forEach(function(item, i, arr) {
-					if(typeof item[1].offer !== 'undefined' && item[1].page.id == $('.product').data('id')){
-						if($('.add_to_cart_block').attr('data-offer_id') == item[1].offer.id) {
-							is_active = item[1];
-						}
-					}
-				});
-				if(!is_active){
-					$button.show();
-					$('.add_to_cart_block').attr('data-order_id', '');
-					$('.product__quantity').hide();
-				}else{
-					$button.hide();
-					$('.product__quantity').show();
-					$('.add_to_cart_block').attr('data-order_id', is_active.id);
-					$('.add_to_cart_block').find('.current_quantity').val(is_active.amount);
-				}
-			});
-		}else{
-			Object.entries(site.TradeOffers.basketOffers.items.item).forEach(function(item, i, arr) {
-				if(typeof item[1].offer !== 'undefined' && item[1].page.id == $('.product').data('id')){
-					if($('.add_to_cart_block').attr('data-offer_id') == item[1].offer.id) {
-						is_active = item[1];
-					}
-				}
-			});
-			if(!is_active){
-				$button.show();
-				$('.add_to_cart_block').attr('data-order_id', '');
-				$('.product__quantity').hide();
-			}else{
-				$button.hide();
-				$('.product__quantity').show();
-				$('.add_to_cart_block').attr('data-order_id', is_active.id);
-				$('.add_to_cart_block').find('.current_quantity').val(is_active.amount);
-			}
-		}
-
-		
-		
+                $(".addToCartBlock .product__quantity").addClass(
+                  "product__quantity-active"
+                );
+                $(".addToCartBlock .add_to_cart_block").attr(
+                  "data-order_id",
+                  is_active.id
+                );
+                $(".addToCartBlock .add_to_cart_block")
+                  .find(".current_quantity")
+                  .val(is_active.amount);
+              }
+            }
+          }
+        });
+      } else {
+        if (typeof site.TradeOffers.basketOffers.items != "undefined") {
+			
+			console.log(Object.entries(site.TradeOffers.basketOffers.items));
+          if (Object.entries(site.TradeOffers.basketOffers.items).length) {
+            Object.entries(site.TradeOffers.basketOffers.items.item).forEach(
+              function (item, i, arr) {
+				
+                if (
+                  typeof item[1].offer !== "undefined" &&
+                  item[1].page.id == $(".product").data("id")
+                ) {
+                  if (
+                    $(".addToCartBlock .add_to_cart_block").attr(
+                      "data-offer_id"
+                    ) == item[1].offer.id
+                  ) {
+                    is_active = item[1];
+                  }
+                }
 
 
-		
-		/*if (!this.isAllCharacteristicsFilled() || !this.getOfferId()) {
+              }
+            );
+            if (!is_active) {
+              
+			  $button.each(function(){
+				$(this).removeClass("hidden");
+			  })
+			  console.log($button);
+              $(".addToCartBlock .add_to_cart_block").attr("data-order_id", "");
+              $(".addToCartBlock .product__quantity").addClass(
+                "product__quantity-active"
+              );
+            } else {
+              $button.addClass("hidden");
+              $(".addToCartBlock .product__quantity").removeClass(
+                "product__quantity-active"
+              );
+              $(".addToCartBlock .add_to_cart_block").attr(
+                "data-order_id",
+                is_active.id
+              );
+              $(".addToCartBlock .add_to_cart_block")
+                .find(".current_quantity")
+                .val(is_active.amount);
+            }
+          }
+		 
+        }
+      }
+
+      /*if (!this.isAllCharacteristicsFilled() || !this.getOfferId()) {
 
 			if (!$button.hasClass('not_buy')) {
 				$button.addClass('not_buy');
@@ -817,253 +886,262 @@ site.TradeOffers = {
 			return;
 		}*/
 
-		$button.attr('class', $button.data('old-class'));
-	},
+      $button.attr("class", $button.data("old-class"));
+    },
 
-	/**
-	 * Устанавливает значение выбранной характеристики
-	 * @param {String} name имя характеристики
-	 * @param {*|jQuery|HTMLElement} $option контейнер (<option>) значения характеристики
-	 */
-	setCharacteristic: function(name, $option) {
-		var that = this;
-		var valueList = this.parseOption($option);
+    /**
+     * Устанавливает значение выбранной характеристики
+     * @param {String} name имя характеристики
+     * @param {*|jQuery|HTMLElement} $option контейнер (<option>) значения характеристики
+     */
+    setCharacteristic: function (name, $option) {
+      var that = this;
+      var valueList = this.parseOption($option);
 
+      that.characteristicMap[name] = {};
 
-		that.characteristicMap[name] = {};
+      for (var index in valueList) {
+        that.characteristicMap[name][index] = valueList[index];
+      }
 
-		for (var index in valueList) {
-			that.characteristicMap[name][index] = valueList[index];
-		}
+      if (Object.keys(valueList).length === 0) {
+        delete that.characteristicMap[name];
+      }
+    },
 
-		if (Object.keys(valueList).length === 0) {
-			delete that.characteristicMap[name];
-		}
-	},
+    /**
+     * Возвращает карту выбранных характеристик
+     * @returns {Object}
+     */
+    getCharacteristicMap: function () {
+      return this.characteristicMap;
+    },
 
-	/**
-	 * Возвращает карту выбранных характеристик
-	 * @returns {Object}
-	 */
-	getCharacteristicMap: function() {
-		return this.characteristicMap;
-	},
+    /**
+     * Разбирает контейнер (<option>) значения характеристики
+     * @param {*|jQuery|HTMLElement} $option контейнер (<option>) значения характеристики
+     */
+    parseOption: function ($option) {
+      var value = {};
 
-	/**
-	 * Разбирает контейнер (<option>) значения характеристики
-	 * @param {*|jQuery|HTMLElement} $option контейнер (<option>) значения характеристики
-	 */
-	parseOption: function($option) {
-		var value = {};
+      if ($option.data("offer-id-list") === "") {
+        return value;
+      }
 
-		if ($option.data('offer-id-list') === '') {
-			return value;
-		}
+      $(this.getOptionOfferIdList($option)).each(function () {
+        if ($option.data("value")) {
+          value[this] = $option.data("value");
+        }
+      });
 
-		$(this.getOptionOfferIdList($option)).each(function() {
-			if ($option.data('value')) {
-				value[this] = $option.data('value');
-			}
-		});
+      return value;
+    },
 
-		return value;
-	},
+    /**
+     * Возвращает список торговых предложений, с заданным значением характеристики
+     * @param {*|jQuery|HTMLElement} $option контейнер (<option>) значения характеристики
+     * @returns {Array}
+     */
+    getOptionOfferIdList: function ($option) {
+      return $option.data("offer-id-list").toString().split(";");
+    },
 
-	/**
-	 * Возвращает список торговых предложений, с заданным значением характеристики
-	 * @param {*|jQuery|HTMLElement} $option контейнер (<option>) значения характеристики
-	 * @returns {Array}
-	 */
-	getOptionOfferIdList: function($option) {
-		return $option.data('offer-id-list').toString().split(';');
-	},
+    /**
+     * Определяет выбранное торговое предложения исходя из указанных характеристик
+     * @returns {Boolean} удалось ли выбрать предложение
+     */
+    resolveSelectedOfferId: function () {
+      var selectedMap = this.getCharacteristicMap();
+      var selectedOfferIdList = {};
 
-	/**
-	 * Определяет выбранное торговое предложения исходя из указанных характеристик
-	 * @returns {Boolean} удалось ли выбрать предложение
-	 */
-	resolveSelectedOfferId: function() {
-		var selectedMap = this.getCharacteristicMap();
-		var selectedOfferIdList = {};
+      for (var name in selectedMap) {
+        for (var selectedId in selectedMap[name]) {
+          if (!selectedOfferIdList[selectedId]) {
+            selectedOfferIdList[selectedId] = {};
+          }
 
-		for (var name in selectedMap) {
-			for (var selectedId in selectedMap[name]) {
-				if (!selectedOfferIdList[selectedId]) {
-					selectedOfferIdList[selectedId] = {};
-				}
+          var nameList = {};
+          nameList[name] = name;
+          Object.assign(selectedOfferIdList[selectedId], nameList);
+        }
+      }
 
-				var nameList = {};
-				nameList[name] = name;
-				Object.assign(selectedOfferIdList[selectedId], nameList)
-			}
-		}
+      var filteredOfferIdList = {};
+      var nameLength = Object.keys(selectedMap).length;
 
-		var filteredOfferIdList = {};
-		var nameLength = Object.keys(selectedMap).length;
+      for (var offerId in selectedOfferIdList) {
+        if (Object.keys(selectedOfferIdList[offerId]).length === nameLength) {
+          filteredOfferIdList[offerId] = offerId;
+        }
+      }
 
-		for (var offerId in selectedOfferIdList) {
-			console.log('offerId in selectedOfferIdList',Object.keys(selectedOfferIdList[offerId]).length,nameLength);
-			if (Object.keys(selectedOfferIdList[offerId]).length === nameLength) {
-				filteredOfferIdList[offerId] = offerId;
-			}
-		}
+      for (var filteredOfferId in filteredOfferIdList) {
+        this.setOfferId(filteredOfferId);
+        $(".addToCartBlock .add_to_cart_block").attr(
+          "data-offer_id",
+          filteredOfferId
+        );
 
+        this.changePrice();
+        this.changeImage();
+        this.switchBuyButtonListActivity();
+        return true;
+      }
 
-		for (var filteredOfferId in filteredOfferIdList) {
-			this.setOfferId(filteredOfferId);
-			$('.add_to_cart_block').attr('data-offer_id',filteredOfferId);
-			
-			this.changePrice();
-			this.changeImage();
-			this.switchBuyButtonListActivity();
-			return true;
-		}
+      return false;
+    },
 
-		return false;
-	},
+    /** Вызывает изменения цены товара на цену выбранного предложения  */
+    changePrice: function () {
+      var that = this;
+      this.foreachOptionWithOffer(
+        getLabel("js-trade-offer-price"),
+        function (value) {
+          that.setPrice(value);
+        }
+      );
+    },
 
-	/** Вызывает изменения цены товара на цену выбранного предложения  */
-	changePrice: function() {
-		
-		var that = this;
-		this.foreachOptionWithOffer(getLabel('js-trade-offer-price'), function(value) {
-			that.setPrice(value);
-		});
-	},
+    /** Вызывает изменения изображения товара на изображение выбранного предложения  */
+    changeImage: function () {
+      var that = this;
+      this.foreachOptionWithOffer(
+        getLabel("js-trade-offer-image"),
+        function (value) {
+          that.setImage(value);
+        }
+      );
+    },
 
-	/** Вызывает изменения изображения товара на изображение выбранного предложения  */
-	changeImage: function() {
-		var that = this;
-		this.foreachOptionWithOffer(getLabel('js-trade-offer-image'), function(value) {
-			that.setImage(value);
-		});
-	},
+    /**
+     * Применяет функцию обратного вызова для значения заданной характеристики, соответсвующего выбранному предложению
+     * @param {String} characteristicName имя характеристики
+     * @param {Function} callback функция обратного вызова
+     */
+    foreachOptionWithOffer: function (characteristicName, callback) {
+      var that = this;
+      var offerId = that.getOfferId();
+      that.getSelectOptionListByName(characteristicName).each(function () {
+        var $option = $(this);
+        if (that.getOptionOfferIdList($option).indexOf(offerId) !== -1) {
+          callback($option.data("value"));
+        }
+      });
+    },
 
-	/**
-	 * Применяет функцию обратного вызова для значения заданной характеристики, соответсвующего выбранному предложению
-	 * @param {String} characteristicName имя характеристики
-	 * @param {Function} callback функция обратного вызова
-	 */
-	foreachOptionWithOffer: function(characteristicName, callback) {
-		var that = this;
-		var offerId = that.getOfferId();
-		that.getSelectOptionListByName(characteristicName).each(function() {
-			var $option = $(this);
-			if (that.getOptionOfferIdList($option).indexOf(offerId) !== -1) {
-				callback($option.data('value'));
-			}
-		});
-	},
+    /**
+     * Изменяет содержимое контейнера цены товара
+     * @param {String} value новое значение
+     */
+    setPrice: function (value) {
+      if (!value) {
+        return;
+      }
 
-	/**
-	 * Изменяет содержимое контейнера цены товара
-	 * @param {String} value новое значение
-	 */
-	setPrice: function(value) {
-		if (!value) {
-			return;
-		}
+      $("div.top_block-price h2 span").text(value);
+    },
 
-		$('div.top_block-price h2 span').text(value);
-	},
+    /**
+     * Изменяет содержимое контейнера главного изображения товара
+     * @param {String} value новое значение
+     */
+    setImage: function (value) {
+      if (!value) {
+        return;
+      }
 
-	/**
-	 * Изменяет содержимое контейнера главного изображения товара
-	 * @param {String} value новое значение
-	 */
-	setImage: function(value) {
-		if (!value) {
-			return;
-		}
+      var $imageContainer = $(".toogles__item--active .product__img a");
+      $imageContainer.attr("href", value);
+      $("img", $imageContainer).attr("src", value);
+      $("a[rel=fancybox_group]").fancybox({
+        loop: true,
+        touch: false,
+        toolbar: false,
+        hideScrollbar: false,
+      });
+    },
 
-		var $imageContainer = $('.toogles__item--active .product__img a');
-		console.log($('img', $imageContainer));
-		$imageContainer.attr('href', value);
-		$('img', $imageContainer).attr('src', value);
-		$("a[rel=fancybox_group]").fancybox({
-			'loop': true,
-			'touch': false,
-			'toolbar': false,
-			'hideScrollbar': false,
-		});
-	},
+    /**
+     * Определяет доступен ли функционал модуля
+     * @returns {boolean}
+     */
+    isAvailable: function () {
+      return (
+        $(".additional_options-item:not(.hidden)").not('[style="display:none"]')
+          .length > 0
+      );
+    },
 
-	/**
-	 * Определяет доступен ли функционал модуля
-	 * @returns {boolean}
-	 */
-	isAvailable: function() {
-		return $('.additional_options-item:not(.hidden)').not('[style="display:none"]').length > 0;
-	},
+    /**
+     * Возвращает идентификатор выбранного торгового предложения
+     * @returns {Null|Integer}
+     */
+    getOfferId: function () {
+      return this.offerId;
+    },
 
-	/**
-	 * Возвращает идентификатор выбранного торгового предложения
-	 * @returns {Null|Integer}
-	 */
-	getOfferId: function() {
-		return this.offerId;
-	},
+    /**
+     * Устанавливает идентификатор выбранного торгового предложения
+     * @param {Integer} id новый идентификатор
+     */
+    setOfferId: function (id) {
+      this.offerId = id;
+    },
 
-	/**
-	 * Устанавливает идентификатор выбранного торгового предложения
-	 * @param {Integer} id новый идентификатор
-	 */
-	setOfferId: function(id) {
-		this.offerId = id;
-	},
+    /**
+     * Определяет были ли все характеристики заполнены
+     * @returns {Boolean}
+     */
+    isAllCharacteristicsFilled: function () {
+      return (
+        Object.keys(this.getNotFilledCharacteristicNameList()).length === 0
+      );
+    },
 
-	/**
-	 * Определяет были ли все характеристики заполнены
-	 * @returns {Boolean}
-	 */
-	isAllCharacteristicsFilled: function() {
-		return Object.keys(this.getNotFilledCharacteristicNameList()).length === 0;
-	},
+    /**
+     * Возвращает список имен незаполненных характеристик
+     * @return {Object}
+     */
+    getNotFilledCharacteristicNameList: function () {
+      var filledCharacteristicNameList = this.getCharacteristicMap();
+      var notFilledCharacteristicNameList = {};
 
-	/**
-	 * Возвращает список имен незаполненных характеристик
-	 * @return {Object}
-	 */
-	getNotFilledCharacteristicNameList: function() {
-		var filledCharacteristicNameList = this.getCharacteristicMap();
-		var notFilledCharacteristicNameList = {};
+      for (var name in this.getCharacteristicNameList()) {
+        if (!filledCharacteristicNameList[name]) {
+          notFilledCharacteristicNameList[name] = name;
+        }
+      }
 
-		for (var name in this.getCharacteristicNameList()) {
-			if (!filledCharacteristicNameList[name]) {
-				notFilledCharacteristicNameList[name] = name;
-			}
-		}
+      return notFilledCharacteristicNameList;
+    },
 
-		return notFilledCharacteristicNameList;
-	},
+    /**
+     * Возвращает список имен всех характеристик, доступных для заполнения
+     * @returns {Array}
+     */
+    getCharacteristicNameList: function () {
+      var nameList = [];
 
-	/**
-	 * Возвращает список имен всех характеристик, доступных для заполнения
-	 * @returns {Array}
-	 */
-	getCharacteristicNameList: function() {
-		var nameList = [];
+      this.getSelectList().each(function () {
+        var $select = $(this);
 
-		this.getSelectList().each(function() {
-			var $select = $(this);
+        if ($select.hasClass("hidden") === false) {
+          var name = $select.data("characteristic-name");
+          nameList[name] = name;
+        }
+      });
 
-			if ($select.hasClass('hidden') === false) {
-				var name = $select.data('characteristic-name');
-				nameList[name] = name
-			}
-		});
+      return nameList;
+    },
+  };
 
-		return nameList;
-	}
-};
-
-$(function() {
-	if (site.TradeOffers.isAvailable()) {
-		site.TradeOffers.init();
-	}
-});
-
+  $(function () {
+    if (site.TradeOffers.isAvailable()) {
+      site.TradeOffers.init();
+    }
+  });
 })(window, jQuery, getLabel);
+
 var basket = {
 	get : function(callback) {
 		basket.__request("/udata/emarket/basket.json", {}, callback);
@@ -1146,12 +1224,13 @@ site.Cart = {
 		 * Если у товара есть опционные свойства - появляется всплывающее окно с выбором свойств.
 		 * Если опционных свойств нет - товар добавляется в корзину.
 		 */
+
 		$('a.add_to_cart_button').on('click', function(e) {
 			e.preventDefault();
 			var $button = $(this);
 
-			$(this).hide();
-			$(this).next().css('display', 'flex');
+			$(this).toggleClass('hidden');
+			$(this).next().toggleClass('product__quantity-active');
 
 			if ($button.hasClass('not_buy')) {
 				return;
@@ -1301,8 +1380,8 @@ site.Cart = {
 			site.Cart.modify(orderItemId, $input.val(), oldValue);
 
 			if(+$input.val() <= 0) {
-				$parent.find('.product__quantity').hide();
-				$parent.find('.add_to_cart_button').show();
+				$parent.find('.product__quantity').toggleClass('product__quantity-active');
+				$parent.find('.add_to_cart_button').toggleClass('hidden');
 			}
 		});
 
@@ -1324,8 +1403,8 @@ site.Cart = {
 			site.Cart.modify(orderItemId, quantityNode.val(), oldValue);
 		
 			if(+quantityNode.val() <= 0) {
-				$parent.find('.product__quantity').hide();
-				$parent.find('.add_to_cart_button').show();
+				$parent.find('.product__quantity').toggleClass('product__quantity-active');
+				$parent.find('.add_to_cart_button').toggleClass('hidden');
 			}
 		});
 

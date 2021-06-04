@@ -26,12 +26,13 @@ site.Cart = {
 		 * Если у товара есть опционные свойства - появляется всплывающее окно с выбором свойств.
 		 * Если опционных свойств нет - товар добавляется в корзину.
 		 */
+
 		$('a.add_to_cart_button').on('click', function(e) {
 			e.preventDefault();
 			var $button = $(this);
 
-			$(this).hide();
-			$(this).next().css('display', 'flex');
+			$(this).toggleClass('hidden');
+			$(this).next().toggleClass('product__quantity-active');
 
 			if ($button.hasClass('not_buy')) {
 				return;
@@ -181,8 +182,8 @@ site.Cart = {
 			site.Cart.modify(orderItemId, $input.val(), oldValue);
 
 			if(+$input.val() <= 0) {
-				$parent.find('.product__quantity').hide();
-				$parent.find('.add_to_cart_button').show();
+				$parent.find('.product__quantity').toggleClass('product__quantity-active');
+				$parent.find('.add_to_cart_button').toggleClass('hidden');
 			}
 		});
 
@@ -204,8 +205,8 @@ site.Cart = {
 			site.Cart.modify(orderItemId, quantityNode.val(), oldValue);
 		
 			if(+quantityNode.val() <= 0) {
-				$parent.find('.product__quantity').hide();
-				$parent.find('.add_to_cart_button').show();
+				$parent.find('.product__quantity').toggleClass('product__quantity-active');
+				$parent.find('.add_to_cart_button').toggleClass('hidden');
 			}
 		});
 

@@ -62,6 +62,9 @@
                     color: #08c;
                     border: none;
                     border-bottom: 1px dotted;
+                    &.currency_toselect {
+                        color: #ccc;
+                    }
                 }
             }
         }
@@ -144,5 +147,40 @@
                 }
             }
         }
+    }
+}
+
+.mobile-popup-form__text {
+    margin-top: 13px;
+    margin-bottom: 16px;
+    .list-group-item-action {
+        margin-bottom: 17px;
+        display: inline-block;
+    }
+}
+
+.list-group-item-action.selectCurrency {
+    margin-bottom: 17px;
+    display: inline-block;
+}
+
+.list-group-item {
+    color: #08c;  
+    border-bottom: 1px dotted; 
+    margin-right: 24px;
+}
+.list-group-item:hover{
+    color:#000
+}
+
+.popup-wrap {
+    .inputs {
+        font-size: 1.2rem;
+    }
+    .btn--black {
+        padding: 0 2rem;
+    }
+    .inputs__row {
+        flex-wrap: wrap;
     }
 }

@@ -28,17 +28,17 @@ $ids = [];
 	<?php foreach ($productList as $product): $ids[] = $product->id; ?>
 		<?= $this->render(['product'=>$product,'compareList'=>$compareList,'cartItems'=>$cart['items'],'context'=>$context[$product->id]], 'catalog/product/preview/index') ?>
 	<?php endforeach; ?>
-	<div class="card" style="opacity:0;padding: 0;margin: 0;"></div>
-	<div class="card" style="opacity:0;padding: 0;margin: 0;"></div>
-	<div class="card" style="opacity:0;padding: 0;margin: 0;"></div>
-	<div class="card" style="opacity:0;padding: 0;margin: 0;"></div>
+	<div class="card card-invis"></div>
+	<div class="card card-invis"></div>
+	<div class="card card-invis"></div>
+	<div class="card card-invis"></div>
 </div>
 
 <?php if(count($pageList)): ?>
-	<div class="center-wrap" style="padding-top: 6rem;">
+	<div class="center-wrap pt-6">
 		<div class="pool-filters__title">Статьи по вашему запросу</div>
 	</div>
-	<div class="center-wrap" style="padding-top: 2.1rem;">
+	<div class="center-wrap pt-2">
 		<div class="news">
 			<div class="news_page">
 				<?php foreach ($pageList as $page):  ?>

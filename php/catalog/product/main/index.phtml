@@ -36,7 +36,7 @@ $variables['cartItems'] = $cart['items'];
         <?= $this->render($variables, 'catalog/product/main/slider')?>
       <?php else:?>
         <div class="product__img desktop--hide">
-					<img src="<?= $imageList[0] ?>" style="object-fit: contain;" alt=""></a>
+					<img src="<?= $imageList[0] ?>" alt=""></a>
 				</div>
       <?php endif;?>
       <div class="product__inner-right desktop--hide mobile--hide">
@@ -49,10 +49,10 @@ $variables['cartItems'] = $cart['items'];
       </div>
 	  	<?php $i=1; foreach ($imageList as $image): ?>
 			<div class="toogles__item mobile--hide <?=($i==1)?'toogles__item--active':''?>" data-toogles="<?=$i++?>">
-				<div class="toogles__item-content" <?=($i==2)?'style="display:block"':''?>> 
+      <div class="toogles__item-content <?=($i==2)?'toogles__item-content-active':''?>"> 
 				<div>
 					<div class="product__img">
-					<a rel="fancybox_group" href="<?= $image ?>" class="fancybox" data-fancybox="gallery"><img src="<?= $image ?>" style="object-fit: contain;" alt=""></a>
+					<a rel="fancybox_group" href="<?= $image ?>" class="fancybox" data-fancybox="gallery"><img src="<?= $image ?>" alt=""></a>
 					</div>
 				</div>
 				</div>
@@ -109,7 +109,7 @@ $variables['cartItems'] = $cart['items'];
             </div>
           </div>
           <div class="toogles__item toogles__item--active" data-toogles="1">
-            <div class="toogles__item-content" style="display: block;">
+            <div class="toogles__item-content toogles__item-content-active">
               <div>
                 <div class="product__tabs-tab">
                   <div class="article" umi:element-id="<?= $variables['pageId'] ?>"
@@ -210,7 +210,7 @@ $variables['cartItems'] = $cart['items'];
                     <div class="kit__tab mobile--hide">
                       <div class="kit__tab-item"><a class="card" href="">
                           <p class="card__filter">хит</p>
-                          <p class="card__filter card__filter--bg">доставка безплатная</p>
+                          <p class="card__filter card__filter--bg">доставка бесплатная</p>
                           <div class="card__img">
                             <div><img src="assets/images/kit__img1.png" alt="">
                             </div>
@@ -242,7 +242,7 @@ $variables['cartItems'] = $cart['items'];
                       </div>
                       <div class="kit__tab-item"><a class="card" href="">
                           <p class="card__filter">хит</p>
-                          <p class="card__filter card__filter--bg">доставка безплатная</p>
+                          <p class="card__filter card__filter--bg">доставка бесплатная</p>
                           <div class="card__img">
                             <div><img src="assets/images/kit__img2.png" alt="">
                             </div>
@@ -342,7 +342,7 @@ $variables['cartItems'] = $cart['items'];
                     <div class="kit__tab mobile--hide">
                       <div class="kit__tab-item"><a class="card" href="">
                           <p class="card__filter">хит</p>
-                          <p class="card__filter card__filter--bg">доставка безплатная</p>
+                          <p class="card__filter card__filter--bg">доставка бесплатная</p>
                           <div class="card__img">
                             <div><img src="assets/images/kit__img3.png" alt="">
                             </div>
@@ -375,7 +375,7 @@ $variables['cartItems'] = $cart['items'];
                       </div>
                       <div class="kit__tab-item"><a class="card" href="">
                           <p class="card__filter">хит</p>
-                          <p class="card__filter card__filter--bg">доставка безплатная</p>
+                          <p class="card__filter card__filter--bg">доставка бесплатная</p>
                           <div class="card__img">
                             <div><img src="assets/images/kit__img4.png" alt="">
                             </div>

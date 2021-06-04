@@ -2,15 +2,15 @@
     $page = $variables['page'];
 ?>
 
-<div class="center-wrap" style="padding-top: 2.1rem;">
+<div class="center-wrap pt-2">
     <?= $this->render($variables, 'layout/header/titleWithBread') ?>
 </div>
 
-<div class="center-wrap" style="padding-top: 2.1rem;">
+<div class="center-wrap pt-2">
     <div class="feedback-list">
             <?= $this->render($this->getFeedback(), 'content/feedback/feedback_list') ?>
         </div>
-    <div class="article" style="padding-top: 2.1rem;">
+    <div class="article pt-2">
         <?=$page->getValue('content')?>
     </div> 
 </div>

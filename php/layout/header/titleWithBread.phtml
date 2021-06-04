@@ -14,12 +14,12 @@ $fon_temnyj = $p->getValue('fon_temnyj');
 
 <?php if($pic): $pic = $this->thumb($pic,1200,'auto'); ?>
     <?php if($p->getValue('zagolovok_na_kartinke')): ?>
-        <section class="blog-header" style="background: url(<?=$pic[0]?>) 0 0 no-repeat;background-size: cover;"> 
-            <h2 class="blog-header__title" <?=($fon_temnyj)?'style="color:#fff"':''?>><?=$header?></h2>
-            <div class="blog-header__paragraph" <?=($fon_temnyj)?'style="color:#fff"':''?>><?=$p->getValue('anons')?></div>
+        <section class="blog-header <?=($fon_temnyj)?'blog-header--dark':''?>" data-bgimage="<?=$pic[0]?>"> 
+            <h2 class="blog-header__title"><?=$header?></h2>
+            <div class="blog-header__paragraph"><?=$p->getValue('anons')?></div>
         </section>
     <?php else: ?>
-    <img src="<?=$pic[0]?>" style="width:100%;margin-top:2rem">
+    <img class="blog-header__img" src="<?=$pic[0]?>">
     <?php endif; ?>
 <?php endif; ?>
 

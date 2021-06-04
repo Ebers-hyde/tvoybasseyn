@@ -11,6 +11,10 @@
 
             display: none;
 
+            &-active {
+                display: block;
+            }
+
             >div {
                 display: inherit;
                 flex-direction: inherit;

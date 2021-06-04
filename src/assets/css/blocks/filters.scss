@@ -12,6 +12,15 @@
       display: flex;
       max-width: 100%;
       margin-bottom: 1rem;
+      margin-top:1rem;
+      div {
+        &:nth-child(1) {
+          margin-right: 10px;
+        }
+        span {
+          margin-right: 5px;
+        }
+      }
       input {
         width: 7rem;
         border: 1px solid #e5e5e5;
@@ -250,3 +259,4 @@
       outline: none;
     }
   }
+

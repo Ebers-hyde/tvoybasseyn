@@ -12,8 +12,8 @@
         public function renderPages($page) {
 			$default = 'content/default';
 			if($page->getObjectTypeId()==195) $default = 'content/pools/page'; // Страница бассейна
-			if($page->getObjectTypeId()==228) $default = 'content/catalog/equipment'; // Оборудование
-			if($page->getObjectTypeId()==233) $default = 'content/catalog/category_sbor'; // Сборный бассейн
+			if($page->getObjectTypeId()==228) $default = 'content/pools/equipment'; // Оборудование
+			if($page->getObjectTypeId()==233) $default = 'content/pools/category_sbor'; // Сборный бассейн
 			if(!empty($custom_page = $page->getValue('shablon'))){ 
 				return $custom_page;
 			}

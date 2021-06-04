@@ -212,6 +212,9 @@
             margin-bottom: 3rem;
             align-items: flex-start;
             min-height: 40px;
+            &-inactive {
+                opacity: 0;
+            }
 
             &--hide {
                 display: none;
@@ -401,4 +404,12 @@
 
         }
     }
+}
+
+.nvsidebar-mobile__bottom-logo {
+    padding: 0.4rem 3rem;
+}
+
+#Capa_1 {
+    enable-background:new 0 0 400.548 400.548;
 }

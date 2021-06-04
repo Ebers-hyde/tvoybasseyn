@@ -10,3 +10,14 @@ if(document.querySelector('.series-list')) {
         }
     })
 }
+
+$('.series__itemGallery').each(function(){
+    let mySwiper = new Swiper($(this), {
+    slidesPerView: 1,
+    loop: false,
+    navigation: {
+        nextEl: '.button-next'+$(this).data('index'),
+        prevEl: '.button-prev'+$(this).data('index'),
+    },
+    });
+});

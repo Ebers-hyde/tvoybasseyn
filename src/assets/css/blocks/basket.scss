@@ -296,6 +296,9 @@
   .cart__list__text {
     width: 100%;
     height: 95px;
+    &__name {
+      font-size: 12px;
+    } 
   }
   
   .cart__list {
@@ -807,4 +810,9 @@ div.popup.mobile-cart_popup {
 
 .onestep-mobile {
   padding-top: 15px;
+}
+
+.cart__list__item{
+  padding-top: 4px;
+  border-bottom: 1px solid #E2E6F0;
 }

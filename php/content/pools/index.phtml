@@ -3,7 +3,7 @@ $page = $variables['page'];
 $catalog = $this->getProductsListFromCategory($variables['pageId'],100);
 
 ?>
-<div class="center-wrap" style="padding-top: 2.1rem;">
+<div class="center-wrap pt-2">
     <?= $this->render($variables, 'layout/header/titleWithBread') ?>
 </div>
     <div class="catalog-list">
@@ -18,8 +18,8 @@ $catalog = $this->getProductsListFromCategory($variables['pageId'],100);
             <div class=" catalog-list__category" style="opacity:0"></div>
         <?php } ?>
     </div>
-<div class="center-wrap" style="padding-top: 2.1rem;">
-    <div class="article" style="padding-top: 2.1rem;">
+<div class="center-wrap pt-2">
+    <div class="article pt-2">
         <?=$page->getValue('content')?>
     </div>
 </div>

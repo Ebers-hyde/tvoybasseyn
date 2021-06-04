@@ -9,7 +9,7 @@ if($p=$page->getValue('obem')) $props['Объем'] = $p.' м<sup>3</sup>';
 if($p=$page->getValue('kolichestvo_segmentov')) $props['Сегм'] = $p.' шт';
 
 ?>
-<div class="product__specifications" style="margin-top:2rem;">
+<div class="product__specifications">
 <div class="product__column-title">Характеристики</div>
 <?php foreach($props as $k=>$prop): ?>
         <p class="product__specifications-item"><?=$k?>  — <span><?=$prop?></span></p>

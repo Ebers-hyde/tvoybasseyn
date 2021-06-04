@@ -82,6 +82,7 @@
 	&__form {
 		max-width: 25.6rem;
 		width: 100%;
+		height: 32px;
 
 		@include mobile{
 			padding: 0 3rem;
@@ -276,4 +277,10 @@
 
 html.u-eip .header{
 	top: 38px;
+}
+
+.header__price{
+	font-size: 1.4rem;
+	color: #c3c3c3;
+	font-weight: 400;
 }

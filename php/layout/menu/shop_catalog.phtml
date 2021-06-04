@@ -38,11 +38,11 @@ if(!empty($variables['parents'])){
             </ul>
           <?php } ?>
           <?php if(count($subList['lines'])%3==2){ ?>
-                <ul class="sidebar__drop-list" style="opacity:0"></ul>
+                <ul class="sidebar__drop-list sidebar__drop-list-inactive"></ul>
               <?php } ?>
               <?php if(count($subList['lines'])%3==1){ ?>
-                <ul class="sidebar__drop-list" style="opacity:0"></ul>
-                <ul class="sidebar__drop-list" style="opacity:0"></ul>
+                <ul class="sidebar__drop-list sidebar__drop-list-inactive"></ul>
+                <ul class="sidebar__drop-list sidebar__drop-list-inactive"></ul>
 
               <?php } ?>
         </div>

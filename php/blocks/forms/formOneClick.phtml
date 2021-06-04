@@ -1,14 +1,14 @@
 <?php
 $orderForm = $this->macros('emarket', 'createForm', ['emarket-purchase-oneclick']);
 ?>
-<form class="inputs" action="" style="font-size: 1.2rem;">
+<form class="inputs" action="">
     <div id="one_click_order_optioned_properties">
         <!-- Сюда будут динамически подставлены опционные свойства конкретного товара
                 при нажатии на кнопку "Купить в один клик", если у товара есть такие свойства. -->
     </div>
     
     <?php foreach ($orderForm['groups'] as $group): ?>
-        <div class="inputs__row" style="flex-wrap: wrap;">
+        <div class="inputs__row">
         <?php foreach ($group['fields'] as $field): ?>
                 <?= $this->render($field, "data/form_field/{$field['type']}") ?>
         <?php endforeach; ?>
@@ -17,7 +17,7 @@ $orderForm = $this->macros('emarket', 'createForm', ['emarket-purchase-oneclick'
     
     <div class="inputs__row">
     <div class="inputs__field-wrap">
-        <input class="btn btn--black" type="submit" value="Отправить заявку" style="padding: 0 2rem;">
+        <input class="btn btn--black" type="submit" value="Отправить заявку">
     </div>
     <div class="inputs__field-wrap mobile--hide">
         <div class="inputs__personal">

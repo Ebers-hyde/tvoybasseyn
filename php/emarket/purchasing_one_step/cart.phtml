@@ -18,7 +18,7 @@ $cart['drawFormButton'] = true;
 		</a>
 	</div>
 	<div class="">
-		<h2 class="data-form__title" style="padding-top: 0;">
+		<h2 class="data-form__title pt-0">
 			<?= $this->translate('cart_reminder') ?>
 		</h2>
 	</div>
@@ -28,10 +28,3 @@ $cart['drawFormButton'] = true;
 <div class="cart onestep-mobile hidden desktop--hide">
 	<?= $this->render($cart, 'emarket/cart/product_list') ?>
 </div>
-
-<style>
-	.cart__list__item{
-		padding-top: 4px;
-		border-bottom: 1px solid #E2E6F0;
-	}
-</style>
