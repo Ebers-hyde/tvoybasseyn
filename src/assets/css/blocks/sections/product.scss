@@ -194,11 +194,6 @@
             padding: 3.5rem 0 0;
             }
             .center-wrap {
-                @media screen and (max-width:$large_tablet) {
-                    padding-left: calc((100% - 600px)/2 + 15px);
-                    max-width: 100%;
-                    padding-right: 0;
-                }
                 @media screen and (max-width:$large_mobile) {
                     padding-left: 15px;
                 }
@@ -463,7 +458,6 @@
             display: none;
 
             @media screen and (max-width:$large_tablet) {
-                top: calc(100% + 2.5rem);
                 left: 0;
                 right: 0;
                 z-index: 5;
@@ -564,12 +558,6 @@
         display: flex;
         padding-top: 2.5rem;
         padding-bottom: 2.5rem;
-
-        @media screen and (max-width:$large_tablet) {
-            padding-top: 1.4rem;
-            flex-direction: column;
-            padding-bottom: 0;
-        }
         .toogles__item-content{
             width: 48.4rem;
         }

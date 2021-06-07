@@ -68,10 +68,7 @@ main {
   margin: 0px auto;
   padding: 0px 15px;
 
-  @media screen and (max-width: $large_tablet) {
-    //1024
-    max-width: $large_mobile;
-  }
+ 
 }
 
 h1,
@@ -143,9 +140,7 @@ h5 {
   padding-top: 7.2rem;
   padding-top: 53.7px;
 
-  @media screen and (max-width: $large_tablet) {
-    width: 100%;
-  }
+
   .content__overlay {
     position: absolute;
     z-index: 10;
@@ -155,9 +150,6 @@ h5 {
     cursor: pointer;
     &.hidden {
       opacity: 0;
-    }
-    @media screen and (max-width: $large_tablet) {
-      display: none;
     }
   }
 }

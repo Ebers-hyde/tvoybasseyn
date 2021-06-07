@@ -14,7 +14,13 @@
 <link rel="stylesheet" href="compiled/demomarket.lib.min.css">
 <link rel="stylesheet" href="compiled/demomarket.min.css">
 
-<link href="dist/assets/css/app.css" rel="stylesheet"></head>
+<link href="dist/assets/css/app.css" rel="stylesheet">
+<?php if($this->isMobile()): ?>
+    <link href="dist/assets/css/mobile_only.css" rel="stylesheet">
+<?php else: ?>
+    <link href="dist/assets/css/desktop_only.css" rel="stylesheet">
+<?php endif; ?>
+
 
 <script type="text/javascript" src="/ulang/<?= $variables['lang'] ?>/common/emarket/?js" charset="utf-8"></script>
 <script src="compiled/demomarket.lib-min.js"></script>

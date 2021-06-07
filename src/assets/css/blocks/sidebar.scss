@@ -3,13 +3,11 @@
     width: 28rem;
     z-index: 11;
 
-    @media screen and (max-width:1024px) {
-        display: none;
-    }
+
 
     &__wrap {
         position: fixed;
-        background: #353C46;
+        background: #353C46; 
         height: 100vh;
         width: 28rem;
         display: flex;

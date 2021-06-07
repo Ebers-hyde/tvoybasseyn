@@ -11,10 +11,6 @@
         justify-content: space-between;
         font-size: 1.4rem;
         color: #565656;
-
-        @media screen and (max-width:$large_tablet) {
-            flex-direction: column;
-        }
     }
 
     &__address {

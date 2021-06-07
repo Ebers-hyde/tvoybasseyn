@@ -1,9 +1,6 @@
 .services {
     padding: 10rem 0 3rem;
-
-    @media screen and (max-width:$large_tablet) {
-        padding: 0;
-    }
+    
     &__tab {
         display: flex;
         justify-content: space-between;
