@@ -5,6 +5,7 @@ $mass = [];
 $t_props = [];
 foreach($category as $item){
     $model = $item->getValue('model')[0];
+    if(!$model) continue;
     if($p=$model->getValue('dlina')) $t_props['Длина'] = $p.' м';
     if($p=$model->getValue('shirina')) $t_props['Ширина'] = $p.' м';
     if($p=$model->getValue('glubina')) $t_props['Глубина'] = $p.' м';

@@ -1,3 +1,34 @@
+const Calculation = class {
+    constructor() {
+        this.poolPrice = null;
+        this.sumPrice = 0;
+        this.bottomPrice = null;
+        this.sumPriceTable = null;
+    }
+    init() {
+        this.poolPrice = 0;
+        this.bottomPrice = document.querySelector('#bottom_price');
+        this.sumPriceTable = document.querySelector('.sumPrice');
+    }
+
+    recalc() {
+        this.sumPrice = parseInt(this.poolPrice);
+        let list = document.querySelectorAll('.configurator__option-window.active');
+        list.forEach(o => {
+            this.sumPrice += parseInt(o.dataset.price);
+        });
+        this.redraw();
+    }
+
+    redraw() {
+        this.bottomPrice.textContent = this.sumPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " ₽";
+        this.sumPriceTable.textContent = this.sumPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " ₽";
+    }
+}
+
+const mycalc = new Calculation;
+mycalc.init();
+
 const Configurator = class {
     constructor() {
         this.configuratorMain = null;
@@ -15,8 +46,9 @@ const Configurator = class {
         this.togglingPools = null;
         this.variants = null;
         this.modelQuery = window.location.search ? window.location.search : null;
-        this.bottomPrice = null;
+        //this.bottomPrice = null;
         this.showCalcBtn = null;
+        this.table_rows = null;
     }
 
     init() {
@@ -25,7 +57,7 @@ const Configurator = class {
         this.togglingPools = document.querySelectorAll('.toggle_pool') ? document.querySelectorAll('.toggle_pool') : null;
         this.options = document.querySelectorAll('.configurator__option');
         this.optionWindows = document.querySelectorAll('.configurator__option-window');
-        this.bottomPrice = document.querySelector('#bottom_price');
+        //this.bottomPrice = document.querySelector('#bottom_price');
         this.variants = document.querySelector('.option_variant');
         this.cristal_price = document.querySelector('#cristal-price');
         this.equipmentLists = document.querySelectorAll('.equipment_list');
@@ -37,13 +69,17 @@ const Configurator = class {
         this.configuratorPopup = document.querySelector('#configurator_popup');
         this.popupGrid = this.configuratorPopup.querySelector('.configurator__equipment-grid');
         this.showCalcBtn = document.querySelector('.showCalc__btn');
+        this.table_rows = '';
+        
+        document.querySelector('#base-price').closest('.configurator__option-window').dataset.price = 0;
 
         if(this.modelQuery !== null) {
             let modelId = this.modelQuery.split("=", 2)[1];
             if(window.json.models[modelId]) {
                 this.setPool(modelId);
-                this.bottomPrice.textContent = this.poolWindow.dataset.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " ₽";
+                //this.bottomPrice.textContent = this.poolWindow.dataset.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " ₽";
                 this.cristal_price.textContent = "+" + this.poolWindow.dataset.cristal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " ₽";
+                this.cristal_price.closest('.configurator__option-window').dataset.price = this.poolWindow.dataset.cristal;
             }
         }
 
@@ -73,10 +109,11 @@ const Configurator = class {
                 
                 optionWindow.onclick = (event) => {
                     let group_id = optionWindow.dataset.window_id;
-                    let section_id = optionWindow.closest('.equipment_list').dataset.section;
+                    let section_id = optionWindow.closest('.configurator__equipment').dataset.section;
                     if(event.target.classList.contains('clear_icon')) {
                         optionWindow.innerHTML = initialWindow;
                         optionWindow.classList.remove('active');
+                        mycalc.recalc();
                         return;
                     }
                     if( window.json[section_id].groups[group_id].action=='show_popup'){
@@ -86,7 +123,7 @@ const Configurator = class {
                         if(items) {
                             for (let i in items) {
                                 if(typeof items[i].prices === 'undefined') continue;
-                                this.popupGrid.querySelector('.popup-form__item:nth-child('+index+')').innerHTML = `<div class="configurator__option-window">
+                                this.popupGrid.querySelector('.popup-form__item:nth-child('+index+')').innerHTML = `<div class="configurator__option-window" data-item_id="${i}" data-price="${items[i].prices[this.poolWindow.dataset.id]}">
                                 <div class="clear_icon-container">
                                     <img class="clear_icon" src="dist/assets/images/configurator/icons/clear_cross.svg"></img>
                                 </div>
@@ -99,9 +136,9 @@ const Configurator = class {
                                     <div class="window_info">
                                         <p>${items[i].hint}</p>
                                     </div>
-                                    <div><span>${items[i].name}</span></div>
-                                    <div><span>${items[i].prices[this.poolWindow.dataset.id]} ₽</span></div>
-                                    <img class='option-window_country' src="${items[i].img}" alt="">
+                                    <div><span class="item__name">${items[i].name}</span></div>
+                                    <div><span class="item__price">${items[i].prices[this.poolWindow.dataset.id]} ₽</span></div>
+                                    <img src="${items[i].img}" alt="">
                                     <div class="window_icon"><img src="dist/assets/images/configurator/icons/change.svg" style="width: 289px;max-width: 289px;height: 100%;" alt=""></div>
                                 </div>`;
                                 index++;
@@ -119,7 +156,6 @@ const Configurator = class {
                             optionWindow.querySelector(".window_icon img").src = "dist/assets/images/configurator/icons/show.svg";
                         }
                     }
-                   
                 }
                 
             } else {
@@ -131,6 +167,9 @@ const Configurator = class {
                         document.querySelectorAll('.equipment_list').forEach(list => {
                         list.style.display = "block";
                         });
+                        mycalc.recalc();
+
+
                 }
             }
 
@@ -162,6 +201,10 @@ const Configurator = class {
                 let popupWindow = document.querySelector('.configurator__option-window[data-window_id="'+this.configuratorPopup.querySelector('input[name="window_id"]').value+'"]');
                 popupWindow.innerHTML = form__item.querySelector('.configurator__option-window').innerHTML;
                 popupWindow.classList.toggle('active');
+                popupWindow.dataset.price = form__item.querySelector('.configurator__option-window').dataset.price;
+                popupWindow.dataset.item_id = form__item.querySelector('.configurator__option-window').dataset.item_id;
+                this.redrawItemsPrices();
+                mycalc.recalc();
                 close_popup('configurator_popup');
             }
             form__item.onmouseover = (event) => {
@@ -182,6 +225,7 @@ const Configurator = class {
             pool.onclick = () => {
                 this.setPool(pool.dataset.id);
                 this.cristal_price.textContent = "+" + this.poolWindow.dataset.cristal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " ₽";
+                this.cristal_price.closest('.configurator__option-window').dataset.price = this.poolWindow.dataset.cristal;
                 this.poolWindow.classList.remove("toggle_pool");
                 window.history.replaceState(null, 'Конфигуратор', `https://tvoybasseyn.ru/pools_catalog/konfgurator?model=${pool.dataset.id}`);
             }
@@ -215,8 +259,31 @@ const Configurator = class {
         this.poolWindow.dataset.price = document.querySelector(`.toggle_pool[data-id="${model}"]`).dataset.price;
         this.poolWindow.dataset.cristal = document.querySelector(`.toggle_pool[data-id="${model}"]`).dataset.cristal;
         this.poolWindow.innerHTML = document.querySelector(`.toggle_pool[data-id="${model}"]`).innerHTML;
-        this.bottomPrice.textContent = this.poolWindow.dataset.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " ₽";
+        //this.bottomPrice.textContent = this.poolWindow.dataset.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " ₽";
         this.cristal_price.textContent = "+" + this.poolWindow.dataset.cristal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " ₽";
+        this.cristal_price.closest('.configurator__option-window').dataset.price = this.poolWindow.dataset.cristal;
+
+        mycalc.poolPrice = this.poolWindow.dataset.price;
+        mycalc.recalc();
+
+        this.redrawItemsPrices();
+    }
+
+    redrawItemsPrices() {
+        this.table_rows = '';
+        document.querySelectorAll(".equipment_list .configurator__option-window.active").forEach(w => {
+        let item_id = w.dataset.item_id;
+        let pool_id = this.poolWindow.dataset.id;
+        let itemPrice = window.json.prices[item_id][pool_id];
+        w.querySelector('.item__price').textContent = itemPrice; 
+        this.table_rows+= `<tr class="configurator__estimate-tableRow_modified"><td>${w.querySelector('.item__name').textContent}</td><td></td><td>${itemPrice} ₽</td></tr>`;
+        });
+        this.redrawTable();
+    }
+
+    redrawTable() {
+        document.querySelector('.js_pool').innerHTML = `<tr class="configurator__estimate-tableRow_modified"><td>Чаша бассейна ${document.querySelector('.series__modelName').textContent}</td><td></td><td>${mycalc.poolPrice} ₽</td></tr>`;
+        document.querySelector('.js_calc').innerHTML = this.table_rows;
     }
 }
 

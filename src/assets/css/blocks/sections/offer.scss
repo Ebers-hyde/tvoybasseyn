@@ -1,0 +1,100 @@
+.offer__header {
+    position: relative;
+}
+.offer__header-content {
+    position: absolute;
+    left: 15%;
+    top: 24%;
+    p {
+        margin-bottom: 30px;
+        font-size: 16px;
+        color: #fff;
+        font-weight: 300;
+    }
+    svg {
+        margin-bottom: 5px;
+    }
+    h4 {
+        font-style: normal;
+        font-weight: 600;
+        font-size: 28px;
+        line-height: 113.5%;
+        color: #fff;
+        margin-bottom: 47px;
+        span {
+            font-weight: 300;
+        }
+    }
+}
+
+.offer__parties {
+    display: flex;
+    width: 1200px;
+    margin: 75px auto 100px auto;
+    justify-content: space-between;
+}
+
+.offer__party {
+    width: 355px;
+    height: 233px;
+    border-bottom: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-bottom: 40px;
+    &:nth-child(2) {
+        position: relative;
+        img {
+            position: absolute;
+            top: 20px;
+            right: 0;
+        }
+        .offer__party_title {
+            display: block;
+            width: 173px;
+        }
+    }
+}
+
+.offer__party_header {
+    display: inline-block;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 113.5%;
+    color: #6F7784;
+}
+
+.offer__party_title {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 32px;
+    line-height: 113.5%;
+    color: black;
+}
+
+.offer__party_details {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 113.5%;
+    color: #494949;
+}
+
+.offer__banner {
+    width: 742px;
+    box-sizing: border-box;
+    padding: 29px 72px;
+    margin: 0 auto;
+    border: 1px solid #4081FF;
+}
+
+.offer__banner_link {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 138.56%;
+    text-align: center;
+    text-decoration-line: underline;
+    color: #3569CF;
+}

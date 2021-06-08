@@ -58,4 +58,20 @@
 			color: #fff;
 		}
 	}
+
+	&--primary {
+		display: flex;
+		align-items: flex-start;
+		padding: 13px 23px;
+		background: #4081FF;
+		border-radius: 3px;
+		color: #fff;
+		font-weight: 600;
+		font-size: 11px;
+		line-height: 150%;
+		border: 0;
+		max-width: max-content;
+	}
 }
+
+

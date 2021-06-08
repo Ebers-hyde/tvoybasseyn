@@ -78,7 +78,12 @@
         <!-- End Google Tag Manager (noscript) -->
         <?php endif;?>
 
-        <?= $this->render($variables, 'layout/main') ?>
+		<?php if(!empty($variables['pageId']) && $variables['pageId'] == 7762): ?>
+			<?= $this->render($variables, $variables['page']->getValue('shablon')) ?>
+		<?php else:?>
+			<?= $this->render($variables, 'layout/main') ?>
+		<?php endif;?>
+	
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/5.4.5/js/swiper.min.js"></script>
     

@@ -33,6 +33,9 @@ import './assets/css/blocks/sections/gallery.scss';
 
 import './assets/css/blocks/sections/compare.scss';
 
+//offer page
+import './assets/css/blocks/sections/offer.scss';
+
 //BLOCKS
 import './assets/css/blocks/article.scss';
 import './assets/css/blocks/feedback.scss';

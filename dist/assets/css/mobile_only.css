@@ -50,3 +50,9 @@
     max-width: 100%;
     padding-right: 0;
 }
+.mobile-menu__list {
+    overflow: auto;
+}
+.sidebar__nav-link {
+    padding: 1.6rem 3rem;
+}

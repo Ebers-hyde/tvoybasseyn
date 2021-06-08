@@ -21,9 +21,14 @@ foreach($params as $param){
     $temp[$groupId][$param->getId()]['img'] = (!empty($param->getValue('kartinka')))?$param->getValue('kartinka')->getFilePath(1):'';
     // $temp[$groupId][$param->getId()]['prices'] = $param->getValue('param_prices');
     foreach($param->getValue('param_prices') as $price){
-        $temp[$groupId][$param->getId()]['prices'][$this->vsk_objById($price['rel'])->name] = $price['float'];
+      //  echo $this->vsk_objById($price['rel'])->name.' = '.$price['float']."\n";
+        if($price['float']){
+            $temp[$groupId][$param->getId()]['prices'][$this->vsk_objById($price['rel'])->name] = $price['float'];
+        }
+        $json['prices'][$param->getId()][$this->vsk_objById($price['rel'])->name] = $price['float'];
     }
 }
+
 foreach($groups as $group){
     $json[$group->getValue('razdel')]['groups'][$group->getId()]['items'] = $temp[$group->getId()];
     $json[$group->getValue('razdel')]['groups'][$group->getId()]['icon'] = (!empty($group->getValue('icon')))?$group->getValue('icon')->getFilePath(1):'';
@@ -32,12 +37,16 @@ foreach($groups as $group){
     $json[$group->getValue('razdel')]['groups'][$group->getId()]['name'] = $group->getName();
     $json[$group->getValue('razdel')]['groups'][$group->getId()]['target_section'] = $group->getValue('show_razdel');
 }
+
 foreach($sections as $section){
     $json[$section->getId()]['name'] = $section->getName();
     $json[$section->getId()]['hide'] = $section->getValue('hide');
 }
+
+
 foreach($modelsArr as $category){
     $model = $category->getValue('model')[0];
+    if(!$category->getValue('model')) continue;
     $price = intval(str_replace(' ', '', $model->getValue('stoimost')));
     $price_cristal = intval(str_replace(' ', '', $model->getValue('cena_cristal')));
     $model_width = $model->getValue('shirina');
@@ -48,7 +57,6 @@ foreach($modelsArr as $category){
     $json['models'][$category->name]['width'] = ($model_width)?$model_width . ' м':false;
     $json['models'][$category->name]['length'] = ($model_length)?$model_length . ' м':false;
     $json['models'][$category->name]['depth'] = ($model_depth)?$model_depth . ' м':false;
-//    $json['models'][$category->name]['difference'] = ($price_cristal>$price)?$price_cristal-$price:false;
 }
 ?>
 
@@ -98,7 +106,7 @@ foreach($modelsArr as $category){
                     <div><span id="cristal-price"></span></div>
                 </div>
             </div>
-            <div class="configurator__option equipment_list" data-section="121198">
+            <div class="configurator__option equipment_list configurator__equipment" data-section="121198">
                 <h6 class="configurator__option-header">Опции</h6>
                 <div class="configurator__option-grid">
                     <!-- <div class="configurator__option-window">
@@ -216,38 +224,26 @@ foreach($modelsArr as $category){
 </div>
 <div class="configurator__estimate">
     <h4>Предварительный расчёт</h4>
+    <div class="configurator__estimate-table_container">
     <table class="configurator__estimate-table">
-        <tr class="configurator__estimate-tableRow_modified">
-            <td>Наименование</td>
-            <td>Количество</td>
-            <td>Сумма</td>
-        </tr>
-        <tr>
-            <td>Композитный бассейн</td>
-            <td>1 шт</td>
-            <td>490 000 ₽</td>
-        </tr>
-        <tr>
-            <td>Скиммер ABS пластик (КНР)</td>
-            <td>1 шт</td>
-            <td>5 000 ₽</td>
-        </tr>
-        <tr>
-            <td>Форсунки ABS пластик (КНР)</td>
-            <td>2 шт</td>
-            <td>5 000 ₽</td>
-        </tr>
-        <tr>
-            <td>Фильтр D 900 с вентилем</td>
-            <td>1 шт</td>
-            <td>30 000 ₽</td>
-        </tr>
+        <thead>
+            <tr class="configurator__estimate-tableRow_modified">
+                <th>Наименование</th>
+                <th></th>
+                <th>Сумма</th>
+            </tr>
+        </thead>
+        <tbody class="js_pool">
+        </tbody>
+        <tbody class="js_calc">
+        </tbody>
         <tr class="configurator__estimate-tableRow_modified">
             <td>Итого</td>
             <td></td>
-            <td>1 384 938 ₽</td>
+            <td class="sumPrice"></td>
         </tr>
-    </table>
+        </table>
+    </div>
     <div class="configurator__estimate-buttons">
         <button class="configurator__estimate-button">Оставить заявку</button>
         <button class="configurator__estimate-button">Сохранить</button>

@@ -865,6 +865,13 @@
         opacity: 1;
         color: black;
     }
+    div {
+        &:last-child {
+            img {
+                max-width: 50%;
+            }
+        }
+    }
 }
 
 .close_modelDropdown {
