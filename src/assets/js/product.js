@@ -6,6 +6,7 @@ if(document.querySelector('.product')&&document.querySelector('.toggle_modelsDro
             document.querySelector('.product__modelDropdowns').classList.toggle('opened');
             document.querySelector('.product__info2').classList.toggle('inactive');
             document.querySelector('.product__purchase').classList.toggle('inactive');
+            document.querySelector('.product__optionDropdowns').classList.toggle('inactive');
         }
     })
 }

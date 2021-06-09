@@ -567,6 +567,10 @@
     }
 }
 
+.productv2 {
+    padding-top: 0;
+}
+
 #product-attribute-specs-table {
     tr {
         vertical-align: baseline;
@@ -704,7 +708,6 @@
 .product__info2-model {
     display: flex;
     justify-content: space-between;
-    width: 90%;
     margin-bottom: 20px;
     h4 {
         margin-bottom: 15px;
@@ -713,9 +716,10 @@
 
 .product__info2-scheme {
     position: relative;
-    height: 117px;
-    width: 294px;
+    height: 119px;
+    width: 355px;
     text-align: right;
+    top: -38px;
 }
 
 .product__info2-length, .product__info2-width, .product__info2-depth {
@@ -815,6 +819,12 @@
 
 .product__dropdowns {
     margin-bottom: 60px;
+}
+
+.product__optionDropdowns {
+    &.inactive {
+        transform: translateY(300px);
+    }
 }
 
 .product__dropdown {

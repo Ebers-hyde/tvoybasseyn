@@ -4,11 +4,29 @@ const Calculation = class {
         this.sumPrice = 0;
         this.bottomPrice = null;
         this.sumPriceTable = null;
+        this.modelsPriority = null;
     }
     init() {
         this.poolPrice = 0;
         this.bottomPrice = document.querySelector('#bottom_price');
         this.sumPriceTable = document.querySelector('.sumPrice');
+        this.modelsPriority = [
+            'royal_12037',
+            'royal_10037',
+            'royal_9037',
+            'royal_8037',
+            'hugo_8237',
+            'supreme_7530',
+            'supreme_6530',
+            'hugo_6232',
+            'art_6530',
+            'supreme_5530',
+            'hugo_5227',
+            'hugo_4222',
+            'supreme_4530',
+            'art_4025',
+            'base'
+        ];
     }
 
     recalc() {
@@ -23,6 +41,15 @@ const Calculation = class {
     redraw() {
         this.bottomPrice.textContent = this.sumPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " ₽";
         this.sumPriceTable.textContent = this.sumPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " ₽";
+    }
+    getPriorityPrice(poolId, pricesArr) {
+        console.log(this.modelsPriority);
+        if(typeof this.modelsPriority[poolId] != 'undefined') 
+            return pricesArr[poolId];
+        for(let i = this.modelsPriority.indexOf(poolId)+1; i<= this.modelsPriority.length; i++) {
+                if(typeof this.modelsPriority[i] != 'undefined') 
+                    return pricesArr[this.modelsPriority[i]];
+        }
     }
 }
 
@@ -123,7 +150,7 @@ const Configurator = class {
                         if(items) {
                             for (let i in items) {
                                 if(typeof items[i].prices === 'undefined') continue;
-                                this.popupGrid.querySelector('.popup-form__item:nth-child('+index+')').innerHTML = `<div class="configurator__option-window" data-item_id="${i}" data-price="${items[i].prices[this.poolWindow.dataset.id]}">
+                                this.popupGrid.querySelector('.popup-form__item:nth-child('+index+')').innerHTML = `<div class="configurator__option-window" data-item_id="${i}" data-price="${items[i].prices[this.poolWindow.dataset.id] ? items[i].prices[this.poolWindow.dataset.id] : mycalc.getPriorityPrice(this.poolWindow.dataset.id, items[i].prices)}">
                                 <div class="clear_icon-container">
                                     <img class="clear_icon" src="dist/assets/images/configurator/icons/clear_cross.svg"></img>
                                 </div>
@@ -137,7 +164,7 @@ const Configurator = class {
                                         <p>${items[i].hint}</p>
                                     </div>
                                     <div><span class="item__name">${items[i].name}</span></div>
-                                    <div><span class="item__price">${items[i].prices[this.poolWindow.dataset.id]} ₽</span></div>
+                                    <div><span class="item__price">${items[i].prices[this.poolWindow.dataset.id] ? items[i].prices[this.poolWindow.dataset.id] : mycalc.getPriorityPrice(this.poolWindow.dataset.id, items[i].prices)} ₽</span></div>
                                     <img src="${items[i].img}" alt="">
                                     <div class="window_icon"><img src="dist/assets/images/configurator/icons/change.svg" style="width: 289px;max-width: 289px;height: 100%;" alt=""></div>
                                 </div>`;

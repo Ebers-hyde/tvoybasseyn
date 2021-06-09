@@ -37,6 +37,7 @@ import './assets/css/blocks/sections/compare.scss';
 import './assets/css/blocks/sections/offer.scss';
 
 //BLOCKS
+import './assets/css/blocks/pool.scss';
 import './assets/css/blocks/article.scss';
 import './assets/css/blocks/feedback.scss';
 import './assets/css/blocks/catalog-list.scss';
@@ -97,6 +98,7 @@ import './assets/js/popup';
 import './assets/js/mobile-menu';
 import './assets/js/product-slider';
 import './assets/js/configurator';
+import './assets/js/offer';
 import './assets/js/filter';
 import './assets/js/select';
 import './assets/js/video';

@@ -35,7 +35,7 @@ else $price2 = number_format($price2, 0, ',', ' ') . ' ₽';
 ?>
 
 
-<section class="product" id="product-page">
+<section class="product productv2" id="product-page">
     <div class="product__aquabioraphy">
         <img src="<?=$page->getValue('header_image')?:$serie->getValue('header_image')?>" alt="">
         <div class="product__aquabioraphy-titles">
@@ -97,7 +97,7 @@ else $price2 = number_format($price2, 0, ',', ' ') . ' ₽';
                 <h3><?= $price2 ?></h3>
             </div>
             <div class="product__purchase-links">
-                <button class="btn btn--blue">Консультация</button>
+                <button class="btn btn--blue" onclick="$('#callback input[name=&quot;system_form_id&quot;]').val(236);$('#callback .popup-form__title').text('Консультация по бассейну <?=$page->name?>');show_popup('callback')">Консультация</button>
                 <button>В калькулятор</button>
                 <?php if ($cher) : ?>
                 <a href="<?= $cher->getFilePath(1) ?>" target="_blank">Скачать чертеж</a>
@@ -110,7 +110,7 @@ else $price2 = number_format($price2, 0, ',', ' ') . ' ₽';
             </div>
         </div>
     </div>
-    <div class="product__dropdowns">
+    <div class="product__dropdowns product__optionDropdowns">
         <div class="product__dropdown" data-dropdown="variants">
             <h2 class="product__dropdown-title">Варианты исполнения</h2>
             <div class="product__dropdown-icon">

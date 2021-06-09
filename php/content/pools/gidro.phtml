@@ -21,7 +21,7 @@ if($p=$page->getValue('obem')) $props['Объем'] = $p.' м<sup>3</sup>';
 if($p=$page->getValue('kolichestvo_segmentov')) $props['Сегм'] = $p.' шт';
 
 ?>
-<div class="right-slide__block pool">
+<div class="center-wrap pt-2 pool">
 <?= $this->render($variables, 'layout/header/breadcrumbs') ?>
     <span class="right-slide__title"><?= $this->escape($variables['header']) ?></span>
 
@@ -101,7 +101,7 @@ if($p=$page->getValue('kolichestvo_segmentov')) $props['Сегм'] = $p.' шт';
 
 </div>
 <?php if($page->getValue('cveta')){ $list = umiObjectsCollection::getInstance()->getGuidedItems($page->getValue('cveta'));$cveta = $this->vsk_objById(array_keys($list));  ?>
-<div class="right-slide__block">
+<div class="center-wrap pt-2">
     <h2 class="right-slide__blockH2">Цвета</h2>
 
     <div style="display: flex;flex-wrap: wrap;">
@@ -117,7 +117,7 @@ if($p=$page->getValue('kolichestvo_segmentov')) $props['Сегм'] = $p.' шт';
 <?php } ?>
 
 <?php  $similar = $this->getRelatedProducts($page); ?>
-<div class="right-slide__block">
+<div class="center-wrap pt-2">
   <h2 class="right-slide__blockH2">Рекомендуем обратить внимание</h2>  
     <div class="catalog-list">
         <?php foreach($similar as $category): ?>
@@ -126,7 +126,7 @@ if($p=$page->getValue('kolichestvo_segmentov')) $props['Сегм'] = $p.' шт';
     </div>
 </div>
 <?php if($page->getValue('galereya_proektov')){ $list = umiObjectsCollection::getInstance()->getGuidedItems($page->getValue('galereya_proektov'));$galereya_proektov = $this->vsk_objById(array_keys($list));  ?>
-<div class="right-slide__block">
+<div class="center-wrap pt-2">
     <h2 class="right-slide__blockH2">Галерея проектов</h2>
 
     <div style="display: flex;flex-wrap: wrap;">
@@ -142,15 +142,8 @@ if($p=$page->getValue('kolichestvo_segmentov')) $props['Сегм'] = $p.' шт';
 <?php } ?>
 
 
-<div class="right-slide__block">
+<div class="center-wrap pt-2">
   <div class="article" style="padding-top:50px">
   <?=$page->getValue('content')?>
-
-
-  <!--h2 class="right-slide__blockH2">Заголовок</!--h2>
-    <p class="article__text">Самый большой из всех представленных нашей компанией стекловолоконных бассейнов. Строгие формы без излишних рельефных изгибов делают эту модель предельно универсальной. Бассейн «Адмирал» подойдет как для занятий спортом и оздоровительными плавательными процедурами, так и для развлечений всей семьей или дружной компанией.</p>
-    <p class="article__text">Цельная литая чаша бассейна «Адмирал» не выгорает на солнце, не выделяет токсических веществ в воду и окрашена в приятный голубой оттенок, благодаря которому купание в нем доставит не только физическое, но и эстетическое удовольствие. Легкие выступы на его боковых поверхностях позволят передохнуть во время плавания, или же вылезти из бассейна без помощи лестницы. Возможно дополнительное устройство осветительного и аэрационного оборудования. Лестницы и поручни из нержавеющей стали без труда монтируются к бортам бассейна.</p>
-    <p class="article__text">Композитный стеклопластик является современным материалом, расчетные характеристики которого идеально подходят для производства бассейнов. Он полностью водоотталкивающий и не изменяет своей структуры в течение долгого времени, прочен, легок и достаточно гибкий, чтобы выдерживать собственный вес при транспортировке и монтаже. Срок эксплуатации композитных бассейнов – более 50-ти лет.</p>
-    <p-- class="article__text">Подготовительные работы под место для монтажа стекловолоконного бассейна «Адмирал», по сравнению с устройством традиционных железобетонных аналогов, не требуют особых усилий. Установка такого типа бассейнов занимает всего около 5-ти дней.</p-->
-  </div>
+ </div>
 </div>

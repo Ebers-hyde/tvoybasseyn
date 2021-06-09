@@ -1,0 +1,246 @@
+.pool{
+    $p: &;
+
+    &__wrapper{
+        display: flex;
+        @include mobile{
+            flex-direction: column;
+        }
+    }
+    &__fullWidth{
+        background: rgba(92, 110, 104, 0.14);
+        position: relative;
+        width: 100%;
+        height: 100%;
+        word-break: break-all;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        &-right{
+            right: 0;
+        }
+        img{
+            padding: 60px;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 5%;
+            left: 5%;
+            object-fit: contain;
+            max-width: 90%;
+            max-height: 90%;
+        }
+    }
+    &__slider{
+        
+        // min-width: 620px;
+        height: 380px;
+        @include mobile{
+            min-width: 100%;
+
+            min-height: 320px!important;
+        }
+    }
+    &__leftCol{
+        // min-width: 620px;
+        width: 71%;
+        &_gidro{
+            padding-right:20px;
+            min-width:50%;   
+            width: 50%;
+        }
+        @include mobile{
+            width: 100%;
+            min-width: auto;
+            padding-right: 0!important;
+        }
+    }
+    &__rightCol{
+        width: auto;
+        @include mobile{
+            margin-top: 35px;
+            width: 100%;
+        }
+    }
+    &__constructor{
+        img{
+            max-width: 95%;
+            margin-left: 5%;
+        }
+    }
+
+    &__props{
+        display: flex;
+        justify-content: space-between;
+        width: 60%; 
+        float: left;
+        padding-top: 5px;
+        @include mobile{
+            width: 100%;
+        }
+    }
+    &__download{
+        width: 40%;
+        float: right;
+        display: flex;
+        height: 40px;
+        align-items: center;
+        justify-content: flex-end;
+        font-weight: 300;
+        font-size: 14px;
+        text-decoration-line: underline;
+    }
+    &__prop{
+        display: flex;
+        flex-direction: column;
+    }
+    &__propTitle{
+        font-weight: normal;
+        font-size: 16px;
+        color: #000000;
+    }
+    &__propVal{
+        font-weight: 300;
+        font-size: 16px;
+        color: #000000;
+    }
+
+    &__filter{
+        display: flex;
+        justify-content: space-between;
+        margin-top: 40px;
+        margin-bottom: 40px;
+        align-items: center;
+        .filter{
+            margin-top:0;
+            margin-bottom:0;
+        }
+    } 
+    &__filterBlock{
+        margin-bottom: 55px;
+        position: relative;
+        &:before{
+            content: ' ';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            pointer-events: none;
+            background: rgba(255,255,255,0);
+            background: -moz-linear-gradient(left, rgba(255,255,255,0) 90%, rgba(255,255,255,1) 100%);
+            background: -webkit-gradient(left top, right top, color-stop(90%, rgba(255,255,255,0)), color-stop(100%, rgba(255,255,255,1)));
+            background: -webkit-linear-gradient(left, rgba(255,255,255,0) 90%, rgba(255,255,255,1) 100%);
+            background: -o-linear-gradient(left, rgba(255,255,255,0) 90%, rgba(255,255,255,1) 100%);
+            background: -ms-linear-gradient(left, rgba(255,255,255,0) 90%, rgba(255,255,255,1) 100%);
+            background: linear-gradient(to right, rgba(255,255,255,0) 90%, rgba(255,255,255,1) 100%);
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ffffff', GradientType=1 );
+        }
+    }
+    &__filterBlockHeader{
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+    }
+    &__filterIcon{
+        margin-right: 15px;
+    }
+    &__filterProducts{
+        padding: 4px;
+        padding-bottom: 21px;
+        margin-right: 15px;
+    }
+    &__filterCat{
+        font-size: 24px;
+        line-height: 35px;
+    }
+    &__filterTitle{
+        font-weight: bold;
+        font-size: 30px;
+        line-height: 44px;
+        display: inline-block;
+
+    }
+    &__summary{
+        position: sticky;
+        top: 70px;
+        max-width: 380px;
+        background: $lightGray;
+        padding: 15px 20px;
+        border-radius: 3px;
+ 
+        #{$p}__filterCat{
+            padding-bottom: 15px;
+            display: inline-block;
+        }
+
+        #{$p}__summaryLine_total:first-child:before{
+            display:none;
+        }
+    }
+    &__summaryLine{
+        display: flex;
+        padding-bottom: 15px;
+        align-items: center;
+        justify-content: space-between;
+        position: relative;
+        &:before{
+            content: ' ';
+            position: absolute;
+            border-bottom: 1px dashed rgb(206, 206, 206);
+            width: 100%;
+            top: 11px;
+        }
+    }
+    &__summaryLine_total{
+        &:before{
+            display: none;
+        }
+    }
+    &__summaryAction{
+        display: flex;
+        justify-content: flex-end;
+        margin-bottom: 40px;
+    }
+    &__summaryTitle{
+        font-weight: bold;
+        font-size: 24px;
+        line-height: 35px;
+    }
+    &__summarySumm{
+        font-size: 24px;
+        line-height: 28px;
+        text-align: right;
+        font-feature-settings: 'tnum' on, 'lnum' on;
+        color: #000000;
+    } 
+    &__summaryName{ 
+        font-weight: 350;
+        font-size: 14px;
+        line-height: 13px;
+        background: $lightGray;
+        position: relative;
+        padding-right: 5px;
+    }
+    &__summaryPrice{
+        font-size: 14px;
+        line-height: 16px;
+        text-align: right;
+        font-feature-settings: 'tnum' on, 'lnum' on;
+        color: #8E8E8E;
+
+        background: $lightGray;
+        position: relative;
+        padding-left: 5px;
+    }
+    &__summaryLinks{
+        padding-top:30px;
+    }
+    &__summaryLink{
+        display: inline-block;
+        font-size: 15px;
+        line-height: 21px;
+        text-decoration-line: underline;
+        padding-bottom: 15px;
+        color:#000;
+    }
+}

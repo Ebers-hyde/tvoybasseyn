@@ -11,7 +11,7 @@
 	class VskPhpExtension extends ViewPhpExtension {
         public function renderPages($page) {
 			$default = 'content/default';
-			if($page->getObjectTypeId()==195) $default = 'content/pools/page'; // Страница бассейна
+			if($page->getObjectTypeId()==195||$page->getObjectTypeId()==270) $default = 'content/pools/page'; // Страница бассейна
 			if($page->getObjectTypeId()==228) $default = 'content/pools/equipment'; // Оборудование
 			if($page->getObjectTypeId()==233) $default = 'content/pools/category_sbor'; // Сборный бассейн
 			if(!empty($custom_page = $page->getValue('shablon'))){ 
