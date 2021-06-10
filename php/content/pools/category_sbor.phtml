@@ -4,22 +4,16 @@
     $catalog = $this->getProductsListFromCategory($variables['pageId'],100);
     $projects = $this->getProjects($page->id); 
 ?>
-<div class="right-slide__block">
-    <div class="fixedSubmenu fixedSubmenu__fixed">
-        <div class="fixedSubmenu__item fixedSubmenu__item_active" data-url="#desc">Описание</div>
-<?php if($projects){ ?><div class="fixedSubmenu__item" data-url="#portfolio">Реализованные проекты</div><?php } ?>
-        <!--div-- class="fixedSubmenu__item">Рассчитать стоимость</!--div-->
-<?php if($page->getValue('setup')) { ?><div class="fixedSubmenu__item" data-url="#setup">Установка и обслуживание</div><?php } ?>
-<?php if($page->getValue('catalog')) { ?><div class="fixedSubmenu__item" data-url="#catalog">Приобрести</div><?php } ?>
-    </div>
+<div class="right-slide__block pt-2 center-wrap">
 
     <?= $this->render($variables, 'layout/header/breadcrumbs') ?>
  
-    <span class="right-slide__title"><?= $this->escape($variables['header']) ?></span>
+    <span class="product__title"><?= $this->escape($variables['header']) ?></span>
 
     
 
-    <div class="article" id="desc">
+    <div class="article pt-2" id="desc">
+        <img src="<?=$page->getValue('menu_pic_a')?>" alt="">
         <?=$page->getValue('content')?>
     </div>
 </div>
@@ -44,8 +38,8 @@
 
 <?php if($page->getValue('setup')) { ?>
 <div class="right-slide__block">
-<div class="article" id="setup">
-    <h2 class="right-slide__blockH2">Установка бассейна</h2>
+<div class="article center-wrap pool_setup" id="setup">
+    <h2>Установка бассейна</h2>
         <?=$page->getValue('setup')?>
     </div>
 </div>

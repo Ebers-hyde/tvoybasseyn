@@ -8,7 +8,7 @@ const Calculation = class {
     }
     init() {
         this.poolPrice = 0;
-        this.bottomPrice = document.querySelector('#bottom_price');
+        this.bottomPrice = document.querySelector('.bottom_price');
         this.sumPriceTable = document.querySelector('.sumPrice');
         this.modelsPriority = [
             'royal_12037',
@@ -39,17 +39,19 @@ const Calculation = class {
     }
 
     redraw() {
-        this.bottomPrice.textContent = this.sumPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " ₽";
-        this.sumPriceTable.textContent = this.sumPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " ₽";
+        this.bottomPrice.textContent = this.formatPrice(this.sumPrice);
+        this.sumPriceTable.textContent = this.formatPrice(this.sumPrice);
     }
     getPriorityPrice(poolId, pricesArr) {
-        console.log(this.modelsPriority);
         if(typeof this.modelsPriority[poolId] != 'undefined') 
             return pricesArr[poolId];
         for(let i = this.modelsPriority.indexOf(poolId)+1; i<= this.modelsPriority.length; i++) {
                 if(typeof this.modelsPriority[i] != 'undefined') 
                     return pricesArr[this.modelsPriority[i]];
         }
+    }
+    formatPrice(price) {
+        return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " ₽";
     }
 }
 
@@ -73,7 +75,6 @@ const Configurator = class {
         this.togglingPools = null;
         this.variants = null;
         this.modelQuery = window.location.search ? window.location.search : null;
-        //this.bottomPrice = null;
         this.showCalcBtn = null;
         this.table_rows = null;
     }
@@ -84,9 +85,8 @@ const Configurator = class {
         this.togglingPools = document.querySelectorAll('.toggle_pool') ? document.querySelectorAll('.toggle_pool') : null;
         this.options = document.querySelectorAll('.configurator__option');
         this.optionWindows = document.querySelectorAll('.configurator__option-window');
-        //this.bottomPrice = document.querySelector('#bottom_price');
         this.variants = document.querySelector('.option_variant');
-        this.cristal_price = document.querySelector('#cristal-price');
+        this.cristal_price = document.querySelector('.cristal-price');
         this.equipmentLists = document.querySelectorAll('.equipment_list');
         this.infoBlocks = document.querySelectorAll('.window_info'); 
         this.infoIcons = document.querySelectorAll('.info_icon-container');
@@ -97,15 +97,12 @@ const Configurator = class {
         this.popupGrid = this.configuratorPopup.querySelector('.configurator__equipment-grid');
         this.showCalcBtn = document.querySelector('.showCalc__btn');
         this.table_rows = '';
-        
-        document.querySelector('#base-price').closest('.configurator__option-window').dataset.price = 0;
 
         if(this.modelQuery !== null) {
             let modelId = this.modelQuery.split("=", 2)[1];
             if(window.json.models[modelId]) {
                 this.setPool(modelId);
-                //this.bottomPrice.textContent = this.poolWindow.dataset.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " ₽";
-                this.cristal_price.textContent = "+" + this.poolWindow.dataset.cristal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " ₽";
+                this.cristal_price.textContent = "+" + mycalc.formatPrice(this.poolWindow.dataset.cristal);
                 this.cristal_price.closest('.configurator__option-window').dataset.price = this.poolWindow.dataset.cristal;
             }
         }
@@ -150,7 +147,8 @@ const Configurator = class {
                         if(items) {
                             for (let i in items) {
                                 if(typeof items[i].prices === 'undefined') continue;
-                                this.popupGrid.querySelector('.popup-form__item:nth-child('+index+')').innerHTML = `<div class="configurator__option-window" data-item_id="${i}" data-price="${items[i].prices[this.poolWindow.dataset.id] ? items[i].prices[this.poolWindow.dataset.id] : mycalc.getPriorityPrice(this.poolWindow.dataset.id, items[i].prices)}">
+                                this.popupGrid.querySelector('.popup-form__item:nth-child('+index+')').innerHTML = this.generatePopupWindow(items,  i); 
+                                /*`<div class="configurator__option-window" data-item_id="${i}" data-price="${items[i].prices[this.poolWindow.dataset.id] ? items[i].prices[this.poolWindow.dataset.id] : mycalc.getPriorityPrice(this.poolWindow.dataset.id, items[i].prices)}">
                                 <div class="clear_icon-container">
                                     <img class="clear_icon" src="dist/assets/images/configurator/icons/clear_cross.svg"></img>
                                 </div>
@@ -164,10 +162,10 @@ const Configurator = class {
                                         <p>${items[i].hint}</p>
                                     </div>
                                     <div><span class="item__name">${items[i].name}</span></div>
-                                    <div><span class="item__price">${items[i].prices[this.poolWindow.dataset.id] ? items[i].prices[this.poolWindow.dataset.id] : mycalc.getPriorityPrice(this.poolWindow.dataset.id, items[i].prices)} ₽</span></div>
+                                    <div><span class="item__price">${items[i].prices[this.poolWindow.dataset.id] ? mycalc.formatPrice(items[i].prices[this.poolWindow.dataset.id]) : mycalc.formatPrice(mycalc.getPriorityPrice(this.poolWindow.dataset.id, items[i].prices))}</span></div>
                                     <img src="${items[i].img}" alt="">
                                     <div class="window_icon"><img src="dist/assets/images/configurator/icons/change.svg" style="width: 289px;max-width: 289px;height: 100%;" alt=""></div>
-                                </div>`;
+                                </div>`;*/
                                 index++;
                             }
                         } else this.popupGrid.querySelectorAll('.popup-form__item').forEach(form_item => {
@@ -199,28 +197,6 @@ const Configurator = class {
 
                 }
             }
-
-            /*this.variants.forEach(variant => {
-                variant.onclick = () => {
-                    this.variants.forEach(variant => {
-                        variant.style.borderColor = "#e5e5e5"
-                    })
-                    variant.style.borderColor = "#4081ff";
-                    this.options[2].classList.add('configurator__option--active');
-                    this.equipmentLists.forEach(list => {
-                        list.classList.add('configurator__equipment--active');
-                    })
-                }
-            })*/
-            
-            // this.extraEquipment.querySelectorAll('.configurator__option-window').forEach(option => {
-            //     option.onclick = function() {
-            //         if(document.querySelector(`#${option.dataset.eq_id}`)) {
-            //             document.querySelector(`#${option.dataset.eq_id}`).classList.add('configurator__equipment--active');
-            //         }
-            //     }
-            // })
-
         });
 
         this.configuratorPopup.querySelectorAll('.popup-form__item').forEach(form__item => {
@@ -240,7 +216,6 @@ const Configurator = class {
                 }else{
                     this.hideElem(form__item.querySelector('.window_info')); 
                 }
-                
             }
             form__item.onmouseleave = () => {
                 this.hideElem(form__item.querySelector('.window_icon'));
@@ -251,7 +226,7 @@ const Configurator = class {
         this.togglingPools.forEach(pool => {
             pool.onclick = () => {
                 this.setPool(pool.dataset.id);
-                this.cristal_price.textContent = "+" + this.poolWindow.dataset.cristal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " ₽";
+                this.cristal_price.textContent = "+" + mycalc.formatPrice(this.poolWindow.dataset.cristal);
                 this.cristal_price.closest('.configurator__option-window').dataset.price = this.poolWindow.dataset.cristal;
                 this.poolWindow.classList.remove("toggle_pool");
                 window.history.replaceState(null, 'Конфигуратор', `https://tvoybasseyn.ru/pools_catalog/konfgurator?model=${pool.dataset.id}`);
@@ -287,7 +262,7 @@ const Configurator = class {
         this.poolWindow.dataset.cristal = document.querySelector(`.toggle_pool[data-id="${model}"]`).dataset.cristal;
         this.poolWindow.innerHTML = document.querySelector(`.toggle_pool[data-id="${model}"]`).innerHTML;
         //this.bottomPrice.textContent = this.poolWindow.dataset.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " ₽";
-        this.cristal_price.textContent = "+" + this.poolWindow.dataset.cristal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " ₽";
+        this.cristal_price.textContent = "+" + mycalc.formatPrice(this.poolWindow.dataset.cristal);
         this.cristal_price.closest('.configurator__option-window').dataset.price = this.poolWindow.dataset.cristal;
 
         mycalc.poolPrice = this.poolWindow.dataset.price;
@@ -296,20 +271,43 @@ const Configurator = class {
         this.redrawItemsPrices();
     }
 
+    generatePopupWindow(list, item) {
+        let optionPrice = list[item].prices[this.poolWindow.dataset.id] ? list[item].prices[this.poolWindow.dataset.id] : mycalc.getPriorityPrice(this.poolWindow.dataset.id, list[item].prices)
+        let window = `<div class="configurator__option-window" data-item_id="${item}" data-price="${optionPrice}">
+            <div class="clear_icon-container">
+                <img class="clear_icon" src="dist/assets/images/configurator/icons/clear_cross.svg"></img>
+            </div>
+                <div class="info_icon-container"> 
+                    <svg class="info_icon" width="19" height="19" viewBox="0 0 19 19" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="9.29319" cy="9.29319" r="8.79319" fill="white" />
+                        <path d="M8.47921 7.23784H10.38L10.304 14.2077H8.40318L8.47921 7.23784ZM9.4372 5.89969C9.09253 5.89969 8.80361 5.79325 8.57045 5.58036C8.33728 5.35734 8.2207 5.08363 8.2207 4.75923C8.2207 4.43483 8.33728 4.16618 8.57045 3.9533C8.80361 3.73027 9.09253 3.61876 9.4372 3.61876C9.78188 3.61876 10.0708 3.7252 10.304 3.93809C10.5371 4.14084 10.6537 4.39935 10.6537 4.71361C10.6537 5.04815 10.5371 5.33199 10.304 5.56516C10.0809 5.78818 9.79201 5.89969 9.4372 5.89969Z" fill="#CBCBCB" />
+                    </svg>
+                </div>
+                <div class="window_info">
+                    <p>${list[item].hint}</p>
+                </div>
+                <div><span class="item__name">${list[item].name}</span></div>
+                <div><span class="item__price">${mycalc.formatPrice(optionPrice)}</span></div>
+                <img src="${list[item].img}" alt="">
+            <div class="window_icon"><img src="dist/assets/images/configurator/icons/change.svg" style="width: 289px;max-width: 289px;height: 100%;" alt=""></div>
+        </div>`
+        return window;
+    }
+
     redrawItemsPrices() {
         this.table_rows = '';
         document.querySelectorAll(".equipment_list .configurator__option-window.active").forEach(w => {
         let item_id = w.dataset.item_id;
         let pool_id = this.poolWindow.dataset.id;
         let itemPrice = window.json.prices[item_id][pool_id];
-        w.querySelector('.item__price').textContent = itemPrice; 
-        this.table_rows+= `<tr class="configurator__estimate-tableRow_modified"><td>${w.querySelector('.item__name').textContent}</td><td></td><td>${itemPrice} ₽</td></tr>`;
+        w.querySelector('.item__price').textContent = mycalc.formatPrice(itemPrice); 
+        this.table_rows+= `<tr class="configurator__estimate-tableRow_modified"><td>${w.querySelector('.item__name').textContent}</td><td></td><td>${mycalc.formatPrice(itemPrice)}</td></tr>`;
         });
         this.redrawTable();
     }
 
     redrawTable() {
-        document.querySelector('.js_pool').innerHTML = `<tr class="configurator__estimate-tableRow_modified"><td>Чаша бассейна ${document.querySelector('.series__modelName').textContent}</td><td></td><td>${mycalc.poolPrice} ₽</td></tr>`;
+        document.querySelector('.js_pool').innerHTML = `<tr class="configurator__estimate-tableRow_modified"><td>Чаша бассейна ${document.querySelector('.series__modelName').textContent}</td><td></td><td>${mycalc.formatPrice(mycalc.poolPrice)}</td></tr>`;
         document.querySelector('.js_calc').innerHTML = this.table_rows;
     }
 }

@@ -1,10 +1,56 @@
+<?php
+    $page = $variables['page'];
+
+    $obj = $this->vsk_objById($page->getValue('pool_model'));
+    $modelNameArr = explode(' ',$obj->name);
+    $variant = $this->vsk_objById($page->getValue('ex_option'));
+    $color = $this->vsk_objById($page->getValue('pool_color'));
+    $model = [
+      'serie' => $this->vsk_objById($obj->getValue('series')),
+      'name' => $modelNameArr[0],
+      'number' => $modelNameArr[1],
+      'variant' => [
+        'name' => $variant->name,
+        'desc' => $variant->getValue('desc')
+      ],
+      'img' => '',
+      'width' => $obj->getValue('shirina'),
+      'length' => $obj->getValue('dlina'),
+      'depth' => $obj->getValue('glubina'),
+      'volume' => $obj->getValue('obem'),
+      'color' => $color->name,
+      'desc' => $obj->getValue('content'),
+      'price' => $obj->getValue('stoimost'),
+      'options' => '',
+    ];
+
+    $customer = [
+      'name' => $page->getValue('customer_name'),
+      'phone' => $page->getValue('customer_phone'),
+      'email' => $page->getValue('customer_email'),
+      'place' => $page->getValue('place'),
+    ];
+
+    $obj = $this->vsk_objById($page->getValue('manager'));
+    $manager = [
+      'name' => $obj->getValue('name'),
+      'phone' => $obj->getValue('phone'),
+      'email' => $obj->getValue('email'),
+      'photo' => $obj->getValue('photo'),
+    ];
+
+    $offer_date = date('d.m.Y',strtotime($page->getValue('offer_date')));
+    $euro = $page->getValue('euro');
+    var_dump($color)
+?>
+
 <section class="offer">
   <div class="offer__header">
     <img src="dist/assets/images/1700.png" alt="Обложка страницы">
     <div class="offer__header-content">
       <p>КОММЕРЧЕСКОЕ ПРЕДЛОЖЕНИЕ</p>
       <img src="dist/assets/images/aquabioraphy_title.svg" alt="">
-      <h4>Royal <span>12037</span></h4>
+      <h4><?= $model['name'] ?> <span><?=$model['number']?></span></h4>
       <a class="btn btn--primary"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
           <g clip-path="url(#clip0)">
             <path d="M14.3333 12H12.3333C12.1493 12 12 11.8507 12 11.6667C12 11.4827 12.1493 11.3333 12.3333 11.3333H14.3333C14.8847 11.3333 15.3333 10.8847 15.3333 10.3333V5.66667C15.3333 5.11533 14.8847 4.66667 14.3333 4.66667H1.66667C1.11533 4.66667 0.666667 5.11533 0.666667 5.66667V10.3333C0.666667 10.8847 1.11533 11.3333 1.66667 11.3333H3.66667C3.85067 11.3333 4 11.4827 4 11.6667C4 11.8507 3.85067 12 3.66667 12H1.66667C0.747333 12 0 11.252 0 10.3333V5.66667C0 4.748 0.747333 4 1.66667 4H14.3333C15.2527 4 16 4.748 16 5.66667V10.3333C16 11.252 15.2527 12 14.3333 12Z" fill="white" />
@@ -26,23 +72,23 @@
   <div class="center-wrap offer__parties offer__block">
       <div class="offer__party">
         <span class="offer__party_header">Кому</span>
-        <h3 class="offer__party_title">Александр</h3>
-        <p class="offer__party_details">+7 (960) 271-17-70</p>
-        <p class="offer__party_details">krankina@tophouse.ru</p>
-        <p class="offer__party_details">Всеволожск</p>
+        <h3 class="offer__party_title"><?=$customer['name']?></h3>
+        <p class="offer__party_details"><?=$customer['phone']?></p>
+        <p class="offer__party_details"><?=$customer['email']?></p>
+        <p class="offer__party_details"><?=$customer['place']?></p>
       </div>
       <div class="offer__party">
         <span class="offer__party_header">Ваш менеджер</span>
-        <h3 class="offer__party_title">Никита Джигурда</h3>
-        <p class="offer__party_details">+7 (911) 000-86-13</p>
-        <p class="offer__party_details">krankina@tophouse.ru</p>
-        <img src="dist/assets/images/offer_manager.png" alt="Менеджер">
+        <h3 class="offer__party_title"><?=$manager['name']?></h3>
+        <p class="offer__party_details"><?=$manager['phone']?></p>
+        <p class="offer__party_details"><?=$manager['email']?></p>
+        <img src="<?=$manager['photo']?>" alt="Менеджер <?=$manager['name']?>">
       </div>
       <div class="offer__party">
         <span class="offer__party_header">Предложение</span>
-        <h3 class="offer__party_title">КП от 03.06.2021</h3>
+        <h3 class="offer__party_title">КП от <?=$offer_date?></h3>
         <p class="offer__party_details">Действительно в течении 3х рабочих дней.</p>
-        <p class="offer__party_details">Курс евро ЦБ: 89,69 руб.</p>
+        <p class="offer__party_details">Курс евро ЦБ: <?=$euro?> руб.</p>
       </div>
   </div>
   <div class="center-wrap offer__banner offer__block">
@@ -50,29 +96,31 @@
   </div>
 
   <div class="center-wrap offer__pool offer__block">
-  <h3 class="offer__pool_name">Cristal Royal <span>12037</span></h3>
+  <h3 class="offer__pool_name"><?=$model['variant']['name']?> <?=$model['name']?> <span><?=$model['number']?></span></h3>
   <div class="offer__pool_params">
     <div class="offer__pool_img">
       <img src="dist/assets/images/royal_grani.png" alt="">
     </div>
     <div class="offer__pool_param">
-      <h2>12</h2>
+      <h2><?=$model['length']?></h2>
       <span>Длина, м</span>
     </div>
     <div class="offer__pool_param">
-      <h2>3,7</h2>
+      <h2><?=$model['width']?></h2>
       <span>Ширина, м</span>
     </div>
     <div class="offer__pool_param">
-      <h2>1,4 - 1,75</h2>
+      <h2><?=$model['depth']?></h2>
       <span>Глубина, м</span>
     </div>
+    <?php if($model['volume']):?>
     <div class="offer__pool_param">
-      <h2>28</h2>
+      <h2><?=$model['volume']?></h2>
       <span>Объем чаши, м.куб</span>
     </div>
+    <?php endif;?>
   </div>
-  <p class="offer__pool_color">Цвет: <span>Grani Cristal 6</span></p>
+  <p class="offer__pool_color">Цвет: <span><?=$model['color']?></span></p>
   <a class="offer__pool_chertezh" href="#">Показать чертеж</a>
   </div>
 
@@ -84,9 +132,7 @@
       </svg>
     </div>
     <div class="offer__description_content hidden" data-block="about">
-    Композитный бассейн ROYAL – одна из популярнейших линеек производства Аквабиография. Многие люди выбрали ROYAL из-за его классической формы и универсальных функций. Наша компания представляет четыре доступных в линейке модели.
-    ROYAL предлагает роскошь и стиль, как никто другой. Четкие линии, грандиозный вход и переменная глубина чаши делают ROYAL идеальным бассейном в любой обстановке.
-    Главным и несравнимым достоинством ROYAL безусловно является классическая римская лестница. Она является как парадным входом в бассейн, так и заметным украшением чаши в целом. Размер ступеней дает возможность с легкостью пользоваться бассейном людям всех возрастов и комплекций. При желании ступени можно оснастить диодной подсветкой, чтобы вариант исполнения Вашего бассейна стал эксклюзивным и неповторимым.
+      <?=$model['desc']?>
     </div>
   </div>
   <div class="offer__description center-wrap offer__block">
@@ -97,9 +143,7 @@
       </svg>
     </div>
     <div class="offer__description_content hidden" data-block="cristal">
-    Композитный бассейн ROYAL – одна из популярнейших линеек производства Аквабиография. Многие люди выбрали ROYAL из-за его классической формы и универсальных функций. Наша компания представляет четыре доступных в линейке модели.
-    ROYAL предлагает роскошь и стиль, как никто другой. Четкие линии, грандиозный вход и переменная глубина чаши делают ROYAL идеальным бассейном в любой обстановке.
-    Главным и несравнимым достоинством ROYAL безусловно является классическая римская лестница. Она является как парадным входом в бассейн, так и заметным украшением чаши в целом. Размер ступеней дает возможность с легкостью пользоваться бассейном людям всех возрастов и комплекций. При желании ступени можно оснастить диодной подсветкой, чтобы вариант исполнения Вашего бассейна стал эксклюзивным и неповторимым.
+      <?=$model['variant']['desc']?>
     </div>
   </div>
 
@@ -108,7 +152,7 @@
       <div class="offer__expense">
         <div class="offer__expense_name">Модель бассейна</div>
         <div class="offer__expense_spacing"></div>
-        <div class="offer__expense_cost">1 090 000р.</div>
+        <div class="offer__expense_cost"><?=$model['price']?></div>
       </div>
       <div class="offer__expense">
         <div class="offer__expense_name">Утепление Thermopool</div>
@@ -261,7 +305,7 @@
     </div>
   </div>
 
-  <div class="offer__complect offer__block">
+  <div class="offer__complect">
     <h2 class="offer__complect_title">Комплектация</h2>
     <div class="offer__complect_flex">
       <div class="offer__complect_parts">
@@ -274,7 +318,48 @@
           <p class="offer__complect_part"><span>ИТОГО:</span><span>2 735 000р.</span></p>
         </div>
       </div>
+      <div class="offer__complect_manager">
+        <div>
+          <span>Ваш менеджер</span>
+          <h3>Никита Джигурда</h3>
+        </div>
+        <div>
+          <p>+7 (911) 000-86-13</p>
+          <p>krankina@tophouse.ru</p>
+        </div>
+      </div>
     </div>
+  </div>
+
+  <div class="center-wrap offer__banner offer__banner-modified offer__block">
+    <a href="#" class="offer__banner_link">Скидка 20% на павильон Aura covers при покупке бассейна</a>
+  </div>
+
+  <hr>
+
+  <div class="product__dropdownItem-projects gallery center-wrap">
+    <h2 class="offer__complect_title">Готовые проекты с бассейном Аквабиография Royal</h2>
+    <a data-fancybox="gallery_1" data-options='{"thumbs" : {"autoStart":true}}' href="dist/assets/images/poolPage_serie.png" class="gallery__category">
+        <div class="gallery__image is-loading">
+            <img src="dist/assets/images/poolPage_serie.png">
+        </div>
+        <span class="gallery__subtitle">Проект</span><br>
+        <span class="gallery__title">пос. Сиверский</span>
+    </a>
+    <a data-fancybox="gallery_2" data-options='{"thumbs" : {"autoStart":true}}' href="dist/assets/images/poolPage_serie.png" class="gallery__category">
+        <div class="gallery__image is-loading">
+            <img src="dist/assets/images/poolPage_serie.png">
+        </div>
+        <span class="gallery__subtitle">Проект</span><br>
+        <span class="gallery__title">пос. Сиверский</span>
+    </a>
+    <a data-fancybox="gallery_3" data-options='{"thumbs" : {"autoStart":true}}' href="dist/assets/images/poolPage_serie.png" class="gallery__category">
+        <div class="gallery__image is-loading">
+            <img src="dist/assets/images/poolPage_serie.png">
+        </div>
+        <span class="gallery__subtitle">Проект</span><br>
+        <span class="gallery__title">пос. Сиверский</span>
+    </a>
   </div>
 
 </section>

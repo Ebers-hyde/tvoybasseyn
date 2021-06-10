@@ -1,3 +1,18 @@
+.offer {
+    hr {
+        margin-bottom: 100px;
+    }
+    .gallery {
+        margin: 0px auto;
+        .gallery__subtitle {
+            margin-top: 30px;
+        }
+        .gallery__title {
+            padding-top: 0;
+        }
+    }   
+}
+
 .offer__header {
     position: relative;
     a {
@@ -96,6 +111,10 @@
     padding: 29px 72px;
     margin: 100px auto;
     border: 1px solid #4081FF;
+    &-modified {
+        width: 840px;
+        padding: 29px 135px;
+    }
     
 }
 
@@ -296,4 +315,97 @@
     display: flex;
     justify-content: space-between;
     margin-bottom: 50px;
+}
+
+.offer__complect {
+    width: 840px;
+    margin: 0 auto 100px auto;
+}
+
+.offer__complect_title {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 32px;
+    line-height: 113.5%;
+    margin-bottom: 25px;
+}
+
+.offer__complect_flex {
+    display: flex;
+}
+
+.offer__complect_parts {
+    width: 590px;
+    margin-right: 30px;
+    background: linear-gradient(
+102.48deg
+, #4081FF 9.56%, #2A64D6 85.35%);
+    border-radius: 10px;
+    padding: 25px 45px 20px 30px;
+    div:first-child {
+        margin-bottom: 30px;
+        .offer__complect_part {
+            span {
+                &:nth-child(1) {
+                    font-weight: normal;
+                }
+                &:nth-child(2) {
+                    font-weight: 500;
+                }
+            }
+        }
+    }
+}
+
+.offer__complect_part {
+    display: flex;
+    justify-content: space-between;
+    span {
+        &:nth-child(1) {
+            font-style: normal;
+            font-weight: bold;
+            font-size: 20px;
+            line-height: 156.6%;
+            color: #FFFFFF;
+        }
+        &:nth-child(2) {
+            font-style: normal;
+            font-weight: bold;
+            font-size: 20px;
+            line-height: 156.56%;
+            text-align: right;
+            font-feature-settings: 'tnum' on, 'lnum' on;
+            color: #FFFFFF;
+        }
+    }
+}
+
+.offer__complect_manager {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    div {
+        span {
+            display: block;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 16px;
+            line-height: 113.5%;
+            color: #6F7784;
+            margin-bottom: 5px;
+        }
+        p {
+            font-style: normal;
+            font-weight: 500;
+            font-size: 18px;
+            line-height: 113.5%;
+        }
+        h3 {
+            font-style: normal;
+            font-weight: 600;
+            font-size: 26px;
+            line-height: 113.5%;
+            color: #000000;
+        }
+    }
 }

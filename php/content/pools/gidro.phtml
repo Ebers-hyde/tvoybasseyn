@@ -23,15 +23,16 @@ if($p=$page->getValue('kolichestvo_segmentov')) $props['Сегм'] = $p.' шт';
 ?>
 <div class="center-wrap pt-2 pool">
 <?= $this->render($variables, 'layout/header/breadcrumbs') ?>
-    <span class="right-slide__title"><?= $this->escape($variables['header']) ?></span>
+    <div class="product__title"><?= $this->escape($variables['header']) ?></div>
 
     <div class="pool__wrapper">
         <div class="pool__leftCol pool__leftCol_gidro">
-            <div class="swiper-container pool__slider" style="    min-width: 100%;">
+            <?php if(count($photos) > 1):?>
+                <div class="swiper-container pool__slider" style="    min-width: 100%;">
                 <div class="swiper-wrapper">
                     <?php foreach($photos as $photo): ?>
                         <div class="swiper-slide">
-                            <img data-src="<?=$photo->getFilePath(1)?>" class="swiper-lazy" style="object-fit: contain;height:100%">
+                            <img src="<?=$photo->getFilePath(1)?>" class="swiper-lazy" style="object-fit: contain;height:100%">
                             <div class="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
                         </div>
                     <?php endforeach; ?>    
@@ -39,7 +40,12 @@ if($p=$page->getValue('kolichestvo_segmentov')) $props['Сегм'] = $p.' шт';
                 <div class="swiper-button-next swiper-button-black"></div>
                 <div class="swiper-button-prev swiper-button-black"></div>
 
-            </div>
+                </div>
+            <?php else:?>
+                <div class="gidro_img">
+                    <img src="<?=$main_photo?>" alt="">
+                </div>
+            <?php endif;?>
             <div class="pool__props">
             <?php foreach($props as $k=>$prop): ?>
                     <div class="pool__prop">
@@ -63,10 +69,9 @@ if($p=$page->getValue('kolichestvo_segmentov')) $props['Сегм'] = $p.' шт';
 
 
             <div class="pool__rightCol">
-                <div class="pool__summary" style="max-width:100%">
+                
 
-                <video class="wp-video-shortcode lazy-hidden" id="video-33421-1_html5" width="640" height="360" loop="1" autoplay="1" preload="metadata" src="resources/mrSpa.mp4" style="width: 100%;height: auto;"><source type="video/mp4" src="resources/mrSpa.mp4"><a href="resources/mrSpa.mp4">mrSpa.mp4</a></video>
-                    
+                <video class="wp-video-shortcode lazy-hidden mrSpa_video" muted id="video-33421-1_html5" width="640" height="360" loop="1" autoplay="1" preload="metadata" src="resources/mrSpa.mp4" style="width: 100%;height: auto;"><source type="video/mp4" src="resources/mrSpa.mp4"><a href="resources/mrSpa.mp4">mrSpa.mp4</a></video>
 
 
                 <div class="pool__filter">
@@ -82,11 +87,11 @@ if($p=$page->getValue('kolichestvo_segmentov')) $props['Сегм'] = $p.' шт';
 
 
 
-                    <div class="pool__summaryLine pool__summaryLine_total"><span class="pool__summaryTitle">Итого</span><span class="pool__summarySumm"><?=$price?> ₽</span></div>
-                    <div class="pool__summaryAction"><a class="btn" data-fancybox data-src="#callback" href="javascript:;">Заказать консультацию</a></div>
+                    <div class="pool__summaryLine pool__summaryLine_total"><span class="pool__summaryTitle">Стоимость</span><span class="pool__summarySumm"><?=$price?> ₽</span></div>
+                    <div class="pool__summaryAction"><a class="btn btn--primary" onclick="$('#callback input[name=&quot;system_form_id&quot;]').val(236);$('#callback .popup-form__title').text('Консультация по бассейну <?=$page->name?>');show_popup('callback')">Консультация</a></div>
                     
                 
-                </div>
+                
             </div>
 
             <?= $this->render(['name'=>'Заказать консультацию','title'=>'Консультация по по бассейну '.$page->name,'ym'=>'consultation'], 'blocks/forms/callback') ?>
@@ -101,14 +106,13 @@ if($p=$page->getValue('kolichestvo_segmentov')) $props['Сегм'] = $p.' шт';
 
 </div>
 <?php if($page->getValue('cveta')){ $list = umiObjectsCollection::getInstance()->getGuidedItems($page->getValue('cveta'));$cveta = $this->vsk_objById(array_keys($list));  ?>
-<div class="center-wrap pt-2">
-    <h2 class="right-slide__blockH2">Цвета</h2>
-
+<div class="gidro__colors center-wrap pt-2">
+    <h2>Цвета</h2>
     <div style="display: flex;flex-wrap: wrap;">
     <?php foreach($cveta as $item): ?>
         <div style="flex: 0 0 25%;max-width: 25%;text-align: center;padding: 10px;">
             <img data-fancybox="galera" data-src="<?=$item->getValue('photo')?>" src="<?=$item->getValue('photo')?>">
-            <span><?=$item->name?></span>
+            <span class="gidro__colors_name"><?=$item->name?></span>
         </div>
     <?php endforeach; ?>
     </div>
@@ -131,7 +135,7 @@ if($p=$page->getValue('kolichestvo_segmentov')) $props['Сегм'] = $p.' шт';
 
     <div style="display: flex;flex-wrap: wrap;">
     <?php foreach($galereya_proektov as $item): ?>
-        <div style="flex: 0 0 25%;max-width: 25%;text-align: center;padding: 10px;">
+        <div class="gidro__project">
             <img data-fancybox="proekty" data-src="<?=$item->getValue('photo')?>" src="<?=$item->getValue('photo')?>">
             <span><?=str_replace('no name','',$item->name)?></span>
         </div>

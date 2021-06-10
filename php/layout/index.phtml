@@ -78,8 +78,8 @@
         <!-- End Google Tag Manager (noscript) -->
         <?php endif;?>
 
-		<?php if(!empty($variables['pageId']) && $variables['pageId'] == 7762): ?>
-			<?= $this->render($variables, $variables['page']->getValue('shablon')) ?>
+		<?php if(!empty($variables['page']) && $variables['page']->getParentId() == 7762): ?>
+			<?= $this->render($variables, 'content/pools/offer') ?>
 		<?php else:?>
 			<?= $this->render($variables, 'layout/main') ?>
 		<?php endif;?>
