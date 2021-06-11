@@ -56,3 +56,7 @@
 .sidebar__nav-link {
     padding: 1.6rem 3rem;
 }
+
+.article {
+    margin: 0;
+}

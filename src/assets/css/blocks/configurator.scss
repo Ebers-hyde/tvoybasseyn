@@ -269,6 +269,12 @@
     }
     &-tableRow_modified {
       border-bottom: none !important;
+      th {
+        font-style: normal;
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 120.4%;
+      }
     }
     &-buttons {
       display: flex;

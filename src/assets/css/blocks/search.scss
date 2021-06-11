@@ -87,3 +87,24 @@ position: absolute;
 top: 14px;
 width: 24px;
 }
+
+.search_wrapper {
+    height: 52px;
+    padding: 10px 20px;
+    position: relative;
+    .search {
+        display: block;
+        .search__input {
+            width: 100%;
+            font-size: 13px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: 100%;
+        }
+    }
+    svg {
+        position: absolute;
+        top: 38%;
+        right: 7%;
+    }
+}

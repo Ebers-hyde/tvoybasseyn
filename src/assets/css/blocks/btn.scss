@@ -71,6 +71,9 @@
 		line-height: 150%;
 		border: 0;
 		max-width: max-content;
+		&:hover {
+			background: #4081FF;
+		}
 	}
 }
 

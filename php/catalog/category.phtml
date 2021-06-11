@@ -21,7 +21,7 @@ $cart = $this->macros('emarket', 'cart');
 
  
 
-        <section class="pool-filters">
+        <section class="pool-filters main">
           <div class="center-wrap">
             <?= $this->render($variables, 'layout/header/titleWithBread') ?>
             <div class="pool-filters__list mobile--hide">
@@ -147,11 +147,14 @@ $cart = $this->macros('emarket', 'cart');
               <?php foreach ($productList as $product): ?>
                 <?= $this->render(['product'=>$product,'compareList'=>$compareList,'cartItems'=>$cart['items']], 'catalog/product/preview/index') ?>
               <?php endforeach; ?>
-              <div class="card cart-invis"></div>
-              <div class="card cart-invis"></div>
-              <div class="card cart-invis"></div>
-              <div class="card cart-invis"></div>
+              <div class="card card-invis"></div>
+              <div class="card card-invis"></div>
+              <div class="card card-invis"></div>
+              <div class="card card-invis"></div>
             </div>
+          </div>
+          <div class="center-wrap">
+            <?= $this->render($pagination, 'blocks/pagination') ?>
           </div>
         </section>
 

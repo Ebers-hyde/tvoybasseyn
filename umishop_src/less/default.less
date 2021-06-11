@@ -1090,91 +1090,88 @@ main {
 }
 
 //--------------------------------------------------- pagination_numbers ------------------------------------------------------//
-main {
-	.pagination_numbers {
-		display: inline-flex;
-		border: 1px solid #ebebeb;
-		margin: 40px 0;
+.pagination_numbers {
+	display: inline-flex;
+	border: 1px solid #ebebeb;
+	margin: 40px 0;
+	@media (max-width: 991px) {
+		display: flex;
+	}
+	li {
+		border-right: 1px solid #ebebeb;
+		width: 50px;
+		text-align: center;
 		@media (max-width: 991px) {
-			display: flex;
+			width: 100%;
 		}
-		li {
-			border-right: 1px solid #ebebeb;
-			width: 50px;
-			text-align: center;
-			@media (max-width: 991px) {
-				width: 100%;
-			}
-			&:last-child {
-				border: none;
-			}
-			&.prev {
-				a {
-					position: relative;
-					width: 100%;
-					height: 100%;
-					&:hover {
-						background-color: transparent;
-					}
-					&:before {
-						content: "";
-						background: url(../img/blue_arrow_icons.png) no-repeat 0 0;
-						width: 10px;
-						height: 15px;
-						position: absolute;
-						top: 0;
-						left: 0;
-						right: 0;
-						bottom: 0;
-						margin: auto;
-					}
-				}
-			}
-			&.next {
-				a {
-					position: relative;
-					width: 100%;
-					height: 100%;
-					&:hover {
-						background-color: transparent;
-					}
-					&:before {
-						content: "";
-						background: url(../img/blue_arrow_icons.png) no-repeat -20px 0;
-						width: 10px;
-						height: 15px;
-						position: absolute;
-						top: 0;
-						left: 0;
-						right: 0;
-						bottom: 0;
-						margin: auto;
-					}
-				}
-			}
-			&.active {
-				a {
-					text-decoration: none;
-					background-color: @color-base;
-					color: #fff;
-				}
-			}
+		&:last-child {
+			border: none;
+		}
+		&.prev {
 			a {
-				display: block;
-				padding: 15px;
-				font-family: @highBold;
-				width: auto;
-				border: none;
+				position: relative;
+				width: 100%;
+				height: 100%;
 				&:hover {
-					text-decoration: none;
-					background-color: @color-base;
-					color: #fff;
+					background-color: transparent;
 				}
+				&:before {
+					content: "";
+					background: url(../img/blue_arrow_icons.png) no-repeat 0 0;
+					width: 10px;
+					height: 15px;
+					position: absolute;
+					top: 0;
+					left: 0;
+					right: 0;
+					bottom: 0;
+					margin: auto;
+				}
+			}
+		}
+		&.next {
+			a {
+				position: relative;
+				width: 100%;
+				height: 100%;
+				&:hover {
+					background-color: transparent;
+				}
+				&:before {
+					content: "";
+					background: url(../img/blue_arrow_icons.png) no-repeat -20px 0;
+					width: 10px;
+					height: 15px;
+					position: absolute;
+					top: 0;
+					left: 0;
+					right: 0;
+					bottom: 0;
+					margin: auto;
+				}
+			}
+		}
+		&.active {
+			a {
+				text-decoration: none;
+				background-color: @color-base;
+				color: #fff;
+			}
+		}
+		a {
+			display: block;
+			padding: 15px;
+			font-family: @highBold;
+			width: auto;
+			border: none;
+			&:hover {
+				text-decoration: none;
+				background-color: @color-base;
+				color: #fff;
 			}
 		}
 	}
 }
-
 //--------------------------------------------------- callbackContent ------------------------------------------------------//
 #callbackContent {
 	form {

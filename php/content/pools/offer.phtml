@@ -1,4 +1,14 @@
 <?php
+    function getOptionPrices($n)
+    {
+       $arr = [];
+       foreach($n as $item){
+        $arr[$item['rel']] = $item['float'];
+       }
+       return $arr;
+    }
+
+    $hierarchy = umiHierarchy::getInstance();
     $page = $variables['page'];
 
     $obj = $this->vsk_objById($page->getValue('pool_model'));
@@ -13,7 +23,7 @@
         'name' => $variant->name,
         'desc' => $variant->getValue('desc')
       ],
-      'img' => '',
+      'img' => $obj->getValue('menu_pic_a'),
       'width' => $obj->getValue('shirina'),
       'length' => $obj->getValue('dlina'),
       'depth' => $obj->getValue('glubina'),
@@ -21,7 +31,14 @@
       'color' => $color->name,
       'desc' => $obj->getValue('content'),
       'price' => $obj->getValue('stoimost'),
-      'options' => '',
+      'price_format' => number_format($obj->getValue('stoimost'), 0, ',', ' '),
+      'options' => $this->vsk_objById($page->getValue('pool_options')),
+      'scheme' => $obj->getValue('chertezh'),
+    ];
+
+    $equipment = [
+      'main' => $this->vsk_objByType($page->getValue('main_equipment')),
+      'add' => $this->vsk_objByType($page->getValue('add_equipment'))
     ];
 
     $customer = [
@@ -33,7 +50,7 @@
 
     $obj = $this->vsk_objById($page->getValue('manager'));
     $manager = [
-      'name' => $obj->getValue('name'),
+      'name' => $obj->name,
       'phone' => $obj->getValue('phone'),
       'email' => $obj->getValue('email'),
       'photo' => $obj->getValue('photo'),
@@ -41,7 +58,11 @@
 
     $offer_date = date('d.m.Y',strtotime($page->getValue('offer_date')));
     $euro = $page->getValue('euro');
-    var_dump($color)
+
+    $summ_main = 0;
+    $summ_add = 0;
+
+    $projects = $this->getProjects(null, $model['serie']);
 ?>
 
 <section class="offer">
@@ -92,14 +113,14 @@
       </div>
   </div>
   <div class="center-wrap offer__banner offer__block">
-    <a href="#" class="offer__banner_link">Скидка 20% на павильон Aura covers при покупке бассейна</a>
+    <a href="https://tvoybasseyn.ru/pavilion_catalog/aura" class="offer__banner_link">Скидка 20% на павильон Aura covers при покупке бассейна</a>
   </div>
 
   <div class="center-wrap offer__pool offer__block">
   <h3 class="offer__pool_name"><?=$model['variant']['name']?> <?=$model['name']?> <span><?=$model['number']?></span></h3>
   <div class="offer__pool_params">
     <div class="offer__pool_img">
-      <img src="dist/assets/images/royal_grani.png" alt="">
+      <img src="<?= $model['img'] ?>" alt="">
     </div>
     <div class="offer__pool_param">
       <h2><?=$model['length']?></h2>
@@ -121,7 +142,7 @@
     <?php endif;?>
   </div>
   <p class="offer__pool_color">Цвет: <span><?=$model['color']?></span></p>
-  <a class="offer__pool_chertezh" href="#">Показать чертеж</a>
+  <a class="offer__pool_chertezh" target="_blank" href="<?=$model['scheme']?>">Показать чертеж</a>
   </div>
 
   <div class="offer__description center-wrap">
@@ -137,7 +158,7 @@
   </div>
   <div class="offer__description center-wrap offer__block">
     <div class="offer__description_title offer__toggle" data-block="cristal">
-      <h2>Что означает Cristal</h2>
+      <h2>Что означает Liner / Cristal</h2>
       <svg width="18px" height="17px" xmlns="http://www.w3.org/2000/svg">
         <path d="M17.7071 0.292893C18.0676 0.653377 18.0953 1.22061 17.7903 1.6129L17.7071 1.70711L9.70711 9.70711C9.34662 10.0676 8.77939 10.0953 8.3871 9.7903L8.29289 9.70711L0.292892 1.70711C-0.0976315 1.31658 -0.0976315 0.683417 0.292892 0.292893C0.653376 -0.0675913 1.22061 -0.0953212 1.6129 0.209704L1.70711 0.292893L9 7.58579L16.2929 0.292893C16.6834 -0.0976309 17.3166 -0.0976309 17.7071 0.292893Z" fill="#000" />
       </svg>
@@ -152,37 +173,30 @@
       <div class="offer__expense">
         <div class="offer__expense_name">Модель бассейна</div>
         <div class="offer__expense_spacing"></div>
-        <div class="offer__expense_cost"><?=$model['price']?></div>
+        <div class="offer__expense_cost"><?=$model['price_format']?> ₽</div>
       </div>
+      <?php $summ = $model['price']+$page->getValue('pool_delivery'); foreach($model['options'] as $option): $price = getOptionPrices($this->vsk_objById($option->getValue('calc_prop'))->getValue('param_prices'))[$page->getValue('pool_model')]; $summ += $price;?>
+        <div class="offer__expense">
+          <div class="offer__expense_name"><?=$option->name?></div>
+          <div class="offer__expense_spacing"></div>
+          <div class="offer__expense_cost"><?=number_format($price, 0, ',', ' ')?> ₽</div>
+        </div>
+      <?php endforeach;?>
       <div class="offer__expense">
-        <div class="offer__expense_name">Утепление Thermopool</div>
-        <div class="offer__expense_spacing"></div>
-        <div class="offer__expense_cost">115 000р.</div>
-      </div>
-      <div class="offer__expense">
-        <div class="offer__expense_name">Утепление Thermopool</div>
-        <div class="offer__expense_spacing"></div>
-        <div class="offer__expense_cost">115 000р.</div>
-      </div>
-      <div class="offer__expense">
-        <div class="offer__expense_name">Утепление Thermopool</div>
-        <div class="offer__expense_spacing"></div>
-        <div class="offer__expense_cost">115 000р.</div>
-      </div>
-      <div class="offer__expense">
-        <div class="offer__expense_name">Утепление Thermopool</div>
-        <div class="offer__expense_spacing"></div>
-        <div class="offer__expense_cost">115 000р.</div>
-      </div>
+          <div class="offer__expense_name">Доставка</div>
+          <div class="offer__expense_spacing"></div>
+          <div class="offer__expense_cost"><?=number_format($page->getValue('pool_delivery'), 0, ',', ' ')?> ₽</div>
+        </div>
+      
       <div class="offer__expenses_summary">
         <div class="offer__expense_name">Итого по категории</div>
         <div class="offer__expense_spacing"></div>
-        <div class="offer__expense_cost">1 935 000р.</div>
+        <div class="offer__expense_cost"><?=number_format($summ, 0, ',', ' ')?> ₽</div>
       </div>
     </div>
   </div>
   <div class="center-wrap offer__banner offer__block">
-    <a href="#" class="offer__banner_link">Скидка 20% на павильон Aura covers при покупке бассейна</a>
+    <a href="https://tvoybasseyn.ru/pavilion_catalog/aura" class="offer__banner_link">Скидка 20% на павильон Aura covers при покупке бассейна</a>
   </div>
 
   <div class="offer__description center-wrap offer__description_flex">
@@ -206,41 +220,21 @@
         <div class="offer__expense_text">Наименование</div>
         <div class="offer__expense_text">Кол-во</div>
         <div class="offer__expense_text">Скидка, руб</div>
+        <div class="offer__expense_text">Цена за шт., руб.</div>
         <div class="offer__expense_text">Сумма со скидкой, руб.</div>
       </div>
+    <?php foreach($equipment['main'] as $item): $summ_main += $item->getValue('cena'); ?>
       <div class="offer__expense offer__expense_modified">
-        <div class="offer__expense_text">Трубная обвязка Ниагара 6 (не далее 5 м)</div>
-        <div class="offer__expense_text">1 шт.</div>
-        <div class="offer__expense_text">0</div>
-        <div class="offer__expense_text">37 759 р.</div>
+        <div class="offer__expense_text"><?=$this->vsk_objById($item->getValue('product_name'))->name?></div>
+        <div class="offer__expense_text"><?=$cnt = $item->getValue('kolichestvo')?:'1 шт'?></div>
+        <div class="offer__expense_text"><?=$sale = $item->getValue('sale')? number_format($item->getValue('sale'), 0, ',', ' ') :'0'?></div>
+        <div class="offer__expense_text"><?=number_format($item->getValue('cena'), 0, ',', ' ')?></div>
+        <div class="offer__expense_text"><?=number_format(($item->getValue('cena')-$sale)*intVal($cnt), 0, ',', ' ')?></div>
       </div>
-      <div class="offer__expense offer__expense_modified">
-        <div class="offer__expense_text">Трубная обвязка Ниагара 6 (не далее 5 м)</div>
-        <div class="offer__expense_text">1 шт.</div>
-        <div class="offer__expense_text">0</div>
-        <div class="offer__expense_text">37 759 р.</div>
-      </div>
-      <div class="offer__expense offer__expense_modified">
-        <div class="offer__expense_text">Трубная обвязка Ниагара 6 (не далее 5 м)</div>
-        <div class="offer__expense_text">1 шт.</div>
-        <div class="offer__expense_text">0</div>
-        <div class="offer__expense_text">37 759 р.</div>
-      </div>
-      <div class="offer__expense offer__expense_modified">
-        <div class="offer__expense_text">Трубная обвязка Ниагара 6 (не далее 5 м)</div>
-        <div class="offer__expense_text">1 шт.</div>
-        <div class="offer__expense_text">0</div>
-        <div class="offer__expense_text">37 759 р.</div>
-      </div>
-      <div class="offer__expense offer__expense_modified">
-        <div class="offer__expense_text">Трубная обвязка Ниагара 6 (не далее 5 м)</div>
-        <div class="offer__expense_text">1 шт.</div>
-        <div class="offer__expense_text">0</div>
-        <div class="offer__expense_text">37 759 р.</div>
-      </div>
+    <?php endforeach; ?>
       <div class="offer__expenses_summary offer__expense offer__expense_modified">
         <div class="offer__expense_text">Итого</div>
-        <div class="offer__expense_text">190 839 р.</div>
+        <div class="offer__expense_text"><?=$summ_main?> р.</div>
       </div>
     </div>
   </div>
@@ -260,6 +254,7 @@
       <img src="dist/assets/images/offer_pool2.png" alt="">
     </div>
   </div>
+  <?php if($equipment['add']): ?>
   <div class="offer__expenses offer__block">
     <div class="center-wrap">
       <div class="offer__expense offer__expense_title offer__expense_modified">
@@ -268,98 +263,77 @@
         <div class="offer__expense_text">Скидка, руб</div>
         <div class="offer__expense_text">Сумма со скидкой, руб.</div>
       </div>
+      <?php foreach($equipment['add'] as $item): $summ_add += $item->getValue('cena'); ?>
       <div class="offer__expense offer__expense_modified">
-        <div class="offer__expense_text">Трубная обвязка Ниагара 6 (не далее 5 м)</div>
-        <div class="offer__expense_text">1 шт.</div>
-        <div class="offer__expense_text">0</div>
-        <div class="offer__expense_text">37 759 р.</div>
+        <div class="offer__expense_text"><?=$this->vsk_objById($item->getValue('product_name'))->name?></div>
+        <div class="offer__expense_text"><?=$cnt = $item->getValue('kolichestvo')?:'1 шт'?></div>
+        <div class="offer__expense_text"><?=$sale = $item->getValue('sale')? number_format($item->getValue('sale'), 0, ',', ' ') :'0'?></div>
+        <div class="offer__expense_text"><?=number_format($item->getValue('cena'), 0, ',', ' ')?></div>
+        <div class="offer__expense_text"><?=number_format(($item->getValue('cena')-$sale)*intVal($cnt), 0, ',', ' ')?></div>
       </div>
-      <div class="offer__expense offer__expense_modified">
-        <div class="offer__expense_text">Трубная обвязка Ниагара 6 (не далее 5 м)</div>
-        <div class="offer__expense_text">1 шт.</div>
-        <div class="offer__expense_text">0</div>
-        <div class="offer__expense_text">37 759 р.</div>
-      </div>
-      <div class="offer__expense offer__expense_modified">
-        <div class="offer__expense_text">Трубная обвязка Ниагара 6 (не далее 5 м)</div>
-        <div class="offer__expense_text">1 шт.</div>
-        <div class="offer__expense_text">0</div>
-        <div class="offer__expense_text">37 759 р.</div>
-      </div>
-      <div class="offer__expense offer__expense_modified">
-        <div class="offer__expense_text">Трубная обвязка Ниагара 6 (не далее 5 м)</div>
-        <div class="offer__expense_text">1 шт.</div>
-        <div class="offer__expense_text">0</div>
-        <div class="offer__expense_text">37 759 р.</div>
-      </div>
-      <div class="offer__expense offer__expense_modified">
-        <div class="offer__expense_text">Трубная обвязка Ниагара 6 (не далее 5 м)</div>
-        <div class="offer__expense_text">1 шт.</div>
-        <div class="offer__expense_text">0</div>
-        <div class="offer__expense_text">37 759 р.</div>
-      </div>
+    <?php endforeach; ?>
       <div class="offer__expenses_summary offer__expense offer__expense_modified">
         <div class="offer__expense_text">Итого</div>
-        <div class="offer__expense_text">190 839 р.</div>
+        <div class="offer__expense_text"><?=$summ_add?> р.</div>
       </div>
     </div>
   </div>
+  <?php endif;?>
 
   <div class="offer__complect">
     <h2 class="offer__complect_title">Комплектация</h2>
     <div class="offer__complect_flex">
       <div class="offer__complect_parts">
         <div>
-          <p class="offer__complect_part"><span>Чаша</span><span>1 935 000р.</span></p>
-          <p class="offer__complect_part"><span>Основное оборудование</span><span>535 000р.</span></p>
-          <p class="offer__complect_part"><span>Дополнительное оборудование</span><span>190 839р.</span></p>
+          <p class="offer__complect_part"><span>Чаша</span><span><?=$model['price_format'] . "р."?></span></p>
+          <p class="offer__complect_part"><span>Основное оборудование</span><span><?= number_format($summ_main, 0, ',', ' ') ?>р.</span></p>
+          <p class="offer__complect_part"><span>Дополнительное оборудование</span><span><?= number_format($summ_add, 0, ',', ' ') ?>р.</span></p>
         </div>
         <div>
-          <p class="offer__complect_part"><span>ИТОГО:</span><span>2 735 000р.</span></p>
+          <p class="offer__complect_part"><span>ИТОГО:</span><span><?= number_format($model['price'] + $summ_main + $summ_add, 0, ',', ' ') ?> р.</span></p>
         </div>
       </div>
       <div class="offer__complect_manager">
         <div>
           <span>Ваш менеджер</span>
-          <h3>Никита Джигурда</h3>
+          <h3><?=$manager['name']?></h3>
         </div>
         <div>
-          <p>+7 (911) 000-86-13</p>
-          <p>krankina@tophouse.ru</p>
+          <p><?=$manager['phone']?></p>
+          <p><?=$manager['email']?></p>
         </div>
       </div>
     </div>
   </div>
 
   <div class="center-wrap offer__banner offer__banner-modified offer__block">
-    <a href="#" class="offer__banner_link">Скидка 20% на павильон Aura covers при покупке бассейна</a>
+    <a href="https://tvoybasseyn.ru/pavilion_catalog/aura/" class="offer__banner_link">Скидка 20% на павильон Aura covers при покупке бассейна</a>
   </div>
 
   <hr>
 
-  <div class="product__dropdownItem-projects gallery center-wrap">
-    <h2 class="offer__complect_title">Готовые проекты с бассейном Аквабиография Royal</h2>
-    <a data-fancybox="gallery_1" data-options='{"thumbs" : {"autoStart":true}}' href="dist/assets/images/poolPage_serie.png" class="gallery__category">
+  <div class="center-wrap">
+    <h2 class="offer__complect_title">Готовые проекты с бассейном Аквабиография <?=$model['name']?></h2>
+    <div class="gallery">
+      <?php foreach (array_slice($projects, 0, 3) as $key=> $item): $photos = $this->thumb($item->getValue('photos'),1600); ?>
+      <a data-fancybox="gallery_<?=$key?>" data-options='{"thumbs" : {"autoStart":true}}' href="<?=$photos[0]?>" class="gallery__category">
+        
         <div class="gallery__image is-loading">
-            <img src="dist/assets/images/poolPage_serie.png">
+            <!-- <img src="<?//=$photos[0]?>"> -->
+            <img src="<?=$this->thumb($item->getValue('photos'),600,400)[0]?>">
         </div>
-        <span class="gallery__subtitle">Проект</span><br>
-        <span class="gallery__title">пос. Сиверский</span>
+        <span class="gallery__subtitle"><?=$item->name?></span>
+        <span class="gallery__title"><?= $item->getValue('address') ?></span><br>
     </a>
-    <a data-fancybox="gallery_2" data-options='{"thumbs" : {"autoStart":true}}' href="dist/assets/images/poolPage_serie.png" class="gallery__category">
-        <div class="gallery__image is-loading">
-            <img src="dist/assets/images/poolPage_serie.png">
+    <?php if(count($photos) > 1): ?>
+        <div style="display:none">
+            <?php foreach($photos as $k=>$photo){ if($k==0) continue; ?>
+                <a data-fancybox="gallery_<?=$key?>" data-thumb="<?=$photo?>" href="<?=$photo?>"></a>
+            <?php } ?>
         </div>
-        <span class="gallery__subtitle">Проект</span><br>
-        <span class="gallery__title">пос. Сиверский</span>
-    </a>
-    <a data-fancybox="gallery_3" data-options='{"thumbs" : {"autoStart":true}}' href="dist/assets/images/poolPage_serie.png" class="gallery__category">
-        <div class="gallery__image is-loading">
-            <img src="dist/assets/images/poolPage_serie.png">
-        </div>
-        <span class="gallery__subtitle">Проект</span><br>
-        <span class="gallery__title">пос. Сиверский</span>
-    </a>
+    <?php endif; ?>
+<?php endforeach; ?> 
+    </div>
   </div>
 
 </section>

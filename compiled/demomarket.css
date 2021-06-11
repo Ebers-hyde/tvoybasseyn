@@ -1538,7 +1538,7 @@ main .main_pagination div.gray_text {
   margin-top: 10px;
   font-size: 12px;
 }
-main .pagination_numbers {
+.pagination_numbers {
   display: -webkit-inline-flex;
   display: -moz-inline-box;
   display: -ms-inline-flexbox;
@@ -1547,35 +1547,35 @@ main .pagination_numbers {
   margin: 40px 0;
 }
 @media (max-width: 991px) {
-  main .pagination_numbers {
+  .pagination_numbers {
     display: -webkit-flex;
     display: -moz-box;
     display: -ms-flexbox;
     display: flex;
   }
 }
-main .pagination_numbers li {
+.pagination_numbers li {
   border-right: 1px solid #ebebeb;
   width: 50px;
   text-align: center;
 }
 @media (max-width: 991px) {
-  main .pagination_numbers li {
+  .pagination_numbers li {
     width: 100%;
   }
 }
-main .pagination_numbers li:last-child {
+.pagination_numbers li:last-child {
   border: none;
 }
-main .pagination_numbers li.prev a {
+.pagination_numbers li.prev a {
   position: relative;
   width: 100%;
   height: 100%;
 }
-main .pagination_numbers li.prev a:hover {
+.pagination_numbers li.prev a:hover {
   background-color: transparent;
 }
-main .pagination_numbers li.prev a:before {
+.pagination_numbers li.prev a:before {
   content: "";
   background: url(../img/blue_arrow_icons.png) no-repeat 0 0;
   width: 10px;
@@ -1587,15 +1587,15 @@ main .pagination_numbers li.prev a:before {
   bottom: 0;
   margin: auto;
 }
-main .pagination_numbers li.next a {
+.pagination_numbers li.next a {
   position: relative;
   width: 100%;
   height: 100%;
 }
-main .pagination_numbers li.next a:hover {
+.pagination_numbers li.next a:hover {
   background-color: transparent;
 }
-main .pagination_numbers li.next a:before {
+.pagination_numbers li.next a:before {
   content: "";
   background: url(../img/blue_arrow_icons.png) no-repeat -20px 0;
   width: 10px;
@@ -1607,19 +1607,19 @@ main .pagination_numbers li.next a:before {
   bottom: 0;
   margin: auto;
 }
-main .pagination_numbers li.active a {
+.pagination_numbers li.active a {
   text-decoration: none;
   background-color: #4081FF;
   color: #fff;
 }
-main .pagination_numbers li a {
+.pagination_numbers li a {
   display: block;
   padding: 15px;
   font-family: 'Montserrat', sans-serif;
   width: auto;
   border: none;
 }
-main .pagination_numbers li a:hover {
+.pagination_numbers li a:hover {
   text-decoration: none;
   background-color: #4081FF;
   color: #fff;

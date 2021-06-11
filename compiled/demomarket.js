@@ -853,8 +853,9 @@ $(function() {
               
 			  $button.each(function(){
 				$(this).removeClass("hidden");
+				console.log($(this));
 			  })
-			  console.log($button);
+
               $(".addToCartBlock .add_to_cart_block").attr("data-order_id", "");
               $(".addToCartBlock .product__quantity").addClass(
                 "product__quantity-active"
