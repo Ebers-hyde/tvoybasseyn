@@ -90,6 +90,10 @@
         Напечатать предложение</a>
     </div>
   </div>
+  <div class="center-wrap offer__header-print">
+    <h2>Коммерческое предложение</h2>
+    <img src="dist/assets/images/aquabiography_print.svg" alt="">
+  </div>
   <div class="center-wrap offer__parties offer__block">
       <div class="offer__party">
         <span class="offer__party_header">Кому</span>
@@ -233,12 +237,14 @@
       </div>
     <?php endforeach; ?>
       <div class="offer__expenses_summary offer__expense offer__expense_modified">
-        <div class="offer__expense_text">Итого</div>
-        <div class="offer__expense_text"><?=$summ_main?> р.</div>
+        <div class="offer__expense_text bold">ИТОГО ПО КАТЕГОРИИ</div>
+        <div class="offer__expense_text bold"><?=$summ_main?> р.</div>
       </div>
     </div>
   </div>
 
+  
+  <?php if($equipment['add']): ?>
   <div class="offer__description center-wrap offer__description_flex">
     <div>
       <div class="offer__description_title">
@@ -254,7 +260,6 @@
       <img src="dist/assets/images/offer_pool2.png" alt="">
     </div>
   </div>
-  <?php if($equipment['add']): ?>
   <div class="offer__expenses offer__block">
     <div class="center-wrap">
       <div class="offer__expense offer__expense_title offer__expense_modified">
@@ -273,8 +278,8 @@
       </div>
     <?php endforeach; ?>
       <div class="offer__expenses_summary offer__expense offer__expense_modified">
-        <div class="offer__expense_text">Итого</div>
-        <div class="offer__expense_text"><?=$summ_add?> р.</div>
+        <div class="offer__expense_text bold">ИТОГО ПО КАТЕГОРИИ</div>
+        <div class="offer__expense_text bold"><?=$summ_add?> р.</div>
       </div>
     </div>
   </div>
@@ -312,7 +317,7 @@
 
   <hr>
 
-  <div class="center-wrap">
+  <div class="center-wrap offer__gallery">
     <h2 class="offer__complect_title">Готовые проекты с бассейном Аквабиография <?=$model['name']?></h2>
     <div class="gallery">
       <?php foreach (array_slice($projects, 0, 3) as $key=> $item): $photos = $this->thumb($item->getValue('photos'),1600); ?>

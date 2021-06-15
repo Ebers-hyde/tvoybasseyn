@@ -37,6 +37,7 @@ import './assets/css/blocks/sections/compare.scss';
 import './assets/css/blocks/sections/offer.scss';
 
 //BLOCKS
+import './assets/css/blocks/gidropool.scss';
 import './assets/css/blocks/pool.scss';
 import './assets/css/blocks/article.scss';
 import './assets/css/blocks/feedback.scss';

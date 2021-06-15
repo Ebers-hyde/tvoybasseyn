@@ -238,6 +238,10 @@
     font-size: 16px;
     line-height: 156.6%;
     color: #000;
+    font-family: 'Montserrat-Number', 'Montserrat', sans-serif;
+    &.bold {
+        font-weight: 600;
+    }
 }
 
 .offer__expense_name {
@@ -263,6 +267,7 @@
     font-feature-settings: 'tnum' on, 'lnum' on;
     font-size: 20px;
     line-height: 130%;
+    font-family: 'Montserrat-Number', 'Montserrat', sans-serif;
 }
 
 .offer__expenses_summary {
@@ -376,6 +381,7 @@
             text-align: right;
             font-feature-settings: 'tnum' on, 'lnum' on;
             color: #FFFFFF;
+            font-family: 'Montserrat-Number', 'Montserrat', sans-serif;
         }
     }
 }
@@ -410,6 +416,10 @@
     }
 }
 
+.offer__header-print {
+    display: none;
+}
+
 
 @media print {
 
@@ -417,17 +427,58 @@
 
 @page {size: landscape}
 
-.offer__header, .offer__party img, .offer__banner, .ya-chat-widget, .offer__description_title svg {
-	display:none;
-}
-
-.ya-chat-widget_theme_dark.ya-chat-widget_desktop, .ya-chat-widget_theme_light.ya-chat-widget_desktop{
+.offer__header, .offer__party img, .offer__banner:not(.offer__banner-modified), .offer__description:not(.offer__description_flex), .offer__gallery, hr, .offer__complect_manager {
     display: none!important;
 }
 
-.offer__description_content {
-    display: block!important;
+.offer__header-print {
+    display: flex;
+    justify-content: space-between;
+    padding-right: 50px;
+    margin: 69px auto;
 }
 
+:after, :before {
+    background: #b4b4b4!important;
+}
+
+.offer__pool_param:after {
+    height: 60%;
+    top: 25px;
+}
+
+.offer__pool_name {
+    margin-bottom: 35px!important;
+}
+
+.offer__pool_param {
+    padding-top: 25px;
+}
+
+.offer__expenses {
+    padding: 0;
+}
+
+.ya-chat-widget.ya-chat-widget_desktop.ya-chat-widget_theme_light.ya-chat-widget_size_normal {
+    display: none!important;
+}
+
+.offer__complect {
+    width: 100%;
+    text-align: center;
+}
+
+.offer__complect_flex {
+    display: block;
+}
+
+.offer__complect_parts {
+    margin: 0 auto;
+}
+
+.offer__banner_link {
+    display: block!important;
+    color: #337ab7!important;
+}
 
 }

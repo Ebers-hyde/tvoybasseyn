@@ -1,153 +1,129 @@
 <?php 
-
 $page = $variables['page'];
+
 $main_photo = '';
 $photos = $page->getValue('photos');
 if($photos) $main_photo = $photos[0]->getFilePath(1);
-$price = 0;
-if($page->getValue('stoimost')) $price = str_replace(' ','',$page->getValue('stoimost'));
-$price = number_format($price, 0, ',', ' ');
 
-$settings = $this->getSettingsContainer();
-$objId = $settings->getValue('uslugi_v_tovare');
-$uslugi = umiObjectsCollection::getInstance()->getGuidedItems($objId);
+$width = $page->getValue('shirina');
+$length = $page->getValue('dlina');
+$depth = $page->getValue('glubina');
+$capacity = $page->getValue('capacity');
 
-$props = [];
-if($p=$page->getValue('dlina')) $props['Длина'] = $p.' м';
-if($p=$page->getValue('shirina')) $props['Ширина'] = $p.' м';
-if($p=$page->getValue('glubina')) $props['Глубина'] = $p.' м';
-if($p=$page->getValue('vysoty')) $props['Выс'] = $p.' м';
-if($p=$page->getValue('obem')) $props['Объем'] = $p.' м<sup>3</sup>';
-if($p=$page->getValue('kolichestvo_segmentov')) $props['Сегм'] = $p.' шт';
+$features = $page->getValue('features');
 
+$abs = $page->getValue('abs_price');
+$metall = $page->getValue('metall_price');
+$gold = $page->getValue('gold_price');
 ?>
-<div class="center-wrap pt-2 pool">
-<?= $this->render($variables, 'layout/header/breadcrumbs') ?>
-    <div class="product__title"><?= $this->escape($variables['header']) ?></div>
 
-    <div class="pool__wrapper">
-        <div class="pool__leftCol pool__leftCol_gidro">
-            <?php if(count($photos) > 1):?>
-                <div class="swiper-container pool__slider" style="    min-width: 100%;">
-                <div class="swiper-wrapper">
-                    <?php foreach($photos as $photo): ?>
-                        <div class="swiper-slide">
-                            <img src="<?=$photo->getFilePath(1)?>" class="swiper-lazy" style="object-fit: contain;height:100%">
-                            <div class="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
-                        </div>
-                    <?php endforeach; ?>    
-                </div>
-                <div class="swiper-button-next swiper-button-black"></div>
-                <div class="swiper-button-prev swiper-button-black"></div>
-
-                </div>
-            <?php else:?>
-                <div class="gidro_img">
-                    <img src="<?=$main_photo?>" alt="">
-                </div>
-            <?php endif;?>
-            <div class="pool__props">
-            <?php foreach($props as $k=>$prop): ?>
-                    <div class="pool__prop">
-                        <span class="pool__propTitle"><?=$k?></span>
-                        <span class="pool__propVal"><?=$prop?></span>
+<main class="gidropool">
+    <div class="pt-2 gidropool__container">
+        <div class="gidropool__info">
+            <?= $this->render($variables, 'layout/header/breadcrumbs') ?>
+            <div class="gidropool__title"><?= $this->escape($variables['header']) ?></div>
+            <div class="gidropool__size">
+            <?php for($i=1; $i<=$capacity; $i++):?>
+                <svg width="13" height="38" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10 3.5a3.5 3.5 0 11-7 0 3.5 3.5 0 017 0zM4 8h5a4 4 0 014 4v6a4.002 4.002 0 01-3 3.874V35a3 3 0 01-3 3H6a3 3 0 01-3-3V21.874A4.002 4.002 0 010 18v-6a4 4 0 014-4z" fill="#C4C4C4"/>
+                </svg>
+            <?php endfor;?>
+                <p class="gidropool__size_text"><?=$length?> x <?=$width?> x <?=$depth?> - <?=$capacity?> места</p>
+            </div>
+            <div class="gidropool__description">
+            <?=$page->content?>
+            </div>
+            <div class="gidropool__variants">
+                <?php if($abs):?>
+                    <div class="gidropool__variant">
+                        <h6 class="gidropool__variant_title">ABS Пластик</h6>
+                        <p class="gidropool__variant_price"><?=$abs . " ₽"?></p>
+                        <a class="btn btn--secondDisabled">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M5.15503 10.344L5.15759 10.3439H13.6563C13.8655 10.3439 14.0494 10.2051 14.1069 10.0039L15.9819 3.44141C16.0223 3.29993 15.994 3.14783 15.9055 3.0304C15.8169 2.91296 15.6783 2.84387 15.5313 2.84387H4.07398L3.73889 1.33594C3.69116 1.12146 3.50098 0.968872 3.28125 0.968872H0.46875C0.209839 0.968872 0 1.17871 0 1.43762C0 1.69653 0.209839 1.90637 0.46875 1.90637H2.90527L4.59766 9.52234C4.73846 10.1045 4.84576 10.3342 5.15503 10.344ZM13.3026 9.40637L14.9098 3.78137H4.28223L5.53223 9.40637H13.3026Z" fill="#C5CCDD"/>
+                                <path d="M4.57129 12.9524C4.57129 13.7926 5.25489 14.4762 6.0951 14.4762C6.93531 14.4762 7.61891 13.7926 7.61891 12.9524C7.61891 12.1122 6.93531 11.4286 6.0951 11.4286C5.25489 11.4286 4.57129 12.1122 4.57129 12.9524ZM6.0951 12.4444C6.37513 12.4444 6.60304 12.6724 6.60304 12.9524C6.60304 13.2324 6.37513 13.4603 6.0951 13.4603C5.81507 13.4603 5.58716 13.2324 5.58716 12.9524C5.58716 12.6724 5.81507 12.4444 6.0951 12.4444Z" fill="#C5CCDD"/>
+                                <path d="M11.4287 12.9524C11.4287 13.7926 12.1123 14.4762 12.9525 14.4762C13.7927 14.4762 14.4763 13.7926 14.4763 12.9524C14.4763 12.1122 13.7927 11.4286 12.9525 11.4286C12.1123 11.4286 11.4287 12.1122 11.4287 12.9524ZM12.9525 12.4444C13.2325 12.4444 13.4605 12.6724 13.4605 12.9524C13.4605 13.2324 13.2325 13.4603 12.9525 13.4603C12.6725 13.4603 12.4446 13.2324 12.4446 12.9524C12.4446 12.6724 12.6725 12.4444 12.9525 12.4444Z" fill="#C5CCDD"/>
+                            </svg>
+                            <span>КУПИТЬ</span>
+                        </a>
                     </div>
+                    <?php endif;?>
+                <?php if($metall):?>
+                    <div class="gidropool__variant">
+                        <h6 class="gidropool__variant_title">Metall</h6>
+                        <p class="gidropool__variant_price"><?=$metall . " ₽"?></p>
+                        <a class="btn btn--secondDisabled">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M5.15503 10.344L5.15759 10.3439H13.6563C13.8655 10.3439 14.0494 10.2051 14.1069 10.0039L15.9819 3.44141C16.0223 3.29993 15.994 3.14783 15.9055 3.0304C15.8169 2.91296 15.6783 2.84387 15.5313 2.84387H4.07398L3.73889 1.33594C3.69116 1.12146 3.50098 0.968872 3.28125 0.968872H0.46875C0.209839 0.968872 0 1.17871 0 1.43762C0 1.69653 0.209839 1.90637 0.46875 1.90637H2.90527L4.59766 9.52234C4.73846 10.1045 4.84576 10.3342 5.15503 10.344ZM13.3026 9.40637L14.9098 3.78137H4.28223L5.53223 9.40637H13.3026Z" fill="#C5CCDD"/>
+                                <path d="M4.57129 12.9524C4.57129 13.7926 5.25489 14.4762 6.0951 14.4762C6.93531 14.4762 7.61891 13.7926 7.61891 12.9524C7.61891 12.1122 6.93531 11.4286 6.0951 11.4286C5.25489 11.4286 4.57129 12.1122 4.57129 12.9524ZM6.0951 12.4444C6.37513 12.4444 6.60304 12.6724 6.60304 12.9524C6.60304 13.2324 6.37513 13.4603 6.0951 13.4603C5.81507 13.4603 5.58716 13.2324 5.58716 12.9524C5.58716 12.6724 5.81507 12.4444 6.0951 12.4444Z" fill="#C5CCDD"/>
+                                <path d="M11.4287 12.9524C11.4287 13.7926 12.1123 14.4762 12.9525 14.4762C13.7927 14.4762 14.4763 13.7926 14.4763 12.9524C14.4763 12.1122 13.7927 11.4286 12.9525 11.4286C12.1123 11.4286 11.4287 12.1122 11.4287 12.9524ZM12.9525 12.4444C13.2325 12.4444 13.4605 12.6724 13.4605 12.9524C13.4605 13.2324 13.2325 13.4603 12.9525 13.4603C12.6725 13.4603 12.4446 13.2324 12.4446 12.9524C12.4446 12.6724 12.6725 12.4444 12.9525 12.4444Z" fill="#C5CCDD"/>
+                            </svg>
+                            <span>КУПИТЬ</span>
+                        </a>
+                    </div>
+                <?php endif;?>
+                <?php if($metall):?>
+                    <div class="gidropool__variant">
+                        <h6 class="gidropool__variant_title">Gold</h6>
+                        <p class="gidropool__variant_price"><?=$gold . " ₽"?></p>
+                        <a class="btn btn--secondDisabled">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M5.15503 10.344L5.15759 10.3439H13.6563C13.8655 10.3439 14.0494 10.2051 14.1069 10.0039L15.9819 3.44141C16.0223 3.29993 15.994 3.14783 15.9055 3.0304C15.8169 2.91296 15.6783 2.84387 15.5313 2.84387H4.07398L3.73889 1.33594C3.69116 1.12146 3.50098 0.968872 3.28125 0.968872H0.46875C0.209839 0.968872 0 1.17871 0 1.43762C0 1.69653 0.209839 1.90637 0.46875 1.90637H2.90527L4.59766 9.52234C4.73846 10.1045 4.84576 10.3342 5.15503 10.344ZM13.3026 9.40637L14.9098 3.78137H4.28223L5.53223 9.40637H13.3026Z" fill="#C5CCDD"/>
+                                <path d="M4.57129 12.9524C4.57129 13.7926 5.25489 14.4762 6.0951 14.4762C6.93531 14.4762 7.61891 13.7926 7.61891 12.9524C7.61891 12.1122 6.93531 11.4286 6.0951 11.4286C5.25489 11.4286 4.57129 12.1122 4.57129 12.9524ZM6.0951 12.4444C6.37513 12.4444 6.60304 12.6724 6.60304 12.9524C6.60304 13.2324 6.37513 13.4603 6.0951 13.4603C5.81507 13.4603 5.58716 13.2324 5.58716 12.9524C5.58716 12.6724 5.81507 12.4444 6.0951 12.4444Z" fill="#C5CCDD"/>
+                                <path d="M11.4287 12.9524C11.4287 13.7926 12.1123 14.4762 12.9525 14.4762C13.7927 14.4762 14.4763 13.7926 14.4763 12.9524C14.4763 12.1122 13.7927 11.4286 12.9525 11.4286C12.1123 11.4286 11.4287 12.1122 11.4287 12.9524ZM12.9525 12.4444C13.2325 12.4444 13.4605 12.6724 13.4605 12.9524C13.4605 13.2324 13.2325 13.4603 12.9525 13.4603C12.6725 13.4603 12.4446 13.2324 12.4446 12.9524C12.4446 12.6724 12.6725 12.4444 12.9525 12.4444Z" fill="#C5CCDD"/>
+                            </svg>
+                            <span>КУПИТЬ</span>
+                        </a>
+                    </div>
+                <?php endif;?>
+            </div>
+        </div>
+        <div class="gidropool__view">
+            <img src="<?=$main_photo?>" alt="">
+        </div>
+    </div>
+    <div class="gidropool__container">
+        <div class="gidropool__video">
+            <video class="wp-video-shortcode lazy-hidden mrSpa_video" muted id="video-33421-1_html5" width="100%" height="477px" loop="1" autoplay="1" preload="metadata" src="resources/mrSpa.mp4" style="width: 100%;height: auto;"><source type="video/mp4" src="resources/mrSpa.mp4"><a href="resources/mrSpa.mp4">mrSpa.mp4</a>
+            </video>
+        </div>
+        <div class="gidropool__features">
+            <h3 class="gidropool__subtitle">
+            Основные особенности
+            </h3>
+            <ul>
+                <?=$features?>
+            </ul>
+        </div>
+    </div>
+    <div class="gidropool__images center-wrap">
+        <img src="dist/assets/images/mrspa_perspective.png" alt="">
+    </div>
+    <?php if($page->getValue('cveta')){ $list = umiObjectsCollection::getInstance()->getGuidedItems($page->getValue('cveta'));$cveta = $this->vsk_objById(array_keys($list));  ?>
+        <div class="gidropool__colors center-wrap">
+            <h2 class="gidropool__subtitle">Цвета</h2>
+            <div style="display: flex;flex-wrap: wrap;">
+            <?php foreach($cveta as $item): ?>
+                <div style="flex: 0 0 25%;max-width: 25%;text-align: center;padding: 10px;">
+                    <img data-fancybox="galera" data-src="<?=$item->getValue('photo')?>" src="<?=$item->getValue('photo')?>">
+                    <span class="gidro__colors_name"><?=$item->name?></span>
+                </div>
             <?php endforeach; ?>
-              
-            </div>
-            <?php if($cher = $page->getValue('chertezh')){?><a data-fancybox href="<?=$cher->getFilePath(1)?>" class="pool__download"><?php $style='margin-right:10px;';$svg='pdf';include 'blocks/svg.php'?>
-            СКАЧАТЬ ЧЕРТЕЖ</a><?php } ?>
-
-           
-        </div>
-        <div class="pool__rightCol">
-            <div class="pool__constructor" style="display:none">
-                <img src="resources/img/constructor.png">
             </div>
 
-
-
-
-            <div class="pool__rightCol">
-                
-
-                <video class="wp-video-shortcode lazy-hidden mrSpa_video" muted id="video-33421-1_html5" width="640" height="360" loop="1" autoplay="1" preload="metadata" src="resources/mrSpa.mp4" style="width: 100%;height: auto;"><source type="video/mp4" src="resources/mrSpa.mp4"><a href="resources/mrSpa.mp4">mrSpa.mp4</a></video>
-
-
-                <div class="pool__filter">
-                        
-                        <div class="filter">
-                            <div class="filter__block">
-                                <div class="filter__field filter__field_active">Simple</div>
-                                <div class="filter__field">Classik</div>
-                                <div class="filter__field">Avangard</div>
-                            </div>
-                        </div>
-                    </div>
-
-
-
-                    <div class="pool__summaryLine pool__summaryLine_total"><span class="pool__summaryTitle">Стоимость</span><span class="pool__summarySumm"><?=$price?> ₽</span></div>
-                    <div class="pool__summaryAction"><a class="btn btn--primary" onclick="$('#callback input[name=&quot;system_form_id&quot;]').val(236);$('#callback .popup-form__title').text('Консультация по бассейну <?=$page->name?>');show_popup('callback')">Консультация</a></div>
-                    
-                
-                
+        </div>
+    <?php } ?>
+    <?php if($page->getValue('galereya_proektov')){ $list = umiObjectsCollection::getInstance()->getGuidedItems($page->getValue('galereya_proektov'));$galereya_proektov = $this->vsk_objById(array_keys($list));  ?>
+        <div class="center-wrap pt-2 gidropool__projects">
+            <h2 class="gidropool__subtitle">Галерея проектов</h2>
+            <div style="display: flex;flex-wrap: wrap;">
+            <?php foreach($galereya_proektov as $item): ?>
+                <div class="gidro__project">
+                    <img data-fancybox="proekty" data-src="<?=$item->getValue('photo')?>" src="<?=$item->getValue('photo')?>">
+                    <span><?=str_replace('no name','',$item->name)?></span>
+                </div>
+            <?php endforeach; ?>
             </div>
-
-            <?= $this->render(['name'=>'Заказать консультацию','title'=>'Консультация по по бассейну '.$page->name,'ym'=>'consultation'], 'blocks/forms/callback') ?>
-
-
-
-
-
         </div>
-    </div>
-
-
-</div>
-<?php if($page->getValue('cveta')){ $list = umiObjectsCollection::getInstance()->getGuidedItems($page->getValue('cveta'));$cveta = $this->vsk_objById(array_keys($list));  ?>
-<div class="gidro__colors center-wrap pt-2">
-    <h2>Цвета</h2>
-    <div style="display: flex;flex-wrap: wrap;">
-    <?php foreach($cveta as $item): ?>
-        <div style="flex: 0 0 25%;max-width: 25%;text-align: center;padding: 10px;">
-            <img data-fancybox="galera" data-src="<?=$item->getValue('photo')?>" src="<?=$item->getValue('photo')?>">
-            <span class="gidro__colors_name"><?=$item->name?></span>
-        </div>
-    <?php endforeach; ?>
-    </div>
-
-</div>
-<?php } ?>
-
-<?php  $similar = $this->getRelatedProducts($page); ?>
-<div class="center-wrap pt-2">
-  <h2 class="right-slide__blockH2">Рекомендуем обратить внимание</h2>  
-    <div class="catalog-list">
-        <?php foreach($similar as $category): ?>
-            <?= $this->render($category, 'content/catalog/preview') ?>
-        <?php endforeach; ?>
-    </div>
-</div>
-<?php if($page->getValue('galereya_proektov')){ $list = umiObjectsCollection::getInstance()->getGuidedItems($page->getValue('galereya_proektov'));$galereya_proektov = $this->vsk_objById(array_keys($list));  ?>
-<div class="center-wrap pt-2">
-    <h2 class="right-slide__blockH2">Галерея проектов</h2>
-
-    <div style="display: flex;flex-wrap: wrap;">
-    <?php foreach($galereya_proektov as $item): ?>
-        <div class="gidro__project">
-            <img data-fancybox="proekty" data-src="<?=$item->getValue('photo')?>" src="<?=$item->getValue('photo')?>">
-            <span><?=str_replace('no name','',$item->name)?></span>
-        </div>
-    <?php endforeach; ?>
-    </div>
-
-</div>
-<?php } ?>
-
-
-<div class="center-wrap pt-2">
-  <div class="article" style="padding-top:50px">
-  <?=$page->getValue('content')?>
- </div>
-</div>
+    <?php } ?>
+</main>

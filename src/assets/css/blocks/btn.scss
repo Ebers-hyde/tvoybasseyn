@@ -75,6 +75,23 @@
 			background: #4081FF;
 		}
 	}
+
+	&--secondDisabled {
+		display: flex;
+		align-items: flex-start;
+		padding: 13px 23px;
+		border-radius: 3px;
+		color: #C5CCDD;
+		font-weight: 600;
+		font-size: 11px;
+		line-height: 150%;
+		border: 1px solid #E2E6F0;
+		max-width: max-content;
+		&:hover {
+			background: #fff;
+			color: #C5CCDD;
+		}
+	}
 }
 
 

@@ -1,0 +1,132 @@
+.gidropool {
+    &__container {
+        display: flex;
+    }
+    &__info {
+        width: 50%;
+        padding-left: 220px;
+    }
+    &__title {
+        font-style: normal;
+        font-weight: bold;
+        font-size: 28px;
+        line-height: 118%;
+    }
+    &__view {
+        text-align: center;
+        width: 50%;
+        background: rgba(92, 110, 104, 0.14);
+        height: 767px;
+        padding: 3% 0;
+        img {
+            max-width: 80%;
+        }
+    }
+    &__size {
+        margin-top: 60px;
+        &_text {
+            font-style: normal;
+            font-weight: normal;
+            font-size: 16px;
+            line-height: 112%;
+            margin-top: 10px;
+        }
+    }
+    &__description {
+        margin-top: 45px;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 14px;
+        line-height: 179.4%;
+        width: 82%;
+    }
+    &__variants {
+        margin-top: 45px;
+        display: flex;
+    }
+    &__variant {
+        margin: 0 19px;
+        &:first-child {
+            margin: 0 19px 0 0;
+        }
+        &:last-child {
+            margin: 0 0 0 19px;
+        }
+        &_title {
+            font-style: normal;
+            font-weight: normal;
+            font-size: 16px;
+            line-height: 112%;
+            font-feature-settings: 'tnum' on, 'lnum' on;
+            color: #353535;
+        }
+        &_price {
+            font-style: normal;
+            font-weight: normal;
+            font-size: 16px;
+            line-height: 113.5%;
+            font-feature-settings: 'tnum' on, 'lnum' on;
+            color: #4081FF;
+        }
+        &-active {
+            .gidropool__variant_title {
+                font-weight: bold;
+            }
+            .gidropool__variant_price {
+                font-weight: bold;
+            }
+            .btn {
+                svg {
+                    path {
+                        fill: #fff;
+                    }
+                }
+            }
+        }
+        .btn {
+            svg {
+                margin-right: 20px;
+            }
+        }
+    }
+    &__video {
+        width: 50%;
+    }
+    &__features {
+        width: 50%;
+        padding: 65px 50px;
+        li {
+            font-style: normal;
+            margin: 8px 0;
+            font-weight: normal;
+            font-size: 14px;
+            line-height: 141.4%;
+            color: #777777;
+        }
+    }
+    &__images {
+        margin: 75px auto;
+        img {
+            width: 100%;
+            max-height: 100%;
+        }
+    }
+    &__colors {
+        h2 {
+            text-align: center;
+        }
+    }
+    &__projects {
+        h2 {
+            text-align: center;
+        }
+    }
+    &__subtitle {
+        font-style: normal;
+        font-weight: bold;
+        font-size: 22px;
+        line-height: 120.4%;
+        color: #000000;
+        margin-bottom: 40px;
+    }
+}
