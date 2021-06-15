@@ -409,3 +409,25 @@
         }
     }
 }
+
+
+@media print {
+
+* { -webkit-print-color-adjust: exact; }
+
+@page {size: landscape}
+
+.offer__header, .offer__party img, .offer__banner, .ya-chat-widget, .offer__description_title svg {
+	display:none;
+}
+
+.ya-chat-widget_theme_dark.ya-chat-widget_desktop, .ya-chat-widget_theme_light.ya-chat-widget_desktop{
+    display: none!important;
+}
+
+.offer__description_content {
+    display: block!important;
+}
+
+
+}

@@ -13,3 +13,7 @@ $('.anchors a:not([data-anchors]):not(.sidebar__nav-linkFollow)').on("click", fu
         location.href = '/#' + elementid;
     }
 });
+
+$('a.pdf').click(function(){
+    window.print();
+});
