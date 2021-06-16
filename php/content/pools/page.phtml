@@ -8,15 +8,15 @@ $serieName = $serie->name;
 $isInSales = $this->findPositionInList($sale, $page->name);
 $cher = $page->getValue('chertezh');
 //$otherSeries = $this->vsk_objByType(195, ['list'=>[['seriya', 'art','notequals'],['seriya', '','isnotnull']]], 3, 'notequals');
-$allSeries = $this->getProductsListFromCategory(1334,100);
+$allSeries = $this->getProductsListFromCategory(1334, 100);
 $otherSeries = [];
 $otherModels = [];
-foreach($allSeries['items'] as $sir){
-    if(!empty($sir->getValue('seriya')) && $sir->getValue('seriya') != $serieName) {
+foreach ($allSeries['items'] as $sir) {
+    if (!empty($sir->getValue('seriya')) && $sir->getValue('seriya') != $serieName) {
         $otherSeries[] = $sir;
     }
 
-    if($sir->getValue('series') == $page->getValue('series')) {
+    if ($sir->getValue('series') == $page->getValue('series')) {
         $otherModels[] = $sir;
     }
 }
@@ -37,39 +37,46 @@ else $price2 = number_format($price2, 0, ',', ' ') . ' ₽';
 
 <section class="product productv2" id="product-page">
     <div class="product__aquabioraphy">
-        <img src="<?=$page->getValue('header_image')?:$serie->getValue('header_image')?>" alt="">
-        <div class="product__aquabioraphy-titles">
+        <img src="<?= $page->getValue('header_image') ?: $serie->getValue('header_image') ?>" alt="">
+        <div class="product__aquabioraphy-titles mobile--hide">
             <h2 class="product__aquabioraphy-title">Аквабиография</h2>
             <h2 class="product__aquabioraphy-serie"><?= $serieName ?></h2>
         </div>
+        <?php if ($isInSales) : ?>
+            <div class="product__purchase-discount desktop--hide">
+                % Доступно со скидкой
+            </div>
+        <?php endif; ?>
     </div>
     <div class="center-wrap product__main">
-        <div class="product__dropdowns product__modelDropdowns">
-        <div class="close_modelDropdown toggle_modelsDropdown">
-            <svg viewBox="0 0 22 23" xmlns="http://www.w3.org/2000/svg">
-            <path d="M3.85922 5.01793L3.93548 4.93157C4.26592 4.60113 4.78588 4.57571 5.14548 4.85531L5.23184 4.93157L11.0003 10.6993L16.7688 4.93157C17.1268 4.57359 17.7072 4.57359 18.0652 4.93157C18.4232 5.28955 18.4232 5.86995 18.0652 6.22793L12.2974 11.9964L18.0652 17.7649C18.3956 18.0953 18.421 18.6153 18.1414 18.9749L18.0652 19.0613C17.7347 19.3917 17.2148 19.4171 16.8552 19.1375L16.7688 19.0613L11.0003 13.2935L5.23184 19.0613C4.87386 19.4192 4.29346 19.4192 3.93548 19.0613C3.5775 18.7033 3.5775 18.1229 3.93548 17.7649L9.70324 11.9964L3.93548 6.22793C3.60503 5.89749 3.57962 5.37753 3.85922 5.01793L3.93548 4.93157L3.85922 5.01793Z" fill="#000"/>
-            </svg>
-        </div>
-            <?php foreach($otherModels as $model):?>
-            <a href="<?= $model->link ?>" class="product__dropdown product__modelDropdown">
-                <div>
-                    <h4>Модель</h4>
-                    <h2><?= $model->name ?></h2>
+        <?php if (!$this->isMobile()) : ?>
+            <div class="product__dropdowns product__modelDropdowns">
+                <div class="close_modelDropdown toggle_modelsDropdown">
+                    <svg viewBox="0 0 22 23" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M3.85922 5.01793L3.93548 4.93157C4.26592 4.60113 4.78588 4.57571 5.14548 4.85531L5.23184 4.93157L11.0003 10.6993L16.7688 4.93157C17.1268 4.57359 17.7072 4.57359 18.0652 4.93157C18.4232 5.28955 18.4232 5.86995 18.0652 6.22793L12.2974 11.9964L18.0652 17.7649C18.3956 18.0953 18.421 18.6153 18.1414 18.9749L18.0652 19.0613C17.7347 19.3917 17.2148 19.4171 16.8552 19.1375L16.7688 19.0613L11.0003 13.2935L5.23184 19.0613C4.87386 19.4192 4.29346 19.4192 3.93548 19.0613C3.5775 18.7033 3.5775 18.1229 3.93548 17.7649L9.70324 11.9964L3.93548 6.22793C3.60503 5.89749 3.57962 5.37753 3.85922 5.01793L3.93548 4.93157L3.85922 5.01793Z" fill="#000" />
+                    </svg>
                 </div>
-                <div>
-                    <h4>Liner</h4>
-                    <h2><?=number_format($model->getValue('stoimost'), 0, ',', ' ')?> ₽</h2>
-                </div>
-                <div>
-                    <h4>Cristal</h4>
-                    <h2><?=number_format($model->getValue('cena_cristal'), 0, ',', ' ')?> ₽</h2>
-                </div>
-                <div>
-                    <img src="<?= $model->getValue('menu_pic_ua') ?>" alt="">
-                </div>
-            </a>
-            <?php endforeach;?>
-        </div>
+                <?php foreach ($otherModels as $model) : ?>
+                    <a href="<?= $model->link ?>" class="product__dropdown product__modelDropdown">
+                        <div>
+                            <h4>Модель</h4>
+                            <h2><?= $model->name ?></h2>
+                        </div>
+                        <div>
+                            <h4>Liner</h4>
+                            <h2><?= number_format($model->getValue('stoimost'), 0, ',', ' ') ?> ₽</h2>
+                        </div>
+                        <div>
+                            <h4>Cristal</h4>
+                            <h2><?= number_format($model->getValue('cena_cristal'), 0, ',', ' ') ?> ₽</h2>
+                        </div>
+                        <div>
+                            <img src="<?= $model->getValue('menu_pic_ua') ?>" alt="">
+                        </div>
+                    </a>
+                <?php endforeach; ?>
+            </div>
+        <?php endif; ?>
         <div class="product__info2">
             <div class="product__info2-model">
                 <div>
@@ -87,23 +94,31 @@ else $price2 = number_format($price2, 0, ',', ' ') . ' ₽';
             </div>
             <div class="product__info2-description">
                 <?= $page->getValue('content') ?>
+                <span class="product__description_toggler desktop--hide">Раскрыть описание</span>
             </div>
         </div>
         <div class="product__purchase">
+            <h4 class="desktop--hide product__purchase_mobileTitle">Стоимость</h4>
             <div class="product__purchase-prices">
-                <h4>Стоимость Liner</h4>
-                <h3><?= $price ?></h3>
-                <h4>Стоимость Cristal</h4>
-                <h3><?= $price2 ?></h3>
+                <div>
+                    <h4>Стоимость Liner</h4>
+                    <h3><?= $price ?></h3>
+                    <span class="desktop--hide">Liner</span>
+                </div>
+                <div>
+                    <h4>Стоимость Cristal</h4>
+                    <h3><?= $price2 ?></h3>
+                    <span class="desktop--hide">Cristal</span>
+                </div>
             </div>
             <div class="product__purchase-links">
-                <button class="btn btn--blue" onclick="$('#callback input[name=&quot;system_form_id&quot;]').val(236);$('#callback .popup-form__title').text('Консультация по бассейну <?=$page->name?>');show_popup('callback')">Консультация</button>
+                <button class="btn btn--blue" onclick="$('#callback input[name=&quot;system_form_id&quot;]').val(236);$('#callback .popup-form__title').text('Консультация по бассейну <?= $page->name ?>');show_popup('callback')">Консультация</button>
                 <button>В калькулятор</button>
                 <?php if ($cher) : ?>
-                <a href="<?= $cher->getFilePath(1) ?>" target="_blank">Скачать чертеж</a>
-                <?php endif;?>
+                    <a href="<?= $cher->getFilePath(1) ?>" target="_blank">Скачать чертеж</a>
+                <?php endif; ?>
                 <?php if ($isInSales) : ?>
-                    <div class="product__purchase-discount">
+                    <div class="product__purchase-discount mobile--hide">
                         % Доступно со скидкой
                     </div>
                 <?php endif; ?>
@@ -115,7 +130,7 @@ else $price2 = number_format($price2, 0, ',', ' ') . ' ₽';
             <h2 class="product__dropdown-title">Варианты исполнения</h2>
             <div class="product__dropdown-icon">
                 <svg width="18px" height="10px" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M17.7071 0.292893C18.0676 0.653377 18.0953 1.22061 17.7903 1.6129L17.7071 1.70711L9.70711 9.70711C9.34662 10.0676 8.77939 10.0953 8.3871 9.7903L8.29289 9.70711L0.292892 1.70711C-0.0976315 1.31658 -0.0976315 0.683417 0.292892 0.292893C0.653376 -0.0675913 1.22061 -0.0953212 1.6129 0.209704L1.70711 0.292893L9 7.58579L16.2929 0.292893C16.6834 -0.0976309 17.3166 -0.0976309 17.7071 0.292893Z" fill="#000" />
+                    <path d="M17.7071 0.292893C18.0676 0.653377 18.0953 1.22061 17.7903 1.6129L17.7071 1.70711L9.70711 9.70711C9.34662 10.0676 8.77939 10.0953 8.3871 9.7903L8.29289 9.70711L0.292892 1.70711C-0.0976315 1.31658 -0.0976315 0.683417 0.292892 0.292893C0.653376 -0.0675913 1.22061 -0.0953212 1.6129 0.209704L1.70711 0.292893L9 7.58579L16.2929 0.292893C16.6834 -0.0976309 17.3166 -0.0976309 17.7071 0.292893Z" />
                 </svg>
             </div>
         </div>
@@ -145,7 +160,7 @@ else $price2 = number_format($price2, 0, ',', ' ') . ' ₽';
             <h2 class="product__dropdown-title">Дополнительные опции</h2>
             <div class="product__dropdown-icon">
                 <svg width="18px" height="10px" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M17.7071 0.292893C18.0676 0.653377 18.0953 1.22061 17.7903 1.6129L17.7071 1.70711L9.70711 9.70711C9.34662 10.0676 8.77939 10.0953 8.3871 9.7903L8.29289 9.70711L0.292892 1.70711C-0.0976315 1.31658 -0.0976315 0.683417 0.292892 0.292893C0.653376 -0.0675913 1.22061 -0.0953212 1.6129 0.209704L1.70711 0.292893L9 7.58579L16.2929 0.292893C16.6834 -0.0976309 17.3166 -0.0976309 17.7071 0.292893Z" fill="#000" />
+                    <path d="M17.7071 0.292893C18.0676 0.653377 18.0953 1.22061 17.7903 1.6129L17.7071 1.70711L9.70711 9.70711C9.34662 10.0676 8.77939 10.0953 8.3871 9.7903L8.29289 9.70711L0.292892 1.70711C-0.0976315 1.31658 -0.0976315 0.683417 0.292892 0.292893C0.653376 -0.0675913 1.22061 -0.0953212 1.6129 0.209704L1.70711 0.292893L9 7.58579L16.2929 0.292893C16.6834 -0.0976309 17.3166 -0.0976309 17.7071 0.292893Z" />
                 </svg>
             </div>
         </div>
@@ -156,7 +171,7 @@ else $price2 = number_format($price2, 0, ',', ' ') . ' ₽';
             <h2 class="product__dropdown-title">Доступные цвета</h2>
             <div class="product__dropdown-icon">
                 <svg width="18px" height="10px" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M17.7071 0.292893C18.0676 0.653377 18.0953 1.22061 17.7903 1.6129L17.7071 1.70711L9.70711 9.70711C9.34662 10.0676 8.77939 10.0953 8.3871 9.7903L8.29289 9.70711L0.292892 1.70711C-0.0976315 1.31658 -0.0976315 0.683417 0.292892 0.292893C0.653376 -0.0675913 1.22061 -0.0953212 1.6129 0.209704L1.70711 0.292893L9 7.58579L16.2929 0.292893C16.6834 -0.0976309 17.3166 -0.0976309 17.7071 0.292893Z" fill="#000" />
+                    <path d="M17.7071 0.292893C18.0676 0.653377 18.0953 1.22061 17.7903 1.6129L17.7071 1.70711L9.70711 9.70711C9.34662 10.0676 8.77939 10.0953 8.3871 9.7903L8.29289 9.70711L0.292892 1.70711C-0.0976315 1.31658 -0.0976315 0.683417 0.292892 0.292893C0.653376 -0.0675913 1.22061 -0.0953212 1.6129 0.209704L1.70711 0.292893L9 7.58579L16.2929 0.292893C16.6834 -0.0976309 17.3166 -0.0976309 17.7071 0.292893Z" />
                 </svg>
             </div>
         </div>
@@ -167,7 +182,7 @@ else $price2 = number_format($price2, 0, ',', ' ') . ' ₽';
             <h2 class="product__dropdown-title">Готовые проекты с <?= $serieName ?></h2>
             <div class="product__dropdown-icon">
                 <svg width="18px" height="10px" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M17.7071 0.292893C18.0676 0.653377 18.0953 1.22061 17.7903 1.6129L17.7071 1.70711L9.70711 9.70711C9.34662 10.0676 8.77939 10.0953 8.3871 9.7903L8.29289 9.70711L0.292892 1.70711C-0.0976315 1.31658 -0.0976315 0.683417 0.292892 0.292893C0.653376 -0.0675913 1.22061 -0.0953212 1.6129 0.209704L1.70711 0.292893L9 7.58579L16.2929 0.292893C16.6834 -0.0976309 17.3166 -0.0976309 17.7071 0.292893Z" fill="#000" />
+                    <path d="M17.7071 0.292893C18.0676 0.653377 18.0953 1.22061 17.7903 1.6129L17.7071 1.70711L9.70711 9.70711C9.34662 10.0676 8.77939 10.0953 8.3871 9.7903L8.29289 9.70711L0.292892 1.70711C-0.0976315 1.31658 -0.0976315 0.683417 0.292892 0.292893C0.653376 -0.0675913 1.22061 -0.0953212 1.6129 0.209704L1.70711 0.292893L9 7.58579L16.2929 0.292893C16.6834 -0.0976309 17.3166 -0.0976309 17.7071 0.292893Z" />
                 </svg>
             </div>
         </div>
@@ -205,7 +220,7 @@ else $price2 = number_format($price2, 0, ',', ' ') . ' ₽';
             <h2 class="product__dropdown-title">Доставка и оплата</h2>
             <div class="product__dropdown-icon">
                 <svg width="18px" height="10px" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M17.7071 0.292893C18.0676 0.653377 18.0953 1.22061 17.7903 1.6129L17.7071 1.70711L9.70711 9.70711C9.34662 10.0676 8.77939 10.0953 8.3871 9.7903L8.29289 9.70711L0.292892 1.70711C-0.0976315 1.31658 -0.0976315 0.683417 0.292892 0.292893C0.653376 -0.0675913 1.22061 -0.0953212 1.6129 0.209704L1.70711 0.292893L9 7.58579L16.2929 0.292893C16.6834 -0.0976309 17.3166 -0.0976309 17.7071 0.292893Z" fill="#000" />
+                    <path d="M17.7071 0.292893C18.0676 0.653377 18.0953 1.22061 17.7903 1.6129L17.7071 1.70711L9.70711 9.70711C9.34662 10.0676 8.77939 10.0953 8.3871 9.7903L8.29289 9.70711L0.292892 1.70711C-0.0976315 1.31658 -0.0976315 0.683417 0.292892 0.292893C0.653376 -0.0675913 1.22061 -0.0953212 1.6129 0.209704L1.70711 0.292893L9 7.58579L16.2929 0.292893C16.6834 -0.0976309 17.3166 -0.0976309 17.7071 0.292893Z" />
                 </svg>
             </div>
         </div>
@@ -215,13 +230,41 @@ else $price2 = number_format($price2, 0, ',', ' ') . ' ₽';
     </div>
     <div class="center-wrap product__series">
         <h2 class="product__series-headline">Другие модели</h2>
-        <div class="product__series-previews">
-            <?php foreach ($otherSeries as $serie): ?>
-            <a href="<?=$serie->link?>" class="product__series-preview">
-                <img src="<?=$this->thumb($serie->getValue('photos'),600,400)[0]?>" alt="">
-                <h2><?= ucfirst(strtolower(explode(' ', $this->escape($serie->name))[0])) ?></h2>
-            </a>
-            <?php endforeach;?>
-        </div>
+        <?php if (!$this->isMobile()) : ?>
+            <div class="product__series-previews">
+                <?php foreach ($otherSeries as $serie) : ?>
+                    <a href="<?= $serie->link ?>" class="product__series-preview">
+                        <img src="<?= $this->thumb($serie->getValue('photos'), 600, 400)[0] ?>" alt="">
+                        <h2><?= ucfirst(strtolower(explode(' ', $this->escape($serie->name))[0])) ?></h2>
+                    </a>
+                <?php endforeach; ?>
+            </div>
+        <?php else : ?>
+            <div class="product__series_slider">
+                <div class="product__series_prev">
+                    <svg width="18px" height="10px" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M17.7071 0.292893C18.0676 0.653377 18.0953 1.22061 17.7903 1.6129L17.7071 1.70711L9.70711 9.70711C9.34662 10.0676 8.77939 10.0953 8.3871 9.7903L8.29289 9.70711L0.292892 1.70711C-0.0976315 1.31658 -0.0976315 0.683417 0.292892 0.292893C0.653376 -0.0675913 1.22061 -0.0953212 1.6129 0.209704L1.70711 0.292893L9 7.58579L16.2929 0.292893C16.6834 -0.0976309 17.3166 -0.0976309 17.7071 0.292893Z"></path>
+                    </svg>
+                </div>
+                <div class="swiper-container">
+                    <div class="swiper-wrapper">
+                        <?php $i = 1;
+                        foreach ($otherSeries as $serie) : ?>
+                            <a href="<?= $serie->link ?>" class="swiper-slide">
+                                <div class="toogles__item-title" data-toogles="<?= $i++ ?>">
+                                    <img src="<?= $this->thumb($serie->getValue('photos'), 600, 400)[0] ?>" alt="">
+                                </div>
+                                <h3><?= ucfirst(strtolower(explode(' ', $this->escape($serie->name))[0])) ?></h3>
+                            </a>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+                <div class="product__series_next">
+                    <svg width="18px" height="10px" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M17.7071 0.292893C18.0676 0.653377 18.0953 1.22061 17.7903 1.6129L17.7071 1.70711L9.70711 9.70711C9.34662 10.0676 8.77939 10.0953 8.3871 9.7903L8.29289 9.70711L0.292892 1.70711C-0.0976315 1.31658 -0.0976315 0.683417 0.292892 0.292893C0.653376 -0.0675913 1.22061 -0.0953212 1.6129 0.209704L1.70711 0.292893L9 7.58579L16.2929 0.292893C16.6834 -0.0976309 17.3166 -0.0976309 17.7071 0.292893Z"></path>
+                    </svg>
+                </div>
+            </div>
+        <?php endif; ?>
     </div>
 </section>

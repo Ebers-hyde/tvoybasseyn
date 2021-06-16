@@ -958,6 +958,9 @@
 
 .product__dropdown-icon {
     width: 8%;
+    svg {
+        fill: #000;
+    }
 }
 
 .product__main .product__dropdowns {

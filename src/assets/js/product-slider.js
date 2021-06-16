@@ -43,3 +43,28 @@ if (document.querySelector('.series__modelsList-slider')) {
     });
 }
 
+if(document.querySelector('.product__series_slider')) {
+    var swiper = new Swiper('.product__series_slider .swiper-container', {
+        slidesPerView: 'auto',
+        initialSlide: 1,
+        spaceBetween: 14,
+        centeredSlides: true,
+        speed: 1000,
+        loop: false,
+        breakpoints: {
+            320: {
+                slidesPerView: 1,
+                direction: 'horizontal',
+            },
+            1024: {
+                slidesPerView: 'auto',
+                direction: 'vertical',
+                centeredSlides: false,
+            },
+        },
+        navigation: {
+            nextEl: '.product__series_next',
+            prevEl: '.product__series_prev',
+        },
+    });
+}

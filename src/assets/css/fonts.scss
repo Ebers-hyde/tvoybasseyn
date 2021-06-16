@@ -1,32 +1,20 @@
 @font-face {
     font-family: 'Montserrat-Number';
-    font-weight: 500;
+    font-weight: normal;
     font-style: normal;
-    src: url('E:\projects\tvoybasseyn.ru v3\src\assets\fonts\Montserrat-Regular.woff');
-    src: url('E:\projects\tvoybasseyn.ru v3\src\assets\fonts\Montserrat-Regular.woff') format('woff'),
-         url('E:\projects\tvoybasseyn.ru v3\src\assets\fonts\Montserrat-Regular.woff2') format('woff2'),
-         url('E:\projects\tvoybasseyn.ru v3\src\assets\fonts\Montserrat-Regular.ttf') format('truetype'),
-         url('E:\projects\tvoybasseyn.ru v3\src\assets\fonts\Montserrat-Regular.svg#MontserratRegular') format('svg');
-  }
+    src: url('~fonts/Montserrat-Light.ttf');
+}
   
-  @font-face {
+@font-face { 
     font-family: 'Montserrat-Number';
     font-weight: 600;
     font-style: normal;
-    src: url('E:\projects\tvoybasseyn.ru v3\src\assets\fonts\Montserrat-SemiBold.woff');
-    src: url('E:\projects\tvoybasseyn.ru v3\src\assets\fonts\Montserrat-SemiBold.woff') format('woff'),
-         url('E:\projects\tvoybasseyn.ru v3\src\assets\fonts\Montserrat-SemiBold.woff2') format('woff2'),
-         url('E:\projects\tvoybasseyn.ru v3\src\assets\fonts\Montserrat-SemiBold.ttf') format('truetype'),
-         url('E:\projects\tvoybasseyn.ru v3\src\assets\fonts\Montserrat-SemiBold.svg#MontserratSemiBold') format('svg');
-  }
+    src: url('~fonts/Montserrat-SemiBold.ttf');
+}
   
-  @font-face {
+@font-face {
     font-family: 'Montserrat-Number';
     font-weight: 700;
     font-style: normal;
-    src: url('E:\projects\tvoybasseyn.ru v3\src\assets\fonts\Montserrat-Bold.woff');
-    src: url('E:\projects\tvoybasseyn.ru v3\src\assets\fonts\Montserrat-Bold.woff') format('woff'),
-         url('E:\projects\tvoybasseyn.ru v3\src\assets\fonts\Montserrat-Bold.woff2') format('woff2'),
-         url('E:\projects\tvoybasseyn.ru v3\src\assets\fonts\Montserrat-Bold.ttf') format('truetype'),
-         url('E:\projects\tvoybasseyn.ru v3\src\assets\fonts\Montserrat-Bold.svg#MontserratBold') format('svg');
+    src: url('~fonts/Montserrat-Bold.ttf');
 }

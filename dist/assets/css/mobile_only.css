@@ -14,6 +14,7 @@
 }
 .content {
     width: 100%;
+    padding-top: 61px;
 }
 .content__overlay {
     display: none;
@@ -59,4 +60,302 @@
 
 .article {
     margin: 0;
+}
+
+.product__purchase-discount {
+    position: absolute;
+    bottom: -5px;
+    left: 90px;
+}
+
+.product__aquabioraphy {
+    margin-bottom: 30px;
+}
+
+.product__main {
+    display: block;
+}
+
+.product__info2-model h4 {
+    display: none;
+}
+
+.product__info2-model h2 {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 113.5%;
+    color: #000;
+}
+
+.product__info2-model .toggle_modelsDropdown {
+    border-bottom: 1px dashed;
+    font-size: 18px;
+}
+
+.product__purchase-links a {
+    position: absolute;
+    top: 0;
+    right: 15px;
+}
+
+.product__info2 {
+    width: 100%;
+    position: relative;
+    margin-bottom: 40px;
+}
+
+.product__info2-model {
+    display: block;
+    margin-bottom: 150px;
+}
+
+.product__info2-scheme {
+    position: static;
+    top: unset;
+    width: 100%;
+}
+
+.product__purchase {
+    width: 100%;
+}
+
+.product__purchase-prices h4 {
+    display: none;
+}
+
+.product__purchase-prices {
+    display: flex;
+    width: 85%;
+    justify-content: space-between;
+    position: absolute;
+    top: 220px;
+}
+
+.product__purchase-prices div h3 {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 24px;
+    font-feature-settings: 'tnum' on, 'lnum' on;
+    color: #494949;
+    margin-bottom: 5px;
+}
+
+.product__purchase-prices div span {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 113.5%;
+    color: #000000;
+}
+
+.product__purchase_mobileTitle {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 113.5%;
+    color: #000000;
+    position: absolute;
+    top: 190px;
+}
+
+.product__info2-description {
+    max-height: 200px;
+    overflow: hidden;
+}
+
+.product__info2-description.opened {
+    max-height: fit-content;
+}
+
+.product__description_toggler {
+    position: absolute;
+    bottom: 0;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 142.3%;
+    text-decoration-line: underline;
+    color: #4081FF;
+    display: block;
+    text-align: center;
+    width: 100%;
+    height: 40px;
+    padding: 10px 0;
+    background: rgb(255,255,255);
+    background: linear-gradient(0deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 0%, rgba(255,255,255,0.6727065826330532) 100%);
+}
+
+.product__purchase-links {
+    height: 62px;
+    margin: 0 -15px;
+    z-index: 3;
+    background: #F5F7F8;
+    position: fixed;
+    bottom: 0;
+    width: 375px;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+.product__purchase-links .btn--blue {
+    font-size: 12px;
+    padding: 5px 23px;
+    width: 191px;
+    height: 44px;
+}
+
+.product__purchase-links button:nth-child(2) {
+    width: 139px;
+    height: 44px;
+}
+
+.product__purchase-links a {
+    display: none;
+}
+
+.product__dropdowns {
+    margin-bottom: 30px;
+}
+
+.product__dropdown {
+    padding: 0 50px;
+    background: #4081FF;
+    height: 57px;
+    margin-bottom: 20px;
+}
+
+.product__dropdown-title {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 120.4%;
+    text-align: center;
+    color: #FFFFFF;
+}
+
+.product__dropdown svg {
+    fill: #fff;
+}
+
+.product__dropdownItem {
+    padding: 10px;
+}
+
+.product__dropdownItem .article {
+    padding: 0;
+}
+
+.product__dropdownItem_flex div {
+    margin: 0 5px;
+}
+
+.product__series_slider {
+    position: relative;
+}
+
+.product__series_prev {
+    width: 18px;
+    height: 10px;
+    transform: rotate(90deg);
+    position: absolute;
+    top: 75px;
+    left: 10px;
+}
+
+.product__series_next {
+    width: 18px;
+    height: 10px;
+    transform: rotate( -90deg);
+    position: absolute;
+    top: 75px;
+    right: 10px;
+}
+
+.product__series_slider .swiper-container {
+    width: 70%;
+}
+
+.product__series_slider img {
+    border-radius: 5px;
+}
+
+.product__series_slider .swiper-slide h3 {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 24px;
+    text-align: center;
+    color: #000000;
+}
+
+.product__series-headline {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 120.4%;
+    text-align: center;
+    color: #000000;
+}
+
+.gidropool__view {
+    width: 100%;
+    height: unset;
+    margin-top: 20px;
+}
+
+.gidropool__title {
+    margin-bottom: 10px;
+}
+
+.gidropool__variants {
+    display: block;
+    margin-bottom: 40px;
+}
+
+.gidropool__variants .product__series-headline {
+    text-align: left;
+}
+
+.gidropool__variants .product__series-headline {
+    margin-bottom: 20px;
+}
+
+.gidropool__variant {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.gidropool__variant_title  {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 112%;
+    display: flex;
+    align-items: center;
+    font-feature-settings: 'tnum' on, 'lnum' on;
+    color: #353535;
+}
+
+.gidropool__variant_price {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 113.5%;
+    display: flex;
+    align-items: center;
+    font-feature-settings: 'tnum' on, 'lnum' on;
+    color: #1C1E21;
+}
+
+.gidropool__variant .btn {
+    height: 44px;
+}
+
+.gidropool .product__info2-description {
+    position: relative;
+    margin-bottom: 50px;
 }

@@ -435,7 +435,7 @@
     display: flex;
     justify-content: space-between;
     padding-right: 50px;
-    margin: 69px auto;
+    margin: 30px auto;
 }
 
 :after, :before {
@@ -480,5 +480,24 @@
     display: block!important;
     color: #337ab7!important;
 }
+
+.offer__party {
+    height: 174px;
+}
+
+.offer__party_header {
+    font-size: 14px;
+}
+
+.offer__party_title {
+    font-size: 18px;
+}
+
+.offer__party_details {
+    font-size: 16px;
+    margin: 0;
+}
+
+.pagebreak { page-break-before: always; } /* page-break-after works, as well */
 
 }

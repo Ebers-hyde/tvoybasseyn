@@ -11,3 +11,18 @@ if($('.gidropool')) {
         $(this).find('.btn').toggleClass('btn--primary');
     })
 }
+
+if($('.product__description_toggler')) {
+    $('.product__description_toggler').click(function() {
+        $('.product__info2-description').toggleClass('opened');
+        $('.product__description_toggler').text(function() {
+            let text;
+            if($('.product__description_toggler').text() == 'Раскрыть описание') {
+                text = 'Скрыть описание';
+            } else {
+                text = 'Раскрыть описание';
+            }
+            return text;
+        })
+    })
+}

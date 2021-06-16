@@ -30,8 +30,14 @@
       'volume' => $obj->getValue('obem'),
       'color' => $color->name,
       'desc' => $obj->getValue('content'),
-      'price' => $obj->getValue('stoimost'),
-      'price_format' => number_format($obj->getValue('stoimost'), 0, ',', ' '),
+      'price' => [
+        'Liner' => $obj->getValue('stoimost'),
+        'Cristal' => $obj->getValue('cena_cristal')
+      ],
+      'price_format' => [
+        'Liner' => number_format($obj->getValue('stoimost'), 0, ',', ' '),
+        'Cristal' => number_format($obj->getValue('cena_cristal'), 0, ',', ' ')
+    ],
       'options' => $this->vsk_objById($page->getValue('pool_options')),
       'scheme' => $obj->getValue('chertezh'),
     ];
@@ -167,19 +173,38 @@
         <path d="M17.7071 0.292893C18.0676 0.653377 18.0953 1.22061 17.7903 1.6129L17.7071 1.70711L9.70711 9.70711C9.34662 10.0676 8.77939 10.0953 8.3871 9.7903L8.29289 9.70711L0.292892 1.70711C-0.0976315 1.31658 -0.0976315 0.683417 0.292892 0.292893C0.653376 -0.0675913 1.22061 -0.0953212 1.6129 0.209704L1.70711 0.292893L9 7.58579L16.2929 0.292893C16.6834 -0.0976309 17.3166 -0.0976309 17.7071 0.292893Z" fill="#000" />
       </svg>
     </div>
-    <div class="offer__description_content hidden" data-block="cristal">
-      <?=$model['variant']['desc']?>
+    <div class="offer__description_content hidden product__dropdownItem_flex" style="width:100%" data-block="cristal">
+    <div>
+                <div class="article" style="margin:0;">
+                    <h2 style="margin-bottom: 60px;">LINER®</h2>
+                    <h4>FIBERGLASS POOL</h4>
+                    <p>Базовый вариант исполнения. Cмесь полиэфирной смолы, армирующих материалов и барьерный винилэфирный слой. Отличный состав по своим свойствам, который идеально подходит для создания стационарного бассейна. Тем более в такой чаше нет ни единого шва, что делает ее очень прочной. На выбор дается 2 цвета - белый и голубой. Гарантия на чаши в исполнении Liner составляет 15 лет.</p>
+                </div>
+            </div>
+            <div>
+                <div class="article" style="margin:0;">
+                    <h2 style="margin-bottom: 60px;">CRISTAL®</h2>
+                    <h4>GLASS CRISTAL®</h4>
+                    <p>Прозрачный слой, созданный по новейшей технологии для создания непревзойденного глянцевого эффекта. Придаёт насыщенный зеркальный оттенок и глубину цвету. Надежно защищает от хим. реагентов, механического воздействия и ультрофиолетового излучения. Гарантия на чаши в исполнении Cristal - 30 лет.</p>
+
+                    <h4>GRANI CRISTAL®</h4>
+                    <p>Инновационный материал в основе которого лежит технология литиевого гранита. Наши дизайнеры собрали девять цветов которые погрузят вас в мир натурального камня. Гранит, мрамор которые подчёркнут монументальность, престижность и индивидуальность вашего дизайнерского решения.</p>
+
+                    <h4>CERAMO CRISTAL®</h4>
+                    <p>Керамический слой, повышающий жесткость конструкции. Дополнительный гидроизоляционный слой, уменьшает теплопотери до 20%</p>
+                </div>
+            </div>
     </div>
   </div>
 
   <div class="offer__expenses offer__block">
     <div class="center-wrap">
       <div class="offer__expense">
-        <div class="offer__expense_name">Модель бассейна</div>
+        <div class="offer__expense_name">Чаша бассейна</div>
         <div class="offer__expense_spacing"></div>
-        <div class="offer__expense_cost"><?=$model['price_format']?> ₽</div>
+        <div class="offer__expense_cost"><?=$model['price_format'][$model['variant']['name']]?> ₽</div>
       </div>
-      <?php $summ = $model['price']+$page->getValue('pool_delivery'); foreach($model['options'] as $option): $price = getOptionPrices($this->vsk_objById($option->getValue('calc_prop'))->getValue('param_prices'))[$page->getValue('pool_model')]; $summ += $price;?>
+      <?php $summ = $model['price'][$model['variant']['name']]+$page->getValue('pool_delivery'); foreach($model['options'] as $option): $price = getOptionPrices($this->vsk_objById($option->getValue('calc_prop'))->getValue('param_prices'))[$page->getValue('pool_model')]; $summ += $price;?>
         <div class="offer__expense">
           <div class="offer__expense_name"><?=$option->name?></div>
           <div class="offer__expense_spacing"></div>
@@ -238,7 +263,7 @@
     <?php endforeach; ?>
       <div class="offer__expenses_summary offer__expense offer__expense_modified">
         <div class="offer__expense_text bold">ИТОГО ПО КАТЕГОРИИ</div>
-        <div class="offer__expense_text bold"><?=$summ_main?> р.</div>
+        <div class="offer__expense_text bold"><?=number_format($summ_main, 0, ',', ' ')?></div>
       </div>
     </div>
   </div>
@@ -279,7 +304,7 @@
     <?php endforeach; ?>
       <div class="offer__expenses_summary offer__expense offer__expense_modified">
         <div class="offer__expense_text bold">ИТОГО ПО КАТЕГОРИИ</div>
-        <div class="offer__expense_text bold"><?=$summ_add?> р.</div>
+        <div class="offer__expense_text bold"><?=number_format($summ_add, 0, ',', ' ')?></div>
       </div>
     </div>
   </div>
@@ -290,12 +315,12 @@
     <div class="offer__complect_flex">
       <div class="offer__complect_parts">
         <div>
-          <p class="offer__complect_part"><span>Чаша</span><span><?=$model['price_format'] . "р."?></span></p>
+          <p class="offer__complect_part"><span>Чаша</span><span><?=$model['price_format'][$model['variant']['name']] . "р."?></span></p>
           <p class="offer__complect_part"><span>Основное оборудование</span><span><?= number_format($summ_main, 0, ',', ' ') ?>р.</span></p>
           <p class="offer__complect_part"><span>Дополнительное оборудование</span><span><?= number_format($summ_add, 0, ',', ' ') ?>р.</span></p>
         </div>
         <div>
-          <p class="offer__complect_part"><span>ИТОГО:</span><span><?= number_format($model['price'] + $summ_main + $summ_add, 0, ',', ' ') ?> р.</span></p>
+          <p class="offer__complect_part"><span>ИТОГО:</span><span><?= number_format($model['price'][$model['variant']['name']] + $summ_main + $summ_add, 0, ',', ' ') ?> р.</span></p>
         </div>
       </div>
       <div class="offer__complect_manager">
