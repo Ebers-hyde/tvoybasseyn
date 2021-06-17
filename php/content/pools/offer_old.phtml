@@ -10,10 +10,8 @@
 
     $hierarchy = umiHierarchy::getInstance();
     $page = $variables['page'];
-  
-    /*
+        
     $DB = $this->notion_getDatabase('30698aab6df24add921795af680e031a');
-    $notion = [];
     if(empty($DB)){ echo 'No database selected'; die('error'); }
 
     foreach($DB['results'] as $notion_offer){
@@ -21,69 +19,10 @@
           break;
       }
       $notion_offer = '';
-    } 
-    */
-    if($page->getValue('notion_id')){
-      $notion_offer = $this->notion_getPage($page->getValue('notion_id'));
-      $notion_offer_equipment = $this->notion_getPageContent($page->getValue('notion_id'));
-      $notion_offer_equipment['main'] = $this->notion_getDatabase($notion_offer_equipment['results'][0]['id']);
-      $notion_offer_equipment['add'] = $this->notion_getDatabase($notion_offer_equipment['results'][1]['id']);
-    }else{
-      $DB = $this->notion_getDatabase('30698aab6df24add921795af680e031a');
-      if(empty($DB)){ echo 'No database selected'; die('error'); }
-      foreach($DB['results'] as $notion_offer){
-        if($notion_offer['properties']['Name']['title'][0]['plain_text'] == $page->getName()){	
-            $page->setValue('notion_id',$notion_offer['id']);
-            $page->commit();
-            break;
-        }
-        $notion_offer = '';
-      } 
     }
-    
 
     if(empty($notion_offer)){ die('error'); } 
-    echo '<pre style="font-size:16px">';
-      print_r($notion_offer_equipment);
-      echo "\n\n";
-    echo '</pre>'; 
-
-    if($page->getValue('last_edit') != $notion_offer['last_edited_time']){
-      $notion['manager'] = $this->notion_propVal($notion_offer['properties']['Менеджер']);
-      $notion['customer'] = $this->notion_propVal($notion_offer['properties']['Заказчик']);
-      $notion['model'] = $this->notion_propVal($notion_offer['properties']['Чаша']);
-      $notion['manager']['umi'] = $this->notion_findRelation($notion['manager']['id']);
-      $notion['model']['umi'] = $this->notion_findRelation($notion['model']['id']);
-      $notion['pool_delivery'] = $this->notion_propVal($notion_offer['properties']['Стоимость доставки']);
-      $notion['pool_options'] = $this->notion_propVal($notion_offer['properties']['Доп. опции']);
-      $notion['model_variant'] = $this->notion_propVal($notion_offer['properties']['Исполнение']);
-      $notion['model_color'] = $this->notion_propVal($notion_offer['properties']['Цвет чаши']);
-      $notion['offer_date'] = $this->notion_propVal($notion_offer['properties']['Дата выставления']);
-
-      $page->setValue('last_edit',$notion_offer['last_edited_time']);
-      $page->setValue('pool_delivery',$notion['pool_delivery']);
-      $page->setValue('customer_name',$this->notion_propVal($notion['customer']['properties']['Name']));
-      $page->setValue('customer_phone',$this->notion_propVal($notion['customer']['properties']['Телефон']));
-      $page->setValue('customer_email',$this->notion_propVal($notion['customer']['properties']['Email']));
-      $page->setValue('place',$this->notion_propVal($notion['customer']['properties']['Адрес']));
-      $page->setValue('manager',$notion['manager']['umi']->id);
-      $page->setValue('pool_model',$notion['model']['umi']->id);
-      $page->setValue('pool_options',$notion['pool_options']);
-      $page->setValue('ex_option',$notion['model_variant']);
-      $page->setValue('pool_color',$notion['model_color']);
-      $page->setValue('offer_date',$notion['offer_date']);
-
-      if($notion['manager']['umi']->getValue('last_edit') != $notion['manager']['last_edited_time']){
-        $notion['manager']['umi']->setValue('last_edit',$notion['manager']['last_edited_time']);
-        $notion['manager']['umi']->setValue('email',$this->notion_propVal($notion['manager']['properties']['Email']));
-        $notion['manager']['umi']->setValue('phone',$this->notion_propVal($notion['manager']['properties']['Телефон']));
-        $notion['manager']['umi']->setName($this->notion_propVal($notion['manager']['properties']['Name']));
-        $notion['manager']['umi']->commit();
-      }
-      
-      $page->commit();
-
-    }
+    print_r($notion_offer);
 
     $obj = $this->vsk_objById($page->getValue('pool_model'));
     $modelNameArr = explode(' ',$obj->name);
@@ -98,7 +37,6 @@
         'desc' => $variant->getValue('desc')
       ],
       'img' => $obj->getValue('menu_pic_a'),
-      'header_image' => $obj->getValue('header_image'),
       'width' => $obj->getValue('shirina'),
       'length' => $obj->getValue('dlina'),
       'depth' => $obj->getValue('glubina'),
@@ -138,7 +76,7 @@
     ];
 
     $offer_date = date('d.m.Y',strtotime($page->getValue('offer_date')));
-    $euro = $page->getValue('euro')?'Курс евро ЦБ: '.$page->getValue('euro').' руб.':'';
+    $euro = $page->getValue('euro');
 
     $summ_main = 0;
     $summ_add = 0;
@@ -148,7 +86,7 @@
 
 <section class="offer">
   <div class="offer__header">
-    <img src="<?= $model['header_image'] ?: $model['serie']->getValue('header_image') ?>" alt="Обложка страницы" style="width:100%;height:350px;object-fit:cover">
+    <img src="dist/assets/images/1700.png" alt="Обложка страницы">
     <div class="offer__header-content">
       <p>КОММЕРЧЕСКОЕ ПРЕДЛОЖЕНИЕ</p>
       <img src="dist/assets/images/aquabioraphy_title.svg" alt="">
@@ -188,13 +126,13 @@
         <h3 class="offer__party_title"><?=$manager['name']?></h3>
         <p class="offer__party_details"><?=$manager['phone']?></p>
         <p class="offer__party_details"><?=$manager['email']?></p>
-        <?php if($manager['photo']){ ?><img src="<?=$manager['photo']?>" alt="Менеджер <?=$manager['name']?>"><?php } ?>
+        <img src="<?=$manager['photo']?>" alt="Менеджер <?=$manager['name']?>">
       </div>
       <div class="offer__party">
         <span class="offer__party_header">Предложение</span>
         <h3 class="offer__party_title">КП от <?=$offer_date?></h3>
         <p class="offer__party_details">Действительно в течении 3х рабочих дней.</p>
-        <p class="offer__party_details"><?=$euro?></p>
+        <p class="offer__party_details">Курс евро ЦБ: <?=$euro?> руб.</p>
       </div>
   </div>
   <div class="center-wrap offer__banner offer__block">

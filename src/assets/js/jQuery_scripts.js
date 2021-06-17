@@ -26,3 +26,10 @@ if($('.product__description_toggler')) {
         })
     })
 }
+
+if($('.gidropool__video')) {
+    $('.gidropool__videoIcon_container').click(function() {
+        $('.gidropool__videoIcon_container').hide();
+        $('#mrSpa_video').get(0).play();
+    })
+}

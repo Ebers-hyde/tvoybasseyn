@@ -68,3 +68,55 @@ if(document.querySelector('.product__series_slider')) {
         },
     });
 }
+
+if(document.querySelector('.gidropool__colors_slider')) {
+    var swiper = new Swiper('.gidropool__colors_slider .swiper-container', {
+        slidesPerView: 'auto',
+        initialSlide: 1,
+        spaceBetween: 14,
+        centeredSlides: true,
+        speed: 1000,
+        loop: false,
+        breakpoints: {
+            320: {
+                slidesPerView: 1,
+                direction: 'horizontal',
+            },
+            1024: {
+                slidesPerView: 'auto',
+                direction: 'vertical',
+                centeredSlides: false,
+            },
+        },
+        navigation: {
+            nextEl: '.gidropool__colors_next',
+            prevEl: '.gidropool__colors_prev',
+        },
+    });
+}
+
+if(document.querySelector('.gidropool__projects_slider')) {
+    var swiper = new Swiper('.gidropool__projects_slider .swiper-container', {
+        slidesPerView: 'auto',
+        initialSlide: 1,
+        spaceBetween: 14,
+        centeredSlides: true,
+        speed: 1000,
+        loop: false,
+        breakpoints: {
+            320: {
+                slidesPerView: 1,
+                direction: 'horizontal',
+            },
+            1024: {
+                slidesPerView: 'auto',
+                direction: 'vertical',
+                centeredSlides: false,
+            },
+        },
+        navigation: {
+            nextEl: '.gidropool__projects_next',
+            prevEl: '.gidropool__projects_prev',
+        },
+    });
+}

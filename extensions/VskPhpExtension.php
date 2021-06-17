@@ -216,6 +216,75 @@
 		}
 
 
+		private function notion_cURL($url = '',$post = false){
+			$ch = curl_init($url);
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+			curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+					'Authorization: Bearer secret_Gs5E1YbOWqiBJxLbF6Xaa94dGnTJyfGHZd3ykhxKT9I',
+					'Content-Type: application/json',
+					'Notion-Version: 2021-05-13'
+				));
+			if($post){
+				curl_setopt($ch, CURLOPT_POST, 1);
+				curl_setopt($ch, CURLOPT_POSTFIELDS,
+				"");
+			}
+			$html = curl_exec($ch);
+			curl_close($ch);
+			return $html;
+		}
+
+		public function notion_propVal($prop){
+			if (!empty($prop['rich_text'])) {
+				return $prop['rich_text'][0]['plain_text'];
+			}
+			if (!empty($prop['title'])) {
+				return $prop['title'][0]['plain_text'];
+			}
+			if (!empty($prop['select'])) {
+				return $prop['select']['name'];
+			}
+			if (!empty($prop['date'])) {
+				return $prop['date']['start'];
+			}
+			if (!empty($prop['relation'])) {
+				return $this->notion_getPage($prop['relation'][0]['id']);
+			}
+			if (!empty($prop['multi_select'])) {
+				$return = [];
+				foreach($prop['multi_select'] as $item){
+					$return[] = $item['name'];
+				}
+				return $return;
+			}
+			return '';
+		}
+		
+		public function notion_findRelation($prop){
+			$sel = new selector('objects');
+			
+			$sel->types('object-type')->id(270);
+			$sel->types('object-type')->id(272);
+			$sel->types('object-type')->id(274);
+			
+			$sel->where('notion_id')->equals($prop);
+			$sel->limit(0,1);
+			$sel->order('ord')->asc();
+			
+			return $sel->result[0];
+		}
+		
+		public function notion_getDatabase($id){
+			return json_decode($this->notion_cURL('https://api.notion.com/v1/databases/'.$id.'/query',true),true);
+		}
+		public function notion_getPage($id){
+			return json_decode($this->notion_cURL('https://api.notion.com/v1/pages/'.$id),true);
+		}
+		public function notion_getPageContent($id){
+			return json_decode($this->notion_cURL('https://api.notion.com/v1/blocks/'.$id.'/children?page_size=100'),true);
+		}
+
+
     } 
 
 ?>

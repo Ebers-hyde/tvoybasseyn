@@ -50,7 +50,7 @@ $gold = $page->getValue('gold_price');
                         <h6 class="gidropool__variant_title">Metall</h6>
                         <p class="gidropool__variant_price"><?= $metall . " ₽" ?></p>
                     </div>
-                    <a class="btn btn--secondDisabled">
+                    <a class="btn btn--primary">
                         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" clip-rule="evenodd" d="M5.15503 10.344L5.15759 10.3439H13.6563C13.8655 10.3439 14.0494 10.2051 14.1069 10.0039L15.9819 3.44141C16.0223 3.29993 15.994 3.14783 15.9055 3.0304C15.8169 2.91296 15.6783 2.84387 15.5313 2.84387H4.07398L3.73889 1.33594C3.69116 1.12146 3.50098 0.968872 3.28125 0.968872H0.46875C0.209839 0.968872 0 1.17871 0 1.43762C0 1.69653 0.209839 1.90637 0.46875 1.90637H2.90527L4.59766 9.52234C4.73846 10.1045 4.84576 10.3342 5.15503 10.344ZM13.3026 9.40637L14.9098 3.78137H4.28223L5.53223 9.40637H13.3026Z" fill="#C5CCDD" />
                             <path d="M4.57129 12.9524C4.57129 13.7926 5.25489 14.4762 6.0951 14.4762C6.93531 14.4762 7.61891 13.7926 7.61891 12.9524C7.61891 12.1122 6.93531 11.4286 6.0951 11.4286C5.25489 11.4286 4.57129 12.1122 4.57129 12.9524ZM6.0951 12.4444C6.37513 12.4444 6.60304 12.6724 6.60304 12.9524C6.60304 13.2324 6.37513 13.4603 6.0951 13.4603C5.81507 13.4603 5.58716 13.2324 5.58716 12.9524C5.58716 12.6724 5.81507 12.4444 6.0951 12.4444Z" fill="#C5CCDD" />
@@ -66,7 +66,7 @@ $gold = $page->getValue('gold_price');
                         <h6 class="gidropool__variant_title">Gold</h6>
                         <p class="gidropool__variant_price"><?= $gold . " ₽" ?></p>
                     </div>
-                    <a class="btn btn--secondDisabled">
+                    <a class="btn btn--primary">
                         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" clip-rule="evenodd" d="M5.15503 10.344L5.15759 10.3439H13.6563C13.8655 10.3439 14.0494 10.2051 14.1069 10.0039L15.9819 3.44141C16.0223 3.29993 15.994 3.14783 15.9055 3.0304C15.8169 2.91296 15.6783 2.84387 15.5313 2.84387H4.07398L3.73889 1.33594C3.69116 1.12146 3.50098 0.968872 3.28125 0.968872H0.46875C0.209839 0.968872 0 1.17871 0 1.43762C0 1.69653 0.209839 1.90637 0.46875 1.90637H2.90527L4.59766 9.52234C4.73846 10.1045 4.84576 10.3342 5.15503 10.344ZM13.3026 9.40637L14.9098 3.78137H4.28223L5.53223 9.40637H13.3026Z" fill="#C5CCDD" />
                             <path d="M4.57129 12.9524C4.57129 13.7926 5.25489 14.4762 6.0951 14.4762C6.93531 14.4762 7.61891 13.7926 7.61891 12.9524C7.61891 12.1122 6.93531 11.4286 6.0951 11.4286C5.25489 11.4286 4.57129 12.1122 4.57129 12.9524ZM6.0951 12.4444C6.37513 12.4444 6.60304 12.6724 6.60304 12.9524C6.60304 13.2324 6.37513 13.4603 6.0951 13.4603C5.81507 13.4603 5.58716 13.2324 5.58716 12.9524C5.58716 12.6724 5.81507 12.4444 6.0951 12.4444Z" fill="#C5CCDD" />
@@ -81,6 +81,82 @@ $gold = $page->getValue('gold_price');
             <?= $page->getValue('content') ?>
             <span class="product__description_toggler desktop--hide">Раскрыть описание</span>
         </div>
+        <div class="gidropool__video">
+            <div class="gidropool__videoIcon_container">
+                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                viewBox="0 0 320.001 320.001" xml:space="preserve">
+                    <path d="M295.84,146.049l-256-144c-4.96-2.784-11.008-2.72-15.904,0.128C19.008,5.057,16,10.305,16,16.001v288
+                    c0,5.696,3.008,10.944,7.936,13.824c2.496,1.44,5.28,2.176,8.064,2.176c2.688,0,5.408-0.672,7.84-2.048l256-144
+                    c5.024-2.848,8.16-8.16,8.16-13.952S300.864,148.897,295.84,146.049z"/>
+                </svg>
+            </div>
+            <video class="wp-video-shortcode lazy-hidden" id="mrSpa_video" muted id="video-33421-1_html5" width="100%" height="477px" loop="1" preload="metadata" src="resources/mrSpa.mp4" style="width: 100%;height: auto;">
+                <source type="video/mp4" src="resources/mrSpa.mp4"><a href="resources/mrSpa.mp4">mrSpa.mp4</a>
+            </video>
+        </div>
+        <div class="gidropool__features">
+            <h2 class="product__series-headline">Основные особенности</h2>
+            <ul>
+                <?= $features ?>
+            </ul>
+        </div>
+        <?php if ($page->getValue('cveta')) {
+            $list = umiObjectsCollection::getInstance()->getGuidedItems($page->getValue('cveta'));
+            $cveta = $this->vsk_objById(array_keys($list));  ?>
+        <div class="gidropool__colors">
+            <h2 class="product__series-headline">Цвета</h2>
+            <div class="gidropool__colors_slider">
+            <div class="gidropool__colors_prev">
+                <svg width="18px" height="10px" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M17.7071 0.292893C18.0676 0.653377 18.0953 1.22061 17.7903 1.6129L17.7071 1.70711L9.70711 9.70711C9.34662 10.0676 8.77939 10.0953 8.3871 9.7903L8.29289 9.70711L0.292892 1.70711C-0.0976315 1.31658 -0.0976315 0.683417 0.292892 0.292893C0.653376 -0.0675913 1.22061 -0.0953212 1.6129 0.209704L1.70711 0.292893L9 7.58579L16.2929 0.292893C16.6834 -0.0976309 17.3166 -0.0976309 17.7071 0.292893Z"></path>
+                </svg>
+            </div>
+            <div class="swiper-container">
+                <div class="swiper-wrapper">
+                    <?php foreach ($cveta as $item) : ?>
+                        <div class="swiper-slide">
+                            <img src="<?= $item->getValue('photo') ?>">
+                            <span class="gidropool__colors_name"><?= $item->name ?></span>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+            <div class="gidropool__colors_next">
+                <svg width="18px" height="10px" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M17.7071 0.292893C18.0676 0.653377 18.0953 1.22061 17.7903 1.6129L17.7071 1.70711L9.70711 9.70711C9.34662 10.0676 8.77939 10.0953 8.3871 9.7903L8.29289 9.70711L0.292892 1.70711C-0.0976315 1.31658 -0.0976315 0.683417 0.292892 0.292893C0.653376 -0.0675913 1.22061 -0.0953212 1.6129 0.209704L1.70711 0.292893L9 7.58579L16.2929 0.292893C16.6834 -0.0976309 17.3166 -0.0976309 17.7071 0.292893Z"></path>
+                </svg>
+            </div>
+            </div>
+        </div>
+        <?php } ?>
+        <?php if ($page->getValue('galereya_proektov')) {
+            $list = umiObjectsCollection::getInstance()->getGuidedItems($page->getValue('galereya_proektov'));
+            $galereya_proektov = $this->vsk_objById(array_keys($list));  ?>
+            <div class="gidropool__projects">
+                <h2 class="product__series-headline">Галерея проектов</h2>
+                <div class="gidropool__projects_slider">
+                    <div class="gidropool__projects_prev">
+                        <svg width="18px" height="10px" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17.7071 0.292893C18.0676 0.653377 18.0953 1.22061 17.7903 1.6129L17.7071 1.70711L9.70711 9.70711C9.34662 10.0676 8.77939 10.0953 8.3871 9.7903L8.29289 9.70711L0.292892 1.70711C-0.0976315 1.31658 -0.0976315 0.683417 0.292892 0.292893C0.653376 -0.0675913 1.22061 -0.0953212 1.6129 0.209704L1.70711 0.292893L9 7.58579L16.2929 0.292893C16.6834 -0.0976309 17.3166 -0.0976309 17.7071 0.292893Z"></path>
+                        </svg>
+                    </div>
+                    <div class="swiper-container">
+                        <div class="swiper-wrapper">
+                            <?php foreach ($galereya_proektov as $item) : ?>
+                            <div class="swiper-slide">
+                                <img data-fancybox="proekty" data-src="<?= $item->getValue('photo') ?>" src="<?= $item->getValue('photo') ?>">
+                            </div>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                    <div class="gidropool__projects_next">
+                        <svg width="18px" height="10px" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17.7071 0.292893C18.0676 0.653377 18.0953 1.22061 17.7903 1.6129L17.7071 1.70711L9.70711 9.70711C9.34662 10.0676 8.77939 10.0953 8.3871 9.7903L8.29289 9.70711L0.292892 1.70711C-0.0976315 1.31658 -0.0976315 0.683417 0.292892 0.292893C0.653376 -0.0675913 1.22061 -0.0953212 1.6129 0.209704L1.70711 0.292893L9 7.58579L16.2929 0.292893C16.6834 -0.0976309 17.3166 -0.0976309 17.7071 0.292893Z"></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        <?php } ?>
     <?php else : ?>
         <div class="pt-2 gidropool__container">
             <div class="gidropool__info">

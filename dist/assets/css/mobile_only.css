@@ -227,6 +227,23 @@
     margin-bottom: 20px;
 }
 
+.product__modelDropdown {
+    height: 70px;
+    opacity: 1;
+}
+
+.product__modelDropdown div:nth-child(2) {
+    width: 200px;
+}
+
+.product__modelDropdown div:first-child h2 {
+    font-size: 16px;
+}
+
+.product__modelDropdown div:nth-child(2) img {
+    max-width: 100%;
+}
+
 .product__dropdown-title {
     font-style: normal;
     font-weight: 600;
@@ -252,11 +269,11 @@
     margin: 0 5px;
 }
 
-.product__series_slider {
+.product__series_slider, .gidropool__colors_slider, .gidropool__projects_slider  {
     position: relative;
 }
 
-.product__series_prev {
+.product__series_prev, .gidropool__colors_prev {
     width: 18px;
     height: 10px;
     transform: rotate(90deg);
@@ -265,7 +282,16 @@
     left: 10px;
 }
 
-.product__series_next {
+.gidropool__projects_prev {
+    width: 18px;
+    height: 10px;
+    transform: rotate(90deg);
+    position: absolute;
+    top: 95px;
+    left: 10px;
+}
+
+.product__series_next, .gidropool__colors_next {
     width: 18px;
     height: 10px;
     transform: rotate( -90deg);
@@ -274,11 +300,24 @@
     right: 10px;
 }
 
-.product__series_slider .swiper-container {
+.gidropool__projects_next {
+    width: 18px;
+    height: 10px;
+    transform: rotate( -90deg);
+    position: absolute;
+    top: 95px;
+    right: 10px;
+}
+
+.product__series_slider .swiper-container, .gidropool__colors_slider .swiper-container, .gidropool__projects_slider .swiper-container {
     width: 70%;
 }
 
 .product__series_slider img {
+    border-radius: 5px;
+}
+
+.gidropool__projects_slider img {
     border-radius: 5px;
 }
 
@@ -358,4 +397,62 @@
 .gidropool .product__info2-description {
     position: relative;
     margin-bottom: 50px;
+}
+
+.gidropool__video {
+    width: 100%;
+    margin-bottom: 45px;
+    position: relative;
+}
+
+.gidropool__features {
+    width: 100%;
+    padding: 0 5%;
+    margin-bottom: 45px;
+}
+
+.gidropool__features .product__series-headline, .gidropool__colors .product__series-headline, .gidropool__projects .product__series-headline {
+    margin-bottom: 30px;
+}
+
+.gidropool__colors {
+    background: #F9F9FA;
+    padding: 25px 0;
+    margin-bottom: 45px;
+}
+
+.gidropool__colors_name, .gidropool__projects_name {
+    display: block;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 120.4%;
+    text-align: center;
+    color: #000000;
+}
+
+.gidropool__projects {
+    margin-bottom: 45px;
+}
+
+.gidropool__videoIcon_container {
+    z-index: 3;
+    position: absolute;
+    top: 45%;
+    left: 45%;
+}
+
+.gidropool__videoIcon_container svg {
+    width: 30px;
+    fill: #fff;
+}
+
+.product__optionDropdowns.inactive {
+    transform: none;
+}
+
+.product__main .product__dropdowns {
+    width: 95%;
+    top: 0;
+    left: 10px;
 }
