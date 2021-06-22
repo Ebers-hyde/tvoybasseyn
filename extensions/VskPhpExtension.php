@@ -314,7 +314,7 @@
 			$removeList = [];
 			$arr = $uoc->getGuidedItems($typeId);
 				
-			foreach($notion_equipment['results'] as $item){
+			foreach(array_reverse($notion_equipment['results']) as $item){
 				$sale = isset($item['properties']['Скидка'])?$item['properties']['Скидка']:0;
 				$price = isset($item['properties']['Цена за шт.'])?$item['properties']['Цена за шт.']:0;
 				$count = isset($item['properties']['Количество'])?$item['properties']['Количество']:0;
