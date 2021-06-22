@@ -1,12 +1,15 @@
 <?php
-    function getOptionPrices($n)
-    {
+
+	$uoc = umiObjectsCollection::getInstance();
+
+    function getOptionPrices($n){
        $arr = [];
        foreach($n as $item){
         $arr[$item['rel']] = $item['float'];
        }
        return $arr;
     }
+	
 
     $hierarchy = umiHierarchy::getInstance();
     $page = $variables['page'];
@@ -25,9 +28,6 @@
     */
     if($page->getValue('notion_id')){
       $notion_offer = $this->notion_getPage($page->getValue('notion_id'));
-      $notion_offer_equipment = $this->notion_getPageContent($page->getValue('notion_id'));
-      $notion_offer_equipment['main'] = $this->notion_getDatabase($notion_offer_equipment['results'][0]['id']);
-      $notion_offer_equipment['add'] = $this->notion_getDatabase($notion_offer_equipment['results'][1]['id']);
     }else{
       $DB = $this->notion_getDatabase('30698aab6df24add921795af680e031a');
       if(empty($DB)){ echo 'No database selected'; die('error'); }
@@ -41,14 +41,21 @@
       } 
     }
     
-
+/*
     if(empty($notion_offer)){ die('error'); } 
     echo '<pre style="font-size:16px">';
-      print_r($notion_offer_equipment);
+      print_r($notion_offer_equipment['main']['results']);
       echo "\n\n";
     echo '</pre>'; 
-
+	
+		die();
+*/
     if($page->getValue('last_edit') != $notion_offer['last_edited_time']){
+		$notion_offer_equipment = $this->notion_getPageContent($page->getValue('notion_id'));	 
+		$this->updateEquipmentList($page->getValue('main_equipment'),$this->notion_getDatabase($notion_offer_equipment['results'][0]['id']));
+		$this->updateEquipmentList($page->getValue('add_equipment'),$this->notion_getDatabase($notion_offer_equipment['results'][1]['id']));
+		$this->updateCompositeList($page,$this->notion_getDatabase($notion_offer_equipment['results'][2]['id']));
+		
       $notion['manager'] = $this->notion_propVal($notion_offer['properties']['Менеджер']);
       $notion['customer'] = $this->notion_propVal($notion_offer['properties']['Заказчик']);
       $notion['model'] = $this->notion_propVal($notion_offer['properties']['Чаша']);
@@ -69,6 +76,7 @@
       $page->setValue('manager',$notion['manager']['umi']->id);
       $page->setValue('pool_model',$notion['model']['umi']->id);
       $page->setValue('pool_options',$notion['pool_options']);
+	  print_r('ex_option -> '.$notion['model_variant']);
       $page->setValue('ex_option',$notion['model_variant']);
       $page->setValue('pool_color',$notion['model_color']);
       $page->setValue('offer_date',$notion['offer_date']);
@@ -84,11 +92,17 @@
       $page->commit();
 
     }
+	
 
     $obj = $this->vsk_objById($page->getValue('pool_model'));
+	if(!is_object($obj)){ echo '<h1>Error: pool_model</h1>'; die();}
     $modelNameArr = explode(' ',$obj->name);
     $variant = $this->vsk_objById($page->getValue('ex_option'));
-    $color = $this->vsk_objById($page->getValue('pool_color'));
+	if(!is_object($variant)){ $variant = $this->vsk_objById(158063); }
+	if($page->getValue('pool_color'))
+		$color = $this->vsk_objById($page->getValue('pool_color'));
+	else 
+		$color = false;
     $model = [
       'serie' => $this->vsk_objById($obj->getValue('series')),
       'name' => $modelNameArr[0],
@@ -103,7 +117,7 @@
       'length' => $obj->getValue('dlina'),
       'depth' => $obj->getValue('glubina'),
       'volume' => $obj->getValue('obem'),
-      'color' => $color->name,
+      'color' => $color?$color->name:'',
       'desc' => $obj->getValue('content'),
       'price' => [
         'Liner' => $obj->getValue('stoimost'),
@@ -116,11 +130,35 @@
       'options' => $this->vsk_objById($page->getValue('pool_options')),
       'scheme' => $obj->getValue('chertezh'),
     ];
-
-    $equipment = [
-      'main' => $this->vsk_objByType($page->getValue('main_equipment')),
-      'add' => $this->vsk_objByType($page->getValue('add_equipment'))
-    ];
+	
+	if(!is_array($model['options'])){ $model['options'] = []; }
+	
+	foreach($this->vsk_objByType($page->getValue('main_equipment')) as $key=>$item){
+		if(!is_object($item)){ continue; }
+		$prod = $this->vsk_objById($item->getValue('product_name'));
+		$category = is_object($prod)?$prod->getValue('category'):'all';
+		if(empty($category)) $category = 'all';
+		$equipment['main'][$category][$item->name]['name'] = is_object($prod)?$prod->getValue('product_name'):'';
+		$equipment['main'][$category][$item->name]['price'] = number_format($item->getValue('cena'), 0, ',', ' ');
+		$cnt = $equipment['main'][$category][$item->name]['count'] = $item->getValue('kolichestvo')?:1;
+		$equipment['main'][$category][$item->name]['unit'] = $item->getValue('unit');
+		$equipment['main'][$category][$item->name]['sale'] = number_format($sale = $item->getValue('sale')?:0, 0, ',', ' ');
+		$summ_int = $equipment['main'][$category][$item->name]['summ_int'] = ($item->getValue('cena')*intVal($cnt))-$sale;
+		$equipment['main'][$category][$item->name]['summ'] = number_format($summ_int, 0, ',', ' ');
+	}
+	
+	foreach($this->vsk_objByType($page->getValue('add_equipment')) as $key=>$item){
+		if(!is_object($item)){ continue; }
+		$prod = $this->vsk_objById($item->getValue('product_name'));
+		$category = is_object($prod)?$prod->getValue('category'):'all';
+		if(empty($category)) $category = 'all';
+		$equipment['add'][$category][$item->name]['name'] = is_object($prod)?$prod->getValue('product_name'):'';
+		$equipment['add'][$category][$item->name]['price'] = number_format($item->getValue('cena'), 0, ',', ' ');
+		$cnt = $equipment['add'][$category][$item->name]['count'] = $item->getValue('kolichestvo')?:1;
+		$equipment['add'][$category][$item->name]['unit'] = $item->getValue('unit');
+		$equipment['add'][$category][$item->name]['sale'] = number_format($sale = $item->getValue('sale')?:0, 0, ',', ' ');
+		$equipment['add'][$category][$item->name]['summ'] = number_format(($item->getValue('cena')*intVal($cnt))-$sale, 0, ',', ' ');
+	}
 
     $customer = [
       'name' => $page->getValue('customer_name'),
@@ -130,6 +168,7 @@
     ];
 
     $obj = $this->vsk_objById($page->getValue('manager'));
+	if(!is_object($obj)){ echo '<h1>Error: manager</h1>'; die();}
     $manager = [
       'name' => $obj->name,
       'phone' => $obj->getValue('phone'),
@@ -327,15 +366,45 @@
         <div class="offer__expense_text">Цена за шт., руб.</div>
         <div class="offer__expense_text">Сумма со скидкой, руб.</div>
       </div>
-    <?php foreach($equipment['main'] as $item): $summ_main += $item->getValue('cena'); ?>
-      <div class="offer__expense offer__expense_modified">
-        <div class="offer__expense_text"><?=$this->vsk_objById($item->getValue('product_name'))->name?></div>
-        <div class="offer__expense_text"><?=$cnt = $item->getValue('kolichestvo')?:'1 шт'?></div>
-        <div class="offer__expense_text"><?=$sale = $item->getValue('sale')? number_format($item->getValue('sale'), 0, ',', ' ') :'0'?></div>
-        <div class="offer__expense_text"><?=number_format($item->getValue('cena'), 0, ',', ' ')?></div>
-        <div class="offer__expense_text"><?=number_format(($item->getValue('cena')-$sale)*intVal($cnt), 0, ',', ' ')?></div>
-      </div>
+		<?php foreach($equipment['main']['all'] as $item): $summ_main += $item['summ_int']; ?>
+		  <div class="offer__expense offer__expense_modified">
+			<div class="offer__expense_text"><?=$item['name']?></div>
+			<div class="offer__expense_text"><?=$item['count']?> <?=$item['unit']?></div>
+			<div class="offer__expense_text"><?=$item['sale']?></div>
+			<div class="offer__expense_text"><?=$item['price']?></div>
+			<div class="offer__expense_text"><?=$item['summ']?></div>
+		  </div>
+		<?php endforeach; ?>
+	
+    <?php foreach($equipment['main'] as $catName=>$category): if($catName=='all'||$catName=='В конец') continue; ?>
+		<div class="offer__expense offer__expense_modified">
+			<div class="offer__expense_text bold" style="background: #e5e8ec;padding: 10px;font-size: 18px;margin-top: 15px;"><?=$catName?></div>
+		</div>
+		<?php foreach($category as $item): $summ_main += $item['summ_int']; ?>
+		  <div class="offer__expense offer__expense_modified">
+			<div class="offer__expense_text"><?=$item['name']?></div>
+			<div class="offer__expense_text"><?=$item['count']?> <?=$item['unit']?></div>
+			<div class="offer__expense_text"><?=$item['sale']?></div>
+			<div class="offer__expense_text"><?=$item['price']?></div>
+			<div class="offer__expense_text"><?=$item['summ']?></div>
+		  </div>
+		<?php endforeach; ?>
     <?php endforeach; ?>
+	
+	<div class="offer__expense offer__expense_modified">
+		<div class="offer__expense_text bold" style="padding: 10px;font-size: 18px;">&nbsp;</div>
+	</div>
+		
+	<?php foreach($equipment['main']['В конец'] as $item): $summ_main += $item['summ_int']; ?>
+	  <div class="offer__expense offer__expense_modified">
+		<div class="offer__expense_text"><?=$item['name']?></div>
+		<div class="offer__expense_text"><?=$item['count']?> <?=$item['unit']?></div>
+		<div class="offer__expense_text"><?=$item['sale']?></div>
+		<div class="offer__expense_text"><?=$item['price']?></div>
+		<div class="offer__expense_text"><?=$item['summ']?></div>
+	  </div>
+	<?php endforeach; ?>
+		
       <div class="offer__expenses_summary offer__expense offer__expense_modified">
         <div class="offer__expense_text bold">ИТОГО ПО КАТЕГОРИИ</div>
         <div class="offer__expense_text bold"><?=number_format($summ_main, 0, ',', ' ')?></div>
@@ -366,16 +435,24 @@
         <div class="offer__expense_text">Наименование</div>
         <div class="offer__expense_text">Кол-во</div>
         <div class="offer__expense_text">Скидка, руб</div>
+		<div class="offer__expense_text">Цена за шт., руб.</div>
         <div class="offer__expense_text">Сумма со скидкой, руб.</div>
       </div>
-      <?php foreach($equipment['add'] as $item): $summ_add += $item->getValue('cena'); ?>
-      <div class="offer__expense offer__expense_modified">
-        <div class="offer__expense_text"><?=$this->vsk_objById($item->getValue('product_name'))->name?></div>
-        <div class="offer__expense_text"><?=$cnt = $item->getValue('kolichestvo')?:'1 шт'?></div>
-        <div class="offer__expense_text"><?=$sale = $item->getValue('sale')? number_format($item->getValue('sale'), 0, ',', ' ') :'0'?></div>
-        <div class="offer__expense_text"><?=number_format($item->getValue('cena'), 0, ',', ' ')?></div>
-        <div class="offer__expense_text"><?=number_format(($item->getValue('cena')-$sale)*intVal($cnt), 0, ',', ' ')?></div>
-      </div>
+      <?php foreach($equipment['add'] as $catName=>$category):  ?>
+		<?php if($catName!='all'){ ?>
+			<div class="offer__expense offer__expense_modified">
+				<div class="offer__expense_text bold"><?=$catName?></div>
+			</div>
+		<?php } ?>
+		<?php foreach($category as $item): $summ_main += $item['summ_int']; ?>
+		  <div class="offer__expense offer__expense_modified">
+			<div class="offer__expense_text"><?=$item['name']?></div>
+			<div class="offer__expense_text"><?=$item['count']?> <?=$item['unit']?></div>
+			<div class="offer__expense_text"><?=$item['sale']?></div>
+			<div class="offer__expense_text"><?=$item['price']?></div>
+			<div class="offer__expense_text"><?=$item['summ']?></div>
+		  </div>
+		<?php endforeach; ?>
     <?php endforeach; ?>
       <div class="offer__expenses_summary offer__expense offer__expense_modified">
         <div class="offer__expense_text bold">ИТОГО ПО КАТЕГОРИИ</div>
@@ -391,8 +468,8 @@
       <div class="offer__complect_parts">
         <div>
           <p class="offer__complect_part"><span>Чаша</span><span><?=$model['price_format'][$model['variant']['name']] . "р."?></span></p>
-          <p class="offer__complect_part"><span>Основное оборудование</span><span><?= number_format($summ_main, 0, ',', ' ') ?>р.</span></p>
-          <p class="offer__complect_part"><span>Дополнительное оборудование</span><span><?= number_format($summ_add, 0, ',', ' ') ?>р.</span></p>
+          <p class="offer__complect_part"><span>Основное оборудование</span><span><?= number_format($summ_main, 0, ',', ' ') ?> р.</span></p>
+          <p class="offer__complect_part"><span>Дополнительное оборудование</span><span><?= number_format($summ_add, 0, ',', ' ') ?> р.</span></p>
         </div>
         <div>
           <p class="offer__complect_part"><span>ИТОГО:</span><span><?= number_format($model['price'][$model['variant']['name']] + $summ_main + $summ_add, 0, ',', ' ') ?> р.</span></p>
@@ -409,6 +486,17 @@
         </div>
       </div>
     </div>
+	<?php if($page->getValue('varianty_sotrudnichestva')){ ?>
+		<div style="margin-top: 20px;width: 590px;    padding: 20px 27px;">
+			<h2 style="margin-bottom: 16px;font-size: 22px;color: #316ee4;">Варианты сотрудничества:</h2>
+			<?php foreach($page->getValue('varianty_sotrudnichestva') as $item){ ?>
+				<div>
+					<p class="offer__complect_part" style="margin-bottom: 3px;"><span style="color: #000;"><?=$this->vsk_objById($item['rel'])->name?></span><span style="color: #000;"><?= number_format($item['float'], 0, ',', ' ') ?> р.</span></p>
+					<p style="font-size: 14px;"><?=$item['varchar']?></p>
+				</div>
+			<?php } ?>
+		</div>
+	<?php } ?>
   </div>
 
   <div class="center-wrap offer__banner offer__banner-modified offer__block">

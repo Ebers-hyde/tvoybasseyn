@@ -215,8 +215,8 @@
 			return $cookieJar->get($field);
 		}
 
-
 		private function notion_cURL($url = '',$post = false){
+			$data = '{"sorts": [{"timestamp":"last_edited_time","direction":"descending"}]}';
 			$ch = curl_init($url);
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 			curl_setopt($ch, CURLOPT_HTTPHEADER, array(
@@ -226,8 +226,7 @@
 				));
 			if($post){
 				curl_setopt($ch, CURLOPT_POST, 1);
-				curl_setopt($ch, CURLOPT_POSTFIELDS,
-				"");
+				curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
 			}
 			$html = curl_exec($ch);
 			curl_close($ch);
@@ -241,8 +240,17 @@
 			if (!empty($prop['title'])) {
 				return $prop['title'][0]['plain_text'];
 			}
+			if (!empty($prop['text'])) {
+				return $prop['text'][0]['plain_text'];
+			}
 			if (!empty($prop['select'])) {
 				return $prop['select']['name'];
+			}
+			if (!empty($prop['number'])) {
+				return $prop['number'];
+			}			
+			if (!empty($prop['rollup'])) {
+				return $this->notion_propVal($prop['rollup']['array'][0]);
 			}
 			if (!empty($prop['date'])) {
 				return $prop['date']['start'];
@@ -282,6 +290,80 @@
 		}
 		public function notion_getPageContent($id){
 			return json_decode($this->notion_cURL('https://api.notion.com/v1/blocks/'.$id.'/children?page_size=100'),true);
+		}
+		
+		public function updateCompositeList($page,$notion_equipment){
+			$arr =[];
+			$i = 1;
+			foreach($notion_equipment['results'] as $item){
+				$arr[] = array(
+					'int' => $i++,
+					'rel' => $this->notion_propVal($item['properties']['Name']),
+					'float' => $this->notion_propVal($item['properties']['Сумма']),
+					'varchar' => $this->notion_propVal($item['properties']['Описание'])
+				);
+			}
+			$page->setValue('varianty_sotrudnichestva',$arr);
+			$page->commit();
+			
+		}
+		
+		
+		public function updateEquipmentList($typeId,$notion_equipment){
+			$uoc = umiObjectsCollection::getInstance();
+			$removeList = [];
+			$arr = $uoc->getGuidedItems($typeId);
+				
+			foreach($notion_equipment['results'] as $item){
+				$sale = isset($item['properties']['Скидка'])?$item['properties']['Скидка']:0;
+				$price = isset($item['properties']['Цена за шт.'])?$item['properties']['Цена за шт.']:0;
+				$count = isset($item['properties']['Количество'])?$item['properties']['Количество']:0;
+				$data = [
+					'typeId' => $typeId,
+					'product' => $item['properties']['Товар']['relation'][0]['id'],
+					'sale' => $sale?$this->notion_propVal($item['properties']['Скидка']):0,
+					'unit' => $this->notion_propVal($item['properties']['усл ед'])?:'шт.',
+					'price' => $price?$this->notion_propVal($item['properties']['Цена за шт.']):0,
+					'price_default' => $this->notion_propVal($item['properties']['Цена по умолчанию']),
+					'count' => $count?$this->notion_propVal($item['properties']['Количество']):1
+				];
+
+				if (in_array($item['properties']['Товар']['relation'][0]['id'], $arr)) {
+					$keys = array_keys($arr, $item['properties']['Товар']['relation'][0]['id']);
+					$this->updateProduct($keys[0],$data);
+				}else{
+					$id = $this->addProduct($data);
+					$this->updateProduct($id,$data);
+				}
+				$removeList[$item['properties']['Товар']['relation'][0]['id']] = '';
+			}
+			
+			foreach($arr as $key=>$item){
+				if(!array_key_exists($item,$removeList)) {
+					echo '<br>'.$item.' removed';
+					$uoc->delObject($key);
+				}
+			}
+		}
+		
+		private function updateProduct($id,$data){
+			echo '<h2>Update:</h2>';
+			print_r($data);
+			$uoc = umiObjectsCollection::getInstance();
+			$obj = $uoc->getObject($id);
+			$obj->setName($data['product']);
+			$obj->setValue('product_name',$data['product']);
+			$obj->setValue('kolichestvo',$data['count']);
+			$obj->setValue('sale',$data['sale']);
+			$obj->setValue('cena',$data['price']?:$data['price_default']);
+			$obj->setValue('unit',$data['unit']);
+			$obj->commit();
+		}
+		private function addProduct($data){
+			if(empty($data['typeId'])) return false;
+			if(empty($data['product'])) return false;
+			$uoc = umiObjectsCollection::getInstance();
+			return $uoc->addObject($data['product'],$data['typeId']);
 		}
 
 
