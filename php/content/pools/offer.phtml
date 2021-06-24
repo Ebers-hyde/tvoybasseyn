@@ -32,7 +32,7 @@
       $DB = $this->notion_getDatabase('30698aab6df24add921795af680e031a');
       if(empty($DB)){ echo 'No database selected'; die('error'); }
       foreach($DB['results'] as $notion_offer){
-        if($notion_offer['properties']['Name']['title'][0]['plain_text'] == $page->getName()){	
+        if($notion_offer['properties']['Наименование']['title'][0]['plain_text'] == $page->name){	
             $page->setValue('notion_id',$notion_offer['id']);
             $page->commit();
             break;
@@ -76,7 +76,7 @@
       $page->setValue('manager',$notion['manager']['umi']->id);
       $page->setValue('pool_model',$notion['model']['umi']->id);
       $page->setValue('pool_options',$notion['pool_options']);
-	  print_r('ex_option -> '.$notion['model_variant']);
+
       $page->setValue('ex_option',$notion['model_variant']);
       $page->setValue('pool_color',$notion['model_color']);
       $page->setValue('offer_date',$notion['offer_date']);
@@ -133,31 +133,34 @@
 	
 	if(!is_array($model['options'])){ $model['options'] = []; }
 	
-	foreach($this->vsk_objByType($page->getValue('main_equipment')) as $key=>$item){
+	foreach($this->vsk_objByType($page->getValue('main_equipment'),[],100,'equals','desc') as $key=>$item){
 		if(!is_object($item)){ continue; }
 		$prod = $this->vsk_objById($item->getValue('product_name'));
+		$price_int = $item->getValue('cena')?:$prod->getValue('def_price');
 		$category = is_object($prod)?$prod->getValue('category'):'all';
 		if(empty($category)) $category = 'all';
 		$equipment['main'][$category][$item->name]['name'] = is_object($prod)?$prod->getValue('product_name'):'';
-		$equipment['main'][$category][$item->name]['price'] = number_format($item->getValue('cena'), 0, ',', ' ');
+		$equipment['main'][$category][$item->name]['price'] = number_format($price_int, 0, ',', ' ');
 		$cnt = $equipment['main'][$category][$item->name]['count'] = $item->getValue('kolichestvo')?:1;
 		$equipment['main'][$category][$item->name]['unit'] = $item->getValue('unit');
 		$equipment['main'][$category][$item->name]['sale'] = number_format($sale = $item->getValue('sale')?:0, 0, ',', ' ');
-		$summ_int = $equipment['main'][$category][$item->name]['summ_int'] = ($item->getValue('cena')*intVal($cnt))-$sale;
+		$summ_int = $equipment['main'][$category][$item->name]['summ_int'] = ($price_int*intVal($cnt))-$sale;
 		$equipment['main'][$category][$item->name]['summ'] = number_format($summ_int, 0, ',', ' ');
 	}
 	
-	foreach($this->vsk_objByType($page->getValue('add_equipment')) as $key=>$item){
+	foreach($this->vsk_objByType($page->getValue('add_equipment'),[],100,'equals','desc') as $key=>$item){
 		if(!is_object($item)){ continue; }
 		$prod = $this->vsk_objById($item->getValue('product_name'));
+		$price_int = $item->getValue('cena')?:$prod->getValue('def_price');
 		$category = is_object($prod)?$prod->getValue('category'):'all';
 		if(empty($category)) $category = 'all';
 		$equipment['add'][$category][$item->name]['name'] = is_object($prod)?$prod->getValue('product_name'):'';
-		$equipment['add'][$category][$item->name]['price'] = number_format($item->getValue('cena'), 0, ',', ' ');
+		$equipment['add'][$category][$item->name]['price'] = number_format($price_int, 0, ',', ' ');
 		$cnt = $equipment['add'][$category][$item->name]['count'] = $item->getValue('kolichestvo')?:1;
 		$equipment['add'][$category][$item->name]['unit'] = $item->getValue('unit');
 		$equipment['add'][$category][$item->name]['sale'] = number_format($sale = $item->getValue('sale')?:0, 0, ',', ' ');
-		$equipment['add'][$category][$item->name]['summ'] = number_format(($item->getValue('cena')*intVal($cnt))-$sale, 0, ',', ' ');
+		$summ_int = $equipment['add'][$category][$item->name]['summ_int'] = ($price_int*intVal($cnt))-$sale;
+		$equipment['add'][$category][$item->name]['summ'] = number_format($summ_int, 0, ',', ' ');
 	}
 
     $customer = [
@@ -237,7 +240,7 @@
       </div>
   </div>
   <div class="center-wrap offer__banner offer__block">
-    <a href="https://tvoybasseyn.ru/pavilion_catalog/aura" class="offer__banner_link">Скидка 20% на павильон Aura covers при покупке бассейна</a>
+    <a href="https://tvoybasseyn.ru/pavilion_catalog/aura/" target="_blank" class="offer__banner_link">Скидка 20% на павильон Aura covers при покупке бассейна</a>
   </div>
 
   <div class="center-wrap offer__pool offer__block">
@@ -339,7 +342,7 @@
     </div>
   </div>
   <div class="center-wrap offer__banner offer__block">
-    <a href="https://tvoybasseyn.ru/pavilion_catalog/aura" class="offer__banner_link">Скидка 20% на павильон Aura covers при покупке бассейна</a>
+    <a href="https://tvoybasseyn.ru/pavilion_catalog/aura/" target="_blank" class="offer__banner_link">Скидка 20% на павильон Aura covers при покупке бассейна</a>
   </div>
 
   <div class="offer__description center-wrap offer__description_flex">
@@ -370,21 +373,21 @@
 		  <div class="offer__expense offer__expense_modified">
 			<div class="offer__expense_text"><?=$item['name']?></div>
 			<div class="offer__expense_text"><?=$item['count']?> <?=$item['unit']?></div>
-			<div class="offer__expense_text"><?=$item['sale']?></div>
+			<div class="offer__expense_text"><?=$item['sale']?:''?></div>
 			<div class="offer__expense_text"><?=$item['price']?></div>
 			<div class="offer__expense_text"><?=$item['summ']?></div>
 		  </div>
 		<?php endforeach; ?>
 	
-    <?php foreach($equipment['main'] as $catName=>$category): if($catName=='all'||$catName=='В конец') continue; ?>
+    <?php foreach($equipment['main'] as $catName=>$category): $lower = mb_strtolower($catName); if($catName=='all'||$lower == 'в конец') continue; ?>
 		<div class="offer__expense offer__expense_modified">
 			<div class="offer__expense_text bold" style="background: #e5e8ec;padding: 10px;font-size: 18px;margin-top: 15px;"><?=$catName?></div>
 		</div>
-		<?php foreach($category as $item): $summ_main += $item['summ_int']; ?>
+		<?php foreach($category as $item): $summ_main += $item['summ_int']; ?> 
 		  <div class="offer__expense offer__expense_modified">
 			<div class="offer__expense_text"><?=$item['name']?></div>
 			<div class="offer__expense_text"><?=$item['count']?> <?=$item['unit']?></div>
-			<div class="offer__expense_text"><?=$item['sale']?></div>
+			<div class="offer__expense_text"><?=$item['sale']?:''?></div>
 			<div class="offer__expense_text"><?=$item['price']?></div>
 			<div class="offer__expense_text"><?=$item['summ']?></div>
 		  </div>
@@ -395,11 +398,11 @@
 		<div class="offer__expense_text bold" style="padding: 10px;font-size: 18px;">&nbsp;</div>
 	</div>
 		
-	<?php foreach($equipment['main']['В конец'] as $item): $summ_main += $item['summ_int']; ?>
+	<?php if(!empty($equipment['main']['В конец'])) $for_end = $equipment['main']['В конец']; else $for_end = $equipment['main']['в конец'];  foreach($for_end as $item): $summ_main += $item['summ_int']; ?>
 	  <div class="offer__expense offer__expense_modified">
 		<div class="offer__expense_text"><?=$item['name']?></div>
 		<div class="offer__expense_text"><?=$item['count']?> <?=$item['unit']?></div>
-		<div class="offer__expense_text"><?=$item['sale']?></div>
+		<div class="offer__expense_text"><?=$item['sale']?:''?></div>
 		<div class="offer__expense_text"><?=$item['price']?></div>
 		<div class="offer__expense_text"><?=$item['summ']?></div>
 	  </div>
@@ -438,22 +441,44 @@
 		<div class="offer__expense_text">Цена за шт., руб.</div>
         <div class="offer__expense_text">Сумма со скидкой, руб.</div>
       </div>
-      <?php foreach($equipment['add'] as $catName=>$category):  ?>
-		<?php if($catName!='all'){ ?>
-			<div class="offer__expense offer__expense_modified">
-				<div class="offer__expense_text bold"><?=$catName?></div>
-			</div>
-		<?php } ?>
-		<?php foreach($category as $item): $summ_main += $item['summ_int']; ?>
+      <?php $summ_add = 0; foreach($equipment['add']['all'] as $item): $summ_add += $item['summ_int']; ?>
 		  <div class="offer__expense offer__expense_modified">
 			<div class="offer__expense_text"><?=$item['name']?></div>
 			<div class="offer__expense_text"><?=$item['count']?> <?=$item['unit']?></div>
-			<div class="offer__expense_text"><?=$item['sale']?></div>
+			<div class="offer__expense_text"><?=$item['sale']?:''?></div>
+			<div class="offer__expense_text"><?=$item['price']?></div>
+			<div class="offer__expense_text"><?=$item['summ']?></div>
+		  </div>
+		<?php endforeach; ?>
+	
+    <?php foreach($equipment['add'] as $catName=>$category): if($catName=='all'||mb_strtolower($catName)=='в конец') continue; ?>
+		<div class="offer__expense offer__expense_modified">
+			<div class="offer__expense_text bold" style="background: #e5e8ec;padding: 10px;font-size: 18px;margin-top: 15px;"><?=$catName?></div>
+		</div>
+		<?php foreach($category as $item): $summ_add += $item['summ_int']; ?>
+		  <div class="offer__expense offer__expense_modified">
+			<div class="offer__expense_text"><?=$item['name']?></div>
+			<div class="offer__expense_text"><?=$item['count']?> <?=$item['unit']?></div>
+			<div class="offer__expense_text"><?=$item['sale']?:''?></div>
 			<div class="offer__expense_text"><?=$item['price']?></div>
 			<div class="offer__expense_text"><?=$item['summ']?></div>
 		  </div>
 		<?php endforeach; ?>
     <?php endforeach; ?>
+	
+	<div class="offer__expense offer__expense_modified">
+		<div class="offer__expense_text bold" style="padding: 10px;font-size: 18px;">&nbsp;</div>
+	</div>
+		
+	<?php if(!empty($equipment['add']['В конец'])) $for_end = $equipment['add']['В конец']; else $for_end = $equipment['add']['в конец']; foreach($for_end as $item): $summ_add += $item['summ_int']; ?>
+	  <div class="offer__expense offer__expense_modified">
+		<div class="offer__expense_text"><?=$item['name']?></div>
+		<div class="offer__expense_text"><?=$item['count']?> <?=$item['unit']?></div>
+		<div class="offer__expense_text"><?=$item['sale']?:''?></div>
+		<div class="offer__expense_text"><?=$item['price']?></div>
+		<div class="offer__expense_text"><?=$item['summ']?></div>
+	  </div>
+	<?php endforeach; ?>
       <div class="offer__expenses_summary offer__expense offer__expense_modified">
         <div class="offer__expense_text bold">ИТОГО ПО КАТЕГОРИИ</div>
         <div class="offer__expense_text bold"><?=number_format($summ_add, 0, ',', ' ')?></div>
@@ -500,7 +525,7 @@
   </div>
 
   <div class="center-wrap offer__banner offer__banner-modified offer__block">
-    <a href="https://tvoybasseyn.ru/pavilion_catalog/aura/" class="offer__banner_link">Скидка 20% на павильон Aura covers при покупке бассейна</a>
+    <a href="https://tvoybasseyn.ru/pavilion_catalog/aura/" target="_blank" class="offer__banner_link">Скидка 20% на павильон Aura covers при покупке бассейна</a>
   </div>
 
   <hr>

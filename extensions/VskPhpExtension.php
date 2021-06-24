@@ -29,7 +29,7 @@
         }
  
         // Получить универсальный список объектов отсортированный в админке
-		public function vsk_objByType($type, $where = [], $limit = 100, $method = 'equals') {
+		public function vsk_objByType($type, $where = [], $limit = 100, $method = 'equals', $ord = 'asc') {
             $sel = new selector('objects');
             $sel->types('object-type')->id($type);
             if($where){
@@ -52,7 +52,10 @@
 				}
             }
             $sel->limit(0,$limit);
-            $sel->order('ord')->asc();
+			if($ord == 'asc')
+				$sel->order('ord')->asc();
+			else
+				$sel->order('ord')->desc();
 
 			return $sel->result;
 		}
@@ -314,7 +317,7 @@
 			$removeList = [];
 			$arr = $uoc->getGuidedItems($typeId);
 				
-			foreach(array_reverse($notion_equipment['results']) as $item){
+			foreach($notion_equipment['results'] as $item){
 				$sale = isset($item['properties']['Скидка'])?$item['properties']['Скидка']:0;
 				$price = isset($item['properties']['Цена за шт.'])?$item['properties']['Цена за шт.']:0;
 				$count = isset($item['properties']['Количество'])?$item['properties']['Количество']:0;
