@@ -15,6 +15,9 @@
 
 .offer__header {
     position: relative;
+    @include mobile{
+        background: #000;
+    }
     a {
         svg {
             margin-bottom: 0;
@@ -26,6 +29,10 @@
     position: absolute;
     left: 15%;
     top: 24%;
+    @include mobile{
+        left: 20px;
+        right: 20px;
+    }
     p {
         margin-bottom: 30px;
         font-size: 16px;
@@ -50,12 +57,19 @@
 
 .offer__block {
     margin-bottom: 100px;
+    @include mobile{
+        margin-bottom: 50px;
+    }
 }
 
 .offer__parties {
     display: flex;
     margin-top: 75px;
     justify-content: space-between;
+    @include mobile{
+        flex-direction: column;
+        margin-top: 50px;
+    }
 }
 
 .offer__party {
@@ -66,8 +80,17 @@
     flex-direction: column;
     justify-content: space-between;
     padding-bottom: 40px;
+    @include mobile{
+        height: fit-content;
+        width: 100%;
+    }
     &:nth-child(2) {
         position: relative;
+        @include mobile{
+            margin-top: 30px;
+            padding-bottom: 30px;
+        }
+        
         img {
             position: absolute;
             top: 20px;
@@ -76,6 +99,11 @@
         .offer__party_title {
             display: block;
             width: 173px;
+        }
+    }
+    &:nth-child(3) {
+        @include mobile{
+            margin-top: 30px;
         }
     }
 }
@@ -95,6 +123,9 @@
     font-size: 32px;
     line-height: 113.5%;
     color: black;
+    @include mobile{
+        margin-bottom: 14px;
+    }
 }
 
 .offer__party_details {
@@ -114,6 +145,13 @@
     &-modified {
         width: 840px;
         padding: 29px 135px;
+    }
+    @include mobile{
+        width: 100%;
+        text-align: center;
+        padding: 29px 40px;
+        margin: 50px auto;
+        border: 5px solid #4081FF;
     }
     
 }
@@ -143,10 +181,19 @@
 .offer__pool_params {
     display: flex;
     margin-bottom: 36px;
+    @include mobile{
+        flex-wrap: wrap;
+        justify-content: center;
+    }
 }
 
 .offer__pool_img {
     margin-right: 70px;
+    @include mobile{
+        min-width: 100%;
+        margin-right: 0px;
+    }
+    
 }
 
 .offer__pool_param {
@@ -154,17 +201,27 @@
     min-width: fit-content;
     text-align: center;
     position: relative;
+    @include mobile{
+        width: 109px;
+        margin-right: 0px;
+    }
     h2 {
         font-style: normal;
         font-weight: 300;
         font-size: 66px;
         line-height: 80px;
+        @include mobile{
+            font-size: 36px;
+        }
     }
     span {
         font-style: normal;
         font-weight: normal;
         font-size: 18px;
         line-height: 22px;
+        @include mobile{
+            font-size: 14px;
+        }
     }
     &:after {
         position: absolute;
@@ -175,6 +232,9 @@
         transform: translate(3px, 2px) skew(-15deg, 0deg);
         top: 0;
         right: -30px;
+        @include mobile{
+            right: -4px;
+        }
     }
     &:last-child {
         &:after {
@@ -206,11 +266,17 @@
 .offer__expenses {
     background-color: #FAFAFA;
     padding: 78px 0;
+    @include mobile{
+        padding: 50px 0;
+    }
 }
 
 .offer__expense, .offer__expenses_summary {
     display: flex;
     justify-content: space-between;
+    @include mobile{
+        flex-wrap: wrap;
+    }
 }
 
 .offer__expense {
@@ -222,6 +288,10 @@
         text-align: left;
         min-width: 35%;
         width: 100%;
+        @include mobile{
+            margin-bottom: 10px;
+            max-width: 100%;
+        }
     }
 }
 
@@ -239,8 +309,19 @@
     line-height: 156.6%;
     color: #000;
     font-family: 'Montserrat-Number', 'Montserrat', sans-serif;
+    @include mobile{
+        min-width: 25%;
+        max-width: 25%;
+        font-size: 14px;
+        text-align: left;
+    }
     &.bold {
         font-weight: 600;
+    }
+    &:nth-child(5){
+        @include mobile{
+            text-align: right;
+        }
     }
 }
 
@@ -253,6 +334,10 @@
     width: max-content;
     white-space: nowrap;
     margin-right: 10px;
+    @include mobile{
+        font-size: 16px;
+        color: #585858;
+    }
 }
 
 .offer__expense_spacing {
@@ -268,10 +353,22 @@
     font-size: 20px;
     line-height: 130%;
     font-family: 'Montserrat-Number', 'Montserrat', sans-serif;
+    @include mobile{
+        margin-left: 0;
+    }
 }
 
 .offer__expenses_summary {
     margin-top: 10px;
+    @include mobile{
+        justify-content: space-between;
+        .offer__expense_text:first-child{
+            width: fit-content;
+        }
+        .offer__expense_text{
+            text-align: right;
+        }
+    }
     .offer__expense_name, .offer__expense_cost{
         color: #000;
         font-weight: 600;
@@ -280,6 +377,14 @@
 
 .offer__pool + .offer__description {
     margin-bottom: 50px;
+}
+
+.offer__description{
+    img{
+        @include mobile{
+            display: none;
+        }
+    }
 }
 
 .offer__description_title {
@@ -294,6 +399,9 @@
         font-size: 32px;
         line-height: 113.5%;
         color: #000000;
+        @include mobile{
+            font-size: 22px;
+        }
     }
     svg {
         position: relative;
@@ -311,8 +419,15 @@
     font-size: 18px;
     line-height: 160%;
     color: #494949;
+    @include mobile{
+        width: 100%;
+        font-size: 16px;
+    }
     &WithImg {
         width: 630px;
+        @include mobile{
+            width:100%;
+        }
     }
 }
 
@@ -325,6 +440,10 @@
 .offer__complect {
     width: 840px;
     margin: 0 auto 100px auto;
+    @include mobile{
+        width: 100%;
+        margin-bottom: 50px;
+    }
 }
 
 .offer__complect_title {
@@ -333,10 +452,26 @@
     font-size: 32px;
     line-height: 113.5%;
     margin-bottom: 25px;
+    @include mobile{
+        font-size: 22px;
+        padding: 0 15px;
+    }
 }
 
 .offer__complect_flex {
     display: flex;
+    @include mobile{
+        flex-direction: column;
+    }
+}
+
+.offer__complect_variants{
+    margin: 20px auto 0;
+    width: 590px;    
+    padding: 20px 27px;
+    @include mobile{
+        width: 100%;
+    }
 }
 
 .offer__complect_parts {
@@ -347,15 +482,22 @@
 , #4081FF 9.56%, #2A64D6 85.35%);
     border-radius: 10px;
     padding: 25px 45px 20px 30px;
+    @include mobile{
+        width: 100%;
+        margin-bottom: 15px;
+        padding: 25px 15px 30px;
+    }
     div:first-child {
         margin-bottom: 30px;
         .offer__complect_part {
             span {
                 &:nth-child(1) {
                     font-weight: normal;
+                    
                 }
                 &:nth-child(2) {
                     font-weight: 500;
+                    min-width: 120px;
                 }
             }
         }
@@ -372,6 +514,9 @@
             font-size: 20px;
             line-height: 156.6%;
             color: #FFFFFF;
+            @include mobile{
+                font-size: 16px;
+            }
         }
         &:nth-child(2) {
             font-style: normal;
@@ -382,6 +527,9 @@
             font-feature-settings: 'tnum' on, 'lnum' on;
             color: #FFFFFF;
             font-family: 'Montserrat-Number', 'Montserrat', sans-serif;
+            @include mobile{
+                font-size: 16px;
+            }
         }
     }
 }
@@ -390,6 +538,10 @@
     display: flex;
     flex-direction: column;
     justify-content: space-around;
+    @include mobile{
+        width: fit-content;
+        margin: 0 auto;
+    }
     div {
         span {
             display: block;
@@ -412,6 +564,9 @@
             font-size: 26px;
             line-height: 113.5%;
             color: #000000;
+            @include mobile{
+                margin-bottom: 10px;
+            }
         }
     }
 }
@@ -422,6 +577,10 @@
 
 
 @media print {
+.page_break{
+    page-break-after: always;
+}
+    
 
 * { -webkit-print-color-adjust: exact; }
 
@@ -476,6 +635,11 @@
     margin: 0 auto;
 }
 
+.offer__banner{
+    padding: 0;
+    border: 0;
+    text-align: center;
+}
 .offer__banner_link {
     display: block!important;
     color: #337ab7!important;
@@ -491,6 +655,7 @@
 
 .offer__party_title {
     font-size: 18px;
+  
 }
 
 .offer__party_details {
@@ -500,4 +665,29 @@
 
 .pagebreak { page-break-before: always; } /* page-break-after works, as well */
 
+}
+
+.product__dropdownItem_flex{
+    @include mobile{
+        flex-direction: column;
+    }
+}
+
+.product__dropdownItem_flex div{
+    @include mobile{
+        opacity: 1;
+    }
+}
+
+.btn.pdf{
+    @include mobile{
+        display: none;
+    }
+}
+
+.offer__header > img{
+    @include mobile{
+        height: 215px!important;
+        opacity: 0.6;
+    }
 }

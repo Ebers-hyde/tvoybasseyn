@@ -133,7 +133,7 @@
 	
 	if(!is_array($model['options'])){ $model['options'] = []; }
 	
-	foreach($this->vsk_objByType($page->getValue('main_equipment'),[],100,'equals','desc') as $key=>$item){
+	foreach($this->vsk_objByType($page->getValue('main_equipment'),[],100,'equals','desc','order_weight') as $key=>$item){
 		if(!is_object($item)){ continue; }
 		$prod = $this->vsk_objById($item->getValue('product_name'));
 		$price_int = $item->getValue('cena')?:$prod->getValue('def_price');
@@ -148,7 +148,7 @@
 		$equipment['main'][$category][$item->name]['summ'] = number_format($summ_int, 0, ',', ' ');
 	}
 	
-	foreach($this->vsk_objByType($page->getValue('add_equipment'),[],100,'equals','desc') as $key=>$item){
+	foreach($this->vsk_objByType($page->getValue('add_equipment'),[],100,'equals','desc','order_weight') as $key=>$item){
 		if(!is_object($item)){ continue; }
 		$prod = $this->vsk_objById($item->getValue('product_name'));
 		$price_int = $item->getValue('cena')?:$prod->getValue('def_price');
@@ -221,9 +221,9 @@
       <div class="offer__party">
         <span class="offer__party_header">Кому</span>
         <h3 class="offer__party_title"><?=$customer['name']?></h3>
-        <p class="offer__party_details"><?=$customer['phone']?></p>
-        <p class="offer__party_details"><?=$customer['email']?></p>
-        <p class="offer__party_details"><?=$customer['place']?></p>
+        <?=$customer['phone']?'<p class="offer__party_details">'.$customer['phone'].'</p>':''?>
+        <?=$customer['email']?'<p class="offer__party_details">'.$customer['email'].'</p>':''?>
+        <?=$customer['place']?'<p class="offer__party_details">'.$customer['place'].'</p>':''?>
       </div>
       <div class="offer__party">
         <span class="offer__party_header">Ваш менеджер</span>
@@ -414,7 +414,7 @@
       </div>
     </div>
   </div>
-
+  <div class="page_break"></div>
   
   <?php if($equipment['add']): ?>
   <div class="offer__description center-wrap offer__description_flex">
@@ -485,6 +485,7 @@
       </div>
     </div>
   </div>
+  <div class="page_break"></div>
   <?php endif;?>
 
   <div class="offer__complect">
@@ -512,7 +513,7 @@
       </div>
     </div>
 	<?php if($page->getValue('varianty_sotrudnichestva')){ ?>
-		<div style="margin-top: 20px;width: 590px;    padding: 20px 27px;">
+		<div class="offer__complect_variants">
 			<h2 style="margin-bottom: 16px;font-size: 22px;color: #316ee4;">Варианты сотрудничества:</h2>
 			<?php foreach($page->getValue('varianty_sotrudnichestva') as $item){ ?>
 				<div>
@@ -533,7 +534,7 @@
   <div class="center-wrap offer__gallery">
     <h2 class="offer__complect_title">Готовые проекты с бассейном Аквабиография <?=$model['name']?></h2>
     <div class="gallery">
-      <?php foreach (array_slice($projects, 0, 3) as $key=> $item): $photos = $this->thumb($item->getValue('photos'),1600); ?>
+      <?php foreach (array_slice($projects, 0, 6) as $key=> $item): $photos = $this->thumb($item->getValue('photos'),1600); ?>
       <a data-fancybox="gallery_<?=$key?>" data-options='{"thumbs" : {"autoStart":true}}' href="<?=$photos[0]?>" class="gallery__category">
         
         <div class="gallery__image is-loading">

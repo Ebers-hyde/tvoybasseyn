@@ -106,8 +106,10 @@ $product__tabs['delivery'] = 'Доставка и оплата';
     <div class="product__column" style="position: sticky;top: 86px;display: table;">  
       <div class="product__price">
         <div class="price"> 
-          <a style="font-size: 1.6rem;" data-fancybox data-src="#linerDesc" href="javascript:;"><u>LINER</u>
-          <p><?=$price?></p></a>
+          <?php if($price){ ?>
+            <a style="font-size: 1.6rem;" data-fancybox data-src="#linerDesc" href="javascript:;"><u>LINER</u>
+            <p><?=$price?></p></a>
+          <?php } ?>
           <?php if($price2){ ?>
             <a style="font-size: 1.6rem;" data-fancybox data-src="#cristalDesc" href="javascript:;"><u>CRISTAL</u>
             <p><?=$price2?></p></a>

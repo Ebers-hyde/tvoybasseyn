@@ -29,7 +29,7 @@
         }
  
         // Получить универсальный список объектов отсортированный в админке
-		public function vsk_objByType($type, $where = [], $limit = 100, $method = 'equals', $ord = 'asc') {
+		public function vsk_objByType($type, $where = [], $limit = 100, $method = 'equals', $ord = 'asc', $ord_prop = 'ord') {
             $sel = new selector('objects');
             $sel->types('object-type')->id($type);
             if($where){
@@ -53,9 +53,9 @@
             }
             $sel->limit(0,$limit);
 			if($ord == 'asc')
-				$sel->order('ord')->asc();
+				$sel->order($ord_prop)->asc();
 			else
-				$sel->order('ord')->desc();
+				$sel->order($ord_prop)->desc();
 
 			return $sel->result;
 		}
@@ -317,13 +317,14 @@
 			$removeList = [];
 			$arr = $uoc->getGuidedItems($typeId);
 				
-			foreach($notion_equipment['results'] as $item){
+			foreach($notion_equipment['results'] as $key=>$item){
 				$sale = isset($item['properties']['Скидка'])?$item['properties']['Скидка']:0;
 				$price = isset($item['properties']['Цена за шт.'])?$item['properties']['Цена за шт.']:0;
 				$count = isset($item['properties']['Количество'])?$item['properties']['Количество']:0;
 				$data = [
 					'typeId' => $typeId,
 					'product' => $item['properties']['Товар']['relation'][0]['id'],
+					'order_weight' => $key,
 					'sale' => $sale?$this->notion_propVal($item['properties']['Скидка']):0,
 					'unit' => $this->notion_propVal($item['properties']['усл ед'])?:'шт.',
 					'price' => $price?$this->notion_propVal($item['properties']['Цена за шт.']):0,
@@ -360,6 +361,7 @@
 			$obj->setValue('sale',$data['sale']);
 			$obj->setValue('cena',$data['price']?:$data['price_default']);
 			$obj->setValue('unit',$data['unit']);
+			$obj->setValue('order_weight',$data['order_weight']);
 			$obj->commit();
 		}
 		private function addProduct($data){

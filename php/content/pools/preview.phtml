@@ -13,6 +13,8 @@ $price = ($p=$category->getValue('stoimost'))?$p:false;
 if($price) $prod = true;
 $old_price = ($p=$category->getValue('old_price'))?$p:false;
 
+if($category->getValue('cena_cristal')) $price = str_replace(' ','',$category->getValue('cena_cristal'));
+
 $photos = $category->getValue('photos');
 $photos = $this->thumb(reset($photos),600,300);
 
