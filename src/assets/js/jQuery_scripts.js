@@ -33,3 +33,8 @@ if($('.gidropool__video')) {
         $('#mrSpa_video').get(0).play();
     })
 }
+
+if($('.addToCartBlock').length > 0) {
+    console.log($('.addToCartBlock'));
+    $('.footer').addClass('product_footer');
+}

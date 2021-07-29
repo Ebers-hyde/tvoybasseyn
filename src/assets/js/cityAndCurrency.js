@@ -61,6 +61,14 @@ window.city = window.city || {};
 				return matches ? decodeURIComponent(matches[1]) : undefined;
 			},
 			setLocate: function(name, value) {
+                document.querySelectorAll('.list-group-item-action[data-city]').forEach(c => {
+                    console.log(value);
+                    if (c.dataset.city !== value) {
+                        c.classList.add('city_toSelect');
+                    } else {
+                        c.classList.remove('city_toSelect');
+                    }
+                })
                 
 				document.cookie = `${name}=${value}; path=/; expires=Tue, 19 Jan 2038 03:14:07 GMT`;
 
@@ -85,6 +93,12 @@ window.city = window.city || {};
 			showLocate: function(val = this.getCookie('locate')) {
                 if(locateBox)
 				    document.querySelector('.header__city span').innerHTML = city.names[val];
+
+                    document.querySelectorAll('.list-group-item-action[data-city]').forEach(c => {
+                        if (c.dataset.city !== val) {
+                            c.classList.add('city_toSelect');
+                        }
+                    })
                 
                 if(header__tel){
                     header__tel.forEach(function(tel,index) { 

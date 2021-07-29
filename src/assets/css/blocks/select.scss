@@ -21,10 +21,6 @@
         transition: all 0.5s;
         pointer-events: none;
     }
-    &__down{
-        margin-right: 0.8rem;
-        fill:#4081FF;
-    }
     &--active {
         .select__variants {
             display: flex;
@@ -82,5 +78,17 @@
                 color:#000;
             }
         }
+    }
+}
+
+.sort_variants {
+    right: 0;
+}
+
+.sort__order{
+    margin-right: 0.8rem;
+    fill:#4081FF;
+    &_up {
+        transform: rotate(180deg);
     }
 }

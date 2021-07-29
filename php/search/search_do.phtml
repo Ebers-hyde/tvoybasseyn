@@ -8,11 +8,13 @@
 
 $data = $this->getSearchResult();
 $dataProducts = $this->getSearchResultProducts();
+$contentModule = 'index';
+if ($variables['module'] == 'catalog' || $variables['domain-id'] == 2) $contentModule = 'catalog';
 ?>
 
 
 <div class="center-wrap pt-2">
-<div class="pool-filters__title">Найдено <?=umiCount($dataProducts['lines'])?> товаров и <?=umiCount($data['lines'])?> страниц</div>
+<div class="pool-filters__title">Найдено <?=$contentModule == 'catalog' ? umiCount($dataProducts['lines']) . ' товаров' : umiCount($data['lines']) . ' страниц'?></div>
 </div>
 
 <main class="center-wrap pt-2">
@@ -21,7 +23,7 @@ $dataProducts = $this->getSearchResultProducts();
 
 
 				<?php if (umiCount($data['lines']) > 0 || umiCount($dataProducts['lines']) > 0): ?>
-					<?= $this->render([$data,$dataProducts], "search/result") ?>
+					<?= $this->render([$data,$dataProducts,$contentModule], "search/result") ?>
 				<?php endif; ?>
     
 

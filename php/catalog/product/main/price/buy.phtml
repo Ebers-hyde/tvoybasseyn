@@ -49,7 +49,7 @@ $buyButtonClass = $this->getAddToCartButtonClass($product);
 					<?= $this->getAddToCartButtonMessage($product) ?>
 				</a>
 
-				<a class="buy_one_click_button transparent_btn item_one_click <?= $this->getBuyOneClickButtonClass($product) ?>" data-old-class="">
+				<a class="buy_one_click_button transparent_btn item_one_click <?= $this->getBuyOneClickButtonClass($product) ?>" onclick="ym(80112226,'reachGoal','one_click')" data-old-class="">
 					<?= $this->translate('purchase_one_click') ?>
 				</a>
 			</div>

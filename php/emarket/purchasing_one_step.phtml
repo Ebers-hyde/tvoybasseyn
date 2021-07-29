@@ -13,8 +13,10 @@
  */
 //$page = $variables['page'];
 
-$variables = $this->macros('emarket', 'purchasing_one_step');
+
 $cart = $this->macros('emarket', 'cart');
+if($cart['total-amount']!=0){
+$variables = $this->macros('emarket', 'purchasing_one_step');
 
 
 ?>
@@ -40,7 +42,7 @@ $cart = $this->macros('emarket', 'cart');
                 <!-- заменить на вывод суммы заказа -->
             </div>
             <div class="">
-                <form action="<?= $this->getPurchasingOneStepUrl() ?>" method="post" id="deliveryForm" class="without-steps">
+                <form action="<?= $this->getPurchasingOneStepUrl() ?>" onsubmit="ym(80112226,'reachGoal','checkout')" method="post" id="deliveryForm" class="without-steps">
                     <div class="show_orderDetails desktop--hide">
                         <div>
                             <svg viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
@@ -99,3 +101,9 @@ $cart = $this->macros('emarket', 'cart');
             $('.delivery_choose .data-form__wrapper:first .data-form__label').trigger('click');
     });
 </script>
+
+<?php }else{ ?>
+    <div class="center-wrap pt-2">
+        <?= $this->render($cart, 'emarket/cart/empty') ?>
+    </div>
+<?php } ?>

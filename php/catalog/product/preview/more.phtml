@@ -37,7 +37,7 @@ $data = $this->macros('emarket', 'getCompareLink', [$product->getId()]);
 	</div>
 	<span class="compare-error"></span>
 
-	<a class="buy_one_click_button transparent_btn one_click_btn <?= $this->getBuyOneClickButtonClass($product) ?>">
+	<a class="buy_one_click_button transparent_btn one_click_btn <?= $this->getBuyOneClickButtonClass($product) ?>" onclick="ym(80112226,'reachGoal','one_click')">
 		<?= $this->translate('purchase_one_click') ?>
 	</a>
 </div>

@@ -24,7 +24,7 @@
 ?>
 <div id="portfolio"> 
     <h2 class="right-slide__blockH2">Готовые проекты</h2>
-    <div class="right-slide__block">
+    <div class="right-slide__block center-wrap">
         <div class="gallery swiper-container pool__relised">
             <div class="swiper-wrapper">
                 <?= $this->render($projects, 'content/gallery/gallery_list')?>
@@ -37,7 +37,7 @@
 <?php } ?>
 
 <?php if($page->getValue('setup')) { ?>
-<div class="right-slide__block">
+<div class="right-slide__block center-wrap">
 <div class="article center-wrap pool_setup" id="setup">
     <h2>Установка бассейна</h2>
         <?=$page->getValue('setup')?>

@@ -8,11 +8,19 @@
 ?>
 
 <div class="cart-empty">
-	<div class="container">
-		<div class="row">
-			<h3><?= $this->translate('cart_empty') ?></h3>
-
-			<p><?= $this->translate('return_to_catalog') ?></p>
+	<div class="cart-empty_container">
+		<div class="cart-empty_image desktop--hide">
+			<img src="./src/assets/images/empty_cart.png" alt="">
+		</div>
+		<div class="cart-empty_content">
+			<h3>В корзине пока ничего нет</h3>
+			<p>
+			Начните с главной страницы или воспользуйтесь поиском, чтобы найти что-то конкретное
+			</p>
+			<a href="/" class="cart-empty_goHome btn btn--blue">Перейти на главную</a>
+		</div>
+		<div class="cart-empty_image mobile--hide">
+			<img src="./src/assets/images/empty_cart.png" alt="">
 		</div>
 	</div>
 </div>

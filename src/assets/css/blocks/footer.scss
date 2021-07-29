@@ -11,6 +11,10 @@
         justify-content: space-between;
         font-size: 1.4rem;
         color: #565656;
+        margin-left: 28rem;
+        @media screen and (max-width:$large_tablet) {
+            margin-left: unset;
+        }
     }
 
     &__address {
@@ -78,4 +82,8 @@
         }
 
     }
+}
+
+.product_footer {
+    margin-bottom: 65px;
 }

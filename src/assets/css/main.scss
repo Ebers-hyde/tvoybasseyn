@@ -1,10 +1,31 @@
+@font-face {
+  font-family: 'Montserrat-Number';
+  font-weight: normal;
+  font-style: normal;
+  src: url('~fonts/Montserrat-Light.ttf');
+}
+
+@font-face { 
+  font-family: 'Montserrat-Number';
+  font-weight: 600;
+  font-style: normal;
+  src: url('~fonts/Montserrat-SemiBold.ttf');
+}
+
+@font-face {
+  font-family: 'Montserrat-Number';
+  font-weight: 700;
+  font-style: normal;
+  src: url('~fonts/Montserrat-Bold.ttf');
+}
+
 * {
   box-sizing: border-box;
   margin: 0px;
   padding: 0px;
   outline: none;
   border: 0;
-}
+} 
 
 img {
   max-width: 100%;
@@ -211,3 +232,4 @@ h5 {
 .pt-6 {
   padding-top: 6rem;
 }
+

@@ -45,6 +45,7 @@ site.Cart = {
 					'offer_id': site.TradeOffers.getOfferId(),
 					'price_type_id': $('#price_type_id').data('price-type-id')
 				});
+				ym(80112226,'reachGoal','add_cart');
 				console.log(site.TradeOffers.getOfferId());
 				return;
 			}
@@ -53,6 +54,7 @@ site.Cart = {
 
 			if ($optionedPropertiesBlock.length === 0) {
 				site.Cart.putElementInCart($button);
+				ym(80112226,'reachGoal','add_cart');
 				return;
 			}
 
@@ -381,7 +383,7 @@ site.Cart = {
 
 	/** Выводит на фронтенд пустую корзину */
 	drawEmptyCart: function() {
-		$.get('/templates/demomarket/js/cart/empty.html', function (data) {
+		$.get('/templates/tb_2020/umishop_src/js/cart/empty.html', function (data) {
 			var emptyTemplate = _.template(data);
 			var params = {
 				'cart_empty': getLabel('js-cart_empty'),

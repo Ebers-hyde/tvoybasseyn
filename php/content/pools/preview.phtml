@@ -16,7 +16,7 @@ $old_price = ($p=$category->getValue('old_price'))?$p:false;
 if($category->getValue('cena_cristal')) $price = str_replace(' ','',$category->getValue('cena_cristal'));
 
 $photos = $category->getValue('photos');
-$photos = $this->thumb(reset($photos),600,300);
+$photos = $this->thumb(reset($photos),600);
 
 ?>
 <a href="<?=$category->link?>" class="<?=(is_array($variables)&&!empty($a=$variables[0]))?$a:''?> catalog-list__category <?=$category->getAltName()?>">
@@ -43,7 +43,7 @@ $photos = $this->thumb(reset($photos),600,300);
     <?php endif; */ ?>
 
     <div class="catalog-list__image is-loading" style="opacity:1">
-        <img data-hover="<?=$photos[0]?>" src="<?=($preview = $this->thumb($this->getPicPath($category),600,300)[0])?$preview:$this->getPicPath($category)?>">
+        <img data-hover="<?=$photos[0]?>" src="<?=($preview = $this->thumb($this->getPicPath($category),600)[0])?$preview:$this->getPicPath($category)?>">
         <!-- <img src="<?//=$this->thumb($this->getPicPath($category), 300)[0]?>"> -->
     </div> 
   

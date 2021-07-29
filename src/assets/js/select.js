@@ -13,9 +13,18 @@ $(document).ready(function () {
         $('.select__variant').on('click', function () {
 
             var $this = $(this);
+
+            var sortByValue = $this.data('field');
+
+            console.log(sortByValue);
+            console.log($.cookie('sort_field'));
+
             var fieldName = $this.data('field');
+            var isAscending = ($.cookie('sort_field') != sortByValue) || ($.cookie('sort_field') == sortByValue && $.cookie('sort_direction_is_ascending') == '0');
+
+            console.log(isAscending);
+
             $.cookie('sort_field', fieldName);
-            var isAscending = !$this.parent().hasClass('up_arrow');
             var flag = isAscending ? '1' : '0';
             $.cookie('sort_direction_is_ascending', flag);
             window.location.reload(true);

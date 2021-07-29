@@ -2,6 +2,8 @@
     $page = $variables['page'];
     $catalog = $this->getChildCategories($variables);
     $childCategoryList = $catalog['items'];
+
+    $action = $this->getCommonVar('pre_lang') . '/search/search_do/';
     
 
     $settings = $this->getSettingsContainer();
@@ -10,12 +12,14 @@
 ?>
 <?php if($this->isMobile()): ?>
 <div class="search_wrapper">
-  <form class="search" action="<?= $action ?>" id="searchForm">
+  <form class="search search_mobile" action="<?= $action ?>" id="searchForm">
       <input class="search__input" type="search" name="search_string"	autocomplete="off" class="tooltip_toggle" placeholder="Поиск по каталогу" value="<?=(!empty($_GET['search_string'])?$_GET['search_string']:'')?>">
+      <button class="search_mobile_button" type="submit">
+        <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M6.10008 0.434753C9.22905 0.434753 11.7656 2.97129 11.7656 6.10026C11.7656 7.39211 11.3332 8.58297 10.6053 9.53603L14.1882 13.1201C14.4832 13.4151 14.4832 13.8934 14.1882 14.1884C13.9159 14.4607 13.4874 14.4817 13.1911 14.2513L13.1199 14.1884L9.53584 10.6055C8.58279 11.3334 7.39193 11.7658 6.10008 11.7658C2.9711 11.7658 0.43457 9.22924 0.43457 6.10026C0.43457 2.97129 2.9711 0.434753 6.10008 0.434753ZM6.10008 1.94556C3.8055 1.94556 1.94537 3.80568 1.94537 6.10026C1.94537 8.39484 3.8055 10.255 6.10008 10.255C8.39466 10.255 10.2548 8.39484 10.2548 6.10026C10.2548 3.80568 8.39466 1.94556 6.10008 1.94556Z" fill="#84898E"/>
+        </svg>
+      </button>
   </form>
-  <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M6.10008 0.434753C9.22905 0.434753 11.7656 2.97129 11.7656 6.10026C11.7656 7.39211 11.3332 8.58297 10.6053 9.53603L14.1882 13.1201C14.4832 13.4151 14.4832 13.8934 14.1882 14.1884C13.9159 14.4607 13.4874 14.4817 13.1911 14.2513L13.1199 14.1884L9.53584 10.6055C8.58279 11.3334 7.39193 11.7658 6.10008 11.7658C2.9711 11.7658 0.43457 9.22924 0.43457 6.10026C0.43457 2.97129 2.9711 0.434753 6.10008 0.434753ZM6.10008 1.94556C3.8055 1.94556 1.94537 3.80568 1.94537 6.10026C1.94537 8.39484 3.8055 10.255 6.10008 10.255C8.39466 10.255 10.2548 8.39484 10.2548 6.10026C10.2548 3.80568 8.39466 1.94556 6.10008 1.94556Z" fill="#84898E"/>
-  </svg>
 </div>
 <?php endif;?>
 <section class="building-pools" id="building-pools">

@@ -40,7 +40,6 @@ const buildWebpackConfig = merge(baseWebpackConfig, {
 							// Provide path to the file with resources
 							resources: [
 								'src/assets/css/_bourbon.scss',
-								'src/assets/css/fonts.scss',
 								'src/assets/css/vars.scss'
 							]
 						}

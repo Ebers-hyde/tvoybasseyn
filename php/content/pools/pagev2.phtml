@@ -1,0 +1,224 @@
+<?php
+$sale = $this->getProductsListFromCategory(325);
+
+$page = $variables['page'];
+$serie = $this->vsk_objById($page->getValue('series'))->name;
+
+$isInSales = $this->findPositionInList($sale, $page->name);
+$cher = $page->getValue('chertezh');
+//$otherSeries = $this->vsk_objByType(195, ['list'=>[['seriya', 'art','notequals'],['seriya', '','isnotnull']]], 3, 'notequals');
+$allSeries = $this->getProductsListFromCategory(1334,100);
+$otherSeries = [];
+$otherModels = [];
+foreach($allSeries['items'] as $sir){
+    if(!empty($sir->getValue('seriya')) && $sir->getValue('seriya') != $serie) {
+        $otherSeries[] = $sir;
+    }
+
+    if($sir->getValue('series') == $page->getValue('series')) {
+        $otherModels[] = $sir;
+    }
+}
+
+$projects = $this->getProjects(null, $page->getValue('series'));
+
+
+$price = 0;
+if ($page->getValue('stoimost')) $price = str_replace(' ', '', $page->getValue('stoimost'));
+if ($price == 0) $price = '';
+else $price = number_format($price, 0, ',', ' ') . ' ₽';
+$price2 = 0;
+if ($page->getValue('cena_cristal')) $price2 = str_replace(' ', '', $page->getValue('cena_cristal'));
+if ($price2 == 0) $price2 = '';
+else $price2 = number_format($price2, 0, ',', ' ') . ' ₽';
+?>
+
+
+<section class="product" id="product-page">
+    <div class="product__aquabioraphy">
+        <img src="<?= $page->getValue('header_image') ?>" alt="">
+        <div class="product__aquabioraphy-titles">
+            <h2 class="product__aquabioraphy-title">Аквабиография</h2>
+            <h2 class="product__aquabioraphy-serie"><?= $serie ?></h2>
+        </div>
+    </div>
+    <div class="center-wrap product__main">
+        <div class="product__dropdowns product__modelDropdowns">
+        <div class="close_modelDropdown toggle_modelsDropdown">
+            <svg viewBox="0 0 22 23" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3.85922 5.01793L3.93548 4.93157C4.26592 4.60113 4.78588 4.57571 5.14548 4.85531L5.23184 4.93157L11.0003 10.6993L16.7688 4.93157C17.1268 4.57359 17.7072 4.57359 18.0652 4.93157C18.4232 5.28955 18.4232 5.86995 18.0652 6.22793L12.2974 11.9964L18.0652 17.7649C18.3956 18.0953 18.421 18.6153 18.1414 18.9749L18.0652 19.0613C17.7347 19.3917 17.2148 19.4171 16.8552 19.1375L16.7688 19.0613L11.0003 13.2935L5.23184 19.0613C4.87386 19.4192 4.29346 19.4192 3.93548 19.0613C3.5775 18.7033 3.5775 18.1229 3.93548 17.7649L9.70324 11.9964L3.93548 6.22793C3.60503 5.89749 3.57962 5.37753 3.85922 5.01793L3.93548 4.93157L3.85922 5.01793Z" fill="#000"/>
+            </svg>
+        </div>
+            <?php foreach($otherModels as $model):?>
+            <a href="<?= $model->link ?>" class="product__dropdown product__modelDropdown">
+                <div>
+                    <h4>Модель</h4>
+                    <h2><?= $model->name ?></h2>
+                </div>
+                <div>
+                    <h4>Liner</h4>
+                    <h2><?=number_format($model->getValue('stoimost'), 0, ',', ' ')?> ₽</h2>
+                </div>
+                <div>
+                    <h4>Cristal</h4>
+                    <h2><?=number_format($model->getValue('cena_cristal'), 0, ',', ' ')?> ₽</h2>
+                </div>
+                <div>
+                    <img src="<?= $model->getValue('menu_pic_ua') ?>" alt="">
+                </div>
+            </a>
+            <?php endforeach;?>
+        </div>
+        <div class="product__info2">
+            <div class="product__info2-model">
+                <div>
+                    <h4>Модель</h4>
+                    <h2><?= ucfirst(strtolower(explode(' ', $this->escape($page->name))[0])) ?> <a class="toggle_modelsDropdown">
+                            <?= explode(' ', $this->escape($page->name))[1] ?>
+                            <svg width="13" height="10" viewBox="0 0 13 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M6.5 10L0.870835 0.25L12.1292 0.250001L6.5 10Z" fill="#484848" />
+                            </svg>
+                        </a></h2>
+                </div>
+                <div class="product__info2-scheme">
+                    <img src="<?= $page->getValue('scheme_with_params') ?>" alt="">
+                </div>
+            </div>
+            <div class="product__info2-description">
+                <?= $page->getValue('content') ?>
+            </div>
+        </div>
+        <div class="product__purchase">
+            <div class="product__purchase-prices">
+                <h4>Стоимость Liner</h4>
+                <h3><?= $price ?></h3>
+                <h4>Стоимость Cristal</h4>
+                <h3><?= $price2 ?></h3>
+            </div>
+            <div class="product__purchase-links">
+                <button class="btn btn--blue">Консультация</button>
+                <button>В калькулятор</button>
+                <a href="<?= $cher->getFilePath(1) ?>">Скачать чертеж</a>
+                <?php if ($isInSales) : ?>
+                    <div class="product__purchase-discount">
+                        % Доступно со скидкой
+                    </div>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
+    <div class="product__dropdowns">
+        <div class="product__dropdown" data-dropdown="variants">
+            <h2 class="product__dropdown-title">Варианты исполнения</h2>
+            <div class="product__dropdown-icon">
+                <svg width="18px" height="10px" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M17.7071 0.292893C18.0676 0.653377 18.0953 1.22061 17.7903 1.6129L17.7071 1.70711L9.70711 9.70711C9.34662 10.0676 8.77939 10.0953 8.3871 9.7903L8.29289 9.70711L0.292892 1.70711C-0.0976315 1.31658 -0.0976315 0.683417 0.292892 0.292893C0.653376 -0.0675913 1.22061 -0.0953212 1.6129 0.209704L1.70711 0.292893L9 7.58579L16.2929 0.292893C16.6834 -0.0976309 17.3166 -0.0976309 17.7071 0.292893Z" fill="#000" />
+                </svg>
+            </div>
+        </div>
+        <div class="product__dropdownItem hidden center-wrap product__dropdownItem_flex" data-dropdown="variants">
+            <div>
+                <div class="article" style="margin:0;">
+                    <h2 style="margin-bottom: 60px;">LINER®</h2>
+                    <h4>FIBERGLASS POOL</h4>
+                    <p>Базовый вариант исполнения. Cмесь полиэфирной смолы, армирующих материалов и барьерный винилэфирный слой. Отличный состав по своим свойствам, который идеально подходит для создания стационарного бассейна. Тем более в такой чаше нет ни единого шва, что делает ее очень прочной. На выбор дается 2 цвета - белый и голубой. Гарантия на чаши в исполнении Liner составляет 15 лет.</p>
+                </div>
+            </div>
+            <div>
+                <div class="article" style="margin:0;">
+                    <h2 style="margin-bottom: 60px;">CRISTAL®</h2>
+                    <h4>GLASS CRISTAL®</h4>
+                    <p>Прозрачный слой, созданный по новейшей технологии для создания непревзойденного глянцевого эффекта. Придаёт насыщенный зеркальный оттенок и глубину цвету. Надежно защищает от хим. реагентов, механического воздействия и ультрофиолетового излучения. Гарантия на чаши в исполнении Cristal - 30 лет.</p>
+
+                    <h4>GRANI CRISTAL®</h4>
+                    <p>Инновационный материал в основе которого лежит технология литиевого гранита. Наши дизайнеры собрали девять цветов которые погрузят вас в мир натурального камня. Гранит, мрамор которые подчёркнут монументальность, престижность и индивидуальность вашего дизайнерского решения.</p>
+
+                    <h4>CERAMO CRISTAL®</h4>
+                    <p>Керамический слой, повышающий жесткость конструкции. Дополнительный гидроизоляционный слой, уменьшает теплопотери до 20%</p>
+                </div>
+            </div>
+        </div>
+        <div class="product__dropdown" data-dropdown="options">
+            <h2 class="product__dropdown-title">Дополнительные опции</h2>
+            <div class="product__dropdown-icon">
+                <svg width="18px" height="10px" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M17.7071 0.292893C18.0676 0.653377 18.0953 1.22061 17.7903 1.6129L17.7071 1.70711L9.70711 9.70711C9.34662 10.0676 8.77939 10.0953 8.3871 9.7903L8.29289 9.70711L0.292892 1.70711C-0.0976315 1.31658 -0.0976315 0.683417 0.292892 0.292893C0.653376 -0.0675913 1.22061 -0.0953212 1.6129 0.209704L1.70711 0.292893L9 7.58579L16.2929 0.292893C16.6834 -0.0976309 17.3166 -0.0976309 17.7071 0.292893Z" fill="#000" />
+                </svg>
+            </div>
+        </div>
+        <div class="product__dropdownItem hidden center-wrap" data-dropdown="options">
+            <?= $this->render($variables, 'blocks/tabs/options') ?>
+        </div>
+        <div class="product__dropdown" data-dropdown="colors">
+            <h2 class="product__dropdown-title">Доступные цвета</h2>
+            <div class="product__dropdown-icon">
+                <svg width="18px" height="10px" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M17.7071 0.292893C18.0676 0.653377 18.0953 1.22061 17.7903 1.6129L17.7071 1.70711L9.70711 9.70711C9.34662 10.0676 8.77939 10.0953 8.3871 9.7903L8.29289 9.70711L0.292892 1.70711C-0.0976315 1.31658 -0.0976315 0.683417 0.292892 0.292893C0.653376 -0.0675913 1.22061 -0.0953212 1.6129 0.209704L1.70711 0.292893L9 7.58579L16.2929 0.292893C16.6834 -0.0976309 17.3166 -0.0976309 17.7071 0.292893Z" fill="#000" />
+                </svg>
+            </div>
+        </div>
+        <div class="product__dropdownItem hidden center-wrap" data-dropdown="colors">
+            <?= $this->render($variables, 'blocks/tabs/colors') ?>
+        </div>
+        <div class="product__dropdown" data-dropdown="projects">
+            <h2 class="product__dropdown-title">Готовые проекты с <?= $serie ?></h2>
+            <div class="product__dropdown-icon">
+                <svg width="18px" height="10px" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M17.7071 0.292893C18.0676 0.653377 18.0953 1.22061 17.7903 1.6129L17.7071 1.70711L9.70711 9.70711C9.34662 10.0676 8.77939 10.0953 8.3871 9.7903L8.29289 9.70711L0.292892 1.70711C-0.0976315 1.31658 -0.0976315 0.683417 0.292892 0.292893C0.653376 -0.0675913 1.22061 -0.0953212 1.6129 0.209704L1.70711 0.292893L9 7.58579L16.2929 0.292893C16.6834 -0.0976309 17.3166 -0.0976309 17.7071 0.292893Z" fill="#000" />
+                </svg>
+            </div>
+        </div>
+        <div class="product__dropdownItem hidden center-wrap" data-dropdown="projects">
+            <a class="product__dropdownItem-projectsLink" href="/gallery"><span>Смотреть все</span>
+                <svg width="45" height="12" viewBox="0 0 39 12" stroke="#4081FF" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M38.5303 6.53033C38.8232 6.23744 38.8232 5.76256 38.5303 5.46967L33.7574 0.696699C33.4645 0.403806 32.9896 0.403806 32.6967 0.696699C32.4038 0.989593 32.4038 1.46447 32.6967 1.75736L36.9393 6L32.6967 10.2426C32.4038 10.5355 32.4038 11.0104 32.6967 11.3033C32.9896 11.5962 33.4645 11.5962 33.7574 11.3033L38.5303 6.53033ZM0 6.75L38 6.75V5.25L0 5.25L0 6.75Z" fill="#515151" />
+                </svg>
+            </a>
+            <div class="product__dropdownItem-projects gallery">
+                <?php foreach ($projects as $key => $item) : /* $photos = $item->getValue('photos'); */
+                    $photos = $this->thumb($item->getValue('photos'), 1600); ?>
+                    <a data-fancybox="gallery_<?= $key ?>" data-options='{"thumbs" : {"autoStart":true}}' href="<?= $photos[0] ?>" class="gallery__category">
+
+                        <div class="gallery__image is-loading">
+                            <!-- <img src="<? //=$photos[0]
+                                            ?>"> -->
+                            <img src="<?= $this->thumb($item->getValue('photos'), 600, 400)[0] ?>">
+                        </div>
+                        <span class="gallery__title"><?= $item->name ?></span><br>
+                        <span class="gallery__subtitle"><?= $item->getValue('address') ?></span>
+                    </a>
+                    <?php if (count($photos) > 1) : ?>
+                        <div style="display:none">
+                            <?php foreach ($photos as $k => $photo) {
+                                if ($k == 0) continue; ?>
+                                <a data-fancybox="gallery_<?= $key ?>" data-thumb="<?= $photo ?>" href="<?= $photo ?>"></a>
+                            <?php } ?>
+                        </div>
+                    <?php endif; ?>
+                <?php endforeach; ?>
+            </div>
+        </div>
+        <div class="product__dropdown" data-dropdown="delivery">
+            <h2 class="product__dropdown-title">Доставка и оплата</h2>
+            <div class="product__dropdown-icon">
+                <svg width="18px" height="10px" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M17.7071 0.292893C18.0676 0.653377 18.0953 1.22061 17.7903 1.6129L17.7071 1.70711L9.70711 9.70711C9.34662 10.0676 8.77939 10.0953 8.3871 9.7903L8.29289 9.70711L0.292892 1.70711C-0.0976315 1.31658 -0.0976315 0.683417 0.292892 0.292893C0.653376 -0.0675913 1.22061 -0.0953212 1.6129 0.209704L1.70711 0.292893L9 7.58579L16.2929 0.292893C16.6834 -0.0976309 17.3166 -0.0976309 17.7071 0.292893Z" fill="#000" />
+                </svg>
+            </div>
+        </div>
+        <div class="product__dropdownItem hidden" data-dropdown="delivery">
+            <?= $this->render($variables, 'blocks/tabs/delivery') ?>
+        </div>
+    </div>
+    <div class="center-wrap product__series">
+        <h2 class="product__series-headline">Другие модели</h2>
+        <div class="product__series-previews">
+            <?php foreach ($otherSeries as $serie): ?>
+            <a href="<?=$serie->link?>" class="product__series-preview">
+                <img src="<?=$this->thumb($serie->getValue('photos'),600,400)[0]?>" alt="">
+                <h2><?= ucfirst(strtolower(explode(' ', $this->escape($serie->name))[0])) ?></h2>
+            </a>
+            <?php endforeach;?>
+        </div>
+    </div>
+</section>

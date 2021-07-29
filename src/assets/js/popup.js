@@ -88,6 +88,9 @@ $('.contact__form form,#callback form').submit(function(e){
                 showErrorMessage(forma, data.error);
                 return;
             }
+
+			if(forma.find('input[name="system_form_id"]').val()=='192') ym(80112226,'reachGoal','call');
+			if(forma.find('input[name="system_form_id"]').val()=='232') ym(80112226,'reachGoal','form_footer');
    
             if(forma.data('file')){
                 let win = window.open(forma.data('file'), '_blank');

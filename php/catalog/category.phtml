@@ -60,18 +60,18 @@ $cart = $this->macros('emarket', 'cart');
                 <div class="select">
                 <span class="pool-filters__sort-title">Сортировать</span>
                   <div class="select__value">
-                    <svg class="select__down" width="15" height="13" viewBox="0 0 15 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <svg class="sort__order <?= $this->isSortDirectionAscending() ? 'sort__order_up' : '' ?>" width="15" height="13" viewBox="0 0 15 13" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M3.18046 9.67654C3.18046 9.8537 3.18046 10.7526 3.18046 10.7526C3.18046 10.7526 2.35824 10.1648 2.14087 10.001C1.90305 9.8218 1.402 9.9088 1.16418 10.088C0.862591 10.3152 0.862591 10.6837 1.16418 10.9109L2.92667 12.2389C3.93656 13.0631 3.93656 13.0631 4.94645 12.2389L6.70894 10.9109C7.01053 10.6837 7.01053 10.3152 6.70894 10.088C6.47112 9.9088 5.97007 9.8218 5.73225 10.001C5.51488 10.1648 4.69266 10.7526 4.69266 10.7526C4.69266 10.7526 4.69266 9.8537 4.69266 9.67654V1.47919C4.69266 1.16455 4.35414 0.909485 3.93656 0.909485C3.51897 0.909485 3.18046 1.16455 3.18046 1.47919V9.67654Z"></path>
                       <path d="M15 1.95252C15 1.4812 14.7385 1.09912 14.4159 1.09912H7.93256C7.60998 1.09912 7.34847 1.4812 7.34847 1.95252C7.34847 2.42384 7.60998 2.80591 7.93256 2.80591H14.4159C14.7385 2.80591 15 2.42384 15 1.95252Z"></path>
                       <path d="M15 6.97806C15 6.55911 14.7437 6.21948 14.4276 6.21948H9.16165C8.84553 6.21948 8.58926 6.55911 8.58926 6.97806C8.58926 7.39701 8.84553 7.73663 9.16165 7.73663H14.4276C14.7437 7.73663 15 7.39701 15 6.97806Z"></path>
                       <path d="M15 12.0036C15 11.5323 14.7412 11.1502 14.4219 11.1502H10.2014C9.8821 11.1502 9.62325 11.5323 9.62325 12.0036C9.62325 12.4749 9.8821 12.857 10.2014 12.857H14.4219C14.7412 12.857 15 12.4749 15 12.0036Z"></path>
                     </svg>
-                    <div><?=$sort[$this->getSortField()]?></div>
+                    <div class="sortBy" data-value='<?= $this->getSortField() ?>'><?=$sort[$this->getSortField()]?></div>
                   </div>
                   <svg class="select__arrow" width="6" height="4" viewBox="0 0 6 4" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M2.86243 4L0.643236 0.25L5.08162 0.25L2.86243 4Z"></path>
                   </svg>
-                  <div class="select__variants">
+                  <div class="select__variants sort_variants">
                     <label class="select__variant <?= $this->getSortClass('price') ?>" for="" data-field="price"><span>По цене</span></label>
                     <label class="select__variant <?= $this->getSortClass('name') ?>" for="" data-field="name"><span>По имени</span></label>
                     <label class="select__variant <?= $this->getSortClass('ord') ?>" for="" data-field="ord"><span>По умолчанию</span></label>

@@ -6,7 +6,7 @@ $page = $variables['page'];
 
 $main_photo = '';
 //$photos = $page->getValue('photos');
-$photos = $this->thumb($page->getValue('photos'),1400);
+$photos = $this->thumb($page->getValue('photos'),600);
 $renders = $this->thumb($page->getValue('rendery_modeli'),1400);
 //if(!empty($renders)) $photos = $renders;
 if($photos) $main_photo = $photos[0];
@@ -14,13 +14,14 @@ if($photos) $main_photo = $photos[0];
 ?>
 <div class="center-wrap">
     <div class="product__wrap toogles__wrap">
+      <?php if(count($photos) > 1):?>
       <div class="product__slider">
         <div class="swiper-container">
           <div class="swiper-wrapper">
             <?php $i=1; foreach($photos as $photo): ?> 
                 <div class="swiper-slide">
                     <div class="product__slider-img toogles__item-title" data-toogles="<?=$i++?>">
-                        <div><img src="<?=$photo?>" alt="" style="object-fit: cover;height:100%"></div>
+                        <div><img src="<?=$photo?>" alt=""></div>
                     </div>
                 </div>
             <?php endforeach; ?> 
@@ -30,6 +31,9 @@ if($photos) $main_photo = $photos[0];
         </div>
         <div class="swiper-pagination"></div>
       </div>
+      <?php else:?>
+      <div><img src="<?=$photos[0]?>" alt=""></div>
+      <?php endif;?>
       <div class="product__inner-right desktop--hide">
         <div class="product__inner-postpone comparisons comparisons--bg comparisons--heart">
           <svg viewBox="0 0 15 13" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -37,6 +41,7 @@ if($photos) $main_photo = $photos[0];
           </svg>Отложить
         </div>
       </div>
+      <?php if(count($photos) > 1):?>
       <div class="toogles__list">
       <?php $i=1; foreach($photos as $photo): ?>
             <div class="toogles__item toogles__item_pool <?=($i==1)?'toogles__item--active':''?> mobile--hide" data-toogles="<?=$i++?>">
@@ -48,8 +53,9 @@ if($photos) $main_photo = $photos[0];
                 </div>
                 </div>
             </div>
-        <?php endforeach; ?> 
+        <?php endforeach; ?>
         </div>
+        <?php endif;?>
     </div>
   </div>
 
@@ -57,10 +63,6 @@ if($photos) $main_photo = $photos[0];
   <style>
     .product__column {
         max-width:18.7rem;
-    }
-    .product__slider-img>div img{
-        object-fit: cover;
-        height: 100%;
     }
     .product__img>div {
         padding-bottom: 57.61%;
